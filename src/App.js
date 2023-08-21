@@ -1,11 +1,12 @@
-import { Provider } from 'react-redux';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import './App.css';
 import NoticeBoardList from './components/NoticeBoardList';
 import NoticeBoardSelect from './components/NoticeBoardSelect';
-import store from './store';
+import AdminPage from './components/admin/AdminPage';
+
 function App() {
   return (
-    <Provider store={store}>
+    <>
       <div className="container">
         <div className="header">
           <h2>nav바</h2>
@@ -18,7 +19,13 @@ function App() {
         </section>
         <aside className="right-menu"></aside>
       </div>
-    </Provider>
+      <div>
+        <Routes>
+          <Route path="/admin/:page?" element={<AdminPage />} />
+          <Route path="/*" />
+        </Routes>
+      </div>
+    </>
   );
 }
 
