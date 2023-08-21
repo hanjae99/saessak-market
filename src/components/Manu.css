@@ -1,0 +1,36 @@
+.manu{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  width: 200px;
+  background: white;
+  height: 100%;
+  overflow: auto;
+  position: absolute;
+}
+
+/* .manu1{
+  position: absolute;
+} */
+
+.manu1 li{
+  position: relative;
+}
+
+li{
+  list-style-type: none;
+}
+
+li a{
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: black;
+  font-weight: bold;
+}
+
+li a:hover{
+  background: #333;
+  color: #fff;
+}
+
