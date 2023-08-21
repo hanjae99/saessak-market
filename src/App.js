@@ -1,15 +1,22 @@
-import logo from "./logo.svg";
+import { NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Login from "./components/Login";
-import SingUp from "./components/SingUp";
-import Game from "./components/Game";
+import AdminPage from "./components/admin/AdminPage";
+
+const MainPage = () => {
+  return (
+    <div>
+      <NavLink to="/admin">관리자페이지</NavLink>
+    </div>
+  );
+};
 
 function App() {
   return (
     <div>
-      {/* <Login />
-      <SingUp /> */}
-      <Game />
+      <Routes>
+        <Route path="/admin/:page?" element={<AdminPage />} />
+        <Route path="/*" element={<MainPage />} />
+      </Routes>
     </div>
   );
 }
