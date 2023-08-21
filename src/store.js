@@ -12,7 +12,7 @@ function getRandomDate(start, end) {
 let productId = 300000000;
 const product = createSlice({
   name: 'product',
-  initialState: productJSON.map(p=>({...p, uptime: getRandomDate(new Date(2023, 8, 10), new Date())})),
+  initialState: productJSON.map(p=>({...p,imgsrc1:p.imgsrc1==='null'?null:p.imgsrc1,imgsrc2:p.imgsrc2==='null'?null:p.imgsrc2 , uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString()})),
   // [{
   //   "id":"101694009",
   //   "name":"[미아아트] 아크릴 파도 무드등 20cm",
@@ -31,7 +31,7 @@ const product = createSlice({
         imgsrc1: action.payload.imgsrc1 || "",
         imgsrc2: action.payload.imgsrc2 || "",
         categories: action.payload.categories,
-        uptime: new Date()
+        uptime: new Date().toUTCString()
       };
       state.push(tmp);
     },
@@ -56,7 +56,7 @@ const product = createSlice({
 let boardtId = 10000;
 const board = createSlice({
   name: 'board',
-  initialState: boardJSON.map(p=>({...p, date: getRandomDate(new Date(2023, 8, 10), new Date()), id:boardtId++})),
+  initialState: boardJSON.map(p=>({...p, date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(), id:boardtId++})),
   // [
   //   {
   //     "title": "술안주",
@@ -74,7 +74,7 @@ const board = createSlice({
         content: action.payload.content,
         writer: action.payload.writer,
         clicked: 0,
-        date: new Date()
+        date: new Date().toUTCString()
       };
       state.push(tmp);
     },

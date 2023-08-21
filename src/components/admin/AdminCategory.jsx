@@ -3,7 +3,7 @@ import React from 'react'
 
 
 
-const AdminCategory = () => {
+const AdminCategory = React.memo(({page, setSelectedCg}) => {
 
 
 
@@ -11,6 +11,6 @@ const AdminCategory = () => {
   return (
     <div className='adminCategory'>AdminCategory</div>
   )
-}
+}) 
 
 export default AdminCategory

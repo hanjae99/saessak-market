@@ -10,7 +10,13 @@ const AdminPage = () => {
   let {page} = useParams();
   page = page || '';
   const [selectedCg, setSelectedCg] = useState();
-  const [modalData, setModalData] = useState();
+  const [modalData, setModalData] = useState({
+    att: { style: {}, onClick:()=>{} },
+    children: (
+      <div>
+      </div>
+    )
+  });
   return (
     <div className='adminPage'>
       <AdminNav />

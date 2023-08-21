@@ -13,7 +13,7 @@ const adminData = createSlice({
    },
   reducers: {
     addSP : (state, action) => {
-      state.select_pitem = [...state.select_pitem, action.payload];
+      state.select_pitem.indexOf(action.payload)>=0 ? console.log() : state.select_pitem.push(action.payload);
     },
     delSP : (state, action) => {
       state.select_pitem = state.select_pitem.filter(p => p!==action.payload);
