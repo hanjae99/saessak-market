@@ -1,0 +1,123 @@
+.adminPage, .adminPage * {
+  padding: 0;
+  margin: 0;
+  border: 1px solid gray;
+  box-sizing: border-box;
+}
+
+.adminPage {
+  position: relative;
+}
+
+
+
+
+.adminNav {
+  width: 100%;
+  height: 100px;
+  position: relative;
+}
+
+.adminNav a {
+  text-decoration: none;
+  color: black;
+}
+
+.adminNav * {
+  border: none;
+}
+
+.adminNav > * {
+  position: absolute;
+  list-style: none;
+  color: black;
+  display: flex;
+}
+
+.adminNav > ul {
+  bottom: 4px;
+  width: 70%;
+  right: 5%;
+}
+
+.adminNav > ul > li {
+  margin-left: 5%;
+}
+.adminNav > ul > li > a {
+  display: block;
+  padding: 10px;
+  font-size: 1.1rem;
+}
+
+.adminNav > h1 {
+  bottom: 10px;
+  left: 5%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.adminCategory {
+  width: 200px;
+  height: calc( 100vh - 120px );
+}
+
+.contentBox, .adminModal {
+  position: absolute;
+}
+
+.contentBox ::placeholder {
+  font-size: 0.5rem;
+}
+
+.contentBox {
+  top: 100px;
+  left: 200px;
+  width: calc( 100% - 200px );
+  height: calc( 100vh - 120px );
+}
+
+.contentBox > div {
+  position: absolute;
+}
+
+.adminEdit {
+  top: 50px;
+  left: 70px;
+  width: 80%;
+  height: 100px;
+}
+
+.adminViewer {
+  top: 180px;
+  left: 70px;
+  width: 80%;
+  height: 600px;
+}
+
+.adminViewer div:first-child {
+  width: 100%;
+  height: 15%;
+}
+
+.adminViewer div:last-child {
+  width: 100%;
+  height: 85%;
+}
+
+.adminModal {
+  top: 0;
+  left: 0;
+  display: none;
+}
