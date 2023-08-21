@@ -1,6 +1,7 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdminPage from "./components/admin/AdminPage";
+import Main from "./components/Main";
 
 const MainPage = () => {
   return (
@@ -13,10 +14,11 @@ const MainPage = () => {
 function App() {
   return (
     <div>
-      <Routes>
+      {/* <Routes>
         <Route path="/admin/:page?" element={<AdminPage />} />
         <Route path="/*" element={<MainPage />} />
-      </Routes>
+      </Routes> */}
+      <Main />
     </div>
   );
 }
