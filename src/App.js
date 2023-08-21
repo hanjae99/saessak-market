@@ -1,11 +1,15 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Login from "./components/login";
+import Login from "./components/Login";
+import SingUp from "./components/SingUp";
+import Game from "./components/Game";
 
 function App() {
   return (
     <div>
-      <Login></Login>
+      {/* <Login />
+      <SingUp /> */}
+      <Game />
     </div>
   );
 }
