@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import data from "../product.json";
+import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
 
-const Slide = styled.img`
-  width: 300px;
+const SlideImg = styled.img`
+  width: 100%;
   height: 300px;
   margin-right: 30px;
 `;
@@ -11,17 +12,20 @@ const Slide = styled.img`
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
-  margin-top: 2rem;
+  margin-top: 30px;
+  position: relative;
 `;
 
 const Button = styled.button`
-  all: unset;
-  border: 1px solid coral;
-  padding: 0.5em 2em;
-  color: coral;
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  padding: 0.5em 1em;
+  color: white;
+  cursor: pointer;
   border-radius: 10px;
   &:hover {
     transition: all 0.3s ease-in-out;
+    border: 1px solid coral;
     background-color: coral;
     color: #fff;
   }
@@ -29,20 +33,23 @@ const Button = styled.button`
 `;
 
 const SliderContainer = styled.div`
-  width: 3000px;
-  display: flex;
-  flex-wrap: nowrap;
+  width: 1800px;
+  // display: flex;
+  // flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0 30px;
 `;
 
-const total_slides = data.slice(0, 7).length;
+const total_slides = data.slice(0, 5).length;
 
-// 캐러셀에 7개의 상품 노출
+// 캐러셀에 5개의 상품 노출
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
   const nextSlide = () => {
-    if (currentSlide >= total_slides - 3) {
+    if (currentSlide >= total_slides - 2) {
       setCurrentSlide(0);
     } else {
       setCurrentSlide(currentSlide + 1);
@@ -51,7 +58,7 @@ const Carousel = () => {
 
   const prevSlide = () => {
     if (currentSlide === 0) {
-      setCurrentSlide(total_slides - 3);
+      setCurrentSlide(total_slides - 2);
     } else {
       setCurrentSlide(currentSlide - 1);
     }
@@ -59,19 +66,27 @@ const Carousel = () => {
 
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
-    slideRef.current.style.transform = `translateX(-${currentSlide * 330}px)`;
+    slideRef.current.style.transform = `translateX(-${currentSlide * 20}%)`;
   }, [currentSlide]);
 
   return (
     <Container>
       <SliderContainer ref={slideRef}>
-        {data.slice(0, 7).map((d) => (
-          <Slide src={d.imgsrc1} />
+        {data.slice(0, 5).map((d) => (
+          <div key={d.id}>
+            <SlideImg src={d.imgsrc1} />
+            <p>상품명: {d.name}</p>
+            <p>상품가격: {d.price}</p>
+          </div>
         ))}
       </SliderContainer>
-      <div style={{ textAlign: "center", marginTop: "2rem" }}>
-        <Button onClick={prevSlide}>prev</Button>
-        <Button onClick={nextSlide}>next</Button>
+      <div style={{ textAlign: "center", marginTop: "1rem" }}>
+        <Button onClick={prevSlide}>
+          <GrCaretPrevious />
+        </Button>
+        <Button onClick={nextSlide}>
+          <GrCaretNext />
+        </Button>
       </div>
     </Container>
   );
