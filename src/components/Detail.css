@@ -1,0 +1,22 @@
+.container {
+  width: 80%;
+}
+.contentsBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.contentsBox2 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 20px;
+}
+.products {
+  width: 50%;
+  height: 400px;
+}
+.imgBox {
+  width: 100%;
+  height: 100%;
+}

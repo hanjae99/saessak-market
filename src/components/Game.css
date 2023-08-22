@@ -1,18 +1,18 @@
 .container {
-  width: 70%;
-  margin: 0 auto;
+  width: 80%;
 }
 .contentsBox {
   display: flex;
+  flex-direction: column;
 }
 
 .imgBox {
   background-color: aquamarine;
   width: 50%;
-  height: 300px;
+  height: 500px;
 }
 
 .products {
   width: 49%;
-  height: 300px;
+  height: 500px;
 }
