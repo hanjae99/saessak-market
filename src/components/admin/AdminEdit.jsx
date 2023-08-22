@@ -1,11 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const EditBody = ({ page }) => {
-  const pitem = useSelector(state => state.adminData.select_pitem);
+const EditBody = ({ page, pitem }) => {
   const pboard = useSelector(state => state.product)
   const fboard = useSelector(state => state.board)
-  const data = page === 'productboard' ? pboard : fboard;
+  const data = page === 'productboard' || page === '' ? pboard : fboard;
   const dispatch = useDispatch();
   let interval = [];
   let kd = false;
@@ -13,6 +12,7 @@ const EditBody = ({ page }) => {
     <div style={{ position: 'relative', display: 'flex', height:'100px' }}>
       <button style={{ position: 'relative', padding: '11px', fontSize: '1.2rem' }}
         onMouseDown={(e) => {
+          if (e.target.nextElementSibling.children.length===0) return;
           kd = true;
           if (parseInt(e.target.nextElementSibling.children[0].style.marginLeft) < 15 - 100)
             e.target.nextElementSibling.children[0].style.marginLeft = parseInt(e.target.nextElementSibling.children[0].style.marginLeft) + 100 + 'px';
@@ -31,7 +31,7 @@ const EditBody = ({ page }) => {
             clearInterval(interval.pop());
           }
         }} >{'<'}</button>
-      <div style={{ display: 'flex', width: '700px', position: 'relative', overflow: 'hidden', alignItems:'center' }}>
+      <div style={{ display: 'flex', width: '100%', position: 'relative', overflow: 'hidden', alignItems:'center' }}>
         {pitem && pitem.map(p => <div key={p} style={{ marginLeft: '15px', height:'80px' }} onContextMenu={e=>{
           e.preventDefault();
           dispatch({type:'adminData/delSP',payload:p});
@@ -39,13 +39,14 @@ const EditBody = ({ page }) => {
       </div>
       <button style={{ position: 'relative', right: '0px', padding: '11px', fontSize: '1.2rem' }}
         onMouseDown={(e) => {
+          if (e.target.previousElementSibling.children.length===0) return;
           kd = true;
-          if (parseInt(e.target.previousElementSibling.children[0].style.marginLeft) > 840 - e.target.previousElementSibling.children.length * 100)
+          if (parseInt(e.target.previousElementSibling.children[0].style.marginLeft) > e.target.parentElement.offsetWidth+100 - e.target.previousElementSibling.children.length * 100)
             e.target.previousElementSibling.children[0].style.marginLeft = parseInt(e.target.previousElementSibling.children[0].style.marginLeft) - 100 + 'px';
           setTimeout(() => {
             if (kd) {
               interval.push(setInterval(() => {
-                if (parseInt(e.target.previousElementSibling.children[0].style.marginLeft) > 740 - e.target.previousElementSibling.children.length * 100)
+                if (parseInt(e.target.previousElementSibling.children[0].style.marginLeft) > e.target.parentElement.offsetWidth - e.target.previousElementSibling.children.length * 100)
                   e.target.previousElementSibling.children[0].style.marginLeft = parseInt(e.target.previousElementSibling.children[0].style.marginLeft) - 6 + 'px';
               }, 10))
             }
@@ -64,12 +65,16 @@ const EditBody = ({ page }) => {
 
 
 const AdminEdit = ({ page }) => {
+  const pitem = useSelector(state => state.adminData.select_pitem);
+  const dispatch = useDispatch();
+  const onBtnClick = type => {
+  }
   return (
     <div className='adminEdit'>
-      <EditBody page={page} />
-      <button style={{ position: 'absolute', right: '5px', top: '15px' }}>숨김처리</button>
-      <button style={{ position: 'absolute', right: '5px', top: '40px' }}>숨김+차단</button>
-      <button style={{ position: 'absolute', right: '5px', top: '65px' }}>비우기</button>
+      <EditBody page={page} pitem={pitem} />
+      <button style={{ position: 'absolute', left: '10px', top: '-27px' }} onClick={e=>onBtnClick('hidden')} >숨김처리</button>
+      <button style={{ position: 'absolute', left: '74px', top: '-27px' }} onClick={e=>onBtnClick('ben')}>숨김+차단</button>
+      <button style={{ position: 'absolute', left: '146px', top: '-27px' }} onClick={e=>onBtnClick('clear')}>비우기</button>
     </div>
   )
 }

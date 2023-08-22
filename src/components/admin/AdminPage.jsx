@@ -17,11 +17,12 @@ const AdminPage = () => {
       </div>
     )
   });
+  const [rsl, setRsl] = useState([]);
   return (
     <div className='adminPage'>
       <AdminNav />
       <AdminCategory page={page} setSelectedCg={setSelectedCg} />
-      <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} />
+      <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
       <AdminModal modalData={modalData} />
     </div>
   )
