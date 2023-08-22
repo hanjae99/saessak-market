@@ -1,16 +1,22 @@
-#headContainer {
-  display: flex;
-  justify-content: center;
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 999;
+  padding-bottom: 10px;
+  box-shadow: 1px 1px 7px rgb(97, 96, 96);
 }
 
 .headContent {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
   width: 80%;
   height: 80px;
-  justify-content: center;
+  margin: 0 auto;
 }
 .logo {
-  width: 25%;
   height: 90px;
   text-align: center;
   display: flex;
@@ -28,8 +34,19 @@
   margin-left: 20px;
 }
 
+.logo div a:link {
+  color: black;
+}
+
+.logo div a:visited {
+  color: black;
+}
+
+.logo div a:active {
+  color: rgb(145, 63, 63);
+}
+
 .searchBox {
-  width: 50%;
   display: flex;
   text-align: center;
   align-items: center;
@@ -55,11 +72,11 @@
   position: absolute;
   right: 30px;
   top: 3px;
+  cursor: pointer;
 }
 
 .userBtn {
   display: flex;
-  width: 25%;
   height: 100%;
   justify-content: center;
   align-items: center;

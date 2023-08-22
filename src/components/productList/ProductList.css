@@ -1,0 +1,170 @@
+#mainList {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 25% 75%;
+  box-sizing: border-box;
+}
+
+.filterContainer {
+  width: 100%;
+  /* background-color: #ccc; */
+  padding-right: 30px;
+}
+
+.path > ul {
+  display: flex;
+  align-items: center;
+}
+
+.path ul li {
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.path ul li a:link {
+  color: #b0b0b0;
+}
+
+.path ul li a:visited {
+  color: #b0b0b0;
+}
+
+.path ul li a:active {
+  color: rgb(145, 63, 63);
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 30px;
+}
+
+.contents {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3%);
+}
+
+.item {
+  width: 100%;
+  padding: 30px;
+}
+
+.item > img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+}
+
+.item > p:nth-of-type(2) {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* 왼쪽 필터 부분 */
+.filterContainer {
+  color: rgb(107, 107, 107);
+}
+.filterbox {
+  width: 100%;
+}
+
+.filter {
+  border: 1px solid #a7a7a7;
+  background-color: #e7e7e7;
+  padding: 10px;
+  border-radius: 5px;
+  color: #a7a7a7;
+  cursor: pointer;
+}
+.filter > svg {
+  transform: translateY(3px);
+}
+
+.filter:hover {
+  border: 1px solid black;
+  color: black;
+  transition: all 0.7s;
+}
+
+.filterContainer ul {
+  margin: 0;
+  padding-left: 0;
+}
+
+.categoryItem2 {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+}
+
+.categoryItem2 a {
+  padding-left: 10px;
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.categoryItem2 a:link {
+  color: #b0b0b0;
+}
+
+.categoryItem2 a:visited {
+  color: #b0b0b0;
+}
+
+.categoryItem2 a:active {
+  color: rgb(145, 63, 63);
+}
+
+.categoryItem2 a:hover {
+  background-color: #eeeeee;
+  transition: all 0.7s;
+}
+/* 
+
+.category:hover > #categoryBox {
+  opacity: 1;
+  transition: all 0.7s;
+  visibility: visible;
+}
+
+#categoryBox ul {
+  margin: 0;
+  padding-left: 0;
+}
+
+.categoryItem {
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+}
+
+.categoryItem a {
+  display: block;
+  height: 100%;
+}
+
+.categoryItem a:link {
+  color: #b0b0b0;
+}
+
+.categoryItem a:visited {
+  color: #b0b0b0;
+}
+
+.categoryItem a:active {
+  color: rgb(145, 63, 63);
+}
+
+.categoryItem a:hover {
+  background-color: #adadad;
+  color: black;
+  transition: all 0.7s;
+}
+
+.category span svg {
+  transform: translateY(2px);
+} */

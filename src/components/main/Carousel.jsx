@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import data from "../product.json";
+import data from "../../product.json";
 import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
 
 const SlideImg = styled.img`

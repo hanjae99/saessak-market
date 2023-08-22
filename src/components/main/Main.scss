@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+main {
+  padding-top: 180px;
+}
+
 #mainContainer {
   width: 80%;
   margin: 0 auto;
@@ -43,29 +47,29 @@
 }
 
 .item1 {
-  @include item($url: "../img/notebook.png");
+  @include item($url: "../../img/notebook.png");
 }
 
 .item2 {
-  @include item($url: "../img/earphone.png");
+  @include item($url: "../../img/earphone.png");
 }
 .item3 {
-  @include item($url: "../img/cpu.png");
+  @include item($url: "../../img/cpu.png");
 }
 .item4 {
-  @include item($url: "../img/nintendo.png");
+  @include item($url: "../../img/nintendo.png");
 }
 .item5 {
-  @include item($url: "../img/iphone.png");
+  @include item($url: "../../img/iphone.png");
 }
 .item6 {
-  @include item($url: "../img/bag.png");
+  @include item($url: "../../img/bag.png");
 }
 .item7 {
-  @include item($url: "../img/ipad.png");
+  @include item($url: "../../img/ipad.png");
 }
 .item8 {
-  @include item($url: "../img/converse.png");
+  @include item($url: "../../img/converse.png");
 }
 
 .menu3 {
