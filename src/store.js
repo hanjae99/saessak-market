@@ -77,7 +77,7 @@ const userinitialState = [
 let productId = 300000000;
 const product = createSlice({
   name: 'product',
-  initialState: productJSON.map(p=>({...p,imgsrc1:p.imgsrc1==='null'?null:p.imgsrc1,imgsrc2:p.imgsrc2==='null'?null:p.imgsrc2 , uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(), writer:userinitialState[Math.floor(Math.random()*6)]})),
+  initialState: productJSON.map(p=>({...p,imgsrc1:p.imgsrc1==='null'?null:p.imgsrc1,imgsrc2:p.imgsrc2==='null'?null:p.imgsrc2 , uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(), writer:userinitialState[Math.floor(Math.random()*5)+1].nickname})),
   // [{
   //   "id":"101694009",
   //   "name":"[미아아트] 아크릴 파도 무드등 20cm",
@@ -101,7 +101,7 @@ const product = createSlice({
       state.push(tmp);
     },
     del: (state, action) => { // payload: id
-      state = state.filter(p => p.id !== action.payload);
+      state.forEach((p,i) => p.id === action.payload ? state.splice(i,1) : '')
     },
     fix: (state, action) => { // payload: {id, name [, price, text, imgsrc1, imgsrc2, categories]}
       let tmp = {
@@ -114,6 +114,7 @@ const product = createSlice({
         categories: action.payload.categories || ""
       };
       state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
+      state.forEach((p,i) => p.id === tmp.id ? state.splice(i,1,tmp) : '');
     }
   }
 });
@@ -144,17 +145,20 @@ const board = createSlice({
       state.push(tmp);
     },
     del: (state, action) => { // payload: id
-      state = state.filter(p => p.id !== action.payload);
+      // state = state.filter(p => p.id !== action.payload);
+      state.forEach((p,i) => p.id === action.payload ? state.splice(i,1) : '');
     },
     fix: (state, action) => { // payload: {id, title, content, }
       let tmp = {
         title: action.payload.title,
         content: action.payload.content,
       };
-      state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
+      // state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
+      state.forEach((p,i) => p.id === tmp.id ? state.splice(i,1,tmp) : '');
     },
     clickedUp: (state, action) => { // payload: id
-      state = state.map(p=>p.id===action.payload ? {...p, clicked:p.clicked+1} : p);
+      // state = state.map(p=>p.id===action.payload ? {...p, clicked:p.clicked+1} : p);
+      state.forEach((p,i)=>p.id===action.payload ? state.splice(i,1,{...p, clicked:p.clicked+1}):'');
     }
   }
 });

@@ -56,7 +56,9 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
   const board = useSelector(state => state.board);
   const divRef = useRef();
 
-  useEffect(()=>{page === 'productboard' || page === '' ? setViewMode({...viewMode, mode:'ImageOnly'}) : setViewMode({...viewMode, mode:'Line'})},[page, viewMode, setViewMode])
+  console.log(products)
+
+  useEffect(()=>{page === 'productboard' || page === '' ? setViewMode({...viewMode, mode:'ImageOnly'}) : setViewMode({...viewMode, mode:'Line'})},[page])
   useEffect(() => { setViewMode({ ...viewMode, viewSize: 1 }) }, [])
   useEffect(() => {
     let d1, d2;
