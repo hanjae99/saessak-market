@@ -1,0 +1,21 @@
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a {
+  color: darkgrey;
+  font-size: 1.25rem;
+}
+
+a:hover,
+a:focus {
+  color: gray;
+  font-weight: bold;
+}
+
+ul > li {
+  list-style-type: none;
+  list-style-position: inside;
+  padding-left: 15px;
+}
