@@ -1,7 +1,7 @@
-* {
+/* * {
   margin: 0 auto;
   padding: 0;
-}
+} */
 
 .all {
   width: 80%;
@@ -231,19 +231,21 @@ p {
   color: rgb(17, 17, 17);
 }
 
-tbody {
+.tbody-1 {
   display: table-row-group;
   vertical-align: middle;
   border-color: inherit;
 }
 
-tr {
+.table-main tr {
   display: table-row;
   vertical-align: inherit;
   border-color: inherit;
 }
 
-td {
+
+
+.table-main td {
   display: table-cell;
   vertical-align: inherit;
 }
