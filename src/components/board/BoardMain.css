@@ -1,5 +1,6 @@
 .board-main {
   display: flex;
+  padding-top: 180px;
 }
 .board-left {
   height: 700px;

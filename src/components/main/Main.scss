@@ -32,8 +32,7 @@ main {
   font-size: 1.7rem;
   color: white;
   font-weight: 600;
-  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0),
-    0px -1px rgb(0, 0, 0);
+  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0), 0px -1px rgb(0, 0, 0);
   cursor: pointer;
 }
 
@@ -49,29 +48,29 @@ main {
 }
 
 .item1 {
-  @include item($url: "../../img/notebook.png");
+  @include item($url: '../../img/notebook.png');
 }
 
 .item2 {
-  @include item($url: "../../img/earphone.png");
+  @include item($url: '../../img/earphone.png');
 }
 .item3 {
-  @include item($url: "../../img/cpu.png");
+  @include item($url: '../../img/cpu.png');
 }
 .item4 {
-  @include item($url: "../../img/nintendo.png");
+  @include item($url: '../../img/nintendo.png');
 }
 .item5 {
-  @include item($url: "../../img/iphone.png");
+  @include item($url: '../../img/iphone.png');
 }
 .item6 {
-  @include item($url: "../../img/bag.png");
+  @include item($url: '../../img/bag.png');
 }
 .item7 {
-  @include item($url: "../../img/ipad.png");
+  @include item($url: '../../img/ipad.png');
 }
 .item8 {
-  @include item($url: "../../img/converse.png");
+  @include item($url: '../../img/converse.png');
 }
 
 .menu3 {

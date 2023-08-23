@@ -1,10 +1,10 @@
-import React from "react";
-import Header from "./Header";
-import "./Main.scss";
-import Carousel from "./Carousel";
-import HotProduct from "./HotProduct";
-import NewProduct from "./NewProduct";
-import Footer from "./Footer";
+import React from 'react';
+import Header from './Header';
+import './Main.scss';
+import Carousel from './Carousel';
+import HotProduct from './HotProduct';
+import NewProduct from './NewProduct';
+import Footer from './Footer';
 
 const Main = () => {
   return (
