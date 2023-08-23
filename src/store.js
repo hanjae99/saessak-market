@@ -196,3 +196,5 @@ const store = configureStore({
     blacklist: blacklist.reducer,
   },
 });
+
+export default store;
