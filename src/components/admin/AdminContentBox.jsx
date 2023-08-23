@@ -5,7 +5,7 @@ import AdminUserPage from './AdminUserPage'
 
 const AdminContentBox = React.memo(({ selectedCg, setModalData, page, rsl, setRsl }) => {
   return (
-    <div className='contentBox'>
+    <div className='admincontentBox'>
       {(() => {
         if (page === 'freeboard' || page === 'productboard' || page === '') {
           return (<>
