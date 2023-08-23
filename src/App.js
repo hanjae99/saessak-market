@@ -1,12 +1,12 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdminPage from "./components/admin/AdminPage";
-import Game from "./components/Game";
-import GameResult from "./components/GameResult";
-import Login from "./components/Login";
-import SingUp from "./components/SingUp";
-import Detail from "./components/Detail";
-import GameModal from "./components/GameModal";
+import Login from "./components/Login/Login";
+import SingUp from "./components/Login/SingUp";
+import Game from "./components/game/Game";
+import GameResult from "./components/game/GameResult";
+import Detail from "./components/detail/Detail";
+import GameModal from "./components/game/GameModal";
 
 const MainPage = () => {
   return (
@@ -19,17 +19,22 @@ const MainPage = () => {
 function App() {
   return (
     <div>
-      {/* <Login />
-      <SingUp /> */}
-      <Game />
+      {/* <Login /> */}
+      {/* <SingUp /> */}
+      {/* <Game /> */}
       {/* <GameResult /> */}
       {/* <Detail /> */}
-      <GameModal />
+      {/* <GameModal /> */}
 
-      {/* <Routes>
-        <Route path="/admin/:page?" element={<AdminPage />} />
-        <Route path="/*" element={<MainPage />} />
-      </Routes> */}
+      <Routes>
+        {/* <Route path="/admin/:page?" element={<AdminPage />} />
+        <Route path="/*" element={<MainPage />} /> */}
+        <Route path="/game" element={<Game />} />
+        <Route path="/gameresult/:finalresult" element={<GameResult />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/singup" element={<SingUp />} />
+      </Routes>
     </div>
   );
 }

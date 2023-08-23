@@ -4,6 +4,7 @@ import productJSON from "./product.json";
 import boardJSON from "./board.json";
 import user from "./userSlice";
 import game from "./gameSlice";
+import score from "./scoreSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -11,12 +12,78 @@ function getRandomDate(start, end) {
   return new Date(startDate + Math.random() * (endDate - startDate));
 }
 
+const userinitialState = [
+  {
+    id: "admin",
+    nickname: "관리자",
+    pwd: "1111",
+    name: "관리자",
+    email: "saessak@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
+  },
+  {
+    id: "koo",
+    nickname: "구상모",
+    pwd: "1111",
+    name: "구상모",
+    email: "koosangmo@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
+  },
+  {
+    id: "jin",
+    nickname: "김진",
+    pwd: "1111",
+    name: "김진",
+    email: "kimjin@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
+  },
+  {
+    id: "kgs",
+    nickname: "김궁서",
+    pwd: "1111",
+    name: "김궁서",
+    email: "kgs@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
+  },
+  {
+    id: "lhj",
+    nickname: "이한재",
+    pwd: "1111",
+    name: "이한재",
+    email: "lhj@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
+  },
+  {
+    id: "psh",
+    nickname: "박상현",
+    pwd: "1111",
+    name: "박상현",
+    email: "psh@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
+  },
+];
+
 let productId = 300000000;
 const product = createSlice({
   name: "product",
   initialState: productJSON.map((p) => ({
     ...p,
-    uptime: getRandomDate(new Date(2023, 8, 10), new Date()),
+    imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
+    imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
+    uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
+    writer: userinitialState[Math.floor(Math.random() * 6)].id,
   })),
   // [{
   //   "id":"101694009",
@@ -37,7 +104,7 @@ const product = createSlice({
         imgsrc1: action.payload.imgsrc1 || "",
         imgsrc2: action.payload.imgsrc2 || "",
         categories: action.payload.categories,
-        uptime: new Date(),
+        uptime: new Date().toUTCString(),
       };
       state.push(tmp);
     },
@@ -66,7 +133,7 @@ const board = createSlice({
   name: "board",
   initialState: boardJSON.map((p) => ({
     ...p,
-    date: getRandomDate(new Date(2023, 8, 10), new Date()),
+    date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
     id: boardtId++,
   })),
   // [
@@ -87,7 +154,7 @@ const board = createSlice({
         content: action.payload.content,
         writer: action.payload.writer,
         clicked: 0,
-        date: new Date(),
+        date: new Date().toUTCString(),
       };
       state.push(tmp);
     },
@@ -105,7 +172,7 @@ const board = createSlice({
     },
     clickedUp: (state, action) => {
       // payload: id
-      state.map((p) =>
+      state = state.map((p) =>
         p.id === action.payload ? { ...p, clicked: p.clicked + 1 } : p
       );
     },
@@ -119,6 +186,7 @@ const store = configureStore({
     product: product.reducer,
     user: user.reducer,
     game: game.reducer,
+    score: score.reducer,
   },
 });
 
