@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const user = createSlice({
   name: "user",
   initialState: [
@@ -11,8 +10,9 @@ const user = createSlice({
       name: "관리자",
       email: "saessak@gmail.com",
       phone: "01011112222",
-      adress: "관악구",
+      address: "관악구",
       gender: "male",
+      userproduct: [],
     },
     {
       id: "koo",
@@ -21,7 +21,7 @@ const user = createSlice({
       name: "구상모",
       email: "koosangmo@gmail.com",
       phone: "01011112222",
-      adress: "관악구",
+      address: "관악구",
       gender: "male",
       userproduct: [
         {
@@ -123,8 +123,9 @@ const user = createSlice({
       name: "김궁서",
       email: "kgs@gmail.com",
       phone: "01011112222",
-      adress: "관악구",
+      address: "관악구",
       gender: "male",
+      userproduct: [],
     },
     {
       id: "lhj",
@@ -133,8 +134,9 @@ const user = createSlice({
       name: "이한재",
       email: "lhj@gmail.com",
       phone: "01011112222",
-      adress: "관악구",
+      address: "관악구",
       gender: "male",
+      userproduct: [],
     },
     {
       id: "psh",
@@ -143,8 +145,9 @@ const user = createSlice({
       name: "박상현",
       email: "psh@gmail.com",
       phone: "01011112222",
-      adress: "관악구",
+      address: "관악구",
       gender: "male",
+      userproduct: [],
     },
   ],
   reducers: {
@@ -166,22 +169,10 @@ const user = createSlice({
         return a.id === action.payload;
       })
       num = state[1].userproduct.indexOf(num)
-      // console.log("1", num);
-      // console.log("2", state[1].userproduct);
       state[1].userproduct.splice(num, 1);
-      // console.log("3", state[1].userproduct);
+     
     },
-    // loginUser: (state, action) => {
-    //   const {id, password} = action.payload;
-
-    //   if(state.find(p => p.id === id).pwd === password){
-    //     state.isLoggedIn = true;
-    //     state.loginMessage = '성공';
-    //   }else{
-    //     state.isLoggedIn = false;
-    //     state.loginMessage = '실패: 비밀번호가 올바르지 않습니다.';
-    //   }
-    // }
+   
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminNav from './AdminNav'
 import AdminCategory from './AdminCategory'
 import AdminModal from './AdminModal'
@@ -10,12 +10,20 @@ const AdminPage = () => {
   let {page} = useParams();
   page = page || '';
   const [selectedCg, setSelectedCg] = useState();
-  const [modalData, setModalData] = useState();
+  const [modalData, setModalData] = useState({
+    att: { style: {}, onClick:()=>{} },
+    children: (
+      <div>
+      </div>
+    )
+  });
+  const [rsl, setRsl] = useState([]);
+  useEffect(()=>{setSelectedCg()},[page])
   return (
     <div className='adminPage'>
       <AdminNav />
       <AdminCategory page={page} setSelectedCg={setSelectedCg} />
-      <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} />
+      <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
       <AdminModal modalData={modalData} />
     </div>
   )
