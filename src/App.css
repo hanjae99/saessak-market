@@ -8,22 +8,6 @@ h2 {
   margin: 0;
 }
 
-.left-menu {
-  width: 20%;
-  background-color: mediumaquamarine;
-  height: 800px;
-  list-style-type: none;
-  list-style-position: inside;
-  float: left;
-  box-sizing: content-box;
-  display: inline-block;
-}
-
-ul > li {
-  list-style-type: none;
-  list-style-position: inside;
-  padding-left: 15px;
-}
 table {
   border-collapse: collapse;
 }
@@ -46,15 +30,16 @@ section {
   display: inline-block;
 }
 
-.select {
-  float: right;
-  margin: 20px 10px 10px 20px;
-}
-.select1 {
+/* .select1 {
   margin-left: 20px;
   display: inline-block;
-}
+} */
 
 .table {
   width: 100%;
+}
+
+.main {
+  width: 80%;
+  margin: 0, auto;
 }
