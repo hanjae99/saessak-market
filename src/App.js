@@ -3,6 +3,7 @@ import "./App.css";
 import AdminPage from "./components/admin/AdminPage";
 import Main from "./components/main/Main";
 import ProductList from "./components/productList/ProductList";
+import AddProduct from "./components/addProduct/AddProduct";
 
 const MainPage = () => {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/admin/:page?" element={<AdminPage />} />
         <Route path="/" element={<Main />} />
         <Route path="/search/:searchItem?" element={<ProductList />} />
+        <Route path="/addproduct" element={<AddProduct />} />
       </Routes>
     </div>
   );

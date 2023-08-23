@@ -1,19 +1,20 @@
-import React, { useCallback } from "react";
-import Header from "../main/Header";
-import Footer from "../main/Footer";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import "./ProductList.css";
-import categoryData from "../../category.json";
-import { MdClose } from "react-icons/md";
 import qs from "qs";
+import React, { useCallback, useEffect, useState } from "react";
+import { MdClose } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import categoryData from "../../category.json";
+import Footer from "../main/Footer";
+import Header from "../main/Header";
+import "./ProductList.css";
 
 const ProductList = () => {
   const { searchItem } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [pageNum, setpageNum] = useState(1);
 
-  // 쿼리스트링 category 번호값만 가져옴
+  // 쿼리스트링 category 번호값, page 번호값 가져옴
   const { category } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
@@ -23,6 +24,19 @@ const ProductList = () => {
   const searchedCate = products.filter(
     (p) => p.categories.split(",").find((ps) => ps === category) === category
   );
+
+  // 페이징 처리(한 페이지당 30개의 상품 노출)
+  const [totalPage, setTotalPage] = useState(0);
+
+  useEffect(() => {
+    if (searchItem) {
+      setTotalPage(Math.ceil(searchedItem.length / 30));
+    } else if (category) {
+      setTotalPage(Math.ceil(searchedCate.length / 30));
+    } else {
+      setTotalPage(Math.ceil(products.length / 30));
+    }
+  }, [searchItem, category, products]);
 
   // category 번호로 category 이름 가져옴
   let categoryName = "";
@@ -34,6 +48,16 @@ const ProductList = () => {
   const removeSearch = useCallback(() => {
     navigate("/search");
   }, [navigate]);
+
+  const prevpage = useCallback(() => {
+    setpageNum(pageNum - 1);
+    window.scrollTo(0, 0);
+  }, [pageNum]);
+
+  const nextpage = useCallback(() => {
+    setpageNum(pageNum + 1);
+    window.scrollTo(0, 0);
+  }, [pageNum]);
 
   return (
     <div>
@@ -122,26 +146,30 @@ const ProductList = () => {
           </div>
           <div className="contents">
             {searchItem
-              ? searchedItem.map((si) => {
-                  return (
-                    <div className="item" key={si.id}>
-                      <img src={si.imgsrc1} alt={si.name} />
-                      <p>{si.name}</p>
-                      <p>{si.price}</p>
-                    </div>
-                  );
-                })
+              ? searchedItem
+                  .slice(30 * (pageNum - 1), 30 * pageNum)
+                  .map((si) => {
+                    return (
+                      <div className="item" key={si.id}>
+                        <img src={si.imgsrc1} alt={si.name} />
+                        <p>{si.name}</p>
+                        <p>{si.price}</p>
+                      </div>
+                    );
+                  })
               : category
-              ? searchedCate.map((sc) => {
-                  return (
-                    <div className="item" key={sc.id}>
-                      <img src={sc.imgsrc1} alt={sc.name} />
-                      <p>{sc.name}</p>
-                      <p>{sc.price}</p>
-                    </div>
-                  );
-                })
-              : products.map((p) => {
+              ? searchedCate
+                  .slice(30 * (pageNum - 1), 30 * pageNum)
+                  .map((sc) => {
+                    return (
+                      <div className="item" key={sc.id}>
+                        <img src={sc.imgsrc1} alt={sc.name} />
+                        <p>{sc.name}</p>
+                        <p>{sc.price}</p>
+                      </div>
+                    );
+                  })
+              : products.slice(30 * (pageNum - 1), 30 * pageNum).map((p) => {
                   return (
                     <div className="item" key={p.id}>
                       <img src={p.imgsrc1} alt={p.name} />
@@ -150,6 +178,14 @@ const ProductList = () => {
                     </div>
                   );
                 })}
+          </div>
+          <div className="moveBtn">
+            <button onClick={prevpage} disabled={pageNum === 1}>
+              이전
+            </button>
+            <button onClick={nextpage} disabled={pageNum === totalPage}>
+              다음
+            </button>
           </div>
         </div>
       </main>
