@@ -1,11 +1,11 @@
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AdminPage from './components/admin/AdminPage';
-import Manu from './components/Manu';
-import Check from './components/Check';
-import Changing from './components/Changing';
-import Changing_pwd from './components/Changing_pwd';
-import Wish_List from './components/Wish_List';
+import Manu from './components/kimjin/Manu';
+import Check from './components//kimjin/Check';
+import Changing from './components//kimjin/Changing';
+import Changing_pwd from './components/kimjin/Changing_pwd';
+import Wish_List from './components//kimjin/Wish_List';
 
 const MainPage = () => {
   return (
