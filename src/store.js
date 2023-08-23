@@ -76,8 +76,14 @@ const userinitialState = [
 
 let productId = 300000000;
 const product = createSlice({
-  name: 'product',
-  initialState: productJSON.map(p=>({...p,imgsrc1:p.imgsrc1==='null'?null:p.imgsrc1,imgsrc2:p.imgsrc2==='null'?null:p.imgsrc2 , uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(), writer:userinitialState[Math.floor(Math.random()*6)]})),
+  name: "product",
+  initialState: productJSON.map((p) => ({
+    ...p,
+    imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
+    imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
+    uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
+    writer: userinitialState[Math.floor(Math.random() * 6)],
+  })),
   // [{
   //   "id":"101694009",
   //   "name":"[미아아트] 아크릴 파도 무드등 20cm",
@@ -87,7 +93,9 @@ const product = createSlice({
   //   "imgsrc2":"https://img2.joongna.com/media/original/2023/03/19/16792128081208OP_1esMU.jpg?impolicy=resizeWatermark3&ftext=cui1209",
   //   "categories":"10,188"}]
   reducers: {
-    add: (state, action) => { // payload: {name, categories [, text, price, imgsrc1, imgsrc2]}
+    add: (state, action) => {
+      // payload: {name, categories [, text, price, imgsrc1, imgsrc2]}
+      console.log(action);
       let tmp = {
         id: productId++,
         name: action.payload.name,
@@ -95,15 +103,19 @@ const product = createSlice({
         text: action.payload.text || "",
         imgsrc1: action.payload.imgsrc1 || "",
         imgsrc2: action.payload.imgsrc2 || "",
+        imgsrc3: action.payload.imgsrc3 || "",
         categories: action.payload.categories,
-        uptime: new Date().toUTCString()
+        wantPlace: action.payload.wantPlace || "",
+        uptime: new Date().toUTCString(),
       };
       state.push(tmp);
     },
-    del: (state, action) => { // payload: id
-      state = state.filter(p => p.id !== action.payload);
+    del: (state, action) => {
+      // payload: id
+      state = state.filter((p) => p.id !== action.payload);
     },
-    fix: (state, action) => { // payload: {id, name [, price, text, imgsrc1, imgsrc2, categories]}
+    fix: (state, action) => {
+      // payload: {id, name [, price, text, imgsrc1, imgsrc2, categories]}
       let tmp = {
         id: action.payload.id,
         name: action.payload.name || "",
@@ -111,17 +123,21 @@ const product = createSlice({
         text: action.payload.text || "",
         imgsrc1: action.payload.imgsrc1 || "",
         imgsrc2: action.payload.imgsrc2 || "",
-        categories: action.payload.categories || ""
+        categories: action.payload.categories || "",
       };
-      state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
-    }
-  }
+      state = state.map((p) => (p.id === tmp.id ? { ...p, ...tmp } : p));
+    },
+  },
 });
 
 let boardtId = 10000;
 const board = createSlice({
-  name: 'board',
-  initialState: boardJSON.map(p=>({...p, date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(), id:boardtId++})),
+  name: "board",
+  initialState: boardJSON.map((p) => ({
+    ...p,
+    date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
+    id: boardtId++,
+  })),
   // [
   //   {
   //     "title": "술안주",
@@ -132,31 +148,43 @@ const board = createSlice({
   //   }
   // ]
   reducers: {
-    add: (state, action) => { // payload: {title, writer, content}
+    add: (state, action) => {
+      // payload: {title, writer, content}
       let tmp = {
         id: boardtId++,
         title: action.payload.title,
         content: action.payload.content,
         writer: action.payload.writer,
         clicked: 0,
-        date: new Date().toUTCString()
+        date: new Date().toUTCString(),
       };
       state.push(tmp);
     },
-    del: (state, action) => { // payload: id
-      state = state.filter(p => p.id !== action.payload);
+    del: (state, action) => {
+      // payload: id
+      state = state.filter((p) => p.id !== action.payload);
     },
-    fix: (state, action) => { // payload: {id, title, content, }
+    fix: (state, action) => {
+      // payload: {id, title, content, }
       let tmp = {
         title: action.payload.title,
         content: action.payload.content,
       };
-      state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
+      state = state.map((p) => (p.id === tmp.id ? { ...p, ...tmp } : p));
     },
-    clickedUp: (state, action) => { // payload: id
-      state = state.map(p=>p.id===action.payload ? {...p, clicked:p.clicked+1} : p);
-    }
-  }
+    clickedUp: (state, action) => {
+      // payload: id
+      state.map((p) =>
+        p.id === action.payload ? { ...p, clicked: p.clicked + 1 } : p
+      );
+    },
+    clickedUp: (state, action) => {
+      // payload: id
+      state = state.map((p) =>
+        p.id === action.payload ? { ...p, clicked: p.clicked + 1 } : p
+      );
+    },
+  },
 });
 
 const store = configureStore({
@@ -165,8 +193,6 @@ const store = configureStore({
     board: board.reducer,
     product: product.reducer,
     user: user.reducer,
-    blacklist: blacklist.reducer
-  }
-})
-
-export default store
+    blacklist: blacklist.reducer,
+  },
+});
