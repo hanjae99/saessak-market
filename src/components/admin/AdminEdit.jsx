@@ -68,13 +68,18 @@ const AdminEdit = ({ page }) => {
   const pitem = useSelector(state => state.adminData.select_pitem);
   const dispatch = useDispatch();
   const onBtnClick = type => {
+    if (type==='clear') {
+      dispatch({type:'adminData/delAllSP'})
+    }
   }
   return (
     <div className='adminEdit'>
       <EditBody page={page} pitem={pitem} />
-      <button style={{ position: 'absolute', left: '10px', top: '-27px' }} onClick={e=>onBtnClick('hidden')} >숨김처리</button>
+      <button style={{ position: 'absolute', left: '0px', top: '-27px' }} onClick={e=>onBtnClick('hidden')} >숨김처리</button>
       <button style={{ position: 'absolute', left: '74px', top: '-27px' }} onClick={e=>onBtnClick('ben')}>숨김+차단</button>
-      <button style={{ position: 'absolute', left: '146px', top: '-27px' }} onClick={e=>onBtnClick('clear')}>비우기</button>
+      <button style={{ position: 'absolute', left: '156px', top: '-27px' }} onClick={e=>onBtnClick('clear')}>비우기</button>
+      <br />
+      <hr />
     </div>
   )
 }

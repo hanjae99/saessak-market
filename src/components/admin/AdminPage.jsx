@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminNav from './AdminNav'
 import AdminCategory from './AdminCategory'
 import AdminModal from './AdminModal'
@@ -18,6 +18,7 @@ const AdminPage = () => {
     )
   });
   const [rsl, setRsl] = useState([]);
+  useEffect(()=>{setSelectedCg()},[page])
   return (
     <div className='adminPage'>
       <AdminNav />

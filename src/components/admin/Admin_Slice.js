@@ -6,10 +6,10 @@ const adminData = createSlice({
   initialState: { 
     select_pitem : [],
     select_bitem : [],
-    startDate : '2023-08-19',
-    endDate : '2023-08-19',
-    startTime : '17:05',
-    endTime : '17:35'
+    startDate : '2023-08-23',
+    endDate : '2023-08-23',
+    startTime : '02:05',
+    endTime : '10:35'
    },
   reducers: {
     addSP : (state, action) => {
@@ -22,7 +22,7 @@ const adminData = createSlice({
       state.select_pitem = [];
     },
     addSB : (state, action) => {
-      state.select_bitem = [...state.select_bitem, action.payload];
+      state.select_bitem.indexOf(action.payload)>=0 ? console.log() : state.select_bitem.push(action.payload);
     },
     delSB : (state, action) => {
       state.select_bitem = state.select_bitem.filter(p => p!==action.payload);

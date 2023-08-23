@@ -1,8 +1,11 @@
-.adminPage, .adminPage * {
+.adminPage,
+.adminPage * {
   padding: 0;
   margin: 0;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   box-sizing: border-box;
+
+  list-style: none;
 }
 
 .adminPage {
@@ -16,6 +19,7 @@
   width: 100%;
   height: 100px;
   position: relative;
+  border-bottom: 1px solid black;
 }
 
 .adminNav a {
@@ -27,29 +31,29 @@
   border: none;
 }
 
-.adminNav > * {
+.adminNav>* {
   position: absolute;
-  list-style: none;
   color: black;
   display: flex;
 }
 
-.adminNav > ul {
+.adminNav>ul {
   bottom: 4px;
   width: 70%;
   right: 5%;
 }
 
-.adminNav > ul > li {
+.adminNav>ul>li {
   margin-left: 5%;
 }
-.adminNav > ul > li > a {
+
+.adminNav>ul>li>a {
   display: block;
   padding: 10px;
   font-size: 1.1rem;
 }
 
-.adminNav > h1 {
+.adminNav>h1 {
   bottom: 10px;
   left: 5%;
 }
@@ -70,10 +74,45 @@
 
 .adminCategory {
   width: 200px;
-  height: calc( 100vh - 120px );
+  height: calc(100vh - 120px);
+  padding: 13px;
+}
+.adminCategory li {
+  cursor: pointer;
+  user-select: none;
 }
 
-.contentBox, .adminModal {
+.adminCategory>div,
+.adminCategory>ul>li {
+  border: 1px solid #ccc;
+  background: #eee;
+}
+
+.adminCategory>ul>li>ul>li {
+  border-top: 1px solid #fff;
+  background: #ccc;
+}
+
+.adminCategory>ul>li>ul>li>ul>li {
+  border-top: 1px solid #ccc;
+  background: #fda;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contentBox,
+.adminModal {
   position: absolute;
 }
 
@@ -84,11 +123,11 @@
 .contentBox {
   top: 100px;
   left: 200px;
-  width: calc( 100% - 200px );
-  height: calc( 100vh - 120px );
+  width: calc(100% - 200px);
+  height: calc(100vh - 120px);
 }
 
-.contentBox > div {
+.contentBox>div {
   position: absolute;
 }
 
@@ -97,6 +136,10 @@
   left: 70px;
   width: 80%;
   height: 100px;
+}
+
+.adminEdit > button {
+  padding: 2px 7px;
 }
 
 .adminViewer {
@@ -115,6 +158,33 @@
   width: 100%;
   height: 85%;
 }
+
+.viewrHead {
+  display: inline-block;
+  position: relative;
+}
+
+.viewrHead > * {
+  margin: 2px 5px;
+}
+.viewrHead > input:last-child {
+  position: absolute;
+  top: 30px;
+}
+
+.viewerBody, .viewerBody>span {
+  padding: 0px 10px 2px;
+  border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
 
 .adminModal {
   position: absolute;
