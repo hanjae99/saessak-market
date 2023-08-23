@@ -3,6 +3,8 @@ import adminData from "./components/admin/Admin_Slice";
 import productJSON from "./product.json";
 import boardJSON from "./board.json";
 import user from "./userSlice";
+import game from "./gameSlice";
+import score from "./scoreSlice";
 import blacklist from "./blackListSlice";
 
 function getRandomDate(start, end) {
@@ -82,7 +84,7 @@ const product = createSlice({
     imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
     imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
     uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
-    writer: userinitialState[Math.floor(Math.random() * 6)],
+    writer: userinitialState[Math.floor(Math.random() * 6)].id,
   })),
   // [{
   //   "id":"101694009",
@@ -95,7 +97,6 @@ const product = createSlice({
   reducers: {
     add: (state, action) => {
       // payload: {name, categories [, text, price, imgsrc1, imgsrc2]}
-      console.log(action);
       let tmp = {
         id: productId++,
         name: action.payload.name,
@@ -193,6 +194,10 @@ const store = configureStore({
     board: board.reducer,
     product: product.reducer,
     user: user.reducer,
+    game: game.reducer,
+    score: score.reducer,
     blacklist: blacklist.reducer,
   },
 });
+
+export default store;
