@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 const ViewerHeader = ({ viewMode, setViewMode }) => {
@@ -56,6 +56,8 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
   const board = useSelector(state => state.board);
   const divRef = useRef();
 
+  console.log(products)
+
   useEffect(()=>{page === 'productboard' || page === '' ? setViewMode({...viewMode, mode:'ImageOnly'}) : setViewMode({...viewMode, mode:'Line'})},[page])
   useEffect(() => { setViewMode({ ...viewMode, viewSize: 1 }) }, [])
   useEffect(() => {
@@ -74,11 +76,11 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
         if (filter.indexOf(',') > 0) {
           let fi = filter.split(',');
           for (let i = 0; i < fi.length; i++) {
-            ary = ary.filter(p => p.name.indexOf(fi[i]) >= 0 || p.text.indexOf(fi[i]) >= 0)
+            ary = ary.filter(p => p.name.indexOf(fi[i]) >= 0 || p.text.indexOf(fi[i]) >= 0 || p.nickname.indexOf(filter) >= 0 )
           }
         }
         else {
-          ary = ary.filter(p => p.name.indexOf(filter) >= 0 || p.text.indexOf(filter) >= 0);
+          ary = ary.filter(p => p.name.indexOf(filter) >= 0 || p.text.indexOf(filter) >= 0 || p.nickname.indexOf(filter) >= 0 );
         }
       }
       if (selectedCg && (page === 'productboard' || page === '')) {
