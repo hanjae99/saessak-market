@@ -43,10 +43,10 @@ const Game = () => {
 
   const onsubmit = useCallback(() => {
     const money = parseInt(
-      game[index].price.replace(",", "").replace("원", "")
+      game[index].price.replaceAll(",", "").replace("원", "")
     );
     console.log("inputprice +" + inputprice);
-    console.log("money" + money);
+    console.log("money : " + money);
     const per10 = Percentage(money, 10);
     const per20 = Percentage(money, 20);
     const per30 = Percentage(money, 30);
@@ -56,10 +56,10 @@ const Game = () => {
     let calc = Math.abs(inputprice - money);
     console.log("calc" + calc);
 
-    // console.log("오십퍼센트" + per50);
-    // console.log("사십퍼센트" + per40);
-    // console.log("삼십퍼센트" + per30);
-    // console.log("이십퍼센트" + per20);
+    console.log("오십퍼센트" + per50);
+    console.log("사십퍼센트" + per40);
+    console.log("삼십퍼센트" + per30);
+    console.log("이십퍼센트" + per20);
 
     if (calc >= per50) {
       setResult(2);
@@ -71,10 +71,12 @@ const Game = () => {
       setResult(8);
     } else if (calc >= per10) {
       setResult(10);
+    } else {
+      setResult(10);
     }
 
     setModalOpen(true);
-  }, [game, index, inputprice, result]);
+  }, [game, index, inputprice]);
   console.log("result :" + result);
 
   useEffect(() => {
@@ -83,7 +85,7 @@ const Game = () => {
       setIndex(9);
       navigate("/gameresult/" + score);
     }
-  }, [score]);
+  }, [index, navigate, score]);
   return (
     <div className="container">
       <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
