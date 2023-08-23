@@ -1,1 +1,823 @@
-[{"categoryno":"1","categoryname":"수입명품","categorypr":"null"},{"categoryno":"10","categoryname":"가구/인테리어","categorypr":"null"},{"categoryno":"1001","categoryname":"구두/로퍼","categorypr":"여성신발"},{"categoryno":"1002","categoryname":"운동화/스니커즈","categorypr":"여성신발"},{"categoryno":"1003","categoryname":"샌들/슬리퍼","categorypr":"여성신발"},{"categoryno":"1005","categoryname":"구두/로퍼","categorypr":"남성신발"},{"categoryno":"1006","categoryname":"운동화/스니커즈","categorypr":"남성신발"},{"categoryno":"1009","categoryname":"숄더백","categorypr":"가방/핸드백"},{"categoryno":"101","categoryname":"여성신발","categorypr":"수입명품"},{"categoryno":"1010","categoryname":"크로스백","categorypr":"가방/핸드백"},{"categoryno":"1011","categoryname":"토트백","categorypr":"가방/핸드백"},{"categoryno":"1014","categoryname":"파우치/클러치백","categorypr":"가방/핸드백"},{"categoryno":"1015","categoryname":"서류가방","categorypr":"가방/핸드백"},{"categoryno":"1017","categoryname":"여성용지갑","categorypr":"지갑/벨트"},{"categoryno":"1018","categoryname":"남성용지갑","categorypr":"지갑/벨트"},{"categoryno":"102","categoryname":"남성신발","categorypr":"수입명품"},{"categoryno":"1021","categoryname":"자켓/코트","categorypr":"여성의류"},{"categoryno":"1022","categoryname":"패딩/야상/점퍼","categorypr":"여성의류"},{"categoryno":"1023","categoryname":"티셔츠/민소매/탑","categorypr":"여성의류"},{"categoryno":"1025","categoryname":"블라우스/남방","categorypr":"여성의류"},{"categoryno":"1026","categoryname":"바지/데님","categorypr":"여성의류"},{"categoryno":"1027","categoryname":"스커트","categorypr":"여성의류"},{"categoryno":"1028","categoryname":"원피스/투피스","categorypr":"여성의류"},{"categoryno":"103","categoryname":"가방/핸드백","categorypr":"수입명품"},{"categoryno":"1030","categoryname":"자켓/코트","categorypr":"남성의류"},{"categoryno":"1031","categoryname":"패딩/야상/점퍼","categorypr":"남성의류"},{"categoryno":"1032","categoryname":"티셔츠/민소매","categorypr":"남성의류"},{"categoryno":"1033","categoryname":"니트/스웨터/가디건","categorypr":"남성의류"},{"categoryno":"1034","categoryname":"셔츠/남방","categorypr":"남성의류"},{"categoryno":"1035","categoryname":"바지/데님","categorypr":"남성의류"},{"categoryno":"1038","categoryname":"모자","categorypr":"패션잡화"},{"categoryno":"104","categoryname":"지갑/벨트","categorypr":"수입명품"},{"categoryno":"1041","categoryname":"머플러/스카프","categorypr":"패션잡화"},{"categoryno":"1042","categoryname":"선글라스/안경","categorypr":"패션잡화"},{"categoryno":"1043","categoryname":"여성용시계","categorypr":"시계/쥬얼리"},{"categoryno":"1044","categoryname":"남성용시계","categorypr":"시계/쥬얼리"},{"categoryno":"1045","categoryname":"반지/목걸이/귀걸이","categorypr":"시계/쥬얼리"},{"categoryno":"1046","categoryname":"팔찌/발찌","categorypr":"시계/쥬얼리"},{"categoryno":"1048","categoryname":"여아동복","categorypr":"유아동"},{"categoryno":"105","categoryname":"여성의류","categorypr":"수입명품"},{"categoryno":"1050","categoryname":"티셔츠/캐쥬얼의류","categorypr":"여성의류"},{"categoryno":"1051","categoryname":"니트/스웨터/가디건","categorypr":"여성의류"},{"categoryno":"1052","categoryname":"원피스/정장","categorypr":"여성의류"},{"categoryno":"1053","categoryname":"블라우스/셔츠/남방","categorypr":"여성의류"},{"categoryno":"1054","categoryname":"조끼/베스트","categorypr":"여성의류"},{"categoryno":"1055","categoryname":"바지/팬츠/청바지","categorypr":"여성의류"},{"categoryno":"1056","categoryname":"스커트/치마","categorypr":"여성의류"},{"categoryno":"1057","categoryname":"자켓/코트","categorypr":"여성의류"},{"categoryno":"1058","categoryname":"패딩/야상/점퍼","categorypr":"여성의류"},{"categoryno":"1059","categoryname":"트레이닝복","categorypr":"여성의류"},{"categoryno":"106","categoryname":"남성의류","categorypr":"수입명품"},{"categoryno":"1060","categoryname":"언더웨어/잠옷","categorypr":"여성의류"},{"categoryno":"1061","categoryname":"파티복/드레스/기타","categorypr":"여성의류"},{"categoryno":"1062","categoryname":"티셔츠/캐쥬얼의류","categorypr":"남성의류"},{"categoryno":"1063","categoryname":"니트/스웨터/가디건","categorypr":"남성의류"},{"categoryno":"1064","categoryname":"정장","categorypr":"남성의류"},{"categoryno":"1066","categoryname":"셔츠/남방","categorypr":"남성의류"},{"categoryno":"1067","categoryname":"바지/팬츠/청바지","categorypr":"남성의류"},{"categoryno":"1068","categoryname":"자켓/코트","categorypr":"남성의류"},{"categoryno":"1069","categoryname":"패딩/야상/점퍼","categorypr":"남성의류"},{"categoryno":"107","categoryname":"패션잡화","categorypr":"수입명품"},{"categoryno":"1070","categoryname":"트레이닝복","categorypr":"남성의류"},{"categoryno":"1072","categoryname":"테마의상/기타","categorypr":"남성의류"},{"categoryno":"108","categoryname":"시계/쥬얼리","categorypr":"수입명품"},{"categoryno":"109","categoryname":"유아동","categorypr":"수입명품"},{"categoryno":"110","categoryname":"기타 수입명품","categorypr":"수입명품"},{"categoryno":"111","categoryname":"여성의류","categorypr":"패션의류"},{"categoryno":"1111","categoryname":"베이스 메이크업","categorypr":"메이크업"},{"categoryno":"1112","categoryname":"아이 메이크업","categorypr":"메이크업"},{"categoryno":"1113","categoryname":"립 메이크업","categorypr":"메이크업"},{"categoryno":"1114","categoryname":"치크/하이라이터/쉐딩","categorypr":"메이크업"},{"categoryno":"112","categoryname":"남성의류","categorypr":"패션의류"},{"categoryno":"1150","categoryname":"삼성","categorypr":"스마트폰"},{"categoryno":"1151","categoryname":"애플","categorypr":"스마트폰"},{"categoryno":"1152","categoryname":"LG","categorypr":"스마트폰"},{"categoryno":"1153","categoryname":"기타 제조사","categorypr":"스마트폰"},{"categoryno":"1154","categoryname":"삼성","categorypr":"태블릿PC"},{"categoryno":"1155","categoryname":"애플","categorypr":"태블릿PC"},{"categoryno":"1193","categoryname":"삼성","categorypr":"노트북/넷북"},{"categoryno":"1194","categoryname":"애플","categorypr":"노트북/넷북"},{"categoryno":"1195","categoryname":"LG","categorypr":"노트북/넷북"},{"categoryno":"1196","categoryname":"기타 제조사","categorypr":"노트북/넷북"},{"categoryno":"1197","categoryname":"일체형PC","categorypr":"데스크탑/본체"},{"categoryno":"1198","categoryname":"브랜드PC","categorypr":"데스크탑/본체"},{"categoryno":"1199","categoryname":"조립PC","categorypr":"데스크탑/본체"},{"categoryno":"12","categoryname":"게임","categorypr":"null"},{"categoryno":"1200","categoryname":"침대/매트리스","categorypr":"침실가구"},{"categoryno":"1202","categoryname":"화장대/협탁/거울","categorypr":"침실가구"},{"categoryno":"1203","categoryname":"소파","categorypr":"거실가구"},{"categoryno":"1204","categoryname":"거실테이블/의자","categorypr":"거실가구"},{"categoryno":"1205","categoryname":"거실장/장식장","categorypr":"거실가구"},{"categoryno":"1206","categoryname":"식탁/식탁의자","categorypr":"주방가구"},{"categoryno":"1207","categoryname":"렌지대/수납장","categorypr":"주방가구"},{"categoryno":"1229","categoryname":"4-7세","categorypr":"유아동도서/음반"},{"categoryno":"1232","categoryname":"그림/놀이/만화책","categorypr":"유아동도서/음반"},{"categoryno":"1233","categoryname":"학습/전집","categorypr":"유아동도서/음반"},{"categoryno":"1234","categoryname":"음반/DVD","categorypr":"유아동도서/음반"},{"categoryno":"1235","categoryname":"학습/참고서","categorypr":"학습/교육"},{"categoryno":"1236","categoryname":"수험서/자격증","categorypr":"학습/교육"},{"categoryno":"1237","categoryname":"컴퓨터/인터넷","categorypr":"학습/교육"},{"categoryno":"124","categoryname":"스킨케어","categorypr":"뷰티"},{"categoryno":"1240","categoryname":"인터넷강의","categorypr":"학습/교육"},{"categoryno":"1244","categoryname":"만화책","categorypr":"소설/만화책"},{"categoryno":"1247","categoryname":"문학도서","categorypr":"문학/과학/경영"},{"categoryno":"125","categoryname":"메이크업","categorypr":"뷰티"},{"categoryno":"1250","categoryname":"CD","categorypr":"음반/DVD/굿즈"},{"categoryno":"1251","categoryname":"DVD","categorypr":"음반/DVD/굿즈"},{"categoryno":"1252","categoryname":"LP/기타음반","categorypr":"음반/DVD/굿즈"},{"categoryno":"1253","categoryname":"스타굿즈","categorypr":"음반/DVD/굿즈"},{"categoryno":"126","categoryname":"팩/클렌징/필링","categorypr":"뷰티"},{"categoryno":"1260","categoryname":"드라이버","categorypr":"골프"},{"categoryno":"1261","categoryname":"우드/유틸리티","categorypr":"골프"},{"categoryno":"1262","categoryname":"아이언","categorypr":"골프"},{"categoryno":"1263","categoryname":"웨지/퍼터","categorypr":"골프"},{"categoryno":"1264","categoryname":"골프백/풀세트","categorypr":"골프"},{"categoryno":"1265","categoryname":"골프의류/골프화","categorypr":"골프"},{"categoryno":"1266","categoryname":"볼/용품/기타","categorypr":"골프"},{"categoryno":"1267","categoryname":"하이브리드/픽시/미니벨로","categorypr":"자전거"},{"categoryno":"1268","categoryname":"로드바이크/사이클","categorypr":"자전거"},{"categoryno":"1269","categoryname":"산악자전거","categorypr":"자전거"},{"categoryno":"127","categoryname":"헤어/바디","categorypr":"뷰티"},{"categoryno":"1270","categoryname":"전기자전거","categorypr":"자전거"},{"categoryno":"1271","categoryname":"유아/아동자전거","categorypr":"자전거"},{"categoryno":"1273","categoryname":"자전거용품","categorypr":"자전거"},{"categoryno":"1275","categoryname":"악세서리/기타용품","categorypr":"자전거"},{"categoryno":"1276","categoryname":"인라인/스케이트용품","categorypr":"인라인/스케이트/전동"},{"categoryno":"1278","categoryname":"전기/전동레저용품","categorypr":"인라인/스케이트/전동"},{"categoryno":"1279","categoryname":"축구의류/축구화","categorypr":"축구"},{"categoryno":"128","categoryname":"향수","categorypr":"뷰티"},{"categoryno":"1281","categoryname":"야구의류/야구화","categorypr":"야구"},{"categoryno":"1283","categoryname":"농구의류/농구화","categorypr":"농구"},{"categoryno":"1285","categoryname":"배드민턴의류/용품","categorypr":"라켓스포츠"},{"categoryno":"1288","categoryname":"탁구의류/용품","categorypr":"라켓스포츠"},{"categoryno":"1289","categoryname":"헬스기구","categorypr":"헬스/요가"},{"categoryno":"129","categoryname":"네일케어","categorypr":"뷰티"},{"categoryno":"1290","categoryname":"헬스용품","categorypr":"헬스/요가"},{"categoryno":"1291","categoryname":"요가/필라테스용품","categorypr":"헬스/요가"},{"categoryno":"1292","categoryname":"보충/보조제","categorypr":"헬스/요가"},{"categoryno":"1293","categoryname":"비키니/여성수영복","categorypr":"수상스포츠"},{"categoryno":"1294","categoryname":"남성수영복","categorypr":"수상스포츠"},{"categoryno":"1295","categoryname":"웨이크바지/래쉬가드","categorypr":"수상스포츠"},{"categoryno":"1296","categoryname":"아동용의류/용품","categorypr":"수상스포츠"},{"categoryno":"1297","categoryname":"스쿠버/다이빙용품","categorypr":"수상스포츠"},{"categoryno":"1298","categoryname":"스키/보드의류","categorypr":"겨울스포츠"},{"categoryno":"130","categoryname":"남성 화장품","categorypr":"뷰티"},{"categoryno":"1302","categoryname":"검도/격투/권투용품","categorypr":"검도/격투/권투"},{"categoryno":"131","categoryname":"가발/기타용품","categorypr":"뷰티"},{"categoryno":"139","categoryname":"스마트폰","categorypr":"모바일/태블릿"},{"categoryno":"14","categoryname":"도서/음반/문구","categorypr":"null"},{"categoryno":"140","categoryname":"태블릿PC","categorypr":"모바일/태블릿"},{"categoryno":"141","categoryname":"스마트워치/밴드","categorypr":"모바일/태블릿"},{"categoryno":"143","categoryname":"케이스/거치대/보호필름","categorypr":"모바일/태블릿"},{"categoryno":"144","categoryname":"배터리/충전기/케이블","categorypr":"모바일/태블릿"},{"categoryno":"145","categoryname":"메모리/젠더/리더기","categorypr":"모바일/태블릿"},{"categoryno":"158","categoryname":"노트북/넷북","categorypr":"노트북/PC"},{"categoryno":"159","categoryname":"데스크탑/본체","categorypr":"노트북/PC"},{"categoryno":"16","categoryname":"스포츠","categorypr":"null"},{"categoryno":"160","categoryname":"모니터","categorypr":"노트북/PC"},{"categoryno":"161","categoryname":"CPU/메인보드","categorypr":"노트북/PC"},{"categoryno":"162","categoryname":"HDD/SSD/ODD","categorypr":"노트북/PC"},{"categoryno":"163","categoryname":"RAM/VGA/SOUND","categorypr":"노트북/PC"},{"categoryno":"165","categoryname":"케이스/파워/쿨러","categorypr":"노트북/PC"},{"categoryno":"166","categoryname":"키보드/마우스/스피커","categorypr":"노트북/PC"},{"categoryno":"167","categoryname":"프린터/복합기/잉크/토너","categorypr":"노트북/PC"},{"categoryno":"169","categoryname":"소프트웨어","categorypr":"노트북/PC"},{"categoryno":"170","categoryname":"기타 주변기기","categorypr":"노트북/PC"},{"categoryno":"180","categoryname":"침실가구","categorypr":"가구/인테리어"},{"categoryno":"181","categoryname":"거실가구","categorypr":"가구/인테리어"},{"categoryno":"182","categoryname":"주방가구","categorypr":"가구/인테리어"},{"categoryno":"183","categoryname":"수납/선반/공간박스","categorypr":"가구/인테리어"},{"categoryno":"184","categoryname":"학생/서재/사무용가구","categorypr":"가구/인테리어"},{"categoryno":"185","categoryname":"기타가구","categorypr":"가구/인테리어"},{"categoryno":"186","categoryname":"침구","categorypr":"가구/인테리어"},{"categoryno":"187","categoryname":"커튼/카페트","categorypr":"가구/인테리어"},{"categoryno":"188","categoryname":"조명/무드등","categorypr":"가구/인테리어"},{"categoryno":"189","categoryname":"인테리어소품","categorypr":"가구/인테리어"},{"categoryno":"193","categoryname":"원예","categorypr":"가구/인테리어"},{"categoryno":"2","categoryname":"패션의류","categorypr":"null"},{"categoryno":"200","categoryname":"PC게임","categorypr":"게임"},{"categoryno":"201","categoryname":"플레이스테이션","categorypr":"게임"},{"categoryno":"202","categoryname":"PSP","categorypr":"게임"},{"categoryno":"203","categoryname":"닌텐도","categorypr":"게임"},{"categoryno":"204","categoryname":"Wii","categorypr":"게임"},{"categoryno":"205","categoryname":"XBOX","categorypr":"게임"},{"categoryno":"206","categoryname":"게임타이틀","categorypr":"게임"},{"categoryno":"207","categoryname":"기타 게임","categorypr":"게임"},{"categoryno":"214","categoryname":"유아동도서/음반","categorypr":"도서/음반/문구"},{"categoryno":"215","categoryname":"학습/교육","categorypr":"도서/음반/문구"},{"categoryno":"216","categoryname":"소설/만화책","categorypr":"도서/음반/문구"},{"categoryno":"218","categoryname":"문학/과학/경영","categorypr":"도서/음반/문구"},{"categoryno":"219","categoryname":"예술/디자인","categorypr":"도서/음반/문구"},{"categoryno":"221","categoryname":"기타 도서","categorypr":"도서/음반/문구"},{"categoryno":"222","categoryname":"음반/DVD/굿즈","categorypr":"도서/음반/문구"},{"categoryno":"223","categoryname":"문구/사무용품","categorypr":"도서/음반/문구"},{"categoryno":"228","categoryname":"골프","categorypr":"스포츠"},{"categoryno":"229","categoryname":"자전거","categorypr":"스포츠"},{"categoryno":"230","categoryname":"인라인/스케이트/전동","categorypr":"스포츠"},{"categoryno":"231","categoryname":"축구","categorypr":"스포츠"},{"categoryno":"232","categoryname":"야구","categorypr":"스포츠"},{"categoryno":"233","categoryname":"농구","categorypr":"스포츠"},{"categoryno":"234","categoryname":"라켓스포츠","categorypr":"스포츠"},{"categoryno":"235","categoryname":"헬스/요가","categorypr":"스포츠"},{"categoryno":"236","categoryname":"수상스포츠","categorypr":"스포츠"},{"categoryno":"237","categoryname":"겨울스포츠","categorypr":"스포츠"},{"categoryno":"238","categoryname":"검도/격투/권투","categorypr":"스포츠"},{"categoryno":"239","categoryname":"기타 스포츠","categorypr":"스포츠"},{"categoryno":"4","categoryname":"뷰티","categorypr":"null"},{"categoryno":"6","categoryname":"모바일/태블릿","categorypr":"null"},{"categoryno":"8","categoryname":"노트북/PC","categorypr":"null"}]
+[
+  { "categoryno": "1", "categoryname": "수입명품", "categorypr": "null" },
+  { "categoryno": "10", "categoryname": "가구/인테리어", "categorypr": "null" },
+  {
+    "categoryno": "1001",
+    "categoryname": "구두/로퍼",
+    "categorypr": "여성신발"
+  },
+  {
+    "categoryno": "1002",
+    "categoryname": "운동화/스니커즈",
+    "categorypr": "여성신발"
+  },
+  {
+    "categoryno": "1003",
+    "categoryname": "샌들/슬리퍼",
+    "categorypr": "여성신발"
+  },
+  {
+    "categoryno": "1005",
+    "categoryname": "구두/로퍼",
+    "categorypr": "남성신발"
+  },
+  {
+    "categoryno": "1006",
+    "categoryname": "운동화/스니커즈",
+    "categorypr": "남성신발"
+  },
+  {
+    "categoryno": "1009",
+    "categoryname": "숄더백",
+    "categorypr": "가방/핸드백"
+  },
+  { "categoryno": "101", "categoryname": "여성신발", "categorypr": "수입명품" },
+  {
+    "categoryno": "1010",
+    "categoryname": "크로스백",
+    "categorypr": "가방/핸드백"
+  },
+  {
+    "categoryno": "1011",
+    "categoryname": "토트백",
+    "categorypr": "가방/핸드백"
+  },
+  {
+    "categoryno": "1014",
+    "categoryname": "파우치/클러치백",
+    "categorypr": "가방/핸드백"
+  },
+  {
+    "categoryno": "1015",
+    "categoryname": "서류가방",
+    "categorypr": "가방/핸드백"
+  },
+  {
+    "categoryno": "1017",
+    "categoryname": "여성용지갑",
+    "categorypr": "지갑/벨트"
+  },
+  {
+    "categoryno": "1018",
+    "categoryname": "남성용지갑",
+    "categorypr": "지갑/벨트"
+  },
+  { "categoryno": "102", "categoryname": "남성신발", "categorypr": "수입명품" },
+  {
+    "categoryno": "1021",
+    "categoryname": "자켓/코트",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1022",
+    "categoryname": "패딩/야상/점퍼",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1023",
+    "categoryname": "티셔츠/민소매/탑",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1025",
+    "categoryname": "블라우스/남방",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1026",
+    "categoryname": "바지/데님",
+    "categorypr": "여성의류"
+  },
+  { "categoryno": "1027", "categoryname": "스커트", "categorypr": "여성의류" },
+  {
+    "categoryno": "1028",
+    "categoryname": "원피스/투피스",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "103",
+    "categoryname": "가방/핸드백",
+    "categorypr": "수입명품"
+  },
+  {
+    "categoryno": "1030",
+    "categoryname": "자켓/코트",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1031",
+    "categoryname": "패딩/야상/점퍼",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1032",
+    "categoryname": "티셔츠/민소매",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1033",
+    "categoryname": "니트/스웨터/가디건",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1034",
+    "categoryname": "셔츠/남방",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1035",
+    "categoryname": "바지/데님",
+    "categorypr": "남성의류"
+  },
+  { "categoryno": "1038", "categoryname": "모자", "categorypr": "패션잡화" },
+  {
+    "categoryno": "104",
+    "categoryname": "지갑/벨트",
+    "categorypr": "수입명품"
+  },
+  {
+    "categoryno": "1041",
+    "categoryname": "머플러/스카프",
+    "categorypr": "패션잡화"
+  },
+  {
+    "categoryno": "1042",
+    "categoryname": "선글라스/안경",
+    "categorypr": "패션잡화"
+  },
+  {
+    "categoryno": "1043",
+    "categoryname": "여성용시계",
+    "categorypr": "시계/쥬얼리"
+  },
+  {
+    "categoryno": "1044",
+    "categoryname": "남성용시계",
+    "categorypr": "시계/쥬얼리"
+  },
+  {
+    "categoryno": "1045",
+    "categoryname": "반지/목걸이/귀걸이",
+    "categorypr": "시계/쥬얼리"
+  },
+  {
+    "categoryno": "1046",
+    "categoryname": "팔찌/발찌",
+    "categorypr": "시계/쥬얼리"
+  },
+  { "categoryno": "1048", "categoryname": "여아동복", "categorypr": "유아동" },
+  { "categoryno": "105", "categoryname": "여성의류", "categorypr": "수입명품" },
+  {
+    "categoryno": "1050",
+    "categoryname": "티셔츠/캐쥬얼의류",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1051",
+    "categoryname": "니트/스웨터/가디건",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1052",
+    "categoryname": "원피스/정장",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1053",
+    "categoryname": "블라우스/셔츠/남방",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1054",
+    "categoryname": "조끼/베스트",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1055",
+    "categoryname": "바지/팬츠/청바지",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1056",
+    "categoryname": "스커트/치마",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1057",
+    "categoryname": "자켓/코트",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1058",
+    "categoryname": "패딩/야상/점퍼",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1059",
+    "categoryname": "트레이닝복",
+    "categorypr": "여성의류"
+  },
+  { "categoryno": "106", "categoryname": "남성의류", "categorypr": "수입명품" },
+  {
+    "categoryno": "1060",
+    "categoryname": "언더웨어/잠옷",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1061",
+    "categoryname": "파티복/드레스/기타",
+    "categorypr": "여성의류"
+  },
+  {
+    "categoryno": "1062",
+    "categoryname": "티셔츠/캐쥬얼의류",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1063",
+    "categoryname": "니트/스웨터/가디건",
+    "categorypr": "남성의류"
+  },
+  { "categoryno": "1064", "categoryname": "정장", "categorypr": "남성의류" },
+  {
+    "categoryno": "1066",
+    "categoryname": "셔츠/남방",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1067",
+    "categoryname": "바지/팬츠/청바지",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1068",
+    "categoryname": "자켓/코트",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1069",
+    "categoryname": "패딩/야상/점퍼",
+    "categorypr": "남성의류"
+  },
+  { "categoryno": "107", "categoryname": "패션잡화", "categorypr": "수입명품" },
+  {
+    "categoryno": "1070",
+    "categoryname": "트레이닝복",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "1072",
+    "categoryname": "테마의상/기타",
+    "categorypr": "남성의류"
+  },
+  {
+    "categoryno": "108",
+    "categoryname": "시계/쥬얼리",
+    "categorypr": "수입명품"
+  },
+  { "categoryno": "109", "categoryname": "유아동", "categorypr": "수입명품" },
+  {
+    "categoryno": "110",
+    "categoryname": "기타 수입명품",
+    "categorypr": "수입명품"
+  },
+  { "categoryno": "111", "categoryname": "여성의류", "categorypr": "패션의류" },
+  {
+    "categoryno": "1111",
+    "categoryname": "베이스 메이크업",
+    "categorypr": "메이크업"
+  },
+  {
+    "categoryno": "1112",
+    "categoryname": "아이 메이크업",
+    "categorypr": "메이크업"
+  },
+  {
+    "categoryno": "1113",
+    "categoryname": "립 메이크업",
+    "categorypr": "메이크업"
+  },
+  {
+    "categoryno": "1114",
+    "categoryname": "치크/하이라이터/쉐딩",
+    "categorypr": "메이크업"
+  },
+  { "categoryno": "112", "categoryname": "남성의류", "categorypr": "패션의류" },
+  { "categoryno": "1150", "categoryname": "삼성", "categorypr": "스마트폰" },
+  { "categoryno": "1151", "categoryname": "애플", "categorypr": "스마트폰" },
+  { "categoryno": "1152", "categoryname": "LG", "categorypr": "스마트폰" },
+  {
+    "categoryno": "1153",
+    "categoryname": "기타 제조사",
+    "categorypr": "스마트폰"
+  },
+  { "categoryno": "1154", "categoryname": "삼성", "categorypr": "태블릿PC" },
+  { "categoryno": "1155", "categoryname": "애플", "categorypr": "태블릿PC" },
+  { "categoryno": "1193", "categoryname": "삼성", "categorypr": "노트북/넷북" },
+  { "categoryno": "1194", "categoryname": "애플", "categorypr": "노트북/넷북" },
+  { "categoryno": "1195", "categoryname": "LG", "categorypr": "노트북/넷북" },
+  {
+    "categoryno": "1196",
+    "categoryname": "기타 제조사",
+    "categorypr": "노트북/넷북"
+  },
+  {
+    "categoryno": "1197",
+    "categoryname": "일체형PC",
+    "categorypr": "데스크탑/본체"
+  },
+  {
+    "categoryno": "1198",
+    "categoryname": "브랜드PC",
+    "categorypr": "데스크탑/본체"
+  },
+  {
+    "categoryno": "1199",
+    "categoryname": "조립PC",
+    "categorypr": "데스크탑/본체"
+  },
+  { "categoryno": "12", "categoryname": "게임", "categorypr": "null" },
+  {
+    "categoryno": "1200",
+    "categoryname": "침대/매트리스",
+    "categorypr": "침실가구"
+  },
+  {
+    "categoryno": "1202",
+    "categoryname": "화장대/협탁/거울",
+    "categorypr": "침실가구"
+  },
+  { "categoryno": "1203", "categoryname": "소파", "categorypr": "거실가구" },
+  {
+    "categoryno": "1204",
+    "categoryname": "거실테이블/의자",
+    "categorypr": "거실가구"
+  },
+  {
+    "categoryno": "1205",
+    "categoryname": "거실장/장식장",
+    "categorypr": "거실가구"
+  },
+  {
+    "categoryno": "1206",
+    "categoryname": "식탁/식탁의자",
+    "categorypr": "주방가구"
+  },
+  {
+    "categoryno": "1207",
+    "categoryname": "렌지대/수납장",
+    "categorypr": "주방가구"
+  },
+  {
+    "categoryno": "1229",
+    "categoryname": "4-7세",
+    "categorypr": "유아동도서/음반"
+  },
+  {
+    "categoryno": "1232",
+    "categoryname": "그림/놀이/만화책",
+    "categorypr": "유아동도서/음반"
+  },
+  {
+    "categoryno": "1233",
+    "categoryname": "학습/전집",
+    "categorypr": "유아동도서/음반"
+  },
+  {
+    "categoryno": "1234",
+    "categoryname": "음반/DVD",
+    "categorypr": "유아동도서/음반"
+  },
+  {
+    "categoryno": "1235",
+    "categoryname": "학습/참고서",
+    "categorypr": "학습/교육"
+  },
+  {
+    "categoryno": "1236",
+    "categoryname": "수험서/자격증",
+    "categorypr": "학습/교육"
+  },
+  {
+    "categoryno": "1237",
+    "categoryname": "컴퓨터/인터넷",
+    "categorypr": "학습/교육"
+  },
+  { "categoryno": "124", "categoryname": "스킨케어", "categorypr": "뷰티" },
+  {
+    "categoryno": "1240",
+    "categoryname": "인터넷강의",
+    "categorypr": "학습/교육"
+  },
+  {
+    "categoryno": "1244",
+    "categoryname": "만화책",
+    "categorypr": "소설/만화책"
+  },
+  {
+    "categoryno": "1247",
+    "categoryname": "문학도서",
+    "categorypr": "문학/과학/경영"
+  },
+  { "categoryno": "125", "categoryname": "메이크업", "categorypr": "뷰티" },
+  { "categoryno": "1250", "categoryname": "CD", "categorypr": "음반/DVD/굿즈" },
+  {
+    "categoryno": "1251",
+    "categoryname": "DVD",
+    "categorypr": "음반/DVD/굿즈"
+  },
+  {
+    "categoryno": "1252",
+    "categoryname": "LP/기타음반",
+    "categorypr": "음반/DVD/굿즈"
+  },
+  {
+    "categoryno": "1253",
+    "categoryname": "스타굿즈",
+    "categorypr": "음반/DVD/굿즈"
+  },
+  {
+    "categoryno": "126",
+    "categoryname": "팩/클렌징/필링",
+    "categorypr": "뷰티"
+  },
+  { "categoryno": "1260", "categoryname": "드라이버", "categorypr": "골프" },
+  {
+    "categoryno": "1261",
+    "categoryname": "우드/유틸리티",
+    "categorypr": "골프"
+  },
+  { "categoryno": "1262", "categoryname": "아이언", "categorypr": "골프" },
+  { "categoryno": "1263", "categoryname": "웨지/퍼터", "categorypr": "골프" },
+  {
+    "categoryno": "1264",
+    "categoryname": "골프백/풀세트",
+    "categorypr": "골프"
+  },
+  {
+    "categoryno": "1265",
+    "categoryname": "골프의류/골프화",
+    "categorypr": "골프"
+  },
+  {
+    "categoryno": "1266",
+    "categoryname": "볼/용품/기타",
+    "categorypr": "골프"
+  },
+  {
+    "categoryno": "1267",
+    "categoryname": "하이브리드/픽시/미니벨로",
+    "categorypr": "자전거"
+  },
+  {
+    "categoryno": "1268",
+    "categoryname": "로드바이크/사이클",
+    "categorypr": "자전거"
+  },
+  {
+    "categoryno": "1269",
+    "categoryname": "산악자전거",
+    "categorypr": "자전거"
+  },
+  { "categoryno": "127", "categoryname": "헤어/바디", "categorypr": "뷰티" },
+  {
+    "categoryno": "1270",
+    "categoryname": "전기자전거",
+    "categorypr": "자전거"
+  },
+  {
+    "categoryno": "1271",
+    "categoryname": "유아/아동자전거",
+    "categorypr": "자전거"
+  },
+  {
+    "categoryno": "1273",
+    "categoryname": "자전거용품",
+    "categorypr": "자전거"
+  },
+  {
+    "categoryno": "1275",
+    "categoryname": "악세서리/기타용품",
+    "categorypr": "자전거"
+  },
+  {
+    "categoryno": "1276",
+    "categoryname": "인라인/스케이트용품",
+    "categorypr": "인라인/스케이트/전동"
+  },
+  {
+    "categoryno": "1278",
+    "categoryname": "전기/전동레저용품",
+    "categorypr": "인라인/스케이트/전동"
+  },
+  {
+    "categoryno": "1279",
+    "categoryname": "축구의류/축구화",
+    "categorypr": "축구"
+  },
+  { "categoryno": "128", "categoryname": "향수", "categorypr": "뷰티" },
+  {
+    "categoryno": "1281",
+    "categoryname": "야구의류/야구화",
+    "categorypr": "야구"
+  },
+  {
+    "categoryno": "1283",
+    "categoryname": "농구의류/농구화",
+    "categorypr": "농구"
+  },
+  {
+    "categoryno": "1285",
+    "categoryname": "배드민턴의류/용품",
+    "categorypr": "라켓스포츠"
+  },
+  {
+    "categoryno": "1288",
+    "categoryname": "탁구의류/용품",
+    "categorypr": "라켓스포츠"
+  },
+  {
+    "categoryno": "1289",
+    "categoryname": "헬스기구",
+    "categorypr": "헬스/요가"
+  },
+  { "categoryno": "129", "categoryname": "네일케어", "categorypr": "뷰티" },
+  {
+    "categoryno": "1290",
+    "categoryname": "헬스용품",
+    "categorypr": "헬스/요가"
+  },
+  {
+    "categoryno": "1291",
+    "categoryname": "요가/필라테스용품",
+    "categorypr": "헬스/요가"
+  },
+  {
+    "categoryno": "1292",
+    "categoryname": "보충/보조제",
+    "categorypr": "헬스/요가"
+  },
+  {
+    "categoryno": "1293",
+    "categoryname": "비키니/여성수영복",
+    "categorypr": "수상스포츠"
+  },
+  {
+    "categoryno": "1294",
+    "categoryname": "남성수영복",
+    "categorypr": "수상스포츠"
+  },
+  {
+    "categoryno": "1295",
+    "categoryname": "웨이크바지/래쉬가드",
+    "categorypr": "수상스포츠"
+  },
+  {
+    "categoryno": "1296",
+    "categoryname": "아동용의류/용품",
+    "categorypr": "수상스포츠"
+  },
+  {
+    "categoryno": "1297",
+    "categoryname": "스쿠버/다이빙용품",
+    "categorypr": "수상스포츠"
+  },
+  {
+    "categoryno": "1298",
+    "categoryname": "스키/보드의류",
+    "categorypr": "겨울스포츠"
+  },
+  { "categoryno": "130", "categoryname": "남성 화장품", "categorypr": "뷰티" },
+  {
+    "categoryno": "1302",
+    "categoryname": "검도/격투/권투용품",
+    "categorypr": "검도/격투/권투"
+  },
+  {
+    "categoryno": "131",
+    "categoryname": "가발/기타용품",
+    "categorypr": "뷰티"
+  },
+  {
+    "categoryno": "139",
+    "categoryname": "스마트폰",
+    "categorypr": "모바일/태블릿"
+  },
+  {
+    "categoryno": "14",
+    "categoryname": "도서/음반/문구",
+    "categorypr": "null"
+  },
+  {
+    "categoryno": "140",
+    "categoryname": "태블릿PC",
+    "categorypr": "모바일/태블릿"
+  },
+  {
+    "categoryno": "141",
+    "categoryname": "스마트워치/밴드",
+    "categorypr": "모바일/태블릿"
+  },
+  {
+    "categoryno": "143",
+    "categoryname": "케이스/거치대/보호필름",
+    "categorypr": "모바일/태블릿"
+  },
+  {
+    "categoryno": "144",
+    "categoryname": "배터리/충전기/케이블",
+    "categorypr": "모바일/태블릿"
+  },
+  {
+    "categoryno": "145",
+    "categoryname": "메모리/젠더/리더기",
+    "categorypr": "모바일/태블릿"
+  },
+  {
+    "categoryno": "158",
+    "categoryname": "노트북/넷북",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "159",
+    "categoryname": "데스크탑/본체",
+    "categorypr": "노트북/PC"
+  },
+  { "categoryno": "16", "categoryname": "스포츠", "categorypr": "null" },
+  { "categoryno": "160", "categoryname": "모니터", "categorypr": "노트북/PC" },
+  {
+    "categoryno": "161",
+    "categoryname": "CPU/메인보드",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "162",
+    "categoryname": "HDD/SSD/ODD",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "163",
+    "categoryname": "RAM/VGA/SOUND",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "165",
+    "categoryname": "케이스/파워/쿨러",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "166",
+    "categoryname": "키보드/마우스/스피커",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "167",
+    "categoryname": "프린터/복합기/잉크/토너",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "169",
+    "categoryname": "소프트웨어",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "170",
+    "categoryname": "기타 주변기기",
+    "categorypr": "노트북/PC"
+  },
+  {
+    "categoryno": "180",
+    "categoryname": "침실가구",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "181",
+    "categoryname": "거실가구",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "182",
+    "categoryname": "주방가구",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "183",
+    "categoryname": "수납/선반/공간박스",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "184",
+    "categoryname": "학생/서재/사무용가구",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "185",
+    "categoryname": "기타가구",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "186",
+    "categoryname": "침구",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "187",
+    "categoryname": "커튼/카페트",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "188",
+    "categoryname": "조명/무드등",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "189",
+    "categoryname": "인테리어소품",
+    "categorypr": "가구/인테리어"
+  },
+  {
+    "categoryno": "193",
+    "categoryname": "원예",
+    "categorypr": "가구/인테리어"
+  },
+  { "categoryno": "2", "categoryname": "패션의류", "categorypr": "null" },
+  { "categoryno": "200", "categoryname": "PC게임", "categorypr": "게임" },
+  {
+    "categoryno": "201",
+    "categoryname": "플레이스테이션",
+    "categorypr": "게임"
+  },
+  { "categoryno": "202", "categoryname": "PSP", "categorypr": "게임" },
+  { "categoryno": "203", "categoryname": "닌텐도", "categorypr": "게임" },
+  { "categoryno": "204", "categoryname": "Wii", "categorypr": "게임" },
+  { "categoryno": "205", "categoryname": "XBOX", "categorypr": "게임" },
+  { "categoryno": "206", "categoryname": "게임타이틀", "categorypr": "게임" },
+  { "categoryno": "207", "categoryname": "기타 게임", "categorypr": "게임" },
+  {
+    "categoryno": "214",
+    "categoryname": "유아동도서/음반",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "215",
+    "categoryname": "학습/교육",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "216",
+    "categoryname": "소설/만화책",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "218",
+    "categoryname": "문학/과학/경영",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "219",
+    "categoryname": "예술/디자인",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "221",
+    "categoryname": "기타 도서",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "222",
+    "categoryname": "음반/DVD/굿즈",
+    "categorypr": "도서/음반/문구"
+  },
+  {
+    "categoryno": "223",
+    "categoryname": "문구/사무용품",
+    "categorypr": "도서/음반/문구"
+  },
+  { "categoryno": "228", "categoryname": "골프", "categorypr": "스포츠" },
+  { "categoryno": "229", "categoryname": "자전거", "categorypr": "스포츠" },
+  {
+    "categoryno": "230",
+    "categoryname": "인라인/스케이트/전동",
+    "categorypr": "스포츠"
+  },
+  { "categoryno": "231", "categoryname": "축구", "categorypr": "스포츠" },
+  { "categoryno": "232", "categoryname": "야구", "categorypr": "스포츠" },
+  { "categoryno": "233", "categoryname": "농구", "categorypr": "스포츠" },
+  { "categoryno": "234", "categoryname": "라켓스포츠", "categorypr": "스포츠" },
+  { "categoryno": "235", "categoryname": "헬스/요가", "categorypr": "스포츠" },
+  { "categoryno": "236", "categoryname": "수상스포츠", "categorypr": "스포츠" },
+  { "categoryno": "237", "categoryname": "겨울스포츠", "categorypr": "스포츠" },
+  {
+    "categoryno": "238",
+    "categoryname": "검도/격투/권투",
+    "categorypr": "스포츠"
+  },
+  {
+    "categoryno": "239",
+    "categoryname": "기타 스포츠",
+    "categorypr": "스포츠"
+  },
+  { "categoryno": "4", "categoryname": "뷰티", "categorypr": "null" },
+  { "categoryno": "6", "categoryname": "모바일/태블릿", "categorypr": "null" },
+  { "categoryno": "8", "categoryname": "노트북/PC", "categorypr": "null" }
+]
