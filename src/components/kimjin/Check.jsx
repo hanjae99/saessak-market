@@ -48,7 +48,7 @@ const Check = () => {
                   <div className="manu-2-1-1">
                     <span className="section-title">회원정보</span>
                   </div>
-                  <tbody>
+                  <tbody className='tbody-1'>
                     {
                       users[1].userproduct.map((a, i) =>
                         <div key={i}>
