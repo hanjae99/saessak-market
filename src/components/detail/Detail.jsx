@@ -9,8 +9,14 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const item = product.find((p) => p.id === id);
   const userproduct = useSelector((state) => state.user[1].userproduct);
-  const itemcate = product.find((i) => i.categories === item.categories);
-  const recomends = product.filter((j) => j.categories === itemcate.categories);
+  const itemcate = product.find((i) => {
+    console.log("item", item);
+    console.log(i);
+    return i.categories && i.categories === item.categories;
+  });
+  const recomends = product.filter(
+    (j) => j.categories && j.categories === itemcate.categories
+  );
 
   console.log("item :" + item.categories);
   console.log("itemcate:" + itemcate);

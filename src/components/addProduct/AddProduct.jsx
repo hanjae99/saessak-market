@@ -8,14 +8,13 @@ const AddProduct = () => {
   const [imgSrc, setImgSrc] = useState([]);
   const [imgCount, setImgCount] = useState(0);
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.product.value);
+  const state = useSelector((state) => state.product);
   console.log(state);
 
   const getImgSrc = (e) => {
     const file = e.target.files[0];
     const fileSrc = URL.createObjectURL(file);
     const newImgSrc = [...imgSrc, fileSrc];
-    console.log(newImgSrc);
     setImgSrc(newImgSrc);
     setImgCount(imgCount + 1);
   };

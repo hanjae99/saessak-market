@@ -11,15 +11,16 @@ header {
 
 .headContent {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 25% 50% 25%;
   width: 80%;
   height: 80px;
   margin: 0 auto;
 }
 .logo {
   height: 90px;
-  text-align: center;
   display: flex;
+  text-align: center;
+  align-items: center;
 }
 
 .logo img {
@@ -27,11 +28,14 @@ header {
 }
 
 .logo div {
-  font-family: "Bagel Fat One", cursive;
-  font-family: "Gaegu", cursive;
   font-size: 2rem;
   line-height: 90px;
   margin-left: 20px;
+  min-width: 120px;
+}
+
+.logo-text {
+  font-family: "Gaegu", cursive;
 }
 
 .logo div a:link {

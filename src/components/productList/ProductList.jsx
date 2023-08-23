@@ -22,7 +22,9 @@ const ProductList = () => {
   const products = useSelector((state) => state.product);
   const searchedItem = products.filter((p) => p.name.includes(searchItem));
   const searchedCate = products.filter(
-    (p) => p.categories.split(",").find((ps) => ps === category) === category
+    (p) =>
+      p.categories &&
+      p.categories.split(",").find((ps) => ps === category) === category
   );
 
   // 페이징 처리(한 페이지당 30개의 상품 노출)
@@ -150,7 +152,13 @@ const ProductList = () => {
                   .slice(30 * (pageNum - 1), 30 * pageNum)
                   .map((si) => {
                     return (
-                      <div className="item" key={si.id}>
+                      <div
+                        className="item-product"
+                        key={si.id}
+                        onClick={() => {
+                          navigate("/detail/" + si.id);
+                        }}
+                      >
                         <img src={si.imgsrc1} alt={si.name} />
                         <p>{si.name}</p>
                         <p>{si.price}</p>
@@ -162,7 +170,13 @@ const ProductList = () => {
                   .slice(30 * (pageNum - 1), 30 * pageNum)
                   .map((sc) => {
                     return (
-                      <div className="item" key={sc.id}>
+                      <div
+                        className="item-product"
+                        key={sc.id}
+                        onClick={() => {
+                          navigate("/detail/" + sc.id);
+                        }}
+                      >
                         <img src={sc.imgsrc1} alt={sc.name} />
                         <p>{sc.name}</p>
                         <p>{sc.price}</p>
@@ -171,7 +185,13 @@ const ProductList = () => {
                   })
               : products.slice(30 * (pageNum - 1), 30 * pageNum).map((p) => {
                   return (
-                    <div className="item" key={p.id}>
+                    <div
+                      className="item-product"
+                      key={p.id}
+                      onClick={() => {
+                        navigate("/detail/" + p.id);
+                      }}
+                    >
                       <img src={p.imgsrc1} alt={p.name} />
                       <p>{p.name}</p>
                       <p>{p.price}</p>
