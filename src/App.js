@@ -7,6 +7,9 @@ import Game from "./components/game/Game";
 import GameResult from "./components/game/GameResult";
 import Detail from "./components/detail/Detail";
 import GameModal from "./components/game/GameModal";
+import Main from "./components/main/Main";
+import ProductList from "./components/productList/ProductList";
+import AddProduct from "./components/addProduct/AddProduct";
 
 const MainPage = () => {
   return (
@@ -19,16 +22,11 @@ const MainPage = () => {
 function App() {
   return (
     <div>
-      {/* <Login /> */}
-      {/* <SingUp /> */}
-      {/* <Game /> */}
-      {/* <GameResult /> */}
-      {/* <Detail /> */}
-      {/* <GameModal /> */}
-
       <Routes>
-        {/* <Route path="/admin/:page?" element={<AdminPage />} />
-        <Route path="/*" element={<MainPage />} /> */}
+        <Route path="/admin/:page?" element={<AdminPage />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/search/:searchItem?" element={<ProductList />} />
+        <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/game" element={<Game />} />
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />

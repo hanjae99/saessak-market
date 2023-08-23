@@ -5,6 +5,7 @@ import boardJSON from "./board.json";
 import user from "./userSlice";
 import game from "./gameSlice";
 import score from "./scoreSlice";
+import blacklist from "./blackListSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -103,7 +104,9 @@ const product = createSlice({
         text: action.payload.text || "",
         imgsrc1: action.payload.imgsrc1 || "",
         imgsrc2: action.payload.imgsrc2 || "",
+        imgsrc3: action.payload.imgsrc3 || "",
         categories: action.payload.categories,
+        wantPlace: action.payload.wantPlace || "",
         uptime: new Date().toUTCString(),
       };
       state.push(tmp);
@@ -172,6 +175,12 @@ const board = createSlice({
     },
     clickedUp: (state, action) => {
       // payload: id
+      state.map((p) =>
+        p.id === action.payload ? { ...p, clicked: p.clicked + 1 } : p
+      );
+    },
+    clickedUp: (state, action) => {
+      // payload: id
       state = state.map((p) =>
         p.id === action.payload ? { ...p, clicked: p.clicked + 1 } : p
       );
@@ -187,6 +196,7 @@ const store = configureStore({
     user: user.reducer,
     game: game.reducer,
     score: score.reducer,
+    blacklist: blacklist.reducer,
   },
 });
 
