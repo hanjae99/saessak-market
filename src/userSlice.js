@@ -76,9 +76,45 @@ const user = createSlice({
       name: "김진",
       email: "kimjin@gmail.com",
       phone: "01011112222",
-      address: "관악구",
+      adress: "관악구",
       gender: "male",
-      userproduct: [],
+      userproduct:[{
+        "id": "126230110",
+        "name": "플랫퍼 밴딩 점프슈트 하늘색(새제품,새상품)",
+        "price": "36,000원",
+        "text": "플랫퍼에서 파는 점프슈트 새상품 입니다. 플랫퍼 점프슈트 하늘색 44-77 사이즈 가능 [상세 참고] https://m.flatper.co.kr/product/%EB%AC%B4%EB%A3%8C%EB%B0%B0%EC%86%A1%EC%A0%A4%EB%A6%AC-%EB%B8%8C%EC%9D%B4%EB%84%A5-%EB%82%A0%EA%B0%9C-%EB%B0%B4%EB%94%A9-%EB%A7%A5%EC%8B%9C-%EB%A1%B1-%EC%A0%90%ED%94%84%EC%88%98%ED%8A%B8-5color/6149/category/108/display/1/",
+        "imgsrc1": "https://img2.joongna.com/media/original/2023/08/10/1691633997858OdO_h5CxL.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "imgsrc2": "https://img2.joongna.com/media/original/2023/08/10/1691633997858sSw_OY6df.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "categories": "1055,111,2"
+      },
+      {
+        "id": "126230291",
+        "name": "츄룸 쉬폰 오프숄더 블라우스(새상품, 새제품)",
+        "price": "27,000원",
+        "text": "새제품입니다 -> 연핑크, 그레이, 브라운, 아이보리 있어요 [상세 참고] https://m.smartstore.naver.com/_churoom_/products/8778246023",
+        "imgsrc1": "https://img2.joongna.com/media/original/2023/08/10/1691634090639SxP_nDfOG.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "imgsrc2": "https://img2.joongna.com/media/original/2023/08/10/1691634090640JB5_vBrbQ.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "categories": "1053,111,2"
+      },
+      {
+        "id": "126230514",
+        "name": "프릴 블라우스(새제품) - 화이트, 핑크",
+        "price": "24,000원",
+        "text": "프릴 디테일이 예쁜 블라에요~ 저렴이 아닙니당 원가에 팔아요 화이트, 핑크 두컬러 다있어요 [상세 참고] https://m.smartstore.naver.com/alldaymay/products/8528348127?NaPm=ct%3Dllk44wnk%7Cci%3D537d9db4cc25324d43f5fc130de38c3682d6154b%7Ctr%3Dslsl%7Csn%3D637627%7Chk%3D13465e1912b528b7c1a05806144cde0ffdbc57c1",
+        "imgsrc1": "https://img2.joongna.com/media/original/2023/08/10/1691634158885hED_upIIZ.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "imgsrc2": "https://img2.joongna.com/media/original/2023/08/10/1691634158886BqC_Bz3bu.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "categories": "1053,111,2"
+      },
+      {
+        "id": "126230679",
+        "name": "프릴 블라우스(새제품) - 화이트, 핑크",
+        "price": "24,000원",
+        "text": "프릴 디테일이 예쁜 블라에요~ 저렴이 아닙니당 원가에 팔아요 화이트, 핑크 두컬러 다있어요 [상세 참고] https://m.smartstore.naver.com/alldaymay/products/8528348127?NaPm=ct%3Dllk44wnk%7Cci%3D537d9db4cc25324d43f5fc130de38c3682d6154b%7Ctr%3Dslsl%7Csn%3D637627%7Chk%3D13465e1912b528b7c1a05806144cde0ffdbc57c1",
+        "imgsrc1": "https://img2.joongna.com/media/original/2023/08/10/1691634224771CWH_jf1DL.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "imgsrc2": "https://img2.joongna.com/media/original/2023/08/10/1691634224772mFb_UrTsI.jpg?impolicy=resizeWatermark3&ftext=밀키찡",
+        "categories": "1053,111,2"
+      },
+    ],
     },
     {
       id: "kgs",
@@ -124,20 +160,22 @@ const user = createSlice({
       state = state.filter((e) => action.payload !== e.id);
     },
     update: (state, action) => {
-      let newstate = {
-        //payload: {name, nickname, pwd,email,phone,address}
-        name: action.payload.name,
-        nickname: action.payload.nickname,
-        pwd: action.payload.pwd,
-        email: action.payload.email,
-        phone: action.payload.phone,
-        address: action.payload.address,
-      };
-      state = state.map((p) =>
-        p.id === newstate.id ? { ...p, ...newstate } : p
-      );
+      console.log("hi", action.payload);
+      state.forEach((p, i) => p.id === action.payload.id ? state[i] = action.payload : "")
     },
+    deleteItem(state, action){
+      console.log(state);
+      let num = state[1].userproduct.find((a) => {
+        return a.id === action.payload;
+      })
+      num = state[1].userproduct.indexOf(num)
+      state[1].userproduct.splice(num, 1);
+     
+    },
+   
   },
 });
+
+export let {deleteItem} = user.actions;
 
 export default user;

@@ -14,11 +14,17 @@ import CreateNotice from './components/board/CreateNotice';
 import CreateVoice from './components/board/CreateVoice';
 import { useState } from 'react';
 import BoardInfo from './components/board/BoardInfo';
+import Manu from './components/kimjin/Manu';
+import Check from './components//kimjin/Check';
+import Changing from './components//kimjin/Changing';
+import Changing_pwd from './components/kimjin/Changing_pwd';
+import Wish_List from './components//kimjin/Wish_List';
 
 const MainPage = () => {
   return (
     <div>
       <NavLink to="/admin">관리자페이지</NavLink>
+      <NavLink to='/user/mypage'>마이페이지</NavLink>
     </div>
   );
 };
@@ -40,6 +46,11 @@ function App() {
         <Route path="/boardmain" element={<BoardMain page={page} />} />
         <Route path="/boardwrite" element={<CreateNotice />} />
         <Route path="/boardmain/1" element={<CreateVoice page={page} />} />
+        <Route path='/user/mypage' element={<Manu />}></Route>
+        <Route path='/user/check' element={<Check />}></Route>
+        <Route path='/user/changing' element={<Changing/>}></Route>
+        <Route path='/user/changingpwd' element={<Changing_pwd/>}></Route>
+        <Route path='/user/wishlist' element={<Wish_List/>}></Route>
       </Routes>
     </div>
   );
