@@ -1,0 +1,15 @@
+footer {
+  margin-top: 20vh;
+}
+.footerBox {
+  background-color: rgb(199, 138, 67);
+}
+.footerName {
+  font-family: "Bagel Fat One", cursive;
+  font-family: "Gaegu", cursive;
+  font-size: 2rem;
+}
+
+.footerDesc {
+  font-size: 0.9rem;
+}

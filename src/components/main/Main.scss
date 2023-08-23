@@ -1,0 +1,95 @@
+* {
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+main {
+  padding-top: 180px;
+}
+
+#mainContainer {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20vh;
+}
+
+// 요즘뜨는상품 스타일
+#hotItemContainer {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px 20px;
+}
+
+.hotItem {
+  background-color: #ccc;
+  border-radius: 5px;
+  width: 100%;
+  height: 27vh;
+  text-align: center;
+  line-height: 27vh;
+  font-size: 1.7rem;
+  color: white;
+  font-weight: 600;
+  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0),
+    0px -1px rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.menu2 {
+  margin-top: 20vh;
+}
+
+@mixin item($url: url) {
+  background-image: url($url);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.item1 {
+  @include item($url: "../../img/notebook.png");
+}
+
+.item2 {
+  @include item($url: "../../img/earphone.png");
+}
+.item3 {
+  @include item($url: "../../img/cpu.png");
+}
+.item4 {
+  @include item($url: "../../img/nintendo.png");
+}
+.item5 {
+  @include item($url: "../../img/iphone.png");
+}
+.item6 {
+  @include item($url: "../../img/bag.png");
+}
+.item7 {
+  @include item($url: "../../img/ipad.png");
+}
+.item8 {
+  @include item($url: "../../img/converse.png");
+}
+
+.menu3 {
+  margin-top: 20vh;
+}
+
+.newProductContainer {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.newItem {
+  width: 1fr;
+  padding-left: 20px;
+}
+
+.newItem > img {
+  width: 100%;
+  height: 25vh;
+}

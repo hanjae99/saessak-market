@@ -1,0 +1,28 @@
+/* * {
+  text-align: center;
+  margin: 0 auto;
+} */
+.container1 {
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: bold;
+}
+.imgBoxs {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.products {
+  width: 100%;
+}
+.img1 {
+  width: 200px;
+  height: 200px;
+}
+.text1 > p {
+  text-align: center;
+}

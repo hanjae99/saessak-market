@@ -19,13 +19,13 @@ const NavItem = () => {
   )
 }
 
-const AdminNav = () => {
+const AdminNav = React.memo(() => {
   return (
     <div className='adminNav'>
       <Logo />
       <NavItem />
     </div>
   )
-}
+}) 
 
 export default AdminNav

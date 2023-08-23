@@ -1,0 +1,96 @@
+.addProductContainer {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.imgUploadBox {
+  display: flex;
+  align-items: center;
+}
+
+.labelButton {
+  line-height: 200px;
+  text-align: center;
+  background-color: #ccc;
+  border-radius: 10px;
+  margin-right: 20px;
+  width: 200px;
+  height: 200px;
+  font-size: 0.8rem;
+}
+
+.labelButton > label {
+  display: block;
+  cursor: pointer;
+}
+
+.labelButton:hover {
+  background-color: rgba(109, 200, 42, 0.7);
+  transition: all 0.5s;
+}
+
+.imgUploadBox input {
+  visibility: hidden;
+}
+
+.imgItem {
+  width: 250px;
+  height: 250px;
+  border: 1px solid black;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+.addContents {
+  padding-left: 10vw;
+  margin-top: 10vh;
+  position: relative;
+}
+
+.addContents > form > div {
+  margin-bottom: 30px;
+}
+
+.addName > input {
+  width: 40%;
+  height: 40px;
+  padding: 10px;
+}
+
+.addPrice > input {
+  width: 40%;
+  height: 40px;
+  padding: 10px;
+}
+
+.addLocal > input {
+  width: 40%;
+  height: 40px;
+  padding: 10px;
+}
+
+.addText > textarea {
+  width: 80%;
+  height: 200px;
+  padding: 10px;
+}
+
+.submitBtn {
+  position: absolute;
+  right: 20%;
+}
+
+.submitBtn > button {
+  width: 100px;
+  height: 50px;
+  margin-left: 20px;
+  background-color: rgb(145, 63, 63);
+  border: none;
+  border-radius: 10px;
+  color: white;
+}
+
+.submitBtn > button:hover {
+  background-color: rgba(109, 200, 42, 0.7);
+  transition: all 0.5s;
+}
