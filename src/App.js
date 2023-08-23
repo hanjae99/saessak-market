@@ -1,5 +1,4 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
-import './App.css';
 import AdminPage from './components/admin/AdminPage';
 import Login from './components/Login/Login';
 import SingUp from './components/Login/SingUp';
