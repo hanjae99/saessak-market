@@ -1,0 +1,18 @@
+.container {
+  width: 80%;
+}
+.contentsBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.imgBox {
+  background-color: aquamarine;
+  width: 50%;
+  height: 500px;
+}
+
+.products {
+  width: 49%;
+  height: 500px;
+}
