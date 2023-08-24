@@ -117,7 +117,12 @@ const CarouselBox = () => {
       <div className="slide-textBox">
         <p className="slide-text">{s.name}</p>
         <p className="slide-text">{s.price}</p>
-        <p className="slide-text">{s.uptimeminutes}분전</p>
+        <p className="slide-text">
+          {Math.floor(
+            (new Date().getTime() - Date.parse(s.uptime)) / 1000 / 60
+          )}
+          분전
+        </p>
       </div>
     </div>
   ));

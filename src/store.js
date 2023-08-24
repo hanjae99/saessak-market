@@ -13,12 +13,6 @@ function getRandomDate(start, end) {
   return new Date(startDate + Math.random() * (endDate - startDate));
 }
 
-function getRandomMinutes(start, end) {
-  const randomDateTime = getRandomDate(start, end).getTime();
-  const now = new Date().getTime();
-  return Math.floor((now - randomDateTime) / 1000 / 60);
-}
-
 const userinitialState = [
   {
     id: "admin",
@@ -90,11 +84,10 @@ const product = createSlice({
       ...p,
       imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
       imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
-      uptime: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
-      uptimeminutes: getRandomMinutes(new Date(2023, 7, 10), new Date()),
+      uptime: getRandomDate(new Date(2023, 7, 20), new Date()).toUTCString(),
       writer: userinitialState[Math.floor(Math.random() * 5) + 1].nickname,
     }))
-    .sort((a, b) => (a.uptimeminutes > b.uptimeminutes ? 1 : -1)),
+    .sort((a, b) => (Date.parse(a.uptime) < Date.parse(b.uptime) ? 1 : -1)),
   // [{
   //   "id":"101694009",
   //   "name":"[미아아트] 아크릴 파도 무드등 20cm",
@@ -118,7 +111,7 @@ const product = createSlice({
         wantPlace: action.payload.wantPlace || "",
         uptime: new Date().toUTCString(),
       };
-      state.push(tmp);
+      state.unshift(tmp);
     },
     del: (state, action) => {
       // payload: id

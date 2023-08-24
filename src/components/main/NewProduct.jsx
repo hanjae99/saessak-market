@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const NewProduct = () => {
   const state = useSelector((state) => state.product);
   const navigate = useNavigate();
+  const now = new Date().getTime();
 
   return (
     <div className="newProductContainer">
@@ -20,7 +21,7 @@ const NewProduct = () => {
             <img src={d.imgsrc1} alt={d.name} />
             <p>상품명: {d.name}</p>
             <p>상품가격: {d.price}</p>
-            <p>{d.uptimeminutes}분전</p>
+            <p>{Math.floor((now - Date.parse(d.uptime)) / 1000 / 60)}분전</p>
           </div>
         );
       })}
