@@ -23,7 +23,7 @@ const NoticeBoardList = () => {
           </Link>
         </li>
         <li value="공지사항" className="board_li">
-          <Link to="/boardmain/2" className="board_1">
+          <Link to="/boardmain/ntc" className="board_1">
             {post[3]}
           </Link>
         </li>

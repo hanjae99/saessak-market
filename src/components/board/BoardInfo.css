@@ -21,3 +21,17 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.board-info-head {
+  display: flex;
+}
+.board-info-head-left {
+  width: 60%;
+  font-size: 20px;
+}
+.board-info-head-center {
+  width: 8%;
+}
+.board-info-head-right {
+  width: 33%;
+}

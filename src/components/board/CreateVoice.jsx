@@ -25,14 +25,12 @@ const CreateVoice = ({ page }) => {
                 <div className="th">작성자</div>
                 <div className="th">작성일</div>
                 <div className="th">조회수</div>
-                <div className="th">추천</div>
               </div>
             </div>
             <div className="tbody">
               {dummy.slice((page - 1) * 15, page * 15).map((e, i) => {
                 return (
                   <div className="tr" key={i}>
-                    <div className="td"></div>
                     <div className="td"></div>
                     <div className="td"></div>
                     <div className="td"></div>
