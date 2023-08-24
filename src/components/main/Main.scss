@@ -72,6 +72,10 @@ main {
   text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0),
     0px -1px rgb(0, 0, 0);
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: all ease 0.2s;
+  }
 }
 
 .hotItem1 {
@@ -119,6 +123,7 @@ main {
 .newItem > img {
   width: 20vw;
   height: 20vw;
+  border-radius: 5px;
 }
 
 .newItem > p:nth-of-type(2) {

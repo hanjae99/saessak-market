@@ -68,6 +68,9 @@ const Header = () => {
             </span>
             <span>카테고리</span>
             <div id="categoryBox">
+              <div
+                style={{ width: "80%", height: "20px", zIndex: "-999" }}
+              ></div>
               <ul>
                 {category
                   .filter((c) => c.categoryno <= 20)
