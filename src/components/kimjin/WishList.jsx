@@ -13,9 +13,6 @@ const WishList = () => {
 
   return (
     <div className="section">
-      <div className="section_2">
-        <div className="section-2-1"></div>
-      </div>
       <div className="manu-2">
         <div className="manu-2-1">
           {/* <div className="manu-2-1-1">
@@ -25,6 +22,9 @@ const WishList = () => {
             {users[2].userproduct.map((a, i) => (
               <div key={i}>
                 <div className="table-main">
+                  <div className="table-body">
+                    <div className="table-day">"2023. 08. 20 등록"</div>
+                  </div>
                   <tr>
                     <td className="td-1">
                       <div className="td-1-1">

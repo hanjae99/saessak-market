@@ -12,52 +12,90 @@ const MyPage = () => {
       <div className="manu-2">
         <div className="manu-2-1">
           <div className="manu-2-1-1">
-            <span className="section-title">회원정보</span>
-          </div>
-          <div>
-            <label>이름 </label>
-            <input
-              type="text"
-              placeholder={꺼내온정보[1].name}
-              readOnly
-            ></input>
-          </div>
-          <div>
-            <label>닉네임 </label>
-            <input type="text" placeholder="다이어트 호소인" readOnly></input>
-          </div>
-          <div>
-            <label>비밀번호 </label>
-            <input type="passward" placeholder="**********" readOnly></input>
-          </div>
-          <div>
-            <label>이메일 </label>
-            <input
-              type="email"
-              placeholder="rlawls2006@naver.com"
-              readOnly
-            ></input>
-          </div>
-          <div>
-            <label>연락처 </label>
-            <input type="tel" placeholder="010-5061-8328" readOnly></input>
-          </div>
-          <div>
-            <label>주소 </label>
-            <input
-              type="text"
-              placeholder="강북구 미아동 ***-**"
-              readOnly
-            ></input>
-          </div>
-          <div>
-            <button onClick={() => movePage("/user/changingpwd")}>
-              회원정보수정
-            </button>
+            <div className="manu-2-1-1-1">
+              <span className="section-title">회원정보</span>
+            </div>
+            <div>
+              <label style={{ marginRight: "50px" }}>이름 </label>
+              <input
+                type="text"
+                placeholder={꺼내온정보[1].name}
+                readOnly
+              ></input>
+            </div>
+            <div>
+              <label style={{ marginRight: "25px" }}>닉네임 </label>
+              <input type="text" placeholder="다이어트 호소인" readOnly></input>
+            </div>
+            <div>
+              <label>비밀번호 </label>
+              <input type="passward" placeholder="**********" readOnly></input>
+            </div>
+            <div>
+              <label style={{ marginRight: "25px" }}>이메일 </label>
+              <input
+                type="email"
+                placeholder="rlawls2006@naver.com"
+                readOnly
+              ></input>
+            </div>
+            <div>
+              <label style={{ marginRight: "25px" }}>연락처 </label>
+              <input type="tel" placeholder="010-5061-8328" readOnly></input>
+            </div>
+            <div>
+              <label style={{ marginRight: "50px" }}>주소 </label>
+              <input
+                type="text"
+                placeholder="강북구 미아동 ***-**"
+                readOnly
+              ></input>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <button
+                onClick={() => movePage("/user/changingpwd")}
+                style={{
+                  marginRight: "10px",
+                  width: "100px",
+                  height: "40px",
+                  backgroundColor: "rgba(109, 200, 42, 0.7)",
+                  border: "none",
+                }}
+              >
+                회원정보수정
+              </button>
+            </div>
           </div>
           <div className="manu-3">
-            <ImgUpdate></ImgUpdate>
-            <input type="text" placeholder="자기 소개" />
+            <div
+              style={{
+                textAlign: "center",
+                width: "95%",
+                backgroundColor: "#F5F5F5",
+                borderTopLeftRadius: "5px",
+                borderTopRightRadius: "5px",
+                borderTop: "2px solid #D3D3D3",
+                borderRight: "2px solid #D3D3D3",
+                borderLeft: "2px solid #D3D3D3",
+              }}
+            >
+              <ImgUpdate></ImgUpdate>
+            </div>
+            <textarea
+              style={{
+                width: "95%",
+                height: "500px",
+                resize: "none",
+                fontSize: "20px",
+                borderBottomLeftRadius: "5px",
+                borderBottomRightRadius: "5px",
+                borderBottom: "2px solid #D3D3D3",
+                borderRight: "2px solid #D3D3D3",
+                borderLeft: "2px solid #D3D3D3",
+              }}
+              placeholder="자기 소개"
+              className="textarea1"
+            ></textarea>
           </div>
         </div>
       </div>

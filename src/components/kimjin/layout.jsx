@@ -14,7 +14,7 @@ export const Layout = () => {
       <Header />
       <div
         style={{
-          marginTop: "180px",
+          marginTop: "100px",
           width: "100%",
           height: "120px",
           display: "flex",
@@ -23,7 +23,7 @@ export const Layout = () => {
         }}
         className="newmain1"
       >
-        <div
+        {/* <div
           style={{
             width: "calc(100%)",
             height: "100%",
@@ -31,14 +31,14 @@ export const Layout = () => {
             backgroundImage: "url(../../img/tree.png)",
           }}
           className="newmain2"
-        ></div>
+        ></div> */}
       </div>
       <div className="newmain3" style={{ display: "flex", width: "100%" }}>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
-            className="menuBtn"
+            className="menuBtn1"
             style={{
-              backgroundColor: "greenyellow",
+              // backgroundColor: "greenyellow",
               padding: "35px",
               backgroundImage: "url(../../img/saessak.png)",
               backgroundSize: "84%",
@@ -58,7 +58,11 @@ export const Layout = () => {
         </div>
         <div
           className="newmain4"
-          style={{ padding: "1rem 3rem 0 4rem", width: "100%" }}
+          style={{
+            padding: "0 3rem 0 4rem",
+            height: "1000px",
+            width: "100%",
+          }}
         >
           <Routes>
             <Route path="/mypage" element={<MyPage />}></Route>
