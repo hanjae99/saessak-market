@@ -4,7 +4,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { loginUser } from '../../userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Changing_pwd = () => {
+const ChangingPwd = () => {
   const movePage = useNavigate();
   const [password, setPassword] = useState('');
   const [massage, setMassage] = useState('');
@@ -51,4 +51,4 @@ const Changing_pwd = () => {
   )
 }
 
-export default Changing_pwd
+export default ChangingPwd

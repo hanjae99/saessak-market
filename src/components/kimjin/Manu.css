@@ -299,7 +299,7 @@
   outline: none;
 }
 
-img {
+.img1 {
   width: 64px;
   aspect-ratio: auto 64 / 64;
   height: 64px;
