@@ -24,7 +24,7 @@ const MainPage = () => {
   return (
     <div>
       <NavLink to="/admin">관리자페이지</NavLink>
-      <NavLink to='/user/mypage'>마이페이지</NavLink>
+      <NavLink to="/user/mypage">마이페이지</NavLink>
     </div>
   );
 };
@@ -46,11 +46,12 @@ function App() {
         <Route path="/boardmain" element={<BoardMain page={page} />} />
         <Route path="/boardwrite" element={<CreateNotice />} />
         <Route path="/boardmain/1" element={<CreateVoice page={page} />} />
-        <Route path='/user/mypage' element={<Manu />}></Route>
-        <Route path='/user/check' element={<Check />}></Route>
-        <Route path='/user/changing' element={<Changing/>}></Route>
-        <Route path='/user/changingpwd' element={<Changing_pwd/>}></Route>
-        <Route path='/user/wishlist' element={<Wish_List/>}></Route>
+        <Route path="/user/mypage" element={<Manu />}></Route>
+        <Route path="/user/check" element={<Check />}></Route>
+        <Route path="/user/changing" element={<Changing />}></Route>
+        <Route path="/user/changingpwd" element={<Changing_pwd />}></Route>
+        <Route path="/user/wishlist" element={<Wish_List />}></Route>
+        <Route path="/boardmain/info" element={<BoardInfo />}></Route>
       </Routes>
     </div>
   );

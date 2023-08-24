@@ -89,7 +89,12 @@ const Header = () => {
             </div>
           </div>
           <nav className="menu">
-            <div className="menuItem">
+            <div
+              className="menuItem"
+              onClick={() => {
+                navigate('/boardmain');
+              }}
+            >
               <Link to="/boardmain">새싹 게시판</Link>
             </div>
             <div className="menuItem">
