@@ -33,7 +33,9 @@ const Header = () => {
               <img src="../../img/saessak.png" alt="logo" />
             </Link>
             <div>
-              <Link to="/">새싹 마켓</Link>
+              <Link to="/">
+                <span className="logo-text">새싹 마켓</span>
+              </Link>
             </div>
           </div>
           <div className="searchBox">
@@ -66,6 +68,9 @@ const Header = () => {
             </span>
             <span>카테고리</span>
             <div id="categoryBox">
+              <div
+                style={{ width: "80%", height: "20px", zIndex: "-999" }}
+              ></div>
               <ul>
                 {category
                   .filter((c) => c.categoryno <= 20)
@@ -95,10 +100,10 @@ const Header = () => {
               <Link to="/">새싹 게시판</Link>
             </div>
             <div className="menuItem">
-              <Link to="/">새싹 게임</Link>
+              <Link to="/game">새싹 게임</Link>
             </div>
             <div className="menuItem">
-              <Link to="/">상품 등록</Link>
+              <Link to="/addproduct">상품 등록</Link>
             </div>
           </nav>
         </div>
