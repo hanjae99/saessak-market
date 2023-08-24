@@ -6,7 +6,6 @@ footer {
   width: 100vw;
   height: 400px;
   background-color: rgba(199, 138, 67, 0.1);
-  /* background-color: white; */
   box-shadow: 0 -1px 10px rgb(199, 138, 67);
   display: grid;
   grid-template-columns: 30vw 23vw 23vw 23vw;
