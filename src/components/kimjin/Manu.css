@@ -8,36 +8,6 @@
   margin: 0 auto;
 }
 
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-menu,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-form,
-fieldset,
-input,
-textarea,
-blockquote,
-th,
-td,
-p {
-  margin: 0;
-  padding: 0;
-  font-size: 100%;
-  font-family: '돋움', Dotum, sans-serif;
-}
-
 .contents {
   z-index: inherit !important;
 }
@@ -179,7 +149,8 @@ p {
   font-weight: 100;
   font-style: normal;
   box-sizing: border-box;
-  font-family: robotoThinNumber, roboto, "Courier New", Tahoma, NanumGothic, MalgunGothic, 돋움, dotum, sans-serif;
+  font-family: robotoThinNumber, roboto, "Courier New", Tahoma, NanumGothic,
+    MalgunGothic, 돋움, dotum, sans-serif;
 }
 
 .manu-2 {
@@ -188,7 +159,7 @@ p {
 }
 
 .manu-2-1 {
-  margin: 0px 0px 16px
+  margin: 0px 0px 16px;
 }
 
 .manu-2-1-1 {
@@ -203,19 +174,21 @@ p {
 .table-main {
   width: 800px;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 20px;
-  padding: 24px 24px 16px
+  padding: 24px 24px 16px;
 }
 
-.table-body{
+.table-body {
   width: 800px;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 20px;
-  padding: 24px 24px 16px
+  padding: 24px 24px 16px;
 }
 
 .table-day {
@@ -242,8 +215,6 @@ p {
   vertical-align: inherit;
   border-color: inherit;
 }
-
-
 
 .table-main td {
   display: table-cell;

@@ -22,7 +22,9 @@ const ProductList = () => {
   const products = useSelector((state) => state.product);
   const searchedItem = products.filter((p) => p.name.includes(searchItem));
   const searchedCate = products.filter(
-    (p) => p.categories.split(",").find((ps) => ps === category) === category
+    (p) =>
+      p.categories &&
+      p.categories.split(",").find((ps) => ps === category) === category
   );
 
   // 페이징 처리(한 페이지당 30개의 상품 노출)
@@ -151,11 +153,11 @@ const ProductList = () => {
                   .map((si) => {
                     return (
                       <div
+                        className="item-product"
+                        key={si.id}
                         onClick={() => {
                           navigate("/detail/" + si.id);
                         }}
-                        className="item"
-                        key={si.id}
                       >
                         <img src={si.imgsrc1} alt={si.name} />
                         <p>{si.name}</p>
@@ -169,11 +171,11 @@ const ProductList = () => {
                   .map((sc) => {
                     return (
                       <div
+                        className="item-product"
+                        key={sc.id}
                         onClick={() => {
                           navigate("/detail/" + sc.id);
                         }}
-                        className="item"
-                        key={sc.id}
                       >
                         <img src={sc.imgsrc1} alt={sc.name} />
                         <p>{sc.name}</p>
@@ -184,11 +186,11 @@ const ProductList = () => {
               : products.slice(30 * (pageNum - 1), 30 * pageNum).map((p) => {
                   return (
                     <div
+                      className="item-product"
+                      key={p.id}
                       onClick={() => {
                         navigate("/detail/" + p.id);
                       }}
-                      className="item"
-                      key={p.id}
                     >
                       <img src={p.imgsrc1} alt={p.name} />
                       <p>{p.name}</p>

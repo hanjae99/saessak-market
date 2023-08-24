@@ -1,25 +1,30 @@
 import React from "react";
-import data from "../../product.json";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const NewProduct = () => {
+  const state = useSelector((state) => state.product);
   const navigate = useNavigate();
+  const now = new Date().getTime();
 
   return (
     <div className="newProductContainer">
-      {data.slice(10, 14).map((d) => (
-        <div
-          onClick={() => {
-            navigate("/detail/" + d.id);
-          }}
-          className="newItem"
-          key={d.id}
-        >
-          <img src={d.imgsrc1} alt={d.name} />
-          <p>상품명: {d.name}</p>
-          <p>상품가격: {d.price}</p>
-        </div>
-      ))}
+      {state.slice(0, 4).map((d) => {
+        return (
+          <div
+            className="newItem"
+            key={d.id}
+            onClick={() => {
+              navigate("/detail/" + d.id);
+            }}
+          >
+            <img src={d.imgsrc1} alt={d.name} />
+            <p>상품명: {d.name}</p>
+            <p>상품가격: {d.price}</p>
+            <p>{Math.floor((now - Date.parse(d.uptime)) / 1000 / 60)}분전</p>
+          </div>
+        );
+      })}
     </div>
   );
 };

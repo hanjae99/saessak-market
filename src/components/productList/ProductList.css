@@ -46,18 +46,18 @@
   grid-template-columns: repeat(3, 33.3%);
 }
 
-.item {
+.item-product {
   width: 100%;
   padding: 30px;
 }
 
-.item > img {
-  width: 200px;
-  height: 200px;
+.item-product > img {
+  width: 15vw;
+  height: 15vw;
   border-radius: 8px;
 }
 
-.item > p:nth-of-type(2) {
+.item-product > p:nth-of-type(2) {
   font-weight: bold;
   font-size: 1.2rem;
 }
