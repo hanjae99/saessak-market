@@ -3,23 +3,16 @@
   padding-top: 180px;
 }
 .board-left {
-  padding-top: 20px;
-  padding-left: 20px;
   height: 700px;
   flex-basis: 15%;
   box-sizing: border-box;
 }
 .board-center {
-  height: 800px;
+  height: 700px;
   flex-basis: 70%;
   box-sizing: border-box;
 }
-.board-rigth {
-  height: 700px;
-  flex-basis: 15%;
-  float: right;
-  box-sizing: border-box;
-}
+
 .pagination {
   display: flex;
   list-style: none;
@@ -48,17 +41,4 @@
 
 .board-footer {
   display: flex;
-}
-.new-text {
-  width: 80px;
-  height: 38px;
-  margin-top: 16px;
-  margin-right: 10px;
-  background-color: #ddd;
-  border: none;
-  border-radius: 8px;
-}
-
-.new-text:hover {
-  background-color: rgba(109, 200, 42, 0.7);
 }
