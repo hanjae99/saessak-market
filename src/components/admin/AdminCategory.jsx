@@ -82,7 +82,7 @@ const AdminCategory = ({ page, setSelectedCg }) => {
     // console.log(e.target)
     // console.log(e.target.innerText)
     if (e.target.parentElement !== e.currentTarget || e.target.nodeName === 'svg') return;
-    console.log(p)
+    // console.log(p)
     setClickedCtg(p);
     setSelectedCg(p);
   }
