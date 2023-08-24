@@ -44,12 +44,12 @@ const CreateVoice = ({ page }) => {
           <div className="board-footer">
             <ul className="pagination">
               <li className="page-item">
-                <button>
+                <button className="page-link">
                   <FaArrowLeft />
                 </button>
               </li>
               <li className="page-item">
-                <button>
+                <button className="page-link">
                   <FaArrowRight />
                 </button>
               </li>
