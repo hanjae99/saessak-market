@@ -6,6 +6,18 @@ const Footer = () => {
   return (
     <footer>
       <div className="footerBox">
+        <div className="footerImg leaf1">
+          <img src="../../img/leaf1.png" alt="leaf1" />
+        </div>
+        <div className="footerImg leaf2">
+          <img src="../../img/leaf2.png" alt="leaf1" />
+        </div>
+        <div className="footerImg flower1">
+          <img src="../../img/flower1.png" alt="leaf1" />
+        </div>
+        <div className="footerImg tree1">
+          <img src="../../img/tree1.png" alt="leaf1" />
+        </div>
         <div className="footerName">
           <h4>
             <Link to="/">새싹 마켓</Link>
