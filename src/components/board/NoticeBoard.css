@@ -27,18 +27,14 @@
 }
 .td:nth-child(4),
 .th:nth-child(4) {
-  width: 10%;
+  width: 14%;
 }
 .td:nth-child(4) {
   font-size: 14px;
 }
 .td:nth-child(5),
 .th:nth-child(5) {
-  width: 7%;
-}
-.td:nth-child(6),
-.th:nth-child(6) {
-  width: 7%;
+  width: 10%;
 }
 
 .td {
