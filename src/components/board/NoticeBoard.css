@@ -41,7 +41,7 @@
   height: 35px;
   color: black;
 }
-.tr:nth-child(odd) .td {
+.tr:nth-child(odd) {
   background: #eaeaed;
 }
 .table,

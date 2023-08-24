@@ -1,9 +1,10 @@
 import React from 'react';
 import './NoticeBoard.css';
-import dummy from '../../board.json';
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const NoticeBoard = ({ page }) => {
+  const dummy = useSelector((state) => state.board);
   const num = dummy.length;
   return (
     <>
@@ -28,7 +29,11 @@ const NoticeBoard = ({ page }) => {
                 <div className="td">{num - i - (page - 1) * 15}</div>
                 <div className="td">{e.title}</div>
                 <div className="td">{e.writer}</div>
-                <div className="td">{e.date}</div>
+                <div className="td">
+                  {new Date().getDate() === new Date(e.date).getDate()
+                    ? new Date(e.date).toLocaleTimeString()
+                    : new Date(e.date).toLocaleDateString()}
+                </div>
                 <div className="td">{e.clicked}</div>
               </div>
             );
