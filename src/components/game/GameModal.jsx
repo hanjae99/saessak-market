@@ -24,7 +24,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
   }
 
   return (
-    <div className="container">
+    <div className="modal-container">
       <div>
         <img
           src={game && game[index].imgsrc1}

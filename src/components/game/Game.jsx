@@ -9,6 +9,7 @@ import "./Game.css";
 import { useDispatch, useSelector } from "react-redux";
 import GameModal from "./GameModal";
 import { useNavigate } from "react-router-dom";
+import Header from "../main/Header";
 
 const Game = () => {
   const game = useSelector((state) => state.game);
@@ -88,56 +89,59 @@ const Game = () => {
   }, [index, navigate, score]);
   return (
     <div className="container">
-      <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
-      <div className="contentsBox">
-        <div className="contentsBox2">
-          <div className="products">
-            <img
-              src={game[index] && game[index].imgsrc1}
-              alt="이미지"
-              className="imgBox"
-            />
+      <Header />
+      <main>
+        <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
+        <div className="contentsBox">
+          <div className="contentsBox2">
+            <div className="products">
+              <img
+                src={game[index] && game[index].imgsrc1}
+                alt="이미지"
+                className="game-imgBox"
+              />
+            </div>
+
+            <div className="products">
+              <div>
+                <lable>제품명:{game[index] && game[index].name}</lable>
+              </div>
+              <div>
+                <p>{game[index] && game[index].text}</p>
+              </div>
+            </div>
           </div>
 
-          <div className="products">
-            <div>
-              <lable>제품명:{game[index] && game[index].name}</lable>
-            </div>
-            <div>
-              <p>{game[index] && game[index].text}</p>
-            </div>
+          <div>
+            <div className="contentsBox2"></div>
+            <div>진행률 :{index + 1}/10</div>
+            <input
+              type="number"
+              value={inputprice}
+              placeholder="가격을 입력해주세요 (숫자만) ex)15000"
+              onChange={onChange}
+            />
+            <button onClick={onsubmit}>입력</button>
+            {modalOpen && (
+              <GameModal
+                setModalOpen={setModalOpen}
+                inputprice={inputprice}
+                result={result}
+                onIncrease={onIncrease}
+                index={index}
+              />
+            )}
           </div>
         </div>
-
-        <div>
-          <div className="contentsBox2"></div>
-          <div>진행률 :{index + 1}/10</div>
-          <input
-            type="number"
-            value={inputprice}
-            placeholder="가격을 입력해주세요 (숫자만) ex)15000"
-            onChange={onChange}
-          />
-          <button onClick={onsubmit}>입력</button>
-          {modalOpen && (
-            <GameModal
-              setModalOpen={setModalOpen}
-              inputprice={inputprice}
-              result={result}
-              onIncrease={onIncrease}
-              index={index}
-            />
-          )}
-        </div>
-      </div>
-      {/* <div>
-        <div>이미지</div>
-        <label>입력하신 가격 :</label>
-        <p>{inputprice}원</p>
-        <label>중고 가격 :</label>
-        <p>{game[0].price}</p>
-        <h1>점수 : {result}점</h1>
-      </div> */}
+        {/* <div>
+          <div>이미지</div>
+          <label>입력하신 가격 :</label>
+          <p>{inputprice}원</p>
+          <label>중고 가격 :</label>
+          <p>{game[0].price}</p>
+          <h1>점수 : {result}점</h1>
+        </div> */}
+      </main>
     </div>
   );
 };

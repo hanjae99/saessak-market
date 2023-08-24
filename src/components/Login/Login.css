@@ -7,7 +7,8 @@
 }
 
 .login-child {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
+  background-color: white;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -42,7 +43,7 @@
 }
 
 .login-button1 {
-  background-color: #007bff;
+  background-color: rgba(109, 200, 42, 0.6);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -56,5 +57,6 @@
 }
 
 .login-button1:hover {
-  background-color: #0056b3;
+  background-color: rgba(109, 200, 42, 1);
+  color: black;
 }
