@@ -149,12 +149,12 @@
   height: 600px;
 }
 
-.adminViewer div:first-child {
+.adminViewer > div:first-child {
   width: 100%;
   height: 15%;
 }
 
-.adminViewer div:last-child {
+.adminViewer > div:last-child {
   width: 100%;
   height: 85%;
 }

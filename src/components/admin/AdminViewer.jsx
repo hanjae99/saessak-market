@@ -56,31 +56,37 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
   const board = useSelector(state => state.board);
   const divRef = useRef();
 
-  console.log(products)
+  // console.log(products)
 
-  useEffect(()=>{page === 'productboard' || page === '' ? setViewMode({...viewMode, mode:'ImageOnly'}) : setViewMode({...viewMode, mode:'Line'})},[page])
+  useEffect(() => { page === 'productboard' || page === '' ? setViewMode({ ...viewMode, mode: 'ImageOnly' }) : setViewMode({ ...viewMode, mode: 'Line' }) }, [page])
   useEffect(() => { setViewMode({ ...viewMode, viewSize: 1 }) }, [])
   useEffect(() => {
-    let d1, d2;
+    let d1, d2, d3, d4, d5;
+    console.log(page)
     if (page === 'productboard' || page === '') {
       d1 = products;
       d2 = 'uptime';
+      d3 = 'name';
+      d4 = 'text';
     }
     else {
       d1 = board;
       d2 = 'date';
+      d3 = 'title';
+      d4 = 'content';
     }
-    rs = ((ary, dateName) => {
+    rs = ((ary, dateName, d3, d4, d5) => {
+      console.log(ary,d2,d3,d4,d5)
       ary = ary.filter(p => new Date(p[dateName]) >= new Date(startDate + ' ' + startTime) && new Date(p[dateName]) <= new Date(endDate + ' ' + endTime));
       if (filter !== '') {
         if (filter.indexOf(',') > 0) {
           let fi = filter.split(',');
           for (let i = 0; i < fi.length; i++) {
-            ary = ary.filter(p => p.name.indexOf(fi[i]) >= 0 || p.text.indexOf(fi[i]) >= 0 || p.nickname.indexOf(filter) >= 0 )
+            ary = ary.filter(p => p[d3].indexOf(fi[i]) >= 0 || p[d4].indexOf(fi[i]) >= 0 || p.writer.indexOf(filter) >= 0)
           }
         }
         else {
-          ary = ary.filter(p => p.name.indexOf(filter) >= 0 || p.text.indexOf(filter) >= 0 || p.nickname.indexOf(filter) >= 0 );
+          ary = ary.filter(p => p[d3].indexOf(filter) >= 0 || p[d4].indexOf(filter) >= 0 || p.writer.indexOf(filter) >= 0);
         }
       }
       if (selectedCg && (page === 'productboard' || page === '')) {
@@ -91,7 +97,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
         });
       }
       return ary;
-    })(d1, d2);
+    })(d1, d2, d3, d4, d5);
     setRsl(rs);
   }, [startDate, startTime, endDate, endTime, mode, viewSize, filter, page, products, board, setRsl, selectedCg])
 
@@ -143,8 +149,8 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
               }
               onContextMenu={e => { e.preventDefault(); dispatch({ type: 'adminData/addSP', payload: p.id }) }}
               key={p.id}
-              style={ mode==='ImageOnly' ? 
-                { 
+              style={mode === 'ImageOnly' ?
+                {
                   width: 80 * viewSize + 'px',
                   height: 160 * viewSize + 'px',
                   position: 'absolute',
@@ -153,66 +159,101 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                   border: '1px solid gray'
                 } : {}
               }>
-              {mode==='ImageOnly' ? (
+              {mode === 'ImageOnly' ? (
                 <>
-                  {p.imgsrc1 && <img src={p.imgsrc1} alt='' style={{ width: 80 * viewSize -2 + 'px', height: 80 * viewSize -3 + 'px' }}></img>}
-                  {p.imgsrc2 && <img src={p.imgsrc2} alt='' style={{ width: 80 * viewSize -2 + 'px', height: 80 * viewSize -3 + 'px' }}></img>}
+                  {p.imgsrc1 && <img src={p.imgsrc1} alt='' style={{ width: 80 * viewSize - 2 + 'px', height: 80 * viewSize - 3 + 'px' }}></img>}
+                  {p.imgsrc2 && <img src={p.imgsrc2} alt='' style={{ width: 80 * viewSize - 2 + 'px', height: 80 * viewSize - 3 + 'px' }}></img>}
                 </>
               ) : ''}
             </div>)
         } else if (page === 'freeboard') {
           return rs.map((p, i) =>
-            <div
-              onClick={
-                (e) => {
-                  let modalData = {
-                    att: {
-                      style: {
-                        display: 'block',
-                        top: '200px',
-                        left: '200px',
-                        background: 'black',
-                        color: '#fff',
-                        width: '70%',
-                        height: '600px'
+
+            <>
+              {i === 0 && mode !== 'ImageOnly' ? (
+                <div className="tr">
+                  <div className="th">번호</div>
+                  <div className="th">제목</div>
+                  <div className="th">작성자</div>
+                  <div className="th">작성일</div>
+                  <div className="th">조회수</div>
+                </div>
+              ) : ''}
+              <div
+                onClick={
+                  (e) => {
+                    let modalData = {
+                      att: {
+                        style: {
+                          display: 'block',
+                          top: '200px',
+                          left: '200px',
+                          background: 'black',
+                          color: '#fff',
+                          width: '70%',
+                          height: '600px'
+                        },
+                        onClick: (e) => setModalData({ ...modalData, att: { ...modalData.att, style: {} } })
                       },
-                      onClick: (e) => setModalData({ ...modalData, att: { ...modalData.att, style: {} } })
-                    },
-                    children: (
-                      <div style={{ display: 'flex' }}>
-                        <div style={{ width: '360px', height: '600px', padding: '10px' }}>
-                          <img src={p.imgsrc1} alt="" style={{ width: '280px', height: '270px' }} /> <br /><br />
-                          <img src={p.imgsrc2} alt="" style={{ width: '280px', height: '270px' }} />
+                      children: (
+                        <div style={{ display: 'flex' }}>
+                          <div style={{ width: '360px', height: '600px', padding: '10px' }}>
+                            <img src={p.imgsrc1} alt="" style={{ width: '280px', height: '270px' }} /> <br /><br />
+                            <img src={p.imgsrc2} alt="" style={{ width: '280px', height: '270px' }} />
+                          </div>
+                          <div>
+                            제목 : {p.title} <br />
+                            내용 <br />
+                            {p.content}<br />
+                          </div>
                         </div>
-                        <div>
-                          제목 : {p.title} <br />
-                          내용 <br />
-                          {p.content}<br />
-                        </div>
-                      </div>
-                    )
+                      )
+                    }
+                    setModalData(modalData);
                   }
-                  setModalData(modalData);
                 }
-              }
-              onContextMenu={e => { e.preventDefault(); dispatch({ type: 'adminData/addSB', payload: p.id }) }}
-              key={p.id}
-              style={
-                {
-                  width: 80 * viewSize + 'px',
-                  height: 160 * viewSize + 'px',
-                  position: 'absolute',
-                  left: i % ct * 82 * viewSize + (i % ct + 1) * mg + 'px',
-                  top: Math.floor(i / ct) * 164 * viewSize + (Math.floor(i / ct) + 1) * mg + 'px'
+                onContextMenu={e => { e.preventDefault(); dispatch({ type: 'adminData/addSB', payload: p.id }) }}
+                key={p.id}
+                style={mode === 'ImageOnly' ?
+                  {
+                    width: 80 * viewSize + 'px',
+                    height: 160 * viewSize + 'px',
+                    position: 'absolute',
+                    left: i % ct * 82 * viewSize + (i % ct + 1) * mg + 'px',
+                    top: Math.floor(i / ct) * 164 * viewSize + (Math.floor(i / ct) + 1) * mg + 'px'
+                  } :
+                  {
+
+                  }
+                }>
+                {mode === 'ImageOnly' ? (
+                  <>
+                    {p.imgsrc1 && <img src={p.imgsrc1} alt='' style={{ width: 80 * viewSize - 2 + 'px', height: 80 * viewSize - 3 + 'px' }}></img>}
+                    {p.imgsrc2 && <img src={p.imgsrc2} alt='' style={{ width: 80 * viewSize - 2 + 'px', height: 80 * viewSize - 3 + 'px' }}></img>}
+                  </>
+                ) : (
+                  <>
+
+
+                    {
+                      <div className="tr" key={p.id}>
+                        <div className="td">{p.id}</div>
+                        <div className="td">{p.title}</div>
+                        <div className="td">{p.writer}</div>
+                        <div className="td">{new Date().getDate() === new Date(p.date).getDate() ? new Date(p.date).toLocaleTimeString() : new Date(p.date).toLocaleDateString()}</div>
+                        <div className="td">{p.clicked}</div>
+                      </div>
+
+                    }
+                  </>
+                )
                 }
-              }>
-              {p.imgsrc1 && <img src={p.imgsrc1} alt='' style={{ width: 80 * viewSize + 'px', height: 80 * viewSize + 'px' }}></img>}
-              {p.imgsrc2 && <img src={p.imgsrc2} alt='' style={{ width: 80 * viewSize + 'px', height: 80 * viewSize + 'px' }}></img>}
-            </div>)
+              </div>
+            </>)
         }
       })()
       }
-    </div>
+    </div >
   )
 }
 
