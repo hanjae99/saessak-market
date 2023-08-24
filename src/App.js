@@ -17,6 +17,7 @@ import Changing_pwd from "./components/kimjin/Changing_pwd";
 import Manu from "./components/kimjin/Manu";
 import Main from "./components/main/Main";
 import ProductList from "./components/productList/ProductList";
+import UpdateProduct from "./components/updateProduct/UpdateProduct";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/search/:searchItem?" element={<ProductList />} />
         <Route path="/addproduct" element={<AddProduct />} />
+        <Route path="/updateproduct/:id" element={<UpdateProduct />} />
         <Route path="/game" element={<Game />} />
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />

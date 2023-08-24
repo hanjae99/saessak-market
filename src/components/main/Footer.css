@@ -1,15 +1,66 @@
 footer {
   margin-top: 20vh;
+  width: 100%;
 }
 .footerBox {
-  background-color: rgb(199, 138, 67);
+  width: 100vw;
+  height: 400px;
+  background-color: rgba(199, 138, 67, 0.1);
+  /* background-color: white; */
+  box-shadow: 0 -1px 10px rgb(199, 138, 67);
+  display: grid;
+  grid-template-columns: 30vw 23vw 23vw 23vw;
 }
-.footerName {
-  font-family: "Bagel Fat One", cursive;
-  font-family: "Gaegu", cursive;
-  font-size: 2rem;
+.footerBox ul {
+  padding-left: 0;
 }
 
-.footerDesc {
+.footerBox li {
+  margin-bottom: 10px;
+}
+
+.footerBox h4 {
+  font-size: 1.2rem;
+}
+
+.footerBox a:link {
+  color: #b1b1b1;
+}
+.footerBox a:visited {
+  color: #b1b1b1;
+}
+.footerBox a:active {
+  color: black;
+}
+.footerName {
+  margin-left: 3rem;
+}
+
+.footerName > h4 > a {
+  font-family: "Gaegu", cursive;
+  font-size: 2rem;
+  color: rgb(199, 138, 67);
+}
+.footerName > h4 > a:visited {
+  color: rgb(199, 138, 67);
+}
+.footerName > h4 > a:link {
+  color: rgb(199, 138, 67);
+}
+
+.footerDesc > p {
   font-size: 0.9rem;
+  margin: 0;
+  color: #b1b1b1;
+  line-height: 2rem;
+}
+
+.footerSocial img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.footerContact > ul {
+  padding-right: 10px;
 }

@@ -5,6 +5,11 @@
   font-family: "Noto Sans KR", sans-serif;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 main {
   padding-top: 180px;
 }
@@ -12,7 +17,7 @@ main {
 #mainContainer {
   width: 80%;
   margin: 0 auto;
-  margin-top: 20vh;
+  margin-top: 10vh;
 }
 .carousel-style {
   width: 100%;

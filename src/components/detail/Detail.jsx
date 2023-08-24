@@ -61,7 +61,7 @@ const Detail = () => {
               <h2>닉네임 님의 다른 판매상품 정보</h2>
               <div className="detail-imgbox-flex">
                 {userproduct.slice(0, 3).map((up) => (
-                  <div className="detail-itembox">
+                  <div className="detail-itembox" key={up.id}>
                     <div className="detail-imgbox1">
                       <img className="detail-imgbox1" src={up.imgsrc1} alt="" />
                     </div>
@@ -89,7 +89,7 @@ const Detail = () => {
               recommends.slice(0, 4).map((e) => (
                 <div key={e.id}>
                   <div>
-                    <img src={e.imgsrc1} alt="" srcset="" />
+                    <img src={e.imgsrc1} alt="" />
                   </div>
                   <p>제품명:{e.name}</p>
                   <p>제품가격:{e.price}</p>
