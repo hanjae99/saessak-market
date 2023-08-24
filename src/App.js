@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Changing from "./components//kimjin/Changing";
-import Check from "./components//kimjin/Check";
-import Wish_List from "./components//kimjin/Wish_List";
 import Login from "./components/Login/Login";
 import SingUp from "./components/Login/SingUp";
 import AddProduct from "./components/addProduct/AddProduct";
@@ -13,8 +10,6 @@ import CreateVoice from "./components/board/CreateVoice";
 import Detail from "./components/detail/Detail";
 import Game from "./components/game/Game";
 import GameResult from "./components/game/GameResult";
-import Changing_pwd from "./components/kimjin/Changing_pwd";
-import Manu from "./components/kimjin/Manu";
 import Main from "./components/main/Main";
 import ProductList from "./components/productList/ProductList";
 import UpdateProduct from "./components/updateProduct/UpdateProduct";
