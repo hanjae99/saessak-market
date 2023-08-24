@@ -61,8 +61,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
   useEffect(() => { page === 'productboard' || page === '' ? setViewMode({ ...viewMode, mode: 'ImageOnly' }) : setViewMode({ ...viewMode, mode: 'Line' }) }, [page])
   useEffect(() => { setViewMode({ ...viewMode, viewSize: 1 }) }, [])
   useEffect(() => {
-    let d1, d2, d3, d4, d5;
-    console.log(page)
+    let d1, d2, d3, d4;
     if (page === 'productboard' || page === '') {
       d1 = products;
       d2 = 'uptime';
@@ -75,8 +74,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
       d3 = 'title';
       d4 = 'content';
     }
-    rs = ((ary, dateName, d3, d4, d5) => {
-      console.log(ary,d2,d3,d4,d5)
+    rs = ((ary, dateName, d3, d4) => {
       ary = ary.filter(p => new Date(p[dateName]) >= new Date(startDate + ' ' + startTime) && new Date(p[dateName]) <= new Date(endDate + ' ' + endTime));
       if (filter !== '') {
         if (filter.indexOf(',') > 0) {
@@ -97,7 +95,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
         });
       }
       return ary;
-    })(d1, d2, d3, d4, d5);
+    })(d1, d2, d3, d4);
     setRsl(rs);
   }, [startDate, startTime, endDate, endTime, mode, viewSize, filter, page, products, board, setRsl, selectedCg])
 
@@ -147,7 +145,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                   setModalData(modalData);
                 }
               }
-              onContextMenu={e => { e.preventDefault(); dispatch({ type: 'adminData/addSP', payload: p.id }) }}
+              onContextMenu={e => { e.preventDefault(); dispatch({ type: mode === 'ImageOnly' ? 'adminData/addSP' : 'adminData/addSB', payload: p.id }) }}
               key={p.id}
               style={mode === 'ImageOnly' ?
                 {
@@ -169,9 +167,9 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
         } else if (page === 'freeboard') {
           return rs.map((p, i) =>
 
-            <>
+            <div key={p.id}>
               {i === 0 && mode !== 'ImageOnly' ? (
-                <div className="tr" style={{textAlign:'center'}}>
+                <div className="tr" style={{ textAlign: 'center', borderTopRightRadius: '10px', borderTopLeftRadius: '10px', overflow: 'hidden' }}>
                   <div className="th">번호</div>
                   <div className="th">제목</div>
                   <div className="th">작성자</div>
@@ -213,7 +211,6 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                   }
                 }
                 onContextMenu={e => { e.preventDefault(); dispatch({ type: 'adminData/addSB', payload: p.id }) }}
-                key={p.id}
                 style={mode === 'ImageOnly' ?
                   {
                     width: 80 * viewSize + 'px',
@@ -233,12 +230,10 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                   </>
                 ) : (
                   <>
-
-
                     {
-                      <div className="tr" key={p.id} style={{textAlign:'center', background:i%2===1?'#fff':''}}>
+                      <div className="tr" style={{ textAlign: 'center', background: i % 2 === 1 ? '#fff' : '' }}>
                         <div className="td">{p.id}</div>
-                        <div className="td" style={{textAlign:'left'}}>{p.title}</div>
+                        <div className="td" style={{ textAlign: 'left' }}>{p.title}</div>
                         <div className="td">{p.writer}</div>
                         <div className="td">{new Date().getDate() === new Date(p.date).getDate() ? new Date(p.date).toLocaleTimeString() : new Date(p.date).toLocaleDateString()}</div>
                         <div className="td">{p.clicked}</div>
@@ -249,7 +244,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                 )
                 }
               </div>
-            </>)
+            </div>)
         }
       })()
       }
