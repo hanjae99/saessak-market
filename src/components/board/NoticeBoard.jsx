@@ -19,7 +19,6 @@ const NoticeBoard = ({ page }) => {
             <div className="th">작성자</div>
             <div className="th">작성일</div>
             <div className="th">조회수</div>
-            <div className="th">추천</div>
           </div>
         </div>
         <div className="tbody">
@@ -31,7 +30,6 @@ const NoticeBoard = ({ page }) => {
                 <div className="td">{e.writer}</div>
                 <div className="td">{e.date}</div>
                 <div className="td">{e.clicked}</div>
-                <div className="td"></div>
               </div>
             );
           })}
