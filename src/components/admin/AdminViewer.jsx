@@ -171,7 +171,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
 
             <>
               {i === 0 && mode !== 'ImageOnly' ? (
-                <div className="tr">
+                <div className="tr" style={{textAlign:'center'}}>
                   <div className="th">번호</div>
                   <div className="th">제목</div>
                   <div className="th">작성자</div>
@@ -236,9 +236,9 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
 
 
                     {
-                      <div className="tr" key={p.id}>
+                      <div className="tr" key={p.id} style={{textAlign:'center', background:i%2===1?'#fff':''}}>
                         <div className="td">{p.id}</div>
-                        <div className="td">{p.title}</div>
+                        <div className="td" style={{textAlign:'left'}}>{p.title}</div>
                         <div className="td">{p.writer}</div>
                         <div className="td">{new Date().getDate() === new Date(p.date).getDate() ? new Date(p.date).toLocaleTimeString() : new Date(p.date).toLocaleDateString()}</div>
                         <div className="td">{p.clicked}</div>
