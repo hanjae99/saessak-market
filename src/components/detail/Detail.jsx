@@ -2,6 +2,7 @@ import React from "react";
 import "./Detail.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { parse } from "qs";
 
 const Detail = () => {
   const { id } = useParams();
@@ -9,18 +10,14 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const item = product.find((p) => p.id === id);
   const userproduct = useSelector((state) => state.user[1].userproduct);
-  const itemcate = product.find((i) => {
-    console.log("item", item);
-    console.log(i);
-    return i.categories && i.categories === item.categories;
+  const recommends = product.filter((i) => {
+    // console.log("item", item);
+    // console.log(i);
+    return (
+      i.categories.split(",").find((p) => parseInt(p) < 20) ===
+      item.categories.split(",").find((p) => parseInt(p) < 20)
+    );
   });
-  const recomends = product.filter(
-    (j) => j.categories && j.categories === itemcate.categories
-  );
-
-  console.log("item :" + item.categories);
-  console.log("itemcate:" + itemcate);
-  console.log("recomends: " + recomends[1].imgsrc1);
 
   return (
     <div className="container">
@@ -88,15 +85,19 @@ const Detail = () => {
           <div className="products">
             <h1>이런 상품은 어때요?</h1>
 
-            {recomends.slice(0, 4).map((e) => (
-              <div>
-                <div>
-                  <img src={e.imgsrc1} alt="" srcset="" />
+            {recommends ? (
+              recommends.slice(0, 4).map((e) => (
+                <div key={e.id}>
+                  <div>
+                    <img src={e.imgsrc1} alt="" srcset="" />
+                  </div>
+                  <p>제품명:{e.name}</p>
+                  <p>제품가격:{e.price}</p>
                 </div>
-                <p>제품명:{e.name}</p>
-                <p>제품가격:{e.price}</p>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p>상품이 없어요 ㅠㅠ</p>
+            )}
           </div>
         </div>
       </div>
