@@ -150,7 +150,13 @@ const ProductList = () => {
                   .slice(30 * (pageNum - 1), 30 * pageNum)
                   .map((si) => {
                     return (
-                      <div className="item" key={si.id}>
+                      <div
+                        onClick={() => {
+                          navigate("/detail/" + si.id);
+                        }}
+                        className="item"
+                        key={si.id}
+                      >
                         <img src={si.imgsrc1} alt={si.name} />
                         <p>{si.name}</p>
                         <p>{si.price}</p>
@@ -162,7 +168,13 @@ const ProductList = () => {
                   .slice(30 * (pageNum - 1), 30 * pageNum)
                   .map((sc) => {
                     return (
-                      <div className="item" key={sc.id}>
+                      <div
+                        onClick={() => {
+                          navigate("/detail/" + sc.id);
+                        }}
+                        className="item"
+                        key={sc.id}
+                      >
                         <img src={sc.imgsrc1} alt={sc.name} />
                         <p>{sc.name}</p>
                         <p>{sc.price}</p>
@@ -171,7 +183,13 @@ const ProductList = () => {
                   })
               : products.slice(30 * (pageNum - 1), 30 * pageNum).map((p) => {
                   return (
-                    <div className="item" key={p.id}>
+                    <div
+                      onClick={() => {
+                        navigate("/detail/" + p.id);
+                      }}
+                      className="item"
+                      key={p.id}
+                    >
                       <img src={p.imgsrc1} alt={p.name} />
                       <p>{p.name}</p>
                       <p>{p.price}</p>

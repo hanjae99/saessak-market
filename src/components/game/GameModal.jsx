@@ -10,6 +10,19 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
   };
   // const dispatch = useDispatch();
   console.log(game);
+
+  function comma(no) {
+    no += "";
+    let commaNo = Math.floor((no.length - 1) / 3);
+    for (let i = 0; i < commaNo; i++) {
+      no =
+        no.substring(0, no.length - 3 - 4 * i) +
+        "," +
+        no.substring(no.length - 3 - 4 * i);
+    }
+    return no;
+  }
+
   return (
     <div className="container">
       <div>
@@ -20,7 +33,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
         />
       </div>
       <label>입력하신 가격 :</label>
-      <p>{inputprice}원</p>
+      <p>{comma(inputprice)}원</p>
       <label>중고 가격 :</label>
       <p>{game[index].price}</p>
       <h1>점수 : {result} 점</h1>

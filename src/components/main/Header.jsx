@@ -53,7 +53,13 @@ const Header = () => {
             </form>
           </div>
           <div className="userBtn">
-            <button>로그인</button>
+            <button
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              로그인
+            </button>
             <button>마이페이지</button>
           </div>
         </div>
@@ -95,7 +101,7 @@ const Header = () => {
               <Link to="/">새싹 게시판</Link>
             </div>
             <div className="menuItem">
-              <Link to="/">새싹 게임</Link>
+              <Link to="/game">새싹 게임</Link>
             </div>
             <div className="menuItem">
               <Link to="/">상품 등록</Link>

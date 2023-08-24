@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,32 +50,38 @@ const Login = () => {
   console.log("비밀번호: " + inputpwd);
 
   return (
-    <div className="container">
-      <div>
+    <div className="login-container">
+      <div className="login-child">
         <form onSubmit={onSubmit}>
-          <h2>로그인</h2>
-          <div>
+          <h2 className="login-title">로그인</h2>
+          <div className="login-input1">
             <input
+              className="login-inputBox1"
               type="text"
               placeholder="아이디를 입력해주세요"
               value={inputid}
               onChange={onChangeId}
             />
           </div>
-          <div>
+          <div className="login-input2">
             <input
+              className="login-inputBox2"
               type="password"
               placeholder="비밀번호를 입력해주세요"
               value={inputpwd}
               onChange={onChangepwd}
             />
           </div>
-          <div>
+          <div className="login-idpwd">
             <span>아이디찾기</span>| <span>비밀번호 찾기</span>
           </div>
-          <button type="submit">로그인</button>
-          <button>api로그인</button>
-          <button onClick={onClick}>회원가입</button>
+          <button className="login-button1" type="submit">
+            로그인
+          </button>
+          <button className="login-button1">api로그인</button>
+          <button className="login-button1" onClick={onClick}>
+            회원가입
+          </button>
         </form>
       </div>
     </div>

@@ -23,7 +23,7 @@ const GameResult = () => {
     } else if (finalresultint > 40) {
       setResultscore("이제 영수증 챙겨 다니세요 ㅠ");
     } else {
-      setResultscore("이사람 신부름 시키면 개비싼거사옴 ㄷㄷ;;");
+      setResultscore("이사람 심부름 시키면 개비싼거사옴 ㄷㄷ;;");
     }
   }, [finalresultint]);
   return (
