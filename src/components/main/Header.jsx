@@ -100,7 +100,7 @@ const Header = () => {
               <Link to="/">새싹 게시판</Link>
             </div>
             <div className="menuItem">
-              <Link to="/">새싹 게임</Link>
+              <Link to="/game">새싹 게임</Link>
             </div>
             <div className="menuItem">
               <Link to="/addproduct">상품 등록</Link>
