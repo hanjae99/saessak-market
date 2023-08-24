@@ -16,7 +16,9 @@ header {
   height: 80px;
   margin: 0 auto;
 }
+
 .logo {
+  background-color: rgb(235, 199, 116);
   height: 90px;
   text-align: center;
   display: flex;
