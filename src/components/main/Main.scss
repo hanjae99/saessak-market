@@ -2,6 +2,7 @@
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 main {
@@ -13,6 +14,28 @@ main {
   margin: 0 auto;
   margin-top: 20vh;
 }
+.carousel-style {
+  width: 100%;
+}
+
+.slide-item {
+  width: 100%;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.slide-item > img {
+  width: 25vw;
+  height: 25vw;
+}
+
+.slide-textBox {
+  padding: 10px 0;
+}
+
+.slide-item > .slide-text {
+  font-size: 1rem;
+}
 
 // 요즘뜨는상품 스타일
 #hotItemContainer {
@@ -22,13 +45,22 @@ main {
   gap: 20px 20px;
 }
 
-.hotItem {
+.menu2 {
+  margin-top: 20vh;
+}
+
+@mixin hotItem($url: url) {
+  background-image: url($url);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  //
   background-color: #ccc;
   border-radius: 5px;
   width: 100%;
-  height: 27vh;
+  height: 20vw;
   text-align: center;
-  line-height: 27vh;
+  line-height: 20vw;
   font-size: 1.7rem;
   color: white;
   font-weight: 600;
@@ -36,41 +68,30 @@ main {
   cursor: pointer;
 }
 
-.menu2 {
-  margin-top: 20vh;
+.hotItem1 {
+  @include hotItem($url: "../../img/notebook.png");
 }
 
-@mixin item($url: url) {
-  background-image: url($url);
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: center;
+.hotItem2 {
+  @include hotItem($url: "../../img/earphone.png");
 }
-
-.item1 {
-  @include item($url: '../../img/notebook.png');
+.hotItem3 {
+  @include hotItem($url: "../../img/cpu.png");
 }
-
-.item2 {
-  @include item($url: '../../img/earphone.png');
+.hotItem4 {
+  @include hotItem($url: "../../img/nintendo.png");
 }
-.item3 {
-  @include item($url: '../../img/cpu.png');
+.hotItem5 {
+  @include hotItem($url: "../../img/iphone.png");
 }
-.item4 {
-  @include item($url: '../../img/nintendo.png');
+.hotItem6 {
+  @include hotItem($url: "../../img/bag.png");
 }
-.item5 {
-  @include item($url: '../../img/iphone.png');
+.hotItem7 {
+  @include hotItem($url: "../../img/ipad.png");
 }
-.item6 {
-  @include item($url: '../../img/bag.png');
-}
-.item7 {
-  @include item($url: '../../img/ipad.png');
-}
-.item8 {
-  @include item($url: '../../img/converse.png');
+.hotItem8 {
+  @include hotItem($url: "../../img/converse.png");
 }
 
 .menu3 {
@@ -86,9 +107,14 @@ main {
 .newItem {
   width: 1fr;
   padding-left: 20px;
+  cursor: pointer;
 }
 
 .newItem > img {
-  width: 100%;
-  height: 25vh;
+  width: 20vw;
+  height: 20vw;
+}
+
+.newItem > p:nth-of-type(2) {
+  font-weight: bold;
 }

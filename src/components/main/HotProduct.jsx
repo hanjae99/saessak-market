@@ -7,7 +7,7 @@ const HotProduct = () => {
   return (
     <div id="hotItemContainer">
       <div
-        className="hotItem item1"
+        className="hotItem1"
         onClick={() => {
           navigate("/search/노트북");
         }}
@@ -15,7 +15,7 @@ const HotProduct = () => {
         #노트북
       </div>
       <div
-        className="hotItem item2"
+        className="hotItem2"
         onClick={() => {
           navigate("/search/버즈");
         }}
@@ -23,7 +23,7 @@ const HotProduct = () => {
         #버즈
       </div>
       <div
-        className="hotItem item3"
+        className="hotItem3"
         onClick={() => {
           navigate("/search/컴퓨터");
         }}
@@ -31,7 +31,7 @@ const HotProduct = () => {
         #컴퓨터
       </div>
       <div
-        className="hotItem item4"
+        className="hotItem4"
         onClick={() => {
           navigate("/search/닌텐도");
         }}
@@ -39,7 +39,7 @@ const HotProduct = () => {
         #닌텐도
       </div>
       <div
-        className="hotItem item5"
+        className="hotItem5"
         onClick={() => {
           navigate("/search/아이폰");
         }}
@@ -47,7 +47,7 @@ const HotProduct = () => {
         #아이폰
       </div>
       <div
-        className="hotItem item6"
+        className="hotItem6"
         onClick={() => {
           navigate("/search/샤넬");
         }}
@@ -55,7 +55,7 @@ const HotProduct = () => {
         #샤넬
       </div>
       <div
-        className="hotItem item7"
+        className="hotItem7"
         onClick={() => {
           navigate("/search/아이패드");
         }}
@@ -63,7 +63,7 @@ const HotProduct = () => {
         #아이패드
       </div>
       <div
-        className="hotItem item8"
+        className="hotItem8"
         onClick={() => {
           navigate("/search/컨버스");
         }}

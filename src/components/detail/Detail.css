@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .container {
   width: 80%;
   margin: 0 auto;
@@ -36,3 +39,5 @@
 .detail-imgbox1 {
   width: 100%;
 }
+
+/*캐러셀 기능을 리액트로 구현하고 싶어*/

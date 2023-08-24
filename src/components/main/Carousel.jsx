@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import data from "../../product.json";
 import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
 
 const SlideImg = styled.img`
   width: 100%;
@@ -45,6 +46,7 @@ const total_slides = data.slice(0, 5).length;
 
 // 캐러셀에 5개의 상품 노출
 const Carousel = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
@@ -74,7 +76,12 @@ const Carousel = () => {
       <SliderContainer ref={slideRef}>
         {data.slice(0, 5).map((d) => (
           <div key={d.id}>
-            <SlideImg src={d.imgsrc1} />
+            <SlideImg
+              src={d.imgsrc1}
+              onClick={() => {
+                navigate("/detail/" + d.id);
+              }}
+            />
             <p>상품명: {d.name}</p>
             <p>상품가격: {d.price}</p>
           </div>

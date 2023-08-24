@@ -1,33 +1,23 @@
-import { NavLink, Route, Routes } from 'react-router-dom';
-import AdminPage from './components/admin/AdminPage';
-import Login from './components/Login/Login';
-import SingUp from './components/Login/SingUp';
-import Game from './components/game/Game';
-import GameResult from './components/game/GameResult';
-import Detail from './components/detail/Detail';
-import GameModal from './components/game/GameModal';
-import Main from './components/main/Main';
-import ProductList from './components/productList/ProductList';
-import AddProduct from './components/addProduct/AddProduct';
-import BoardMain from './components/board/BoardMain';
-import CreateNotice from './components/board/CreateNotice';
-import CreateVoice from './components/board/CreateVoice';
-import { useState } from 'react';
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Changing from "./components//kimjin/Changing";
+import Check from "./components//kimjin/Check";
+import Wish_List from "./components//kimjin/Wish_List";
+import Login from "./components/Login/Login";
+import SingUp from "./components/Login/SingUp";
+import AddProduct from "./components/addProduct/AddProduct";
+import AdminPage from "./components/admin/AdminPage";
+import BoardMain from "./components/board/BoardMain";
+import CreateNotice from "./components/board/CreateNotice";
+import CreateVoice from "./components/board/CreateVoice";
+import Detail from "./components/detail/Detail";
+import Game from "./components/game/Game";
+import GameResult from "./components/game/GameResult";
+import Changing_pwd from "./components/kimjin/Changing_pwd";
+import Manu from "./components/kimjin/Manu";
+import Main from "./components/main/Main";
+import ProductList from "./components/productList/ProductList";
 import BoardInfo from './components/board/BoardInfo';
-import Manu from './components/kimjin/Manu';
-import Check from './components//kimjin/Check';
-import Changing from './components//kimjin/Changing';
-import Changing_pwd from './components/kimjin/Changing_pwd';
-import Wish_List from './components//kimjin/Wish_List';
-
-const MainPage = () => {
-  return (
-    <div>
-      <NavLink to="/admin">관리자페이지</NavLink>
-      <NavLink to="/user/mypage">마이페이지</NavLink>
-    </div>
-  );
-};
 
 function App() {
   const [page, setPage] = useState(1);

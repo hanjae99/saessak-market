@@ -1,10 +1,10 @@
-import React from 'react';
-import Header from './Header';
-import './Main.scss';
-import Carousel from './Carousel';
-import HotProduct from './HotProduct';
-import NewProduct from './NewProduct';
-import Footer from './Footer';
+import React from "react";
+import Header from "./Header";
+import "./Main.scss";
+import CarouselBox from "./CarouselBox";
+import HotProduct from "./HotProduct";
+import NewProduct from "./NewProduct";
+import Footer from "./Footer";
 
 const Main = () => {
   return (
@@ -16,7 +16,7 @@ const Main = () => {
             <div>
               <h2>당신을 위한 추천상품!</h2>
             </div>
-            <Carousel />
+            <CarouselBox />
           </div>
           <div className="menu2">
             <div>
