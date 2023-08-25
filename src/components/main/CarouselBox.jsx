@@ -115,7 +115,9 @@ const CarouselBox = () => {
     <div key={s.id} className="slide-item">
       <img src={s.imgsrc1} alt={s.name} />
       <div className="slide-textBox">
-        <p className="slide-text">{s.name}</p>
+        <div className="slide-title">
+          <p className="slide-text">{s.name}</p>
+        </div>
         <p className="slide-text">{s.price}</p>
         <p className="slide-text">
           {Math.floor(
@@ -143,7 +145,7 @@ const CarouselBox = () => {
       onChange={handleChange}
       onClickItem={handleClick}
       centerMode={true}
-      centerSlidePercentage={30}
+      centerSlidePercentage={50}
       className="carousel-style"
     >
       {imageBox}

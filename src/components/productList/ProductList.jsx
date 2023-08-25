@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import categoryData from "../../category.json";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
-import "./ProductList.css";
+import "./ProductList.scss";
 
 const ProductList = () => {
   const { searchItem } = useParams();
@@ -160,7 +160,9 @@ const ProductList = () => {
                         }}
                       >
                         <img src={si.imgsrc1} alt={si.name} />
-                        <p>{si.name}</p>
+                        <div className="item-title">
+                          <p>{si.name}</p>
+                        </div>
                         <p>{si.price}</p>
                         {Math.floor(
                           (new Date().getTime() - Date.parse(si.uptime)) /
@@ -194,7 +196,9 @@ const ProductList = () => {
                         }}
                       >
                         <img src={sc.imgsrc1} alt={sc.name} />
-                        <p>{sc.name}</p>
+                        <div className="item-title">
+                          <p>{sc.name}</p>
+                        </div>
                         <p>{sc.price}</p>
                         {Math.floor(
                           (new Date().getTime() - Date.parse(sc.uptime)) /
@@ -225,7 +229,9 @@ const ProductList = () => {
                       }}
                     >
                       <img src={p.imgsrc1} alt={p.name} />
-                      <p>{p.name}</p>
+                      <div className="item-title">
+                        <p>{p.name}</p>
+                      </div>
                       <p>{p.price}</p>
                       {Math.floor(
                         (new Date().getTime() - Date.parse(p.uptime)) /
