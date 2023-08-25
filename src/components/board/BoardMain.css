@@ -62,3 +62,26 @@
   background-color: rgba(109, 200, 42, 0.9);
   transition: all 0.7s;
 }
+@media all and (min-width: 1024px) and (max-width: 1279px) {
+  .td {
+    font-size: 15px;
+  }
+}
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  .td {
+    font-size: 13px;
+  }
+}
+@media all and (min-width: 426px) and (max-width: 767px) {
+  .td {
+    font-size: 12px;
+  }
+  .board-left {
+    flex-basis: 10%;
+  }
+}
+@media all and (min-width: 300px) and (max-width: 425px) {
+  .board-left {
+    flex-basis: 10%;
+  }
+}
