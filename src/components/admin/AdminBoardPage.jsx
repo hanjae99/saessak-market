@@ -14,11 +14,9 @@ const AdminBoardPage = ({ selectedCg, setModalData }) => {
           case '1':
             return <AdminNoticeBoard />
           case '2':
-            return <div>고객의소리</div>
-          case '3':
             return <ObjecttionBoard />
           default:
-            return selectedCg;
+            return <AdminNoticeBoard />;
         }
       })()}
     </div>

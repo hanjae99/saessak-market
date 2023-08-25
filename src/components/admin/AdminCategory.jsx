@@ -24,8 +24,7 @@ const AdminCategory = ({ page, setSelectedCg }) => {
   } else if (page === 'adminboard') {
     mainCtg = [
       {categoryno:"1",categoryname:"공지사항",categorypr:"null"},
-      {categoryno:"2",categoryname:"고객의소리",categorypr:"null"},
-      {categoryno:"3",categoryname:"이의제기 게시판",categorypr:"null"},
+      {categoryno:"2",categoryname:"이의제기 게시판",categorypr:"null"},
     ]
   }
 
