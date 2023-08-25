@@ -7,18 +7,20 @@ import { useNavigate } from 'react-router';
 const NoticeBoard = ({ page }) => {
   const dummy = useSelector((state) => state.board);
   const num = dummy.length;
-  const [value, setValue] = useState('');
   const navigate = useNavigate();
+  const [value, setValue] = useState('');
+  const [filter, setFilter] = useState('');
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
   }, []);
 
   const onSearch = () => {
-    navigate('' + value);
+    setFilter(value);
   };
 
   const enterCheck = (e) => {
+    e.preventDefault();
     if (e.keyCode === 13) {
       onSearch();
       return;
@@ -47,21 +49,24 @@ const NoticeBoard = ({ page }) => {
           </div>
         </div>
         <div className="tbody">
-          {dummy.slice((page - 1) * 15, page * 15).map((e, i) => {
-            return (
-              <div className="tr" key={i} onClick={() => navigate('info/' + e.id)}>
-                <div className="td">{num - i - (page - 1) * 15}</div>
-                <div className="td">{e.title}</div>
-                <div className="td">{e.writer}</div>
-                <div className="td">
-                  {new Date().getDate() === new Date(e.date).getDate()
-                    ? new Date(e.date).toLocaleTimeString()
-                    : new Date(e.date).toLocaleDateString()}
+          {dummy
+            .filter((p) => p.title.includes(filter) || filter === '')
+            .slice((page - 1) * 15, page * 15)
+            .map((e, i) => {
+              return (
+                <div className="tr" key={i} onClick={() => navigate('info/' + e.id)}>
+                  <div className="td">{num - i - (page - 1) * 15}</div>
+                  <div className="td">{e.title}</div>
+                  <div className="td">{e.writer}</div>
+                  <div className="td">
+                    {new Date().getDate() === new Date(e.date).getDate()
+                      ? new Date(e.date).toLocaleTimeString()
+                      : new Date(e.date).toLocaleDateString()}
+                  </div>
+                  <div className="td">{e.clicked}</div>
                 </div>
-                <div className="td">{e.clicked}</div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </>

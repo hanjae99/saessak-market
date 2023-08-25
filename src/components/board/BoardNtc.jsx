@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './BoardMain.css';
 import NoticeBoardList from './NoticeBoardList';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import Header from '../main/Header';
 import BoardNtcBd from './BoardNtcBd';
 

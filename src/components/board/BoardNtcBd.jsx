@@ -1,6 +1,5 @@
 import React from 'react';
 import './NoticeBoard.css';
-import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
