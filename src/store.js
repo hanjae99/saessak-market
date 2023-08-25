@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import adminData from "./components/admin/Admin_Slice";
+import adminData from "./components/admin/adminSlice";
 import productJSON from "./product.json";
 import boardJSON from "./board.json";
 import user from "./userSlice";
