@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import './NoticeBoard.css';
-import { FaSearch } from 'react-icons/fa';
+import { BiSearchAlt2 } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 const NoticeBoard = ({ page }) => {
   const dummy = useSelector((state) => state.board);
   const num = dummy.length;
+  const [value, setValue] = useState('');
   const navigate = useNavigate();
+
+  const onChange = useCallback((e) => {
+    setValue(e.target.value);
+  }, []);
+
+  const onSearch = () => {
+    navigate('' + value);
+  };
+
+  const enterCheck = (e) => {
+    if (e.keyCode === 13) {
+      onSearch();
+      return;
+    }
+  };
   return (
     <>
-      <div className="search">
-        <input type="text" placeholder="제목 검색" />
-        <FaSearch className="search-icon" size="30" />
+      <div className="searchBox">
+        <form>
+          <label>
+            <input type="search" placeholder="제목 검색" value={value} onChange={onChange} onKeyDown={enterCheck} />
+            <span onClick={onSearch}>
+              <BiSearchAlt2 />
+            </span>
+          </label>
+        </form>
       </div>
       <div className="table">
         <div className="thead">

@@ -42,9 +42,6 @@ const BoardNtc = () => {
                 </button>
               </li>
             </ul>
-            <Link to="/boardwrite">
-              <button className="new-text">작성</button>
-            </Link>
           </div>
         </div>
         <div className="board-rigth"></div>
