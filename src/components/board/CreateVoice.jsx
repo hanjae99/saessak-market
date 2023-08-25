@@ -6,6 +6,7 @@ import Header from '../main/Header';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './CreateVoice.css';
+import { FaSearch } from 'react-icons/fa';
 
 const CreateVoice = ({ page }) => {
   const num = dummy.length;
@@ -17,6 +18,10 @@ const CreateVoice = ({ page }) => {
           <NoticeBoardList />
         </div>
         <div className="board-center">
+          <div className="search">
+            <input type="text" placeholder="제목 검색" />
+            <FaSearch className="search-icon" size="30" />
+          </div>
           <div className="table">
             <div className="thead">
               <div className="tr">
