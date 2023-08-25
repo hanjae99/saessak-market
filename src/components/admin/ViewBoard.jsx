@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ViewBoard = ({ dataAry, viewList }) => {
+const ViewBoard = ({ dataAry, viewList, onClick }) => {
   let viewKey = 1;
   return (
     <>
@@ -10,7 +10,7 @@ const ViewBoard = ({ dataAry, viewList }) => {
         </div>
 
         {dataAry.map(p =>
-          <div className='tr' key={'viewBoard'+viewKey++}>
+          <div className='tr' key={'viewBoard'+viewKey++} onClick={onClick}>
             {Object.keys(viewList).map(q => <div key={q} className='td'>{p[q]}</div>)}
           </div>
         )}
