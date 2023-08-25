@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import Header from "../main/Header";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,16 +17,18 @@ const Login = () => {
 
       console.log("asdaasd:" + inputid);
       console.log("dasdasdasd:" + inputpwd);
-      const login = user.find((l) => l.id === inputid);
-      const pwd = user.find((p) => p.pwd === inputpwd);
+      const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
 
       console.log("login" + login);
-      console.log("pwd" + pwd);
 
-      if (!login || !pwd) {
+      if (!login) {
         console.log("아이디 비밀 번호를 다시입력해주세요");
       } else {
-        console.log("사이트로 이동");
+        if (login.gender === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     },
     [inputid, inputpwd, user]
@@ -51,7 +54,8 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="login-child">
+      <Header />
+      <main className="login-child">
         <form onSubmit={onSubmit}>
           <h2 className="login-title">로그인</h2>
           <div className="login-input1">
@@ -75,15 +79,17 @@ const Login = () => {
           <div className="login-idpwd">
             <span>아이디찾기</span>| <span>비밀번호 찾기</span>
           </div>
-          <button className="login-button1" type="submit">
-            로그인
-          </button>
-          <button className="login-button1">api로그인</button>
-          <button className="login-button1" onClick={onClick}>
-            회원가입
-          </button>
+          <div className="login-button-container">
+            <button className="login-button1" type="submit">
+              로그인
+            </button>
+            <button className="login-button1">api로그인</button>
+            <button className="login-button1" onClick={onClick}>
+              회원가입
+            </button>
+          </div>
         </form>
-      </div>
+      </main>
     </div>
   );
 };
