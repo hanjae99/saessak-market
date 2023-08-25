@@ -1,6 +1,9 @@
 .addProductContainer {
   width: 80%;
+  height: 1000px;
   margin: 0 auto;
+  padding: 1rem 1rem;
+  background-color: rgba(199, 138, 67, 0.05);
 }
 
 .imgUploadBox {
@@ -36,7 +39,8 @@
 .imgItem {
   width: 250px;
   height: 250px;
-  border: 1px solid black;
+  border: 1px solid #e2e2e2;
+  background-color: white;
   margin-right: 20px;
   border-radius: 10px;
 }
@@ -45,6 +49,13 @@
   padding-left: 10vw;
   margin-top: 10vh;
   position: relative;
+}
+
+.addContents input,
+.addContents textarea {
+  border-radius: 5px;
+  border: 1px solid rgba(199, 138, 67, 0.7);
+  outline-color: rgba(199, 138, 67, 0.9);
 }
 
 .addContents > form > div {

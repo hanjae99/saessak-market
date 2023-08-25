@@ -175,12 +175,20 @@ const user = createSlice({
       );
     },
     deleteItem(state, action) {
-      console.log(state);
+      console.log("1", state);
       let num = state[1].userproduct.find((a) => {
         return a.id === action.payload;
       });
       num = state[1].userproduct.indexOf(num);
       state[1].userproduct.splice(num, 1);
+    },
+    deleteItem2(state, action) {
+      console.log("2", state);
+      let num = state[2].userproduct.find((a) => {
+        return a.id === action.payload;
+      });
+      num = state[2].userproduct.indexOf(num);
+      state[2].userproduct.splice(num, 1);
     },
   },
 });
