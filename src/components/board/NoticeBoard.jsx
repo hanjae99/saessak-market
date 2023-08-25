@@ -1,10 +1,13 @@
 import React from 'react';
 import './NoticeBoard.css';
-import dummy from '../../board.json';
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const NoticeBoard = ({ page }) => {
+  const dummy = useSelector((state) => state.board);
   const num = dummy.length;
+  const navigate = useNavigate();
   return (
     <>
       <div className="search">
@@ -19,19 +22,21 @@ const NoticeBoard = ({ page }) => {
             <div className="th">작성자</div>
             <div className="th">작성일</div>
             <div className="th">조회수</div>
-            <div className="th">추천</div>
           </div>
         </div>
         <div className="tbody">
           {dummy.slice((page - 1) * 15, page * 15).map((e, i) => {
             return (
-              <div className="tr" key={i}>
+              <div className="tr" key={i} onClick={() => navigate('info/' + e.id)}>
                 <div className="td">{num - i - (page - 1) * 15}</div>
                 <div className="td">{e.title}</div>
                 <div className="td">{e.writer}</div>
-                <div className="td">{e.date}</div>
+                <div className="td">
+                  {new Date().getDate() === new Date(e.date).getDate()
+                    ? new Date(e.date).toLocaleTimeString()
+                    : new Date(e.date).toLocaleDateString()}
+                </div>
                 <div className="td">{e.clicked}</div>
-                <div className="td"></div>
               </div>
             );
           })}

@@ -8,45 +8,17 @@
   margin: 0 auto;
 }
 
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-menu,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-form,
-fieldset,
-input,
-textarea,
-blockquote,
-th,
-td,
-p {
-  margin: 0;
-  padding: 0;
-  font-size: 100%;
-  font-family: '돋움', Dotum, sans-serif;
-}
-
 .contents {
-  z-index: inherit !important;
+  /* z-index: inherit !important; */
+  /* margin-top: 150px; */
 }
 
 .manu-main {
-  position: fixed;
   min-height: 1000px;
+  overflow: auto;
   line-height: 1.42857;
   color: #333;
+  margin-top: 150px;
 }
 
 .manu-main * {
@@ -97,8 +69,14 @@ p {
 }
 
 .manu-1 {
-  width: 150px;
+  width: 200px;
   float: left;
+}
+
+@media (max-width: 1280px) {
+  .manu-1 {
+    display: none;
+  }
 }
 
 .manu-1 .li-1 {
@@ -108,7 +86,7 @@ p {
   border-color: rgb(225, 228, 230);
   border-image: initial;
   color: rgb(17, 17, 17);
-  padding: 10px 0px;
+  /* padding: 10px ; */
   margin: 0px;
 }
 
@@ -152,9 +130,14 @@ p {
 }
 
 .section {
-  width: 830px;
+  width: 100%;
+  height: 100%;
   float: left;
   flex: 3;
+}
+
+.section-title {
+  font-size: 30px;
 }
 
 .section-2 {
@@ -179,19 +162,86 @@ p {
   font-weight: 100;
   font-style: normal;
   box-sizing: border-box;
-  font-family: robotoThinNumber, roboto, "Courier New", Tahoma, NanumGothic, MalgunGothic, 돋움, dotum, sans-serif;
+  font-family: robotoThinNumber, roboto, "Courier New", Tahoma, NanumGothic,
+    MalgunGothic, 돋움, dotum, sans-serif;
 }
 
 .manu-2 {
-  margin: 0px 0px 0px 30px;
   zoom: 1;
 }
 
 .manu-2-1 {
-  margin: 0px 0px 16px
+  margin: 0px 0px 16px;
+  height: 1000px;
+  display: contents;
+  border-radius: 5px;
+  padding: 10px 0 0 10px;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+.pwdCheck {
+  margin: 0px 0px 16px;
+  height: 500px;
+  border: 4px solid rgba(109, 200, 42, 0.7);
+  border-radius: 5px;
+  padding: 10px 0 0 10px;
+}
+
+.pwdCheck1 {
+  /* border: 4px solid rgba(0, 0, 0, 0.469); */
+  width: 100%;
+  height: 500px;
+}
+
+.pwdCheck2 > div {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.pwdCheck2 > div > input {
+  height: 40px;
+  width: 350px;
+  font-size: 20px;
+}
+
+.pwdCheck3 {
+  text-align: right;
+  margin-top: 180px;
+  margin-right: 10px;
+}
+
+.pwdCheck3 > button {
+  width: 70px;
+  height: 40px;
+  margin-right: 10px;
 }
 
 .manu-2-1-1 {
+  height: 50%;
+  flex: 1.5;
+}
+
+.manu-2-1-1 > div {
+  margin-bottom: 2rem;
+}
+
+.manu-2-1-1 > div > label {
+  font-size: 25px;
+}
+
+.manu-2-1-1 > div > input {
+  height: 60px;
+  width: 400px;
+  border-radius: 4px;
+  outline-color: rgba(109, 200, 42, 1);
+}
+
+.manu-3 {
+  flex: 1;
+}
+
+.manu-2-1-1-1 {
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -201,21 +251,23 @@ p {
 }
 
 .table-main {
-  width: 800px;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 20px;
-  padding: 24px 24px 16px
+  width: 90%;
+  margin-left: 5%;
 }
 
-.table-body{
-  width: 800px;
+.table-body {
+  width: 100%;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 20px;
-  padding: 24px 24px 16px
+  margin-bottom: 5px;
+  padding: 24px 24px 16px;
 }
 
 .table-day {
@@ -232,34 +284,34 @@ p {
 }
 
 .tbody-1 {
-  display: table-row-group;
-  vertical-align: middle;
-  border-color: inherit;
+  width: 100%;
 }
 
-.table-main tr {
+/* .table-main tr {
   display: table-row;
   vertical-align: inherit;
   border-color: inherit;
 }
 
-
-
 .table-main td {
   display: table-cell;
   vertical-align: inherit;
+} */
+
+.td-main {
+  display: flex;
 }
 
 .td-1 {
   height: 100%;
-  width: 600px;
+  width: 100%;
   padding: 20px;
   vertical-align: top;
 }
 
 .td-2 {
-  width: 200px;
-  height: 100%;
+  width: 20%;
+  /* height: 100%; */
   text-align: center;
   border-left: 1px solid rgb(238, 238, 238);
 }
@@ -323,7 +375,7 @@ p {
   outline: none;
 }
 
-img {
+.img1 {
   width: 64px;
   aspect-ratio: auto 64 / 64;
   height: 64px;
@@ -404,4 +456,82 @@ img {
 
 .so1 {
   margin-top: 10px;
+}
+
+.menuBtn {
+  cursor: pointer;
+  background-color: rgba(199, 138, 67, 0.4);
+  color: white;
+  width: 200px;
+  height: 100px;
+  font-size: 30px;
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 3px;
+  transition: all 0.5s linear;
+}
+
+.menuBtn1 {
+  width: 200px;
+  height: 100px;
+  padding: 30px 0;
+  margin-top: 3px;
+}
+
+.menuBtn:hover {
+  transform: scale(1.1);
+  background-color: rgba(199, 138, 67, 0.7);
+}
+
+.textarea1:focus {
+  outline: none;
+}
+
+.changing1 > div {
+  margin-bottom: 30px;
+}
+
+.changing1 > div {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.changing1 > div > input {
+  height: 40px;
+  width: 350px;
+  font-size: 20px;
+}
+
+.Changing-1 {
+  margin: 0px 0px 16px;
+  height: 700px;
+  /* border: 4px solid rgba(109, 200, 42, 0.7); */
+  border-radius: 5px;
+  padding: 10px 0 0 10px;
+}
+
+.mypage-1 > div > label {
+  font-size: 20px;
+  margin-top: 2px;
+  margin-bottom: 20px;
+  margin-right: 50px;
+}
+
+.mypage-1 > div > input {
+  width: 500px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.mypage-2 > div > label {
+  font-size: 20px;
+  margin-top: 2px;
+  margin-bottom: 20px;
+  margin-right: 60px;
+}
+
+.mypage-2 > div > input {
+  width: 450px;
+  height: 40px;
+  margin-bottom: 10px;
 }
