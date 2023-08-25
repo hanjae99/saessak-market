@@ -156,3 +156,7 @@
 .modal-labelbox {
   padding-top: 10px;
 }
+.game-productslablediv,
+.game-productsdivtext {
+  margin-left: 10px;
+}

@@ -16,19 +16,27 @@
 .gr-imgBoxs {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 20%);
 }
 
 .gr-img1 {
   border-radius: 20px;
-  width: 19vh;
-  height: 19vh;
+  width: 100%;
+  height: 17vw;
 }
 .gr-text1 > p {
   text-align: center;
+}
+.gr-imgBox1 {
+  padding: 10px;
 }
 .gr-imgBox1:hover .gr-img1 {
   transform: translateY(-7px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   transition: all ease 0.2s;
+}
+.gr-textTitle {
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

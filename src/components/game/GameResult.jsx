@@ -49,8 +49,10 @@ const GameResult = () => {
                     }}
                   >
                     <img className="gr-img1" src={p.imgsrc1} alt="이미지1" />
-                    <div className="text1">
-                      <p>{p.name}</p>
+                    <div className="gr-text1">
+                      <div className="gr-textTitle">
+                        <span>{p.name}</span>
+                      </div>
                       <p>{p.price}</p>
                     </div>
                   </div>

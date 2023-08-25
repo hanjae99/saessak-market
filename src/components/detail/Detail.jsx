@@ -6,6 +6,7 @@ import { parse } from "qs";
 import Header from "../main/Header";
 import Kakao from "./Kakao";
 import Footer from "../main/Footer";
+import DetailCarousel from "./DetailCarousel";
 
 const Detail = () => {
   const { id } = useParams();
@@ -48,9 +49,10 @@ const Detail = () => {
         <main className="detail-contentsBox">
           <div className="detail-contentsBox1">
             <div className="detail-productsitem1">
-              <div className="detail-imgBox">
+              {/* <div className="detail-imgBox">
                 <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
-              </div>
+              </div> */}
+              {item.imgsrc1 && <DetailCarousel item={item} />}
             </div>
             <div className="detail-productsitem2">
               <div>

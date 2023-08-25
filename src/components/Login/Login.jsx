@@ -10,6 +10,7 @@ const Login = () => {
   const [inputid, setInputid] = useState("");
   const [inputpwd, setInputpwd] = useState("");
   const user = useSelector((state) => state.user);
+  const [loginFailed, setLoginFailed] = useState(false); // 상태 추가
   console.log(user[1].id);
 
   const onSubmit = useCallback(
@@ -24,6 +25,7 @@ const Login = () => {
 
       if (!login) {
         console.log("아이디 비밀 번호를 다시입력해주세요");
+        setLoginFailed(true);
       } else {
         if (login.gender === "admin") {
           navigate("/admin");
@@ -32,7 +34,7 @@ const Login = () => {
         }
       }
     },
-    [inputid, inputpwd, user]
+    [inputid, inputpwd, navigate, user]
   );
   const onChangeId = (e) => {
     setInputid(e.target.value);
@@ -78,17 +80,31 @@ const Login = () => {
                 onChange={onChangepwd}
               />
             </div>
+            {loginFailed && (
+              <p className="login-failed-msg">
+                아이디 또는 비밀번호가 잘못되었습니다.
+              </p>
+            )}
             <div className="login-idpwd">
               <span>아이디찾기</span>| <span>비밀번호 찾기</span>
             </div>
             <div className="login-button-container">
-              <button className="login-button1" type="submit">
-                로그인
-              </button>
-              <button className="login-button1">api로그인</button>
-              <button className="login-button1" onClick={onClick}>
-                회원가입
-              </button>
+              <div>
+                <button className="login-button1" type="submit">
+                  로그인
+                </button>
+              </div>
+              <div>
+                <button className="login-button3" onClick={onClick}>
+                  회원가입
+                </button>
+              </div>
+              <div>
+                <button className="login-button2">카카오 로그인</button>
+              </div>
+              <div>
+                <button className="login-button4">NAVER로그인</button>
+              </div>
             </div>
           </form>
         </main>

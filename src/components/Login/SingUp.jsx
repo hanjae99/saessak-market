@@ -7,6 +7,7 @@ import Footer from "../main/Footer";
 
 const SingUp = () => {
   const user = useSelector((state) => state.user);
+  const [singFailed, setSingFailed] = useState(false); // 상태 추가
   console.log(user);
   const dispatch = useDispatch();
   const navigator = useNavigate();
@@ -24,17 +25,31 @@ const SingUp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("id", newUser.id);
-    console.log("nickname", newUser.nickname);
-    console.log("pwd", newUser.pwd);
-    console.log("name", newUser.name);
-    console.log("email", newUser.email);
-    console.log("phone", newUser.phone);
-    console.log("address", newUser.address);
-    console.log("gender", newUser.gender);
+    // console.log("id", newUser.id);
+    // console.log("nickname", newUser.nickname);
+    // console.log("pwd", newUser.pwd);
+    // console.log("name", newUser.name);
+    // console.log("email", newUser.email);
+    // console.log("phone", newUser.phone);
+    // console.log("address", newUser.address);
+    // console.log("gender", newUser.gender);
 
-    dispatch({ type: "user/add", payload: newUser });
-    navigator("/login");
+    if (
+      !newUser.id ||
+      !newUser.nickname ||
+      !newUser.pwd ||
+      !newUser.name ||
+      !newUser.email ||
+      !newUser.phone ||
+      !newUser.gender
+    ) {
+      setSingFailed(true);
+      return;
+    } else {
+      setSingFailed(false);
+      dispatch({ type: "user/add", payload: newUser });
+      navigator("/login");
+    }
   };
 
   const onNickname = (e) => {
@@ -193,6 +208,11 @@ const SingUp = () => {
               />
               여성
             </div>
+            {singFailed && (
+              <p className="singup-failed-msg">
+                필수 정보를 모두 입력해주세요.
+              </p>
+            )}
             <br />
             <div className="singup-Divcheckbox">
               <label className="sinup-text-id">이용약관</label>
