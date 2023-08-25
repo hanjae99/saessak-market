@@ -16,8 +16,6 @@ const AdminBoardPage = ({ selectedCg, setModalData }) => {
           case '2':
             return <div>고객의소리</div>
           case '3':
-            return <div>신고 게시판</div>
-          case '4':
             return <ObjecttionBoard />
           default:
             return selectedCg;
