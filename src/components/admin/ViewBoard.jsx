@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const ViewBoard = ({ dataAry, viewList, onClick }) => {
   let viewKey = 1;
@@ -12,9 +12,7 @@ const ViewBoard = ({ dataAry, viewList, onClick }) => {
           <div className='tr' key={'viewBoard'+viewKey++} onClick={(e,p)=>onClick(e,p)}>
             {Object.keys(viewList).map(q => <div key={q} className='td'>{p[q]}</div>)}
           </div>
-        )}
+        ))}
       </div>
   )
 }
-
-export default ViewBoard

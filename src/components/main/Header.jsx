@@ -7,7 +7,7 @@ import category from '../../category.json';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const navigate = useNavigate();
 
   const onChange = useCallback((e) => {
@@ -15,7 +15,7 @@ const Header = () => {
   }, []);
 
   const onSearch = () => {
-    navigate('/search/' + value);
+    navigate("/search/" + value);
   };
 
   const enterCheck = (e) => {
@@ -100,7 +100,9 @@ const Header = () => {
                   .map((c) => {
                     return (
                       <li className="categoryItem" key={c.categoryno}>
-                        <Link to={'/search?category=' + c.categoryno}>{c.categoryname}</Link>
+                        <Link to={"/search?category=" + c.categoryno}>
+                          {c.categoryname}
+                        </Link>
                       </li>
                     );
                   })}
@@ -111,7 +113,7 @@ const Header = () => {
             <div
               className="menuItem"
               onClick={() => {
-                navigate('/boardmain');
+                navigate("/boardmain");
               }}
             >
               <Link to="/boardmain">새싹 게시판</Link>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import './NoticeBoard.css';
 import dummy from '../../board.json';
 import NoticeBoardList from './NoticeBoardList';
@@ -6,10 +6,27 @@ import Header from '../main/Header';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './CreateVoice.css';
-import { FaSearch } from 'react-icons/fa';
+import { useNavigate } from 'react-router';
+import { BiSearchAlt2 } from 'react-icons/bi';
 
 const CreateVoice = ({ page }) => {
   const num = dummy.length;
+  const navigate = useNavigate();
+  const [value, setValue] = useState('');
+  const onChange = useCallback((e) => {
+    setValue(e.target.value);
+  }, []);
+
+  const onSearch = () => {
+    navigate('' + value);
+  };
+
+  const enterCheck = (e) => {
+    if (e.keyCode === 13) {
+      onSearch();
+      return;
+    }
+  };
   return (
     <>
       <Header></Header>
@@ -18,9 +35,15 @@ const CreateVoice = ({ page }) => {
           <NoticeBoardList />
         </div>
         <div className="board-center">
-          <div className="search">
-            <input type="text" placeholder="제목 검색" />
-            <FaSearch className="search-icon" size="30" />
+          <div className="searchBox">
+            <form>
+              <label>
+                <input type="search" placeholder="제목 검색" value={value} onChange={onChange} onKeyDown={enterCheck} />
+                <span onClick={onSearch}>
+                  <BiSearchAlt2 />
+                </span>
+              </label>
+            </form>
           </div>
           <div className="table">
             <div className="thead">
