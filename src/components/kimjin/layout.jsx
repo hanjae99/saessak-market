@@ -36,7 +36,10 @@ export const Layout = () => {
         ></div> */}
         </div>
         <div className="newmain3" style={{ display: "flex", width: "100%" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            className="layout-1"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <div
               className="menuBtn1"
               style={{
