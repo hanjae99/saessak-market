@@ -162,6 +162,22 @@ const ProductList = () => {
                         <img src={si.imgsrc1} alt={si.name} />
                         <p>{si.name}</p>
                         <p>{si.price}</p>
+                        {Math.floor(
+                          (new Date().getTime() - Date.parse(si.uptime)) /
+                            1000 /
+                            60
+                        ) < 60 ? (
+                          <p>
+                            {Math.floor(
+                              (new Date().getTime() - Date.parse(si.uptime)) /
+                                1000 /
+                                60
+                            )}
+                            분전
+                          </p>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     );
                   })
@@ -180,6 +196,22 @@ const ProductList = () => {
                         <img src={sc.imgsrc1} alt={sc.name} />
                         <p>{sc.name}</p>
                         <p>{sc.price}</p>
+                        {Math.floor(
+                          (new Date().getTime() - Date.parse(sc.uptime)) /
+                            1000 /
+                            60
+                        ) < 60 ? (
+                          <p>
+                            {Math.floor(
+                              (new Date().getTime() - Date.parse(sc.uptime)) /
+                                1000 /
+                                60
+                            )}
+                            분전
+                          </p>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     );
                   })
@@ -195,6 +227,22 @@ const ProductList = () => {
                       <img src={p.imgsrc1} alt={p.name} />
                       <p>{p.name}</p>
                       <p>{p.price}</p>
+                      {Math.floor(
+                        (new Date().getTime() - Date.parse(p.uptime)) /
+                          1000 /
+                          60
+                      ) < 60 ? (
+                        <p>
+                          {Math.floor(
+                            (new Date().getTime() - Date.parse(p.uptime)) /
+                              1000 /
+                              60
+                          )}
+                          분전
+                        </p>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   );
                 })}

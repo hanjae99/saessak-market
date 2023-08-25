@@ -21,6 +21,16 @@ const AdminUserPage = ({ selectedCg, setModalData }) => {
                   <span>phone : {p.phone}</span><span>email : {p.email}</span><br />
                   <span>address : {p.address}</span>
                 </div>
+                { (()=>{
+                  if (!(selectedCg === '' || selectedCg === undefined)){
+                    return (
+                      selectedCg === '1' ? 
+                      <button>차단하기</button>:
+                      <button>차단해제</button>
+                    )
+                  }
+                })() }
+               
               </div>
             )}
     </div>

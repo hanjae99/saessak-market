@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "./AddProduct.css";
-import { useDispatch, useSelector } from "react-redux";
 
 const AddProduct = () => {
   const [imgSrc, setImgSrc] = useState([]);
   const [imgCount, setImgCount] = useState(0);
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.product);
-  console.log(state);
+  const navigate = useNavigate();
 
   const getImgSrc = (e) => {
     const file = e.target.files[0];
@@ -47,6 +47,7 @@ const AddProduct = () => {
     };
 
     dispatch({ type: "product/add", payload: newProduct });
+    navigate("/search");
   };
 
   return (
@@ -107,7 +108,15 @@ const AddProduct = () => {
               </div>
               <div className="submitBtn">
                 <button type="submit">새싹 심기!</button>
-                <button type="submit">취소하기</button>
+                <button
+                  type="reset"
+                  onClick={() => {
+                    const resetImgSrc = [];
+                    setImgSrc(resetImgSrc);
+                  }}
+                >
+                  취소하기
+                </button>
               </div>
             </form>
           </div>

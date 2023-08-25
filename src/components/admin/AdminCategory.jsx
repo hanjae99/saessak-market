@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import category from '../../category.json'
 import { PiMinusSquareBold, PiPlusSquareBold } from 'react-icons/pi'
+import { CgMenu } from 'react-icons/cg'
 
 
 const AdminCategory = ({ page, setSelectedCg }) => {
@@ -89,20 +90,34 @@ const AdminCategory = ({ page, setSelectedCg }) => {
 
   return (
     <div className='adminCategory'>
-      {page!=='adminboard' ? <div style={{background:clickedCtg===0?'#aaa':'' }} onClick={(e) => { setClickedCtg(0); setSelectedCg('');}}>전부보기</div> : ''}
+      <div className='adminCategoryMenu' onClick={e=>{
+        let tp = e.target.nodeName === 'svg' ? e.target.parentElement.parentElement :  e.target.nodeName === 'path' ? e.target.parentElement.parentElement.parentElement :  e.target.parentElement;
+        if (tp.children[1].style.display === 'none') {
+          tp.children[1].style.display = 'block'
+          tp.children[2].style.display = 'block'
+        }
+        else {
+          tp.children[1].style.display = 'none'
+          tp.children[2].style.display = 'none'
+        }
+          
+      }}>
+        <CgMenu />
+      </div>
+      {page!=='adminboard' ? <div style={clickedCtg===0?{background:'rgb(238, 255, 213)'}:{}} onClick={(e) => { setClickedCtg(0); setSelectedCg('');}}>전부보기</div> : ''}
       <ul>
         {mainCtg.map(mainCt =>
-          <li key={mainCt.categoryno} onClick={(e) => onClick(e, mainCt.categoryno)} style={{ position: 'relative', background:mainCt.categoryno===clickedCtg?'#aaa':'' }}>
-            <div style={{ width: '80%' }}>{mainCt.categoryname}</div>
+          <li key={mainCt.categoryno} onClick={(e) => onClick(e, mainCt.categoryno)} style={clickedCtg===mainCt.categoryno?{background:'rgb(238, 255, 213)'}:{}}>
+            <div style={{ width: '80%'}}>{mainCt.categoryname}</div>
             <div style={{ width: '20%', textAlign: 'center', position: 'absolute', right: '0px', top: '0px', display: middleCtg.filter(p => p.categorypr === mainCt.categoryname).length > 0 ? 'block' : 'none'  }} onClick={onContextMenu} ><PiPlusSquareBold /><PiMinusSquareBold style={{display:'none'}} /></div>
             <ul style={{ display: 'none' }}>
               {middleCtg.filter(p => p.categorypr === mainCt.categoryname).map(middleCt =>
-                <li key={middleCt.categoryno} onClick={(e) => onClick(e, middleCt.categoryno)} style={{ position: 'relative',background:middleCt.categoryno===clickedCtg?'#aaa':''  }} >
+                <li key={middleCt.categoryno} onClick={(e) => onClick(e, middleCt.categoryno)} style={clickedCtg===middleCt.categoryno?{background:'rgb(238, 255, 213)'}:{}} >
                   <div style={{ width: '80%' }}>{middleCt.categoryname}</div>
                   <div style={{ width: '20%', textAlign: 'center', position: 'absolute', right: '0px', top: '0px', display: subCtg.filter(p => p.categorypr === middleCt.categoryname).length > 0 ? 'block' : 'none' }} onClick={onContextMenu} ><PiPlusSquareBold /><PiMinusSquareBold style={{display:'none'}} /></div>
                   <ul style={{ display: 'none' }}>
                     {subCtg.filter(p => p.categorypr === middleCt.categoryname).map(subCt =>
-                      <li key={subCt.categoryno} onClick={(e) => onClick(e, subCt.categoryno)} style={{background:subCt.categoryno===clickedCtg?'#aaa':'' }} >
+                      <li key={subCt.categoryno} onClick={(e) => onClick(e, subCt.categoryno)} style={clickedCtg===subCt.categoryno?{background:'rgb(238, 255, 213)'}:{}} >
                         <div style={{ width: '80%' }}>{subCt.categoryname}</div>
                       </li>
                     )}

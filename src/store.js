@@ -6,6 +6,7 @@ import user from "./userSlice";
 import game from "./gameSlice";
 import score from "./scoreSlice";
 import blacklist from "./blackListSlice";
+import ntcData from "./components/board/NtcSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -84,6 +85,7 @@ const product = createSlice({
       ...p,
       imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
       imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
+      imgsrc3: "",
       uptime: getRandomDate(new Date(2023, 7, 20), new Date()).toUTCString(),
       writer: userinitialState[Math.floor(Math.random() * 5) + 1].nickname,
     }))
@@ -120,6 +122,7 @@ const product = createSlice({
       );
     },
     fix: (state, action) => {
+      console.log(action);
       // payload: {id, name [, price, text, imgsrc1, imgsrc2, categories]}
       let tmp = {
         id: action.payload.id,
@@ -128,9 +131,11 @@ const product = createSlice({
         text: action.payload.text || "",
         imgsrc1: action.payload.imgsrc1 || "",
         imgsrc2: action.payload.imgsrc2 || "",
-        categories: action.payload.categories || "",
+        imgsrc3: action.payload.imgsrc3 || "",
+        categories: action.payload.categories || "1",
+        wantPlace: action.payload.wantPlace || "",
       };
-      state = state.map((p) => (p.id === tmp.id ? { ...p, ...tmp } : p));
+      // state = state.map((p) => (p.id === tmp.id ? { ...p, ...tmp } : p));
       state.forEach((p, i) => (p.id === tmp.id ? state.splice(i, 1, tmp) : ""));
     },
   },
@@ -139,11 +144,13 @@ const product = createSlice({
 let boardtId = 10000;
 const board = createSlice({
   name: "board",
-  initialState: boardJSON.map((p) => ({
-    ...p,
-    date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
-    id: boardtId++,
-  })).sort((a, b) => (Date.parse(a.date) < Date.parse(b.date) ? 1 : -1)),
+  initialState: boardJSON
+    .map((p) => ({
+      ...p,
+      date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
+      id: boardtId++,
+    }))
+    .sort((a, b) => (Date.parse(a.date) < Date.parse(b.date) ? 1 : -1)),
   // [
   //   {
   //     "title": "술안주",
@@ -203,6 +210,7 @@ const store = configureStore({
     game: game.reducer,
     score: score.reducer,
     blacklist: blacklist.reducer,
+    ntcData: ntcData.reducer,
   },
 });
 

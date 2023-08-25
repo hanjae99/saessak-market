@@ -23,7 +23,7 @@ const Detail = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="detail-container">
+    <main className="detail-container">
       <Header />
       <main className="detail-contentsBox">
         <div className="detail-contentsBox2">
@@ -119,7 +119,7 @@ const Detail = () => {
           </div>
         </div>
       </main>
-    </div>
+    </main>
   );
 };
 

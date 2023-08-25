@@ -5,14 +5,19 @@
   font-family: "Noto Sans KR", sans-serif;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 main {
-  padding-top: 180px;
+  padding-top: 140px;
 }
 
 #mainContainer {
   width: 80%;
   margin: 0 auto;
-  margin-top: 20vh;
+  margin-top: 10vh;
 }
 .carousel-style {
   width: 100%;
@@ -64,8 +69,13 @@ main {
   font-size: 1.7rem;
   color: white;
   font-weight: 600;
-  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0), 0px -1px rgb(0, 0, 0);
+  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0),
+    0px -1px rgb(0, 0, 0);
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: all ease 0.2s;
+  }
 }
 
 .hotItem1 {
@@ -113,6 +123,7 @@ main {
 .newItem > img {
   width: 20vw;
   height: 20vw;
+  border-radius: 5px;
 }
 
 .newItem > p:nth-of-type(2) {

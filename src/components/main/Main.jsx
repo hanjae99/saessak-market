@@ -8,7 +8,7 @@ import Footer from "./Footer";
 
 const Main = () => {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <Header />
       <main>
         <div id="mainContainer">
