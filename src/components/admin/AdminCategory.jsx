@@ -25,8 +25,7 @@ const AdminCategory = ({ page, setSelectedCg }) => {
     mainCtg = [
       {categoryno:"1",categoryname:"공지사항",categorypr:"null"},
       {categoryno:"2",categoryname:"고객의소리",categorypr:"null"},
-      {categoryno:"3",categoryname:"신고 게시판",categorypr:"null"},
-      {categoryno:"4",categoryname:"이의제기 게시판",categorypr:"null"},
+      {categoryno:"3",categoryname:"이의제기 게시판",categorypr:"null"},
     ]
   }
 
