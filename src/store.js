@@ -7,6 +7,7 @@ import game from "./gameSlice";
 import score from "./scoreSlice";
 import blacklist from "./blackListSlice";
 import ntcData from "./components/board/NtcSlice";
+import objecttion from "./components/admin/objecttionSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -211,6 +212,7 @@ const store = configureStore({
     score: score.reducer,
     blacklist: blacklist.reducer,
     ntcData: ntcData.reducer,
+    objecttion: objecttion.reducer,
   },
 });
 

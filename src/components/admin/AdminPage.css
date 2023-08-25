@@ -243,6 +243,13 @@
 
 
 
+.adminBoardBody {
+  margin-left: 30px;
+  width: 80%;
+}
+
+
+
 
 .adminModal {
   position: absolute;
