@@ -50,6 +50,7 @@
 .detail-divRecommend {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  text-align: center;
 }
 
 /*캐러셀 기능을 리액트로 구현하고 싶어*/

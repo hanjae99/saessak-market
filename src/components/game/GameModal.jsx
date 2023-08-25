@@ -29,7 +29,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
         <img
           src={game && game[index].imgsrc1}
           alt="이미지"
-          className="imgBox"
+          className="modal-imgBox"
         />
       </div>
       <label>입력하신 가격 :</label>
@@ -37,7 +37,9 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
       <label>중고 가격 :</label>
       <p>{game[index].price}</p>
       <h1>점수 : {result} 점</h1>
-      <button onClick={onClick}>다음문제</button>
+      <button className="modal-btn" onClick={onClick}>
+        다음문제
+      </button>
     </div>
   );
 };

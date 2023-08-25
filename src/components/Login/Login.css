@@ -30,6 +30,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  outline-color: rgba(109, 200, 42, 1);
 }
 
 .login-idpwd {
@@ -38,7 +39,7 @@
 
 .login-idpwd span {
   margin-right: 10px;
-  color: #007bff;
+  color: black;
   cursor: pointer;
 }
 

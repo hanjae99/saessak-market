@@ -91,7 +91,10 @@ const SingUp = () => {
     <div className="singup-container1">
       <Header />
       <main>
-        <h1 className="singup-title">회원가입</h1>
+        <div className="singup-divtitle">
+          {" "}
+          <h1 className="singup-title">회원가입</h1>
+        </div>
         <form className="singup-form">
           <div className="singup-input-container">
             <label className="singup-text-id">아이디</label>
@@ -148,7 +151,7 @@ const SingUp = () => {
               placeholder="ex):saessak@gamil.com"
               onChange={onEmail}
             />
-            <button className="singup-bt2">이메일 인증 api</button>
+            <button className="singup-bt2">이메일 인증</button>
           </div>
           <div className="singup-input-container">
             <label className="singup-text-id">휴대폰</label>
@@ -158,7 +161,7 @@ const SingUp = () => {
               placeholder="숫자만 입력해주세요"
               onChange={onPhone}
             />
-            <button className="singup-bt3">전화번호 인증 api</button>
+            <button className="singup-bt3">전화번호 인증</button>
           </div>
           <div className="singup-input-container">
             <label className="singup-text-id">주소</label>
@@ -206,9 +209,11 @@ const SingUp = () => {
             </p>
           </div>
         </form>
-        <button className="singup-checkbtn" type="button" onClick={onSubmit}>
-          가입하기
-        </button>
+        <div className="singup-divcheckbtn">
+          <button className="singup-checkbtn" type="button" onClick={onSubmit}>
+            가입하기
+          </button>
+        </div>
       </main>
     </div>
   );
