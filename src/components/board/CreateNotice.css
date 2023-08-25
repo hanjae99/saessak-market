@@ -87,4 +87,7 @@
   .createBtn {
     height: 60px;
   }
+  .create_main {
+    padding-top: 140px;
+  }
 }

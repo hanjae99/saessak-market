@@ -44,8 +44,14 @@
   display: flex;
 }
 
-/* @media all and (min-width: 1024px) and (max-width: 1279px) {
-  .td {
-    font-size: 15px;
+@media all and (min-width: 300px) and (max-width: 425px) {
+  .board-left {
+    flex-basis: 10%;
   }
-} */
+  .board-center {
+    flex-basis: 80%;
+  }
+  .board-main {
+    padding-top: 150px;
+  }
+}
