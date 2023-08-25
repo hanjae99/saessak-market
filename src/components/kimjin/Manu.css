@@ -183,7 +183,6 @@
 .pwdCheck {
   margin: 0px 0px 16px;
   height: 500px;
-  border: 4px solid rgba(109, 200, 42, 0.7);
   border-radius: 5px;
   padding: 10px 0 0 10px;
 }
@@ -220,6 +219,7 @@
 .manu-2-1-1 {
   height: 50%;
   flex: 1.5;
+  width: 900px;
 }
 
 .manu-2-1-1 > div {
@@ -238,6 +238,7 @@
 }
 
 .manu-3 {
+  width: 900px;
   flex: 1;
 }
 
@@ -256,7 +257,7 @@
     rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 20px;
-  width: 90%;
+  width: 1000px;
   margin-left: 5%;
 }
 
@@ -305,7 +306,7 @@
 .td-1 {
   height: 100%;
   width: 100%;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
   vertical-align: top;
 }
 
@@ -469,13 +470,20 @@
   padding: 30px 0;
   margin-top: 3px;
   transition: all 0.5s linear;
+  border-radius: 5px;
 }
 
 .menuBtn1 {
+  position: relative;
   width: 200px;
   height: 100px;
-  padding: 30px 0;
-  margin-top: 3px;
+  overflow: hidden;
+}
+
+.menuBtn1-img {
+  position: absolute;
+  width: 200px;
+  height: 170px;
 }
 
 .menuBtn:hover {
@@ -505,6 +513,7 @@
 .Changing-1 {
   margin: 0px 0px 16px;
   height: 700px;
+  width: 1000px;
   /* border: 4px solid rgba(109, 200, 42, 0.7); */
   border-radius: 5px;
   padding: 10px 0 0 10px;
@@ -534,4 +543,360 @@
   width: 450px;
   height: 40px;
   margin-bottom: 10px;
+}
+
+.mypage-1-1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.mypage-button {
+  margin-right: 10px;
+  width: 100px;
+  height: 40px;
+  background-color: rgba(109, 200, 42, 0.7);
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.textarea1 {
+  width: 100%;
+  height: 400px;
+  resize: none;
+  font-size: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom: 2px solid #d3d3d3;
+  border-right: 2px solid #d3d3d3;
+  border-left: 2px solid #d3d3d3;
+}
+
+.newmain4 {
+  padding: 0 3rem 0 4rem;
+  height: 100%;
+  width: 1000px;
+}
+
+.changing-h1 {
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.layout-1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  padding: 0 10%;
+  width: 700px;
+}
+
+.changing-com-button {
+  margin-right: 10px;
+  width: 100px;
+  height: 40px;
+  color: white;
+  background-color: rgba(109, 200, 42, 0.7);
+  border: none;
+  border-radius: 3px;
+}
+
+@media screen and (min-width: 795px) and (max-width: 1023px) {
+  .menuBtn {
+    width: 130px;
+    height: 80px;
+    padding: 25px;
+    font-size: 15px;
+  }
+
+  .pwdCheck1 {
+    width: 650px;
+  }
+
+  .manu-3 {
+    width: 700px;
+  }
+
+  .manu-2-1-1 {
+    height: 50%;
+    flex: 1.5;
+    width: 680px;
+  }
+
+  .menuBtn1 {
+    position: relative;
+    width: 130px;
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .menuBtn1-img {
+    position: absolute;
+    width: 130px;
+    height: 170px;
+  }
+
+  .section-title {
+    font-size: 25px;
+  }
+
+  .mypage-1 > div > label {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  .mypage-1 > div > input {
+    width: 400px;
+  }
+
+  .mypage-button {
+    width: 95px;
+    height: 40px;
+    font-size: 15px;
+  }
+
+  .text-button {
+    padding: 20px 20px 20px 10px;
+  }
+
+  .text-button-1 {
+    font-size: 13px;
+    width: 120%;
+  }
+
+  .layout-main {
+    padding: 0 0 0 5%;
+    width: 1000px;
+  }
+
+  .table-main {
+    width: 600px;
+  }
+
+  .Changing-1 {
+    width: 700px;
+  }
+
+  .newmain4 {
+    padding: 0 1rem 0 2rem;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 794px) {
+  .menuBtn {
+    width: 120px;
+    height: 70px;
+    padding: 26px;
+    font-size: 13px;
+  }
+
+  .manu-2-1-1 {
+    height: 50%;
+    flex: 1.5;
+    width: 500px;
+  }
+
+  .menuBtn1 {
+    position: relative;
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+  }
+
+  .menuBtn1-img {
+    position: absolute;
+    width: 120px;
+    height: 135px;
+  }
+
+  .section-title {
+    font-size: 25px;
+  }
+
+  .mypage-1 > div > label {
+    font-size: 13px;
+    margin-bottom: 35px;
+    margin-right: 40px;
+  }
+
+  .mypage-1 > div > input {
+    width: 230px;
+    height: 30px;
+    margin-bottom: 25px;
+  }
+
+  .mypage-button {
+    width: 95px;
+    height: 40px;
+    font-size: 15px;
+  }
+
+  .text-button {
+    padding: 20px 20px 20px 10px;
+  }
+
+  .text-button-1 {
+    font-size: 15px;
+    width: 120%;
+    height: 100%;
+  }
+
+  .textarea1 {
+    height: 300px;
+  }
+
+  .table-day {
+    font-size: 15px;
+  }
+
+  .td-1-1-1-1 {
+    font-size: 13px;
+  }
+
+  .newmain4 {
+    padding: 0 1rem 0 2rem;
+  }
+
+  .img1 {
+    width: 67px;
+    height: 67px;
+  }
+
+  .table-body {
+    height: 60px;
+    padding: 18px 24px 10px;
+  }
+
+  .mypage-2 > div > label {
+    font-size: 15px;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    margin-right: 60px;
+  }
+
+  .mypage-2 > div > input {
+    width: 250px;
+    height: 40px;
+    margin-bottom: 10px;
+  }
+
+  .changing-h1 {
+    font-size: 30px;
+  }
+
+  .layout-main {
+    padding: 0 0 0 4%;
+    width: 750px;
+  }
+
+  .td-1 {
+    width: 90%;
+  }
+
+  .table-main {
+    width: 500px;
+    margin-left: 0;
+  }
+
+  .Changing-1 {
+    width: 600px;
+  }
+}
+
+@media screen and (min-width: 425px) and (max-width: 767px) {
+  .layout-1 {
+    flex-direction: row;
+    height: 150px;
+    width: 600px;
+  }
+
+  .manu-2-1-1 {
+    height: 50%;
+    flex: 1.5;
+    width: 600px;
+  }
+
+  .manu-3 {
+    width: 630px;
+  }
+
+  .mypage-1 > div > input {
+    margin-bottom: 25px;
+  }
+
+  .mypage-1 > div > label {
+    margin-bottom: 35px;
+  }
+
+  .newmain3 {
+    flex-direction: column;
+  }
+
+  .layout-main {
+    padding: 0 0 0 4%;
+    width: 700px;
+  }
+
+  .menuBtn {
+    margin-right: 3px;
+  }
+
+  .menuBtn1 {
+    position: relative;
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+  }
+
+  .menuBtn1-img {
+    position: absolute;
+    width: 95px;
+    height: 135px;
+  }
+
+  .newmain4 {
+    padding: 0 0 0 4%;
+  }
+
+  .mypage-1 > div > label {
+    margin-right: 40px;
+  }
+
+  .text-button {
+    padding: 20px 20px 20px 10px;
+  }
+
+  .text-button-1 {
+    font-size: 18px;
+    width: 120%;
+    height: 100%;
+  }
+
+  .mypage-2 > div > label {
+    font-size: 22px;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    margin-right: 60px;
+  }
+
+  .mypage-2 > div > input {
+    width: 380px;
+    height: 40px;
+    margin-bottom: 14px;
+  }
+
+  .table-main {
+    width: 550px;
+  }
+
+  .pwdCheck1 {
+    width: 500px;
+  }
+
+  .Changing-1 {
+    width: 600px;
+  }
 }
