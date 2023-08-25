@@ -216,3 +216,136 @@ header {
 .menuItem a:active {
   color: rgb(145, 63, 63);
 }
+
+/* 태블릿 미디어쿼리 */
+@media screen and (max-width: 900px) and (min-width: 640px) {
+  .headContent {
+    grid-template-columns: 25% 50% 25%;
+    height: 60px;
+  }
+  .categoryItem {
+    width: 200px;
+    a {
+      width: 200px;
+    }
+  }
+  #categoryBox ul {
+    width: 200px;
+  }
+  .logo img {
+    width: 64px;
+    height: 64px;
+  }
+  .logo > div {
+    margin-left: 0;
+  }
+  .logo-text {
+    font-size: 1.3rem;
+  }
+  .userBtn {
+    button:nth-of-type(1) {
+      font-size: 0.6rem;
+      width: 50px;
+    }
+    button:nth-of-type(2) {
+      font-size: 0.6rem;
+      width: 70px;
+    }
+  }
+}
+
+/* 모바일 미디어쿼리 */
+@media screen and (max-width: 640px) and (min-width: 425px) {
+  .headContent {
+    grid-template-columns: 15% 60% 25%;
+    height: 50px;
+  }
+  .category > span,
+  .menu {
+    font-size: 0.7rem;
+  }
+  .category {
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .categoryItem {
+    width: 100px;
+    a {
+      width: 100px;
+      font-size: 0.7rem;
+    }
+  }
+  #categoryBox ul {
+    width: 100px;
+  }
+  .logo img {
+    width: 64px;
+    height: 64px;
+  }
+  .logo > div {
+    display: none;
+  }
+  .searchBox input {
+    font-size: 0.7rem;
+  }
+  .userBtn {
+    button:nth-of-type(1) {
+      font-size: 0.5rem;
+      min-width: 50px;
+    }
+    button:nth-of-type(2) {
+      font-size: 0.5rem;
+      min-width: 70px;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .headContent {
+    grid-template-columns: 15% 60% 25%;
+    height: 50px;
+  }
+  .category > span,
+  .menu {
+    font-size: 0.6rem;
+  }
+  .category {
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .categoryItem {
+    width: 100px;
+    a {
+      width: 100px;
+      font-size: 0.6rem;
+    }
+  }
+  #categoryBox ul {
+    width: 100px;
+  }
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+  .logo > div {
+    display: none;
+  }
+  .searchBox input {
+    font-size: 0.5rem;
+  }
+  .searchBox span {
+    right: 10px;
+  }
+  .userBtn {
+    button:nth-of-type(1) {
+      font-size: 0.4rem;
+      min-width: 45px;
+    }
+    button:nth-of-type(2) {
+      font-size: 0.4rem;
+      min-width: 60px;
+    }
+  }
+}
