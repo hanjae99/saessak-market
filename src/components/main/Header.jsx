@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from 'react';
-import { BiSearchAlt2 } from 'react-icons/bi';
-import { MdReorder } from 'react-icons/md';
-import './Header.css';
-import { Link, useNavigate } from 'react-router-dom';
-import category from '../../category.json';
+import React, { useCallback, useState } from "react";
+import { BiSearchAlt2 } from "react-icons/bi";
+import { MdReorder } from "react-icons/md";
+import "./Header.scss";
+import { Link, useNavigate } from "react-router-dom";
+import category from "../../category.json";
 
 const Header = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const navigate = useNavigate();
 
   const onChange = useCallback((e) => {
@@ -14,7 +14,7 @@ const Header = () => {
   }, []);
 
   const onSearch = () => {
-    navigate('/search/' + value);
+    navigate("/search/" + value);
   };
 
   const enterCheck = (e) => {
@@ -92,7 +92,9 @@ const Header = () => {
                   .map((c) => {
                     return (
                       <li className="categoryItem" key={c.categoryno}>
-                        <Link to={'/search?category=' + c.categoryno}>{c.categoryname}</Link>
+                        <Link to={"/search?category=" + c.categoryno}>
+                          {c.categoryname}
+                        </Link>
                       </li>
                     );
                   })}
@@ -103,7 +105,7 @@ const Header = () => {
             <div
               className="menuItem"
               onClick={() => {
-                navigate('/boardmain');
+                navigate("/boardmain");
               }}
             >
               <Link to="/boardmain">새싹 게시판</Link>
