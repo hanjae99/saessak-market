@@ -73,6 +73,9 @@
   .td {
     font-size: 13px;
   }
+  .td:nth-child(4) {
+    font-size: 13px;
+  }
 }
 
 @media all and (min-width: 480px) and (max-width: 767px) {
