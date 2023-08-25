@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  margin-top: 190px;
 }
 
 .login-child {
@@ -12,6 +12,8 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  text-align: center;
 }
 
 .login-title {
@@ -26,7 +28,7 @@
 
 .login-inputBox1,
 .login-inputBox2 {
-  width: 100%;
+  width: 30%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -42,15 +44,53 @@
   color: black;
   cursor: pointer;
 }
-
 .login-button1 {
+  width: 30%;
   background-color: rgba(109, 200, 42, 0.6);
+  font-size: 1rem;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+.login-button2 {
+  width: 30%;
+  background-color: rgb(262, 226, 25);
+  font-size: 1rem;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+.login-button3 {
+  width: 30%;
+  background-color: rgba(199, 138, 67, 0.7);
+  font-size: 1rem;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+.login-button4 {
+  width: 30%;
+  background-color: rgb(109, 202, 92);
+  font-size: 1rem;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
 }
 
 .login-button1:not(:last-child) {
@@ -58,6 +98,33 @@
 }
 
 .login-button1:hover {
+  background-color: rgb(60, 134, 8);
+  color: black;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all ease 0.2s;
+}
+.login-button3:hover {
+  background-color: rgba(113, 74, 11, 0.692);
+  color: black;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all ease 0.2s;
+}
+.login-button2:hover {
+  background-color: rgba(238, 235, 36, 0.692);
+  color: black;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all ease 0.2s;
+}
+.login-button4:hover {
   background-color: rgba(109, 200, 42, 1);
   color: black;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all ease 0.2s;
+}
+.login-failed-msg {
+  color: red;
 }

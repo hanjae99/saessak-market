@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GameModal from "./GameModal";
 import { useNavigate } from "react-router-dom";
 import Header from "../main/Header";
+import Footer from "../main/Footer";
 
 const Game = () => {
   const game = useSelector((state) => state.game);
@@ -54,8 +55,13 @@ const Game = () => {
     const money = parseInt(
       game[index].price.replaceAll(",", "").replace("원", "")
     );
-    console.log("inputprice +" + inputprice);
+    console.log("inputprice :" + inputprice);
     console.log("money : " + money);
+
+    if (!inputprice) {
+      setInputprice(0);
+    }
+
     const per10 = Percentage(money, 10);
     const per20 = Percentage(money, 20);
     const per30 = Percentage(money, 30);
@@ -81,7 +87,7 @@ const Game = () => {
     } else if (calc >= per10) {
       setResult(10);
     } else {
-      setResult(10);
+      setResult(0);
     }
 
     setModalOpen(true);
@@ -96,73 +102,76 @@ const Game = () => {
     }
   }, [index, navigate, score]);
   return (
-    <div className="game-container">
-      <Header />
-      <main>
-        <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
-        <div className="game-contentsBox">
-          <div className="game-contentsBox2">
-            <div className="game-products1">
-              <img
-                src={game[index] && game[index].imgsrc1}
-                alt="이미지"
-                className="game-imgBox"
-              />
-            </div>
-
-            <div className="game-products">
-              <div>
-                <lable className="game-productslable">제품명:</lable>
-                <div className="game-productslablediv">
-                  {game[index] && game[index].name}
-                </div>
+    <>
+      <div className="game-container">
+        <Header />
+        <main>
+          <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
+          <div className="game-contentsBox">
+            <div className="game-contentsBox2">
+              <div className="game-products1">
+                <img
+                  src={game[index] && game[index].imgsrc1}
+                  alt="이미지"
+                  className="game-imgBox"
+                />
               </div>
 
-              <lable className="game-productslable">제품설명:</lable>
-              <div className="game-productstext">
-                <div className="game-productsdivtext">
-                  {game[index] && game[index].text}
+              <div className="game-products">
+                <div>
+                  <lable className="game-productslable">제품명:</lable>
+                  <div className="game-productslablediv">
+                    {game[index] && game[index].name}
+                  </div>
+                </div>
+
+                <lable className="game-productslable">제품설명:</lable>
+                <div className="game-productstext">
+                  <div className="game-productsdivtext">
+                    {game[index] && game[index].text}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <div className="game-proceeding">
-              <div
-                className="game-process"
-                style={{ width: `${(index + 1) * 10}%` }}
-              ></div>
-              <div>진행률 :{index + 1}/10</div>
+            <div>
+              <div className="game-proceeding">
+                <div
+                  className="game-process"
+                  style={{ width: `${(index + 1) * 10}%` }}
+                ></div>
+                <div>진행률 :{index + 1}/10</div>
+              </div>
+              <div className="game-divinput">
+                <input
+                  className="game-inputbox"
+                  type="number"
+                  value={inputprice}
+                  placeholder="가격을 입력해주세요 (숫자만) ex)15000"
+                  onChange={onChange}
+                  onKeyDown={onEnter}
+                />
+                <button className="game-inputbtn" onClick={onsubmit}>
+                  입력!!
+                </button>
+              </div>
             </div>
-            <div className="game-divinput">
-              <input
-                className="game-inputbox"
-                type="number"
-                value={inputprice}
-                placeholder="가격을 입력해주세요 (숫자만) ex)15000"
-                onChange={onChange}
-                onKeyDown={onEnter}
+          </div>
+          {modalOpen && (
+            <div className={modalOpen ? "modal-background" : ""}>
+              <GameModal
+                setModalOpen={setModalOpen}
+                inputprice={inputprice}
+                result={result}
+                onIncrease={onIncrease}
+                index={index}
               />
-              <button className="game-inputbtn" onClick={onsubmit}>
-                입력!!
-              </button>
             </div>
-          </div>
-        </div>
-        {modalOpen && (
-          <div className={modalOpen ? "modal-background" : ""}>
-            <GameModal
-              setModalOpen={setModalOpen}
-              inputprice={inputprice}
-              result={result}
-              onIncrease={onIncrease}
-              index={index}
-            />
-          </div>
-        )}
-      </main>
-    </div>
+          )}
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 };
 

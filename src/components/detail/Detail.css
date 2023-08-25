@@ -3,54 +3,135 @@
 }
 .detail-container {
   width: 80%;
-  margin: 0 auto;
-  background-color: lightblue;
+  margin: auto;
+  padding: 20px;
+  background-color: rgba(199, 138, 67, 0.05);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 .detail-contentsBox {
   display: flex;
   flex-direction: column;
 }
-
-.detail-contentsBox2 {
+.detail-contentsBox1 {
   display: flex;
   flex-direction: row;
   width: 100%;
+}
+.detail-contentsBox2 {
+  display: flex;
+  width: 100%;
   margin-top: 20px;
+  border-top: 1px solid #ccc;
 }
 .detail-contentsBox3 {
   width: 100%;
   margin-top: 20px;
+  border-top: 1px solid #ccc;
+  height: 50vh;
+}
+.detail-productsmap {
+  height: 43vh;
 }
 .detail-contentsBox4 {
   width: 100%;
   margin-top: 20px;
 }
-.detail-products {
+.detail-productsitem1 {
   width: 50%;
   height: 400px;
 }
-.detail-imgBox {
-  width: 100%;
-  height: 100%;
-}
-/* .imgBox > img {
-  width: 400px;
+.detail-productsitem2 {
+  width: 50%;
   height: 400px;
-} */
-.detail-imgbox-flex {
-  display: flex;
-  height: 100%;
+  text-align: left;
+  padding-left: 40px;
 }
-.detail-itembox {
-  width: 28%;
+.detail-productsitem3 {
+  width: 50%;
+  height: 400px;
+  text-align: left;
+  overflow-y: scroll;
 }
-.detail-imgbox1 {
+.detail-productsitem3::-webkit-scrollbar {
+  display: none;
+}
+.detail-productsitem4 {
+  width: 50%;
+  height: 400px;
+  text-align: left;
+  padding-left: 40px;
+}
+.detail-productsitem-btn1 {
   width: 100%;
+  height: 3rem;
+  margin-top: 10px;
+  background-color: rgba(109, 200, 42, 0.7);
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: 0px;
 }
-.detail-divRecommend {
+.detail-productsitem-btn2 {
+  width: 100%;
+  height: 3rem;
+  margin-top: 10px;
+  background-color: rgba(199, 138, 67, 0.7);
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: 0px;
+}
+.detail-imgBox > img {
+  width: 100%;
+  height: 30vw;
+  border-radius: 40px;
+  margin-right: 20px;
+  max-height: 300px;
+}
+.detail-imgbox-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  text-align: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 10px;
 }
 
-/*캐러셀 기능을 리액트로 구현하고 싶어*/
+.detail-imgbox1 {
+  width: 100%;
+  height: 6rem;
+  border-radius: 10px;
+}
+
+.detail-divRecommend {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 10px;
+}
+.detail-recommend {
+  width: 100%;
+}
+.detail-recommend-img {
+  width: 17.5vw;
+  height: 15vh;
+  border-radius: 0.5rem;
+}
+.detail-recommend:hover .detail-recommend-img {
+  transform: translateY(-4px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all ease 0.2s;
+}
+.detail-itembox:hover .detail-imgbox1 {
+  transform: translateY(-4px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all ease 0.2s;
+}
+.detail-productsitem-btn1:hover {
+  background-color: rgb(60, 134, 8);
+  transition: all 0.6s;
+}
+.detail-productsitem-btn2:hover {
+  background-color: rgba(113, 74, 11, 0.692);
+  transition: all 0.6s;
+}
