@@ -65,8 +65,14 @@ const Detail = () => {
               <h2>닉네임 님의 다른 판매상품 정보</h2>
               <div className="detail-imgbox-flex">
                 {userproduct.slice(0, 3).map((up) => (
-                  <div className="detail-itembox" key={up.id}>
-                    <div className="detail-imgbox1">
+                  <div className="detail-itembox">
+                    <div
+                      className="detail-imgbox1"
+                      key={up.id}
+                      onClick={() => {
+                        navigate("/detail/" + up.id);
+                      }}
+                    >
                       <img className="detail-imgbox1" src={up.imgsrc1} alt="" />
                     </div>
                     <p>상품명:{up.name}</p>
@@ -89,19 +95,27 @@ const Detail = () => {
           <div className="detail-products4">
             <h1>이런 상품은 어때요?</h1>
 
-            {recommends ? (
-              recommends.slice(0, 4).map((e) => (
-                <div key={e.id}>
-                  <div>
-                    <img src={e.imgsrc1} alt="" />
+            <div className="detail-divRecommend">
+              {recommends ? (
+                recommends.slice(0, 4).map((e) => (
+                  <div
+                    className="detail-recommend"
+                    key={e.id}
+                    onClick={() => {
+                      navigate("/detail/" + e.id);
+                    }}
+                  >
+                    <div>
+                      <img src={e.imgsrc1} alt="" />
+                    </div>
+                    <p>제품명:{e.name}</p>
+                    <p>제품가격:{e.price}</p>
                   </div>
-                  <p>제품명:{e.name}</p>
-                  <p>제품가격:{e.price}</p>
-                </div>
-              ))
-            ) : (
-              <p>상품이 없어요 ㅠㅠ</p>
-            )}
+                ))
+              ) : (
+                <p>상품이 없어요 ㅠㅠ</p>
+              )}
+            </div>
           </div>
         </div>
       </main>
