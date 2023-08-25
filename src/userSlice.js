@@ -11,7 +11,7 @@ const user = createSlice({
       email: "saessak@gmail.com",
       phone: "01011112222",
       address: "관악구",
-      gender: "male",
+      gender: "admin",
       userproduct: [],
     },
     {

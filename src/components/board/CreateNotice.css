@@ -1,5 +1,9 @@
+.create_main {
+  display: flex;
+  padding-top: 180px;
+}
 .createNotice {
-  width: 1000px;
+  width: 100%;
 }
 .cartegory-top {
   display: flex;
@@ -41,4 +45,14 @@
   width: 100%;
   height: 600px;
   resize: none;
+}
+
+.create-left {
+  width: 10%;
+}
+.create-center {
+  width: 80%;
+}
+.create-right {
+  width: 10%;
 }

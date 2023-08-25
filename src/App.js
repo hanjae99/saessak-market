@@ -12,6 +12,9 @@ import Game from "./components/game/Game";
 import GameResult from "./components/game/GameResult";
 import Main from "./components/main/Main";
 import ProductList from "./components/productList/ProductList";
+import BoardInfo from "./components/board/BoardInfo";
+import BoardNtc from "./components/board/BoardNtc";
+import BoardNtcInfo from "./components/board/BoardNtcInfo";
 import UpdateProduct from "./components/updateProduct/UpdateProduct";
 import { Layout } from "./components/kimjin/layout";
 

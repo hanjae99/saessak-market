@@ -1,12 +1,13 @@
 import React from 'react';
 import './NoticeBoard.css';
 import { FaSearch } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 
-const NoticeBoard = ({ page }) => {
-  const dummy = useSelector((state) => state.board);
+const BoardNtcBd = ({ page }) => {
+  const dummy = useSelector((state) => state.ntcData);
   const num = dummy.length;
+
   const navigate = useNavigate();
   return (
     <>
@@ -27,7 +28,7 @@ const NoticeBoard = ({ page }) => {
         <div className="tbody">
           {dummy.slice((page - 1) * 15, page * 15).map((e, i) => {
             return (
-              <div className="tr" key={i} onClick={() => navigate('info/' + e.id)}>
+              <div className="tr" key={i} onClick={() => navigate('/boardmain/ntc/' + e.id)}>
                 <div className="td">{num - i - (page - 1) * 15}</div>
                 <div className="td">{e.title}</div>
                 <div className="td">{e.writer}</div>
@@ -46,4 +47,4 @@ const NoticeBoard = ({ page }) => {
   );
 };
 
-export default NoticeBoard;
+export default BoardNtcBd;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './BoardMain.css';
-import NoticeBoard from './NoticeBoard';
 import NoticeBoardList from './NoticeBoardList';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Header from '../main/Header';
+import BoardNtcBd from './BoardNtcBd';
 
-const BoardMain = () => {
+const BoardNtc = () => {
   const [page, setPage] = useState(1);
   return (
     <>
@@ -16,7 +16,7 @@ const BoardMain = () => {
           <NoticeBoardList />
         </div>
         <div className="board-center">
-          <NoticeBoard page={page} />
+          <BoardNtcBd page={page} />
           <div className="board-footer">
             <ul className="pagination">
               <li className="page-item">
@@ -53,4 +53,4 @@ const BoardMain = () => {
   );
 };
 
-export default BoardMain;
+export default BoardNtc;

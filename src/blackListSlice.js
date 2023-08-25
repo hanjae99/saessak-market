@@ -6,7 +6,7 @@ const adminData = createSlice({
   initialState: { 
     hiddenPdata:[],
     hiddenBdata:[],
-    blackUser:[]
+    blackUser:['psh']
    },
   reducers: {
     addHPD : (state, action) => { // payload: {data, dispatch}

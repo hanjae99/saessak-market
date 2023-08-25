@@ -6,6 +6,7 @@ import user from "./userSlice";
 import game from "./gameSlice";
 import score from "./scoreSlice";
 import blacklist from "./blackListSlice";
+import ntcData from "./components/board/NtcSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -143,11 +144,13 @@ const product = createSlice({
 let boardtId = 10000;
 const board = createSlice({
   name: "board",
-  initialState: boardJSON.map((p) => ({
-    ...p,
-    date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
-    id: boardtId++,
-  })),
+  initialState: boardJSON
+    .map((p) => ({
+      ...p,
+      date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
+      id: boardtId++,
+    }))
+    .sort((a, b) => (Date.parse(a.date) < Date.parse(b.date) ? 1 : -1)),
   // [
   //   {
   //     "title": "술안주",
@@ -207,6 +210,7 @@ const store = configureStore({
     game: game.reducer,
     score: score.reducer,
     blacklist: blacklist.reducer,
+    ntcData: ntcData.reducer,
   },
 });
 

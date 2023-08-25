@@ -22,7 +22,7 @@ function getRandomItemsFromArray(array, numberOfItems) {
 } //JSON파일 랜덤으로 10뽑아주는 함수
 
 const randomData = getRandomItemsFromArray(originalData, 10);
-console.log(randomData); // 랜덤하게 뽑힌 10개의 데이터
+// console.log(randomData); // 랜덤하게 뽑힌 10개의 데이터
 
 const game = createSlice({
   name: "game",

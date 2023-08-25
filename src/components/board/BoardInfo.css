@@ -1,1 +1,45 @@
+.board_info {
+  border: 1px solid black;
+  height: 10rem;
+}
+.info_board {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 1px 2px 2px #ccc;
+  background-image: url(../../img/leaf1.png);
+  background-size: 64px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+.board-center {
+  height: 100%;
+}
 
+.board-main {
+  height: 1200px;
+}
+
+.info_comment {
+  border: 1px solid #ccc;
+  box-sizing: content-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  line-height: 20px;
+  box-shadow: 1px 2px 2px #ccc;
+}
+
+.board-info-head {
+  display: flex;
+}
+.board-info-head-left {
+  width: 60%;
+  font-size: 20px;
+}
+.board-info-head-center {
+  width: 8%;
+}
+.board-info-head-right {
+  width: 33%;
+}
