@@ -3,6 +3,7 @@ import "./GameResult.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
+import Footer from "../main/Footer";
 
 const GameResult = () => {
   const { finalresult } = useParams();
@@ -28,35 +29,38 @@ const GameResult = () => {
     }
   }, [finalresultint]);
   return (
-    <div className="container1">
-      <Header />
-      <main>
-        <h3> 당신의 점수는 ?!</h3>
-        <h1>{finalresult}점</h1>
-        <h3>{resultscore}</h3>
-        <p>지금 보신 상품은 어떠신가요?</p>
+    <>
+      <div className="gr-container1">
+        <Header />
+        <main>
+          <h3> 당신의 점수는 ?!</h3>
+          <h1>{finalresult}점</h1>
+          <h3>{resultscore}</h3>
+          <p>지금 보신 상품은 어떠신가요?</p>
 
-        <div className="imgBoxs">
-          {game &&
-            game.map((p) => (
-              <div key={p.id}>
-                <div
-                  className="imgBox1"
-                  onClick={() => {
-                    navigate("/detail/" + p.id);
-                  }}
-                >
-                  <img className="img1" src={p.imgsrc1} alt="이미지1" />
-                  <div className="text1">
-                    <p>{p.name}</p>
-                    <p>{p.price}</p>
+          <div className="gr-imgBoxs">
+            {game &&
+              game.map((p) => (
+                <div key={p.id}>
+                  <div
+                    className="gr-imgBox1"
+                    onClick={() => {
+                      navigate("/detail/" + p.id);
+                    }}
+                  >
+                    <img className="gr-img1" src={p.imgsrc1} alt="이미지1" />
+                    <div className="text1">
+                      <p>{p.name}</p>
+                      <p>{p.price}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-        </div>
-      </main>
-    </div>
+              ))}
+          </div>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 };
 

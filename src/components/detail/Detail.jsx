@@ -1,9 +1,11 @@
 import React from "react";
 import "./Detail.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { parse } from "qs";
 import Header from "../main/Header";
+import Kakao from "./Kakao";
+import Footer from "../main/Footer";
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,106 +22,139 @@ const Detail = () => {
     );
   });
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const onClick = () => {
+    dispatch({
+      type: "user/addProduct",
+      payload: {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        text: item.text,
+        imgsrc1: item.imgsrc1,
+        imgsrc2: item.imgsrc2,
+        categories: item.categories,
+      },
+    });
+    navigate("/user/wishlist");
+  };
+
   return (
-    <main className="detail-container">
-      <Header />
-      <main className="detail-contentsBox">
-        <div className="detail-contentsBox2">
-          <div className="detail-products">
-            <div className="detail-imgBox">
-              <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
+    <>
+      <div className="detail-container">
+        <Header />
+        <main className="detail-contentsBox">
+          <div className="detail-contentsBox1">
+            <div className="detail-productsitem1">
+              <div className="detail-imgBox">
+                <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
+              </div>
             </div>
-          </div>
-          <div className="detail-products">
-            <div>
-              <p>제품명:{item.name}</p>
-            </div>
-            <div>
-              <p>가격:{item.price}</p>
-            </div>
-            <div>
-              <button>채팅 하기</button>
-            </div>
-            <div>
-              <button>찜</button>
-            </div>
-          </div>
-        </div>
-
-        <div className="detail-contentsBox2">
-          <div className="detail-products">
-            <div>
-              <h2>상품 내용</h2>
-              <div>{item.text}</div>
-            </div>
-          </div>
-
-          <div className="detail-products">
-            <div>
-              <h2>새싹 정보</h2>
-              <div>닉네임: {user[1].nickname}</div>
-            </div>
-            <div>
-              <h2>닉네임 님의 다른 판매상품 정보</h2>
-              <div className="detail-imgbox-flex">
-                {userproduct.slice(0, 3).map((up) => (
-                  <div className="detail-itembox">
-                    <div
-                      className="detail-imgbox1"
-                      key={up.id}
-                      onClick={() => {
-                        navigate("/detail/" + up.id);
-                      }}
-                    >
-                      <img className="detail-imgbox1" src={up.imgsrc1} alt="" />
-                    </div>
-                    <p>상품명:{up.name}</p>
-                    <h5>가격:{up.price}</h5>
-                  </div>
-                ))}
+            <div className="detail-productsitem2">
+              <div>
+                <p>제품명:{item.name}</p>
+              </div>
+              <div>
+                <p>가격:{item.price}</p>
+              </div>
+              <div>
+                <button className="detail-productsitem-btn1">채팅 하기</button>
+              </div>
+              <div>
+                <button onClick={onClick} className="detail-productsitem-btn2">
+                  찜
+                </button>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="detail-contentsBox3">
-          <div className="detail-products">
-            <h1>거래 희망 장소</h1>
-            지도이미지 큰거
-          </div>
-        </div>
+          <div className="detail-contentsBox2">
+            <div className="detail-productsitem3">
+              <div className="detail-productsitemtitle">
+                <h2>상품 내용</h2>
+                <div>{item.text}</div>
+              </div>
+            </div>
 
-        <div className="detail-contentsBox4">
-          <div className="detail-products4">
-            <h1>이런 상품은 어때요?</h1>
-
-            <div className="detail-divRecommend">
-              {recommends ? (
-                recommends.slice(0, 4).map((e) => (
-                  <div
-                    className="detail-recommend"
-                    key={e.id}
-                    onClick={() => {
-                      navigate("/detail/" + e.id);
-                    }}
-                  >
-                    <div>
-                      <img src={e.imgsrc1} alt="" />
+            <div className="detail-productsitem4">
+              <div>
+                <h2>새싹 정보</h2>
+                <div>닉네임: {user[1].nickname}</div>
+              </div>
+              <div>
+                <h2>닉네임 님의 다른 판매상품 정보</h2>
+                <div className="detail-imgbox-grid">
+                  {userproduct.slice(0, 3).map((up) => (
+                    <div className="detail-itembox">
+                      <div
+                        className="detail-imgbox1"
+                        key={up.id}
+                        onClick={() => {
+                          navigate("/detail/" + up.id);
+                        }}
+                      >
+                        <img
+                          className="detail-imgbox1"
+                          src={up.imgsrc1}
+                          alt=""
+                        />
+                      </div>
+                      <span>{up.name}</span>
+                      <br />
+                      <span>{up.price}</span>
                     </div>
-                    <p>제품명:{e.name}</p>
-                    <p>제품가격:{e.price}</p>
-                  </div>
-                ))
-              ) : (
-                <p>상품이 없어요 ㅠㅠ</p>
-              )}
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-    </main>
+
+          <div className="detail-contentsBox3">
+            <div className="detail-products">
+              <h1>거래 희망 장소</h1>
+              <div className="detail-productsmap">
+                <Kakao />
+              </div>
+            </div>
+          </div>
+
+          <div className="detail-contentsBox4">
+            <div className="detail-products4">
+              <h1>이런 상품은 어때요?</h1>
+
+              <div className="detail-divRecommend">
+                {recommends ? (
+                  recommends.slice(0, 4).map((e) => (
+                    <div
+                      className="detail-recommend"
+                      key={e.id}
+                      onClick={() => {
+                        navigate("/detail/" + e.id);
+                      }}
+                    >
+                      <div className="detail-recommend-img">
+                        <img
+                          className="detail-recommend-img"
+                          src={e.imgsrc1}
+                          alt=""
+                        />
+                      </div>
+                      <p>제품명:{e.name}</p>
+                      <p>제품가격:{e.price}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>상품이 없어요 ㅠㅠ</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 };
 

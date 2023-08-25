@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Header from "../main/Header";
+import Footer from "../main/Footer";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,44 +54,47 @@ const Login = () => {
   console.log("비밀번호: " + inputpwd);
 
   return (
-    <div className="login-container">
-      <Header />
-      <main className="login-child">
-        <form onSubmit={onSubmit}>
-          <h2 className="login-title">로그인</h2>
-          <div className="login-input1">
-            <input
-              className="login-inputBox1"
-              type="text"
-              placeholder="아이디를 입력해주세요"
-              value={inputid}
-              onChange={onChangeId}
-            />
-          </div>
-          <div className="login-input2">
-            <input
-              className="login-inputBox2"
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              value={inputpwd}
-              onChange={onChangepwd}
-            />
-          </div>
-          <div className="login-idpwd">
-            <span>아이디찾기</span>| <span>비밀번호 찾기</span>
-          </div>
-          <div className="login-button-container">
-            <button className="login-button1" type="submit">
-              로그인
-            </button>
-            <button className="login-button1">api로그인</button>
-            <button className="login-button1" onClick={onClick}>
-              회원가입
-            </button>
-          </div>
-        </form>
-      </main>
-    </div>
+    <>
+      <div className="login-container">
+        <Header />
+        <main className="login-child">
+          <form onSubmit={onSubmit}>
+            <h2 className="login-title">로그인</h2>
+            <div className="login-input1">
+              <input
+                className="login-inputBox1"
+                type="text"
+                placeholder="아이디를 입력해주세요"
+                value={inputid}
+                onChange={onChangeId}
+              />
+            </div>
+            <div className="login-input2">
+              <input
+                className="login-inputBox2"
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={inputpwd}
+                onChange={onChangepwd}
+              />
+            </div>
+            <div className="login-idpwd">
+              <span>아이디찾기</span>| <span>비밀번호 찾기</span>
+            </div>
+            <div className="login-button-container">
+              <button className="login-button1" type="submit">
+                로그인
+              </button>
+              <button className="login-button1">api로그인</button>
+              <button className="login-button1" onClick={onClick}>
+                회원가입
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 };
 
