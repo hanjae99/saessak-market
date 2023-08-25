@@ -1,5 +1,5 @@
 import React from "react";
-import "./Footer.css";
+import "./Footer.scss";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -86,7 +86,10 @@ const Footer = () => {
           <h4>연락</h4>
           <ul>
             <li>
-              <Link to="https://github.com/hanjae99/saessak-market">
+              <Link
+                to="https://github.com/hanjae99/saessak-market"
+                target="blank"
+              >
                 메일: <br />
                 https://github.com/hanjae99/saessak-market
               </Link>

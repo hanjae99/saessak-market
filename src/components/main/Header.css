@@ -94,6 +94,7 @@ header {
   border: 1px solid rgba(199, 138, 67, 0.1);
   border-radius: 5px;
   padding: 5px 10px;
+  min-width: 60px;
 }
 
 .userBtn button:last-child {
@@ -102,6 +103,7 @@ header {
   border: 1px solid rgba(199, 138, 67, 0.7);
   border-radius: 5px;
   padding: 5px 10px;
+  min-width: 85px;
 }
 
 #navContainer {
@@ -215,4 +217,54 @@ header {
 
 .menuItem a:active {
   color: rgb(145, 63, 63);
+}
+
+/* 태블릿 미디어쿼리 */
+@media screen and (max-width: 900px) and (min-width: 530px) {
+  .headContent {
+    grid-template-columns: 25% 50% 25%;
+    height: 60px;
+  }
+  .logo img {
+    width: 64px;
+    height: 64px;
+  }
+  .logo > div {
+    margin-left: 0;
+  }
+  .logo-text {
+    font-size: 1.3rem;
+  }
+}
+
+/* 모바일 미디어쿼리 */
+@media screen and (max-width: 640px) {
+  .headContent {
+    grid-template-columns: 15% 60% 25%;
+    height: 50px;
+  }
+  .category > span,
+  .menu {
+    font-size: 0.7rem;
+  }
+  .category {
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .logo img {
+    width: 64px;
+    height: 64px;
+  }
+  .logo > div {
+    display: none;
+  }
+  .searchBox input {
+    font-size: 0.7rem;
+  }
+  .userBtn > button {
+    font-size: 0.7rem;
+    min-width: 50px;
+    width: 64px;
+  }
 }
