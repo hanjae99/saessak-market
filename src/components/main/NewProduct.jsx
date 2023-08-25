@@ -19,7 +19,9 @@ const NewProduct = () => {
             }}
           >
             <img src={d.imgsrc1} alt={d.name} />
-            <p>상품명: {d.name}</p>
+            <div className="newItemTitle">
+              <span>상품명: {d.name}</span>
+            </div>
             <p>상품가격: {d.price}</p>
             <p>{Math.floor((now - Date.parse(d.uptime)) / 1000 / 60)}분전</p>
           </div>
