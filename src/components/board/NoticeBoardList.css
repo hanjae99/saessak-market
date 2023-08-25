@@ -27,3 +27,19 @@
   margin: 0 auto;
   padding-left: 10px;
 }
+
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  .board_1 {
+    font-size: 16px;
+  }
+}
+@media all and (min-width: 426px) and (max-width: 767px) {
+  .board_1 {
+    font-size: 16px;
+  }
+}
+@media all and (min-width: 300px) and (max-width: 425px) {
+  .board_1 {
+    font-size: 13px;
+  }
+}

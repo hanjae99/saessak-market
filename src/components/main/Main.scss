@@ -11,7 +11,7 @@ body {
 }
 
 main {
-  padding-top: 180px;
+  padding-top: 140px;
 }
 
 #mainContainer {
@@ -69,7 +69,8 @@ main {
   font-size: 1.7rem;
   color: white;
   font-weight: 600;
-  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0), 0px -1px rgb(0, 0, 0);
+  text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0),
+    0px -1px rgb(0, 0, 0);
   cursor: pointer;
   &:hover {
     transform: scale(1.1);
