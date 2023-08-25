@@ -4,6 +4,7 @@ import { MdReorder } from 'react-icons/md';
 import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
 import category from '../../category.json';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
   const [value, setValue] = useState('');
@@ -23,6 +24,9 @@ const Header = () => {
       return;
     }
   };
+
+  const login = useSelector(state=>state.login);
+  const dispatch = useDispatch();
 
   return (
     <header>
@@ -57,10 +61,14 @@ const Header = () => {
           <div className="userBtn">
             <button
               onClick={() => {
-                navigate("/login");
+                if (login.id === '') {
+                  navigate("/login")
+                } else {
+                  dispatch({type:'login/logout'});
+                }
               }}
             >
-              로그인
+              {login.id === '' ? '로그인' : '로그아웃'}
             </button>
             <button>마이페이지</button>
           </div>

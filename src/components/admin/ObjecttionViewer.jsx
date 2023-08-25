@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ObjecttionBoard from './ObjecttionBoard';
 import { useSelector } from 'react-redux';
+import CommentViewer from './CommentViewer';
 
 
 
@@ -22,20 +23,7 @@ const ObjecttionDetail = ({ viewPage, setViewPage }) => {
           </div>
           <hr />
           <div className="info_board">{ntcData.content}</div>
-          <div className="info_comment">
-            <div>작성자</div>
-            <div>댓글</div>
-            <div>
-              작성일자 <span>답글쓰기</span>
-            </div>
-          </div>
-          <div className="info_comment">
-            <div>작성자</div>
-            <div>댓글</div>
-            <div>
-              작성일자 <span>답글쓰기</span>
-            </div>
-          </div>
+          <CommentViewer isAnonymous={false} parent={dummy} parentId={id} />
         </div>
     </div>
   );

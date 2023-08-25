@@ -1,8 +1,35 @@
 import React from 'react'
+import { FaCheck } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
-const CommentViewer = (parent,parentId) => {
+const CmtInputBox = (parent,parentId,isAnonymous) => {
+  const login = useSelector(state => state.login)
+  console.log(login.id)
   return (
-    <div>CommentViewer</div>
+    <div className='cmtInput'>
+      <div className='cmt_info'>
+        <div></div><strong>댓글쓰기</strong>
+      </div>
+      <div className='cmtInput_textbox'>
+        <span>
+          {true ? '?' : <img src='' alt=''></img>}
+        </span>
+        <div>
+          <textarea />
+        </div>
+        <button>등록</button>
+      </div>
+      {isAnonymous ? <div></div> : ''}
+    </div>
+  )
+}
+
+
+const CommentViewer = (parent,parentId,isAnonymous=false) => {
+  return (
+    <div className='commentBox'>
+      <CmtInputBox isAnonymous={isAnonymous} parent={parent} parentId={parentId} />
+    </div>
   )
 }
 

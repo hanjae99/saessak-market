@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 const Logo2 = () => {
   let store = useSelector(state => state);
+  const [gogo, setGogo] = useState({text:'asd'});
+  const gogoj = JSON.stringify(gogo)
+  console.log(gogoj)
+  const gogotj = JSON.parse(gogoj);
+  console.log(gogotj)
   return (
     <div>
-      1234/{store.user[0].gender}
+     <textarea onKeyUp={(e)=>{console.log(e.target.value); setGogo({text:e.target.value});}}></textarea>
+     <textarea value={gogotj.text}></textarea>
     </div>
   )
 }

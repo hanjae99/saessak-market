@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Header from "../main/Header";
@@ -9,6 +9,7 @@ const Login = () => {
   const [inputid, setInputid] = useState("");
   const [inputpwd, setInputpwd] = useState("");
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   console.log(user[1].id);
 
   const onSubmit = useCallback(
@@ -24,6 +25,7 @@ const Login = () => {
       if (!login) {
         console.log("아이디 비밀 번호를 다시입력해주세요");
       } else {
+        dispatch({type:'login/login',payload:login.id})
         if (login.gender === "admin") {
           navigate("/admin");
         } else {
