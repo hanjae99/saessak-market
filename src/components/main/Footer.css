@@ -70,6 +70,11 @@ footer {
   position: absolute;
 }
 
+.footerImg > img {
+  width: 64px;
+  height: 64px;
+}
+
 .leaf2 {
   top: -70px;
   left: 3vw;
