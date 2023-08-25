@@ -1,22 +1,30 @@
-import React from 'react'
+import React from 'react';
 
 const ViewBoard = ({ dataAry, viewList, onClick }) => {
   let viewKey = 1;
   return (
     <>
-      <div className='table'>
-        <div className='tr'>
-          {Object.keys(viewList).map(q => <div key={q} className='th'>{viewList[q]}</div>)}
+      <div className="table">
+        <div className="tr">
+          {Object.keys(viewList).map((q) => (
+            <div key={q} className="th">
+              {viewList[q]}
+            </div>
+          ))}
         </div>
 
-        {dataAry.map(p =>
-          <div className='tr' key={'viewBoard'+viewKey++} onClick={onClick}>
-            {Object.keys(viewList).map(q => <div key={q} className='td'>{p[q]}</div>)}
+        {dataAry.map((p) => (
+          <div className="tr" key={'viewBoard' + viewKey++} onClick={p.onclick}>
+            {Object.keys(viewList).map((q) => (
+              <div key={q} className="td">
+                {p[q]}
+              </div>
+            ))}
           </div>
-        )}
+        ))}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ViewBoard
+export default ViewBoard;

@@ -28,8 +28,8 @@ const NoticeBoard = ({ page }) => {
   };
 
   const enterCheck = (e) => {
-    e.preventDefault();
     if (e.keyCode === 13) {
+      e.preventDefault();
       onSearch();
       return;
     }
@@ -57,6 +57,9 @@ const NoticeBoard = ({ page }) => {
               new Date().getDate() === new Date(p.date).getDate()
                 ? new Date(p.date).toLocaleTimeString()
                 : new Date(p.date).toLocaleDateString(),
+            onclick: () => {
+              navigate('info/' + p.id);
+            },
           }))}
         viewList={viewList}
       />
