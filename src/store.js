@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import adminData from "./components/admin/Admin_Slice";
+import adminData from "./components/admin/adminSlice";
 import productJSON from "./product.json";
 import boardJSON from "./board.json";
 import user from "./userSlice";
@@ -7,6 +7,7 @@ import game from "./gameSlice";
 import score from "./scoreSlice";
 import blacklist from "./blackListSlice";
 import ntcData from "./components/board/NtcSlice";
+import objecttion from "./components/admin/objecttionSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -211,6 +212,7 @@ const store = configureStore({
     score: score.reducer,
     blacklist: blacklist.reducer,
     ntcData: ntcData.reducer,
+    objecttion: objecttion.reducer,
   },
 });
 
