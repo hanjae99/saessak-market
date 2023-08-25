@@ -91,81 +91,83 @@ const Changing = () => {
             </h1>
           </div>
           <div className="changing1">
-            <div>
-              <label style={{ marginRight: "100px" }}>이름</label>
-              <input
-                type="text"
-                value={newName}
-                placeholder={users[2].name}
-                onChange={newNameChange}
-                style={{
-                  borderRadius: "4px",
-                  outlineColor: "rgba(109, 200, 42, 1)",
-                }}
-              />
+            <div className="mypage-2" style={{ display: "flex" }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <label>이름</label>
+                <label>핸드폰 번호</label>
+                <label>현재 비밀번호</label>
+                <label>새 비밀번호</label>
+                <label>비밀번호 확인</label>
+                <label>주소</label>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <input
+                  type="text"
+                  value={newName}
+                  placeholder={users[2].name}
+                  onChange={newNameChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+                <input
+                  type="phone"
+                  value={newPhone}
+                  placeholder={users[2].phone}
+                  onChange={newPhoneChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+                <input
+                  type="text"
+                  value={now_pwd}
+                  onChange={pwdChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+                <input
+                  type="password"
+                  value={new_pwd}
+                  onChange={newPwdChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+                <input
+                  type="password"
+                  value={new_pwd_check}
+                  onChange={newPwdChangeCheck}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+                <input
+                  type="address"
+                  value={newAddress}
+                  placeholder={users[2].address}
+                  onChange={newAddressChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+              </div>
+            </div>
+            {/* <div>
             </div>
             <div>
-              <label style={{ marginRight: "32.5px" }}>핸드폰 번호</label>
-              <input
-                type="phone"
-                value={newPhone}
-                placeholder={users[2].phone}
-                onChange={newPhoneChange}
-                style={{
-                  borderRadius: "4px",
-                  outlineColor: "rgba(109, 200, 42, 1)",
-                }}
-              />
             </div>
             <div>
-              <label style={{ marginRight: "12.5px" }}>현재 비밀번호</label>
-              <input
-                type="text"
-                value={now_pwd}
-                onChange={pwdChange}
-                style={{
-                  borderRadius: "4px",
-                  outlineColor: "rgba(109, 200, 42, 1)",
-                }}
-              />
             </div>
             <div>
-              <label style={{ marginRight: "32.5px" }}>새 비밀번호</label>
-              <input
-                type="password"
-                value={new_pwd}
-                onChange={newPwdChange}
-                style={{
-                  borderRadius: "4px",
-                  outlineColor: "rgba(109, 200, 42, 1)",
-                }}
-              />
-            </div>
-            <div>
-              <label style={{ marginRight: "12px" }}>비밀번호 확인</label>
-              <input
-                type="password"
-                value={new_pwd_check}
-                onChange={newPwdChangeCheck}
-                style={{
-                  borderRadius: "4px",
-                  outlineColor: "rgba(109, 200, 42, 1)",
-                }}
-              />
-            </div>
-            <div>
-              <label style={{ marginRight: "100px" }}>주소</label>
-              <input
-                type="address"
-                value={newAddress}
-                placeholder={users[2].address}
-                onChange={newAddressChange}
-                style={{
-                  borderRadius: "4px",
-                  outlineColor: "rgba(109, 200, 42, 1)",
-                }}
-              />
-            </div>
+            </div> */}
             <div
               style={{
                 marginTop: "130px",

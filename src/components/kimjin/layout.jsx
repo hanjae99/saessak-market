@@ -5,25 +5,27 @@ import ChangingPwd from "./ChangingPwd";
 import WishList from "./WishList";
 import MyPage from "./mypage";
 import Header from "../main/Header";
+import Footer from "../main/Footer";
 
 export const Layout = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ padding: "0 10%" }}>
-      <Header />
-      <div
-        style={{
-          marginTop: "100px",
-          width: "100%",
-          height: "120px",
-          display: "flex",
-          alignItems: "center",
-          justifyItems: "center",
-        }}
-        className="newmain1"
-      >
-        {/* <div
+    <div>
+      <div style={{ padding: "0 10%" }}>
+        <Header />
+        <div
+          style={{
+            marginTop: "100px",
+            width: "100%",
+            height: "120px",
+            display: "flex",
+            alignItems: "center",
+            justifyItems: "center",
+          }}
+          className="newmain1"
+        >
+          {/* <div
           style={{
             width: "calc(100%)",
             height: "100%",
@@ -32,47 +34,49 @@ export const Layout = () => {
           }}
           className="newmain2"
         ></div> */}
-      </div>
-      <div className="newmain3" style={{ display: "flex", width: "100%" }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        </div>
+        <div className="newmain3" style={{ display: "flex", width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              className="menuBtn1"
+              style={{
+                // backgroundColor: "greenyellow",
+                padding: "35px",
+                backgroundImage: "url(../../img/saessak.png)",
+                backgroundSize: "84%",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "top",
+              }}
+            ></div>
+            <div className="menuBtn" onClick={() => navigate("/user/mypage")}>
+              마이페이지
+            </div>
+            <div className="menuBtn" onClick={() => navigate("/user/check")}>
+              상품 조회
+            </div>
+            <div className="menuBtn" onClick={() => navigate("/user/wishlist")}>
+              찜 목록
+            </div>
+          </div>
           <div
-            className="menuBtn1"
+            className="newmain4"
             style={{
-              // backgroundColor: "greenyellow",
-              padding: "35px",
-              backgroundImage: "url(../../img/saessak.png)",
-              backgroundSize: "84%",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "top",
+              padding: "0 3rem 0 4rem",
+              height: "100%",
+              width: "100%",
             }}
-          ></div>
-          <div className="menuBtn" onClick={() => navigate("/user/mypage")}>
-            마이페이지
+          >
+            <Routes>
+              <Route path="/mypage" element={<MyPage />}></Route>
+              <Route path="/check" element={<Check />}></Route>
+              <Route path="/changing" element={<Changing />}></Route>
+              <Route path="/changingpwd" element={<ChangingPwd />}></Route>
+              <Route path="/wishlist" element={<WishList />}></Route>
+            </Routes>
           </div>
-          <div className="menuBtn" onClick={() => navigate("/user/check")}>
-            상품 조회
-          </div>
-          <div className="menuBtn" onClick={() => navigate("/user/wishlist")}>
-            찜 목록
-          </div>
-        </div>
-        <div
-          className="newmain4"
-          style={{
-            padding: "0 3rem 0 4rem",
-            height: "1000px",
-            width: "100%",
-          }}
-        >
-          <Routes>
-            <Route path="/mypage" element={<MyPage />}></Route>
-            <Route path="/check" element={<Check />}></Route>
-            <Route path="/changing" element={<Changing />}></Route>
-            <Route path="/changingpwd" element={<ChangingPwd />}></Route>
-            <Route path="/wishlist" element={<WishList />}></Route>
-          </Routes>
         </div>
       </div>
+      <Footer />
     </div>
     // <div className="all">
     //   <Header />
