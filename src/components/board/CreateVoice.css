@@ -28,7 +28,7 @@
 .page-link {
   display: block;
   padding: 10px 15px;
-  background-color: #f0f0f0;
+  background-color: rgba(109, 200, 42, 0.7);
   border: 1px solid #ddd;
   color: #333;
   text-decoration: none;
@@ -36,7 +36,8 @@
 }
 
 .page-link:hover {
-  background-color: rgba(109, 200, 42, 0.7);
+  background-color: rgba(109, 200, 42, 0.9);
+  transition: all 0.7s;
 }
 
 .board-footer {
