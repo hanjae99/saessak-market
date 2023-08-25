@@ -153,7 +153,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                     width: 80 * viewSize + 'px',
                     height: 160 * viewSize + 'px',
                     position: 'absolute',
-                    left: i % ct * 82 * viewSize + (i % ct + 1) * mg -14 + 'px',
+                    left: i % ct * 82 * viewSize + (i % ct + 1) * mg - 14 + 'px',
                     top: Math.floor(i / ct) * 164 * viewSize + (Math.floor(i / ct) + 1) * mg + 'px',
                     border: '1px solid gray'
                   } : {}
