@@ -16,7 +16,10 @@ const MyPage = () => {
               <span className="section-title">회원정보</span>
             </div>
             <div className="mypage-1" style={{ display: "flex" }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                className="mypage-1-1"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <label>이름 </label>
                 <label>닉네임 </label>
                 <label>비밀번호 </label>
@@ -64,13 +67,7 @@ const MyPage = () => {
             <div style={{ textAlign: "right" }}>
               <button
                 onClick={() => movePage("/user/changingpwd")}
-                style={{
-                  marginRight: "10px",
-                  width: "100px",
-                  height: "40px",
-                  backgroundColor: "rgba(109, 200, 42, 0.7)",
-                  border: "none",
-                }}
+                className="mypage-button"
               >
                 회원정보수정
               </button>
@@ -92,21 +89,7 @@ const MyPage = () => {
             >
               <ImgUpdate></ImgUpdate>
             </div>
-            <textarea
-              style={{
-                width: "95%",
-                height: "400px",
-                resize: "none",
-                fontSize: "20px",
-                borderBottomLeftRadius: "5px",
-                borderBottomRightRadius: "5px",
-                borderBottom: "2px solid #D3D3D3",
-                borderRight: "2px solid #D3D3D3",
-                borderLeft: "2px solid #D3D3D3",
-              }}
-              placeholder="자기 소개"
-              className="textarea1"
-            ></textarea>
+            <textarea placeholder="자기 소개" className="textarea1"></textarea>
           </div>
         </div>
       </div>

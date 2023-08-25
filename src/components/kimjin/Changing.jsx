@@ -84,11 +84,7 @@ const Changing = () => {
       <form onSubmit={pwdSubmit}>
         <div className="Changing-1">
           <div>
-            <h1
-              style={{ fontSize: "40px", marginTop: "0", marginBottom: "40px" }}
-            >
-              회원정보 수정
-            </h1>
+            <h1 className="changing-h1">회원정보 수정</h1>
           </div>
           <div className="changing1">
             <div className="mypage-2" style={{ display: "flex" }}>
@@ -176,16 +172,7 @@ const Changing = () => {
               }}
             >
               {/* <button onClick={() => movePage('mypage')}>수정 완료</button> */}
-              <button
-                type="submit"
-                style={{
-                  marginRight: "10px",
-                  width: "100px",
-                  height: "40px",
-                  backgroundColor: "rgba(109, 200, 42, 0.7)",
-                  border: "none",
-                }}
-              >
+              <button type="submit" className="changing-com-button">
                 수정 완료
               </button>
             </div>
