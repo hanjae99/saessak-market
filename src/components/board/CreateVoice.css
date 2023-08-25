@@ -43,3 +43,9 @@
 .board-footer {
   display: flex;
 }
+
+/* @media all and (min-width: 1024px) and (max-width: 1279px) {
+  .td {
+    font-size: 15px;
+  }
+} */

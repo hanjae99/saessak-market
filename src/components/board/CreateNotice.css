@@ -64,3 +64,27 @@
 .create-right {
   width: 10%;
 }
+
+@media all and (min-width: 769px) and (max-width: 1023px) {
+  .createBtn {
+    height: 50px;
+    margin-top: 20px;
+  }
+}
+@media all and (min-width: 426px) and (max-width: 768px) {
+  .createBtn {
+    height: 50px;
+    margin-top: 20px;
+  }
+}
+@media all and (min-width: 300px) and (max-width: 425px) {
+  .cartegory-top-left {
+    flex-basis: 65%;
+  }
+  .cartegory-top-right {
+    flex-basis: 30%;
+  }
+  .createBtn {
+    height: 60px;
+  }
+}
