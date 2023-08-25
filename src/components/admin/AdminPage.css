@@ -149,12 +149,12 @@
   height: 600px;
 }
 
-.adminViewer div:first-child {
+.adminViewer > div:first-child {
   width: 100%;
   height: 15%;
 }
 
-.adminViewer div:last-child {
+.adminViewer > div:last-child {
   width: 100%;
   height: 85%;
 }
@@ -177,10 +177,36 @@
   border: 1px solid black;
 }
 
+.adminUserPage {
+  width: 90%;
+  max-width: 1000px;
+  left: 5%;
+  top: 5%;
+}
 
+.adminUserBox {
+  border: 1px solid gray;
+  display: flex;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
+.adminUserBox img, .adminUserBox > div:first-child {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-
+.adminUserBox > div > span {
+  display: inline-block;
+  height: 30px;
+  padding: 3px;
+  margin-top: 10px;
+  margin-left: 20px;
+  /* border: 1px solid black; */
+}
 
 
 

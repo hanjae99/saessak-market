@@ -1,3 +1,7 @@
+.create_main {
+  display: flex;
+  padding-top: 180px;
+}
 .createNotice {
   width: 1000px;
 }

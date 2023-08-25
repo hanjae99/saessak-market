@@ -147,7 +147,7 @@ const board = createSlice({
     ...p,
     date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
     id: boardtId++,
-  })),
+  })).sort((a, b) => (Date.parse(a.date) < Date.parse(b.date) ? 1 : -1)),
   // [
   //   {
   //     "title": "술안주",

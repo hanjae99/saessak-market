@@ -1,7 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const EditBody = ({ page, pitem }) => {
+const EditBody = ({ page }) => {
+  const pitem = useSelector(state => state.adminData.select_pitem);
+  const bitem = useSelector(state => state.adminData.select_bitem);
   const pboard = useSelector(state => state.product)
   const fboard = useSelector(state => state.board)
   const data = page === 'productboard' || page === '' ? pboard : fboard;
@@ -32,10 +34,16 @@ const EditBody = ({ page, pitem }) => {
           }
         }} >{'<'}</button>
       <div style={{ display: 'flex', width: '100%', position: 'relative', overflow: 'hidden', alignItems:'center' }}>
-        {pitem && pitem.map(p => <div key={p} style={{ marginLeft: '15px', height:'80px' }} onContextMenu={e=>{
+        {page !== 'freeboard' ? 
+        pitem && pitem.map(p => <div key={p} style={{ marginLeft: '15px', height:'80px' }} onContextMenu={e=>{
           e.preventDefault();
           dispatch({type:'adminData/delSP',payload:p});
-        }} >{data.map(q => q.id === p ? <img key={q.id} style={{ width: '80px', height: '80px' }} src={q.imgsrc1} alt=''></img> : '')}</div>)}
+        }} >{data.map(q => q.id === p ? <img key={q.id} style={{ width: '80px', height: '80px' }} src={q.imgsrc1} alt=''></img> : '')}</div>):
+        bitem && bitem.map(p => <div key={p} style={{ marginLeft: '15px', height:'80px' }} onContextMenu={e=>{
+          e.preventDefault();
+          dispatch({type:'adminData/delSB',payload:p});
+        }} >{data.map(q => q.id === p ? <p key={q.id} style={{ width: '80px', height: '80px', border: '1px solid gray', overflow: 'hidden' }}> {q.title} </p> : '')}</div>)
+        }
       </div>
       <button style={{ position: 'relative', right: '0px', padding: '11px', fontSize: '1.2rem' }}
         onMouseDown={(e) => {
@@ -65,16 +73,15 @@ const EditBody = ({ page, pitem }) => {
 
 
 const AdminEdit = ({ page }) => {
-  const pitem = useSelector(state => state.adminData.select_pitem);
   const dispatch = useDispatch();
   const onBtnClick = type => {
     if (type==='clear') {
-      dispatch({type:'adminData/delAllSP'})
+      page !== 'freeboard' ? dispatch({type:'adminData/delAllSP'}) : dispatch({type:'adminData/delAllSB'});
     }
   }
   return (
     <div className='adminEdit'>
-      <EditBody page={page} pitem={pitem} />
+      <EditBody page={page} />
       <button style={{ position: 'absolute', left: '0px', top: '-27px' }} onClick={e=>onBtnClick('hidden')} >숨김처리</button>
       <button style={{ position: 'absolute', left: '74px', top: '-27px' }} onClick={e=>onBtnClick('ben')}>숨김+차단</button>
       <button style={{ position: 'absolute', left: '156px', top: '-27px' }} onClick={e=>onBtnClick('clear')}>비우기</button>
