@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AdminNoticeBoard from './AdminNoticeBoard';
-import ObjecttionBoard from './ObjecttionBoard';
+import ObjecttionViewer from './ObjecttionViewer';
 
 
 
@@ -14,7 +14,7 @@ const AdminBoardPage = ({ selectedCg, setModalData }) => {
           case '1':
             return <AdminNoticeBoard />
           case '2':
-            return <ObjecttionBoard />
+            return <ObjecttionViewer />
           default:
             return <AdminNoticeBoard />;
         }

@@ -92,7 +92,7 @@ const AdminCategory = ({ page, setSelectedCg }) => {
         let tp = e.target.nodeName === 'svg' ? e.target.parentElement.parentElement :  e.target.nodeName === 'path' ? e.target.parentElement.parentElement.parentElement :  e.target.parentElement;
         if (tp.children[1].style.display === 'none') {
           tp.children[1].style.display = 'block'
-          if (tp.children[2]) tp.children[2].style.display = 'none'
+          if (tp.children[2]) tp.children[2].style.display = 'block'
         }
         else {
           tp.children[1].style.display = 'none'

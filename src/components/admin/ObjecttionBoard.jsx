@@ -10,7 +10,7 @@ import ViewBoard from './ViewBoard'
 // writer: 'psh',
 // content : '풀어줘요!!'
 
-const ObjecttionBoard = () => {
+const ObjecttionBoard = ({setViewPage}) => {
   const objecttionData = useSelector(state => state.objecttion);
   const users = useSelector(state => state.user);
   const viewList = {
@@ -20,9 +20,13 @@ const ObjecttionBoard = () => {
     upTime: "작성시간",
     viewCount: "조회수"
   }
+  function onClick(e,p) {
+    setViewPage(['2',e.id]);
+    // p.id
+  }
   return (
     <div className='objectionBoard'>
-      <ViewBoard dataAry={objecttionData.map(p => ({ ...p, writer: users.find(q => q.id === p.writer).nickname }))} viewList={viewList} />
+      <ViewBoard dataAry={objecttionData.map(p => ({ ...p, writer: users.find(q => q.id === p.writer).nickname }))} viewList={viewList} onClick={onClick}/>
     </div>
   )
 }
