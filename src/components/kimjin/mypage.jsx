@@ -30,28 +30,32 @@ const MyPage = () => {
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <input
                   type="text"
-                  placeholder={꺼내온정보[1].name}
+                  placeholder={꺼내온정보[2].name}
                   readOnly
                 ></input>
                 <input
                   type="text"
-                  placeholder="다이어트 호소인"
+                  placeholder={꺼내온정보[2].nickname}
                   readOnly
                 ></input>
                 <input
                   type="passward"
-                  placeholder="**********"
+                  placeholder={꺼내온정보[2].pwd}
                   readOnly
                 ></input>
                 <input
                   type="email"
-                  placeholder="rlawls2006@naver.com"
+                  placeholder={꺼내온정보[2].email}
                   readOnly
                 ></input>
-                <input type="tel" placeholder="010-5061-8328" readOnly></input>
+                <input
+                  type="tel"
+                  placeholder={꺼내온정보[2].phone}
+                  readOnly
+                ></input>
                 <input
                   type="text"
-                  placeholder="강북구 미아동 ***-**"
+                  placeholder={꺼내온정보[2].address}
                   readOnly
                 ></input>
               </div>
@@ -78,7 +82,7 @@ const MyPage = () => {
               style={{
                 textAlign: "center",
                 height: "15%",
-                width: "95%",
+                width: "100%",
                 backgroundColor: "#F5F5F5",
                 borderTopLeftRadius: "5px",
                 borderTopRightRadius: "5px",

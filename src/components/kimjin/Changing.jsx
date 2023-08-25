@@ -9,6 +9,8 @@ const Changing = () => {
   const [new_pwd, setNew_pwd] = useState("");
   const [new_pwd_check, setNew_pwd_check] = useState("");
   const [newName, setNewName] = useState("");
+  const [newNickName, setNewNickName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [newAddress, setNewAddress] = useState("");
   const dispatch = useDispatch();
@@ -29,6 +31,14 @@ const Changing = () => {
   const newNameChange = (e) => {
     setNewName(e.target.value);
   };
+  //닉네임 변경
+  const newNickChange = (e) => {
+    setNewNickName(e.target.value);
+  };
+  //이메일 변경
+  const newEmailChange = (e) => {
+    setNewEmail(e.target.value);
+  };
   //핸드폰 번호 변경
   const newPhoneChange = (e) => {
     setNewPhone(e.target.value);
@@ -47,6 +57,12 @@ const Changing = () => {
     // }
 
     //------------------------------------------------------------------------------------
+
+    //이메일 입력안했을때
+    if (newEmail === "") {
+      alert("이메일을 입력해주세요");
+      return;
+    }
 
     //비밀번호가 틀렸을 때
     if (users.find((p) => p.id === "jin").pwd !== now_pwd) {
@@ -67,16 +83,24 @@ const Changing = () => {
         type: "user/update",
         payload: {
           ...users.find((p) => p.id === "jin"),
-          name: newName,
+          nickname: newNickName,
           pwd: new_pwd,
-          phone: newPhone,
           address: newAddress,
         },
       });
+      setNewNickName("");
       setNow_pwd("");
       setNew_pwd("");
       setNew_pwd_check("");
+      setNewAddress("");
+      movePage("/user/mypage");
     }
+
+    //주소를 적지않았을때
+    if (newAddress === "") {
+      setNewEmail(users[2].email);
+    }
+    return;
   };
 
   return (
@@ -90,6 +114,8 @@ const Changing = () => {
             <div className="mypage-2" style={{ display: "flex" }}>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <label>이름</label>
+                <label>닉네임</label>
+                <label>이메일</label>
                 <label>핸드폰 번호</label>
                 <label>현재 비밀번호</label>
                 <label>새 비밀번호</label>
@@ -105,6 +131,32 @@ const Changing = () => {
                   style={{
                     borderRadius: "4px",
                     outlineColor: "rgba(109, 200, 42, 1)",
+                    fontWeight: "bold",
+                    border: "none",
+                    fontSize: "20px",
+                    color: "black",
+                    paddingBottom: "9px",
+                  }}
+                  readOnly
+                />
+                <input
+                  type="text"
+                  value={newNickName}
+                  placeholder={users[2].nickname}
+                  onChange={newNickChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
+                  }}
+                />
+                <input
+                  type="email"
+                  value={newEmail}
+                  placeholder={users[2].email}
+                  onChange={newEmailChange}
+                  style={{
+                    borderRadius: "4px",
+                    outlineColor: "rgba(109, 200, 42, 1)",
                   }}
                 />
                 <input
@@ -116,6 +168,7 @@ const Changing = () => {
                     borderRadius: "4px",
                     outlineColor: "rgba(109, 200, 42, 1)",
                   }}
+                  readOnly
                 />
                 <input
                   type="text"

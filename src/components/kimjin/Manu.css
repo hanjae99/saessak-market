@@ -219,6 +219,7 @@
 .manu-2-1-1 {
   height: 50%;
   flex: 1.5;
+  width: 900px;
 }
 
 .manu-2-1-1 > div {
@@ -237,6 +238,7 @@
 }
 
 .manu-3 {
+  width: 900px;
   flex: 1;
 }
 
@@ -255,7 +257,7 @@
     rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 20px;
-  width: 800px;
+  width: 1000px;
   margin-left: 5%;
 }
 
@@ -511,6 +513,7 @@
 .Changing-1 {
   margin: 0px 0px 16px;
   height: 700px;
+  width: 1000px;
   /* border: 4px solid rgba(109, 200, 42, 0.7); */
   border-radius: 5px;
   padding: 10px 0 0 10px;
@@ -558,7 +561,7 @@
 }
 
 .textarea1 {
-  width: 95%;
+  width: 100%;
   height: 400px;
   resize: none;
   font-size: 20px;
@@ -572,7 +575,7 @@
 .newmain4 {
   padding: 0 3rem 0 4rem;
   height: 100%;
-  width: 100%;
+  width: 1000px;
 }
 
 .changing-h1 {
@@ -595,8 +598,10 @@
   margin-right: 10px;
   width: 100px;
   height: 40px;
+  color: white;
   background-color: rgba(109, 200, 42, 0.7);
   border: none;
+  border-radius: 3px;
 }
 
 @media screen and (min-width: 795px) and (max-width: 1023px) {
@@ -605,6 +610,20 @@
     height: 80px;
     padding: 25px;
     font-size: 15px;
+  }
+
+  .pwdCheck1 {
+    width: 650px;
+  }
+
+  .manu-3 {
+    width: 700px;
+  }
+
+  .manu-2-1-1 {
+    height: 50%;
+    flex: 1.5;
+    width: 680px;
   }
 
   .menuBtn1 {
@@ -649,12 +668,20 @@
   }
 
   .layout-main {
-    padding: 0 0 0 10%;
+    padding: 0 0 0 5%;
     width: 1000px;
   }
 
   .table-main {
     width: 600px;
+  }
+
+  .Changing-1 {
+    width: 700px;
+  }
+
+  .newmain4 {
+    padding: 0 1rem 0 2rem;
   }
 }
 
@@ -664,6 +691,12 @@
     height: 70px;
     padding: 26px;
     font-size: 13px;
+  }
+
+  .manu-2-1-1 {
+    height: 50%;
+    flex: 1.5;
+    width: 500px;
   }
 
   .menuBtn1 {
@@ -755,7 +788,7 @@
   }
 
   .layout-main {
-    padding: 0 0 0 10%;
+    padding: 0 0 0 4%;
     width: 750px;
   }
 
@@ -767,12 +800,27 @@
     width: 500px;
     margin-left: 0;
   }
+
+  .Changing-1 {
+    width: 600px;
+  }
 }
 
 @media screen and (min-width: 425px) and (max-width: 767px) {
   .layout-1 {
     flex-direction: row;
     height: 150px;
+    width: 600px;
+  }
+
+  .manu-2-1-1 {
+    height: 50%;
+    flex: 1.5;
+    width: 600px;
+  }
+
+  .manu-3 {
+    width: 630px;
   }
 
   .mypage-1 > div > input {
@@ -788,6 +836,7 @@
   }
 
   .layout-main {
+    padding: 0 0 0 4%;
     width: 700px;
   }
 
@@ -809,7 +858,7 @@
   }
 
   .newmain4 {
-    padding: 0;
+    padding: 0 0 0 4%;
   }
 
   .mypage-1 > div > label {
@@ -841,5 +890,13 @@
 
   .table-main {
     width: 550px;
+  }
+
+  .pwdCheck1 {
+    width: 500px;
+  }
+
+  .Changing-1 {
+    width: 600px;
   }
 }
