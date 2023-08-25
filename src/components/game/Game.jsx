@@ -9,12 +9,14 @@ import "./Game.css";
 import { useDispatch, useSelector } from "react-redux";
 import GameModal from "./GameModal";
 import { useNavigate } from "react-router-dom";
+import Header from "../main/Header";
 
 const Game = () => {
   const game = useSelector((state) => state.game);
   const score = useSelector((state) => state.score.no);
   console.log("score : " + score);
   const dispatch = useDispatch();
+  const gameBtn = useRef(null);
 
   const [index, setIndex] = useState(0);
   const [inputprice, setInputprice] = useState();
@@ -30,6 +32,13 @@ const Game = () => {
       // console.log("asdasdasdsadasasdasdasd" + score.sta;
     } else {
       navigate("/gameresult/" + score);
+    }
+  };
+
+  const onEnter = (e) => {
+    if (e.keyCode === 13) {
+      onsubmit();
+      return;
     }
   };
 
@@ -87,39 +96,62 @@ const Game = () => {
     }
   }, [index, navigate, score]);
   return (
-    <div className="container">
-      <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
-      <div className="contentsBox">
-        <div className="contentsBox2">
-          <div className="products">
-            <img
-              src={game[index] && game[index].imgsrc1}
-              alt="이미지"
-              className="imgBox"
-            />
+    <div className="game-container">
+      <Header />
+      <main>
+        <h1>HOW MUCH?? 중고가격 맞추기 게임</h1>
+        <div className="game-contentsBox">
+          <div className="game-contentsBox2">
+            <div className="game-products1">
+              <img
+                src={game[index] && game[index].imgsrc1}
+                alt="이미지"
+                className="game-imgBox"
+              />
+            </div>
+
+            <div className="game-products">
+              <div>
+                <lable className="game-productslable">제품명:</lable>
+                <div className="game-productslablediv">
+                  {game[index] && game[index].name}
+                </div>
+              </div>
+
+              <lable className="game-productslable">제품설명:</lable>
+              <div className="game-productstext">
+                <div className="game-productsdivtext">
+                  {game[index] && game[index].text}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="products">
-            <div>
-              <lable>제품명:{game[index] && game[index].name}</lable>
+          <div>
+            <div className="game-proceeding">
+              <div
+                className="game-process"
+                style={{ width: `${(index + 1) * 10}%` }}
+              ></div>
+              <div>진행률 :{index + 1}/10</div>
             </div>
-            <div>
-              <p>{game[index] && game[index].text}</p>
+            <div className="game-divinput">
+              <input
+                className="game-inputbox"
+                type="number"
+                value={inputprice}
+                placeholder="가격을 입력해주세요 (숫자만) ex)15000"
+                onChange={onChange}
+                onKeyDown={onEnter}
+              />
+              <button className="game-inputbtn" onClick={onsubmit}>
+                입력!!
+              </button>
             </div>
           </div>
         </div>
-
-        <div>
-          <div className="contentsBox2"></div>
-          <div>진행률 :{index + 1}/10</div>
-          <input
-            type="number"
-            value={inputprice}
-            placeholder="가격을 입력해주세요 (숫자만) ex)15000"
-            onChange={onChange}
-          />
-          <button onClick={onsubmit}>입력</button>
-          {modalOpen && (
+        {modalOpen && (
+          <div className={modalOpen ? "modal-background" : ""}>
             <GameModal
               setModalOpen={setModalOpen}
               inputprice={inputprice}
@@ -127,17 +159,9 @@ const Game = () => {
               onIncrease={onIncrease}
               index={index}
             />
-          )}
-        </div>
-      </div>
-      {/* <div>
-        <div>이미지</div>
-        <label>입력하신 가격 :</label>
-        <p>{inputprice}원</p>
-        <label>중고 가격 :</label>
-        <p>{game[0].price}</p>
-        <h1>점수 : {result}점</h1>
-      </div> */}
+          </div>
+        )}
+      </main>
     </div>
   );
 };

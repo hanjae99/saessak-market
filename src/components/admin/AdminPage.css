@@ -76,32 +76,61 @@
   width: 200px;
   height: calc(100vh - 120px);
   padding: 13px;
-}
-.adminCategory li {
-  cursor: pointer;
   user-select: none;
 }
 
-.adminCategory>div,
+/* .adminCategory > :nth-child(2),
+.adminCategory > :nth-child(3) {
+  display: none;
+} */
+.adminCategory > *,
+.adminCategory li {
+  cursor: pointer;
+}
+
+.adminCategory>div {
+  padding-left: 4px;
+}
+
+.adminCategory svg {
+  color:coral;
+}
+
+.adminCategory .adminCategoryMenu svg {
+  color: black;
+  font-size: 1.9rem;
+}
+
+.adminCategory>div:nth-child(2),
 .adminCategory>ul>li {
-  border: 1px solid #ccc;
-  background: #eee;
+  position: relative;
+  border: 1px solid #fff;
+  background: rgb(255, 225, 191);
 }
 
 .adminCategory>ul>li>ul>li {
+  position: relative;
   border-top: 1px solid #fff;
-  background: #ccc;
+  background: rgb(255, 218, 175);
 }
 
 .adminCategory>ul>li>ul>li>ul>li {
-  border-top: 1px solid #ccc;
-  background: #fda;
+  position: relative;
+  border-top: 1px solid #fff;
+  background: rgb(255, 202, 142);
 }
 
+.adminCategory>ul>li>div:first-child {
+  margin-left: 4px;
+}
 
+.adminCategory>ul>li>ul>li>div:first-child {
+  margin-left: 11px;
+}
 
-
-
+.adminCategory>ul>li>ul>li>ul>li>div:first-child {
+  margin-left: 19px;
+}
 
 
 
@@ -138,7 +167,7 @@
   height: 100px;
 }
 
-.adminEdit > button {
+.adminEdit>button {
   padding: 2px 7px;
 }
 
@@ -149,12 +178,12 @@
   height: 600px;
 }
 
-.adminViewer > div:first-child {
+.adminViewer>div:first-child {
   width: 100%;
   height: 15%;
 }
 
-.adminViewer > div:last-child {
+.adminViewer>div:last-child {
   width: 100%;
   height: 85%;
 }
@@ -164,23 +193,52 @@
   position: relative;
 }
 
-.viewrHead > * {
+.viewrHead>* {
   margin: 2px 5px;
 }
-.viewrHead > input:last-child {
+
+.viewrHead>input:last-child {
   position: absolute;
   top: 30px;
 }
 
-.viewerBody, .viewerBody>span {
+.viewerBody,
+.viewerBody>span {
   padding: 0px 10px 2px;
   border: 1px solid black;
 }
 
+.adminUserPage {
+  width: 90%;
+  max-width: 1000px;
+  left: 5%;
+  top: 5%;
+}
 
+.adminUserBox {
+  border: 1px solid gray;
+  display: flex;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
+.adminUserBox img,
+.adminUserBox>div:first-child {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-
+.adminUserBox>div>span {
+  display: inline-block;
+  height: 30px;
+  padding: 3px;
+  margin-top: 10px;
+  margin-left: 20px;
+  /* border: 1px solid black; */
+}
 
 
 

@@ -1,8 +1,9 @@
 import React from "react";
 import "./Detail.css";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { parse } from "qs";
+import Header from "../main/Header";
 
 const Detail = () => {
   const { id } = useParams();
@@ -19,16 +20,19 @@ const Detail = () => {
     );
   });
 
+  const navigate = useNavigate();
+
   return (
-    <div className="container">
-      <div className="contentsBox">
-        <div className="contentsBox2">
-          <div className="products">
-            <div className="imgBox">
-              <img className="imgBox" src={item.imgsrc1} alt="1" />
+    <main className="detail-container">
+      <Header />
+      <main className="detail-contentsBox">
+        <div className="detail-contentsBox2">
+          <div className="detail-products">
+            <div className="detail-imgBox">
+              <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
             </div>
           </div>
-          <div className="products">
+          <div className="detail-products">
             <div>
               <p>제품명:{item.name}</p>
             </div>
@@ -44,15 +48,15 @@ const Detail = () => {
           </div>
         </div>
 
-        <div className="contentsBox2">
-          <div className="products">
+        <div className="detail-contentsBox2">
+          <div className="detail-products">
             <div>
               <h2>상품 내용</h2>
               <div>{item.text}</div>
             </div>
           </div>
 
-          <div className="products">
+          <div className="detail-products">
             <div>
               <h2>새싹 정보</h2>
               <div>닉네임: {user[1].nickname}</div>
@@ -62,7 +66,13 @@ const Detail = () => {
               <div className="detail-imgbox-flex">
                 {userproduct.slice(0, 3).map((up) => (
                   <div className="detail-itembox">
-                    <div className="detail-imgbox1">
+                    <div
+                      className="detail-imgbox1"
+                      key={up.id}
+                      onClick={() => {
+                        navigate("/detail/" + up.id);
+                      }}
+                    >
                       <img className="detail-imgbox1" src={up.imgsrc1} alt="" />
                     </div>
                     <p>상품명:{up.name}</p>
@@ -74,34 +84,42 @@ const Detail = () => {
           </div>
         </div>
 
-        <div className="contentsBox2">
-          <div className="products">
+        <div className="detail-contentsBox3">
+          <div className="detail-products">
             <h1>거래 희망 장소</h1>
             지도이미지 큰거
           </div>
         </div>
 
-        <div className="contentsBox2">
-          <div className="products">
+        <div className="detail-contentsBox4">
+          <div className="detail-products4">
             <h1>이런 상품은 어때요?</h1>
 
-            {recommends ? (
-              recommends.slice(0, 4).map((e) => (
-                <div key={e.id}>
-                  <div>
-                    <img src={e.imgsrc1} alt="" srcset="" />
+            <div className="detail-divRecommend">
+              {recommends ? (
+                recommends.slice(0, 4).map((e) => (
+                  <div
+                    className="detail-recommend"
+                    key={e.id}
+                    onClick={() => {
+                      navigate("/detail/" + e.id);
+                    }}
+                  >
+                    <div>
+                      <img src={e.imgsrc1} alt="" />
+                    </div>
+                    <p>제품명:{e.name}</p>
+                    <p>제품가격:{e.price}</p>
                   </div>
-                  <p>제품명:{e.name}</p>
-                  <p>제품가격:{e.price}</p>
-                </div>
-              ))
-            ) : (
-              <p>상품이 없어요 ㅠㅠ</p>
-            )}
+                ))
+              ) : (
+                <p>상품이 없어요 ㅠㅠ</p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </main>
   );
 };
 

@@ -1,12 +1,12 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-import adminData from './components/admin/Admin_Slice';
-import productJSON from './product.json';
-import boardJSON from './board.json';
-import user from './userSlice';
-import game from './gameSlice';
-import score from './scoreSlice';
-import blacklist from './blackListSlice';
-import ntcData from './components/board/NtcSlice';
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+import adminData from "./components/admin/Admin_Slice";
+import productJSON from "./product.json";
+import boardJSON from "./board.json";
+import user from "./userSlice";
+import game from "./gameSlice";
+import score from "./scoreSlice";
+import blacklist from "./blackListSlice";
+import ntcData from "./components/board/NtcSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -16,75 +16,76 @@ function getRandomDate(start, end) {
 
 const userinitialState = [
   {
-    id: 'admin',
-    nickname: '관리자',
-    pwd: '1111',
-    name: '관리자',
-    email: 'saessak@gmail.com',
-    phone: '01011112222',
-    adress: '관악구',
-    gender: 'male',
+    id: "admin",
+    nickname: "관리자",
+    pwd: "1111",
+    name: "관리자",
+    email: "saessak@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
   },
   {
-    id: 'koo',
-    nickname: '구상모',
-    pwd: '1111',
-    name: '구상모',
-    email: 'koosangmo@gmail.com',
-    phone: '01011112222',
-    adress: '관악구',
-    gender: 'male',
+    id: "koo",
+    nickname: "구상모",
+    pwd: "1111",
+    name: "구상모",
+    email: "koosangmo@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
   },
   {
-    id: 'jin',
-    nickname: '김진',
-    pwd: '1111',
-    name: '김진',
-    email: 'kimjin@gmail.com',
-    phone: '01011112222',
-    adress: '관악구',
-    gender: 'male',
+    id: "jin",
+    nickname: "김진",
+    pwd: "1111",
+    name: "김진",
+    email: "kimjin@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
   },
   {
-    id: 'kgs',
-    nickname: '김궁서',
-    pwd: '1111',
-    name: '김궁서',
-    email: 'kgs@gmail.com',
-    phone: '01011112222',
-    adress: '관악구',
-    gender: 'male',
+    id: "kgs",
+    nickname: "김궁서",
+    pwd: "1111",
+    name: "김궁서",
+    email: "kgs@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
   },
   {
-    id: 'lhj',
-    nickname: '이한재',
-    pwd: '1111',
-    name: '이한재',
-    email: 'lhj@gmail.com',
-    phone: '01011112222',
-    adress: '관악구',
-    gender: 'male',
+    id: "lhj",
+    nickname: "이한재",
+    pwd: "1111",
+    name: "이한재",
+    email: "lhj@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
   },
   {
-    id: 'psh',
-    nickname: '박상현',
-    pwd: '1111',
-    name: '박상현',
-    email: 'psh@gmail.com',
-    phone: '01011112222',
-    adress: '관악구',
-    gender: 'male',
+    id: "psh",
+    nickname: "박상현",
+    pwd: "1111",
+    name: "박상현",
+    email: "psh@gmail.com",
+    phone: "01011112222",
+    adress: "관악구",
+    gender: "male",
   },
 ];
 
 let productId = 300000000;
 const product = createSlice({
-  name: 'product',
+  name: "product",
   initialState: productJSON
     .map((p) => ({
       ...p,
-      imgsrc1: p.imgsrc1 === 'null' ? null : p.imgsrc1,
-      imgsrc2: p.imgsrc2 === 'null' ? null : p.imgsrc2,
+      imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
+      imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
+      imgsrc3: "",
       uptime: getRandomDate(new Date(2023, 7, 20), new Date()).toUTCString(),
       writer: userinitialState[Math.floor(Math.random() * 5) + 1].nickname,
     }))
@@ -101,43 +102,48 @@ const product = createSlice({
     add: (state, action) => {
       // payload: {name, categories [, text, price, imgsrc1, imgsrc2]}
       let tmp = {
-        id: productId++ + '',
+        id: productId++ + "",
         name: action.payload.name,
-        price: action.payload.price || '',
-        text: action.payload.text || '',
-        imgsrc1: action.payload.imgsrc1 || '',
-        imgsrc2: action.payload.imgsrc2 || '',
-        imgsrc3: action.payload.imgsrc3 || '',
-        categories: action.payload.categories || '1',
-        wantPlace: action.payload.wantPlace || '',
+        price: action.payload.price || "",
+        text: action.payload.text || "",
+        imgsrc1: action.payload.imgsrc1 || "",
+        imgsrc2: action.payload.imgsrc2 || "",
+        imgsrc3: action.payload.imgsrc3 || "",
+        categories: action.payload.categories || "1",
+        wantPlace: action.payload.wantPlace || "",
         uptime: new Date().toUTCString(),
       };
       state.unshift(tmp);
     },
     del: (state, action) => {
       // payload: id
-      state.forEach((p, i) => (p.id === action.payload ? state.splice(i, 1) : ''));
+      state.forEach((p, i) =>
+        p.id === action.payload ? state.splice(i, 1) : ""
+      );
     },
     fix: (state, action) => {
+      console.log(action);
       // payload: {id, name [, price, text, imgsrc1, imgsrc2, categories]}
       let tmp = {
         id: action.payload.id,
-        name: action.payload.name || '',
-        price: action.payload.price || '',
-        text: action.payload.text || '',
-        imgsrc1: action.payload.imgsrc1 || '',
-        imgsrc2: action.payload.imgsrc2 || '',
-        categories: action.payload.categories || '',
+        name: action.payload.name || "",
+        price: action.payload.price || "",
+        text: action.payload.text || "",
+        imgsrc1: action.payload.imgsrc1 || "",
+        imgsrc2: action.payload.imgsrc2 || "",
+        imgsrc3: action.payload.imgsrc3 || "",
+        categories: action.payload.categories || "1",
+        wantPlace: action.payload.wantPlace || "",
       };
-      state = state.map((p) => (p.id === tmp.id ? { ...p, ...tmp } : p));
-      state.forEach((p, i) => (p.id === tmp.id ? state.splice(i, 1, tmp) : ''));
+      // state = state.map((p) => (p.id === tmp.id ? { ...p, ...tmp } : p));
+      state.forEach((p, i) => (p.id === tmp.id ? state.splice(i, 1, tmp) : ""));
     },
   },
 });
 
 let boardtId = 10000;
 const board = createSlice({
-  name: 'board',
+  name: "board",
   initialState: boardJSON
     .map((p) => ({
       ...p,
@@ -170,7 +176,9 @@ const board = createSlice({
     del: (state, action) => {
       // payload: id
       // state = state.filter(p => p.id !== action.payload);
-      state.forEach((p, i) => (p.id === action.payload ? state.splice(i, 1) : ''));
+      state.forEach((p, i) =>
+        p.id === action.payload ? state.splice(i, 1) : ""
+      );
     },
     fix: (state, action) => {
       // payload: {id, title, content, }
@@ -179,12 +187,16 @@ const board = createSlice({
         content: action.payload.content,
       };
       // state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
-      state.forEach((p, i) => (p.id === tmp.id ? state.splice(i, 1, tmp) : ''));
+      state.forEach((p, i) => (p.id === tmp.id ? state.splice(i, 1, tmp) : ""));
     },
     clickedUp: (state, action) => {
       // payload: id
       // state = state.map(p=>p.id===action.payload ? {...p, clicked:p.clicked+1} : p);
-      state.forEach((p, i) => (p.id === action.payload ? state.splice(i, 1, { ...p, clicked: p.clicked + 1 }) : ''));
+      state.forEach((p, i) =>
+        p.id === action.payload
+          ? state.splice(i, 1, { ...p, clicked: p.clicked + 1 })
+          : ""
+      );
     },
   },
 });
