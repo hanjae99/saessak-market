@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { MdReorder } from 'react-icons/md';
-import './Header.css';
+import './Header.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import category from '../../category.json';
 import { useDispatch, useSelector } from 'react-redux';
