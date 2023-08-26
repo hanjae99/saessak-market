@@ -2,6 +2,7 @@ import React from 'react'
 import AdminEdit from './AdminEdit'
 import AdminViewer from './AdminViewer'
 import AdminUserPage from './AdminUserPage'
+import AdminBoardPage from './AdminBoardPage'
 
 const AdminContentBox = React.memo(({ selectedCg, setModalData, page, rsl, setRsl }) => {
   return (
@@ -16,6 +17,12 @@ const AdminContentBox = React.memo(({ selectedCg, setModalData, page, rsl, setRs
           return (
             <>
               <AdminUserPage selectedCg={selectedCg} setModalData={setModalData} />
+            </>
+          )
+        } else if (page === 'adminboard') {
+          return (
+            <>
+              <AdminBoardPage selectedCg={selectedCg} setModalData={setModalData} />
             </>
           )
         }

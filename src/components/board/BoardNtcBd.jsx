@@ -1,6 +1,5 @@
 import React from 'react';
 import './NoticeBoard.css';
-import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
@@ -11,10 +10,6 @@ const BoardNtcBd = ({ page }) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="search">
-        <input type="text" placeholder="제목 검색" />
-        <FaSearch className="search-icon" size="30" />
-      </div>
       <div className="table">
         <div className="thead">
           <div className="tr">

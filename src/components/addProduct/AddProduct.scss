@@ -1,6 +1,6 @@
 .addProductContainer {
   width: 80%;
-  height: 1000px;
+  // height: 100vh;
   margin: 0 auto;
   padding: 1rem 1rem;
   background-color: rgba(199, 138, 67, 0.05);
@@ -10,7 +10,13 @@
   display: flex;
   align-items: center;
 }
-
+.previewImg {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  height: 30vw;
+  align-items: center;
+}
 .labelButton {
   line-height: 200px;
   text-align: center;
@@ -88,6 +94,7 @@
 
 .submitBtn {
   position: absolute;
+  bottom: -35%;
   right: 20%;
 }
 
@@ -104,4 +111,52 @@
 .submitBtn > button:hover {
   background-color: rgba(109, 200, 42, 0.7);
   transition: all 0.5s;
+}
+
+// 태블릿 미디어쿼리
+@media screen and (max-width: 768px) and (min-width: 425px) {
+  .labelButton {
+    width: 150px;
+    height: 150px;
+    white-space: nowrap;
+    overflow: auto;
+    text-overflow: ellipsis;
+    line-height: 150px;
+    padding: 0 10px;
+  }
+  .imgItem {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+// 모바일 미디어쿼리
+@media screen and (max-width: 424px) {
+  .content-form input {
+    width: 80%;
+  }
+  .imgUploadBox {
+    > div:first-of-type {
+      width: 150px;
+    }
+  }
+  .labelButton {
+    width: 100px;
+    height: 100px;
+    white-space: nowrap;
+    overflow: auto;
+    text-overflow: ellipsis;
+    line-height: 100px;
+    padding: 0 10px;
+    font-size: 0.7rem;
+    margin-right: 0;
+  }
+  .imgItem {
+    width: 150px;
+    height: 150px;
+  }
+  .submitBtn {
+    width: 80%;
+    display: flex;
+  }
 }

@@ -134,7 +134,7 @@ footer {
 }
 
 /* 모바일 미디어쿼리 */
-@media screen and (max-width: 530px) {
+@media screen and (max-width: 530px) and (min-width: 425px) {
   .footerBox {
     a {
       font-size: 0.5rem;
@@ -163,6 +163,59 @@ footer {
   .footerContact {
     h4 {
       font-size: 1rem;
+    }
+    padding-top: 10px;
+  }
+  .footerImg {
+    img {
+      width: 32px;
+      height: 32px;
+    }
+    top: -35px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .footerBox {
+    a {
+      font-size: 0.4rem;
+    }
+    p {
+      font-size: 0.4rem;
+    }
+    ul {
+      padding: 0 5px;
+    }
+    li {
+      margin-bottom: 0;
+    }
+  }
+  .footerName {
+    h4 > a {
+      font-size: 1rem;
+    }
+    h4 {
+      margin-top: 20px;
+    }
+  }
+  .footerSocial {
+    h4 {
+      font-size: 0.7rem;
+    }
+    padding-top: 10px;
+    img {
+      display: none;
+    }
+  }
+  .footerInfo {
+    h4 {
+      font-size: 0.7rem;
+    }
+    padding-top: 10px;
+  }
+  .footerContact {
+    h4 {
+      font-size: 0.7rem;
     }
     padding-top: 10px;
   }

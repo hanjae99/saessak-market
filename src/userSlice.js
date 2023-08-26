@@ -14,6 +14,7 @@ const user = createSlice({
       address: "관악구",
       gender: "admin",
       userproduct: [],
+      profileImg:'',
     },
     {
       id: "koo",
@@ -69,6 +70,7 @@ const user = createSlice({
           categories: "1055,111,2",
         },
       ],
+      profileImg:'',
     },
     {
       id: "jin",
@@ -125,6 +127,7 @@ const user = createSlice({
           categories: "1053,111,2",
         },
       ],
+      profileImg:'',
     },
     {
       id: "kgs",
@@ -136,6 +139,7 @@ const user = createSlice({
       address: "관악구",
       gender: "male",
       userproduct: [],
+      profileImg:'',
     },
     {
       id: "lhj",
@@ -147,6 +151,7 @@ const user = createSlice({
       address: "관악구",
       gender: "male",
       userproduct: [],
+      profileImg:'',
     },
     {
       id: "psh",
@@ -158,6 +163,7 @@ const user = createSlice({
       address: "관악구",
       gender: "male",
       userproduct: [],
+      profileImg:'',
     },
   ],
   reducers: {
