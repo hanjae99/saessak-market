@@ -185,7 +185,11 @@ const SingUp = () => {
             </div>
             <div className="singup-input-container">
               <label className="singup-text-id">주소</label>
-              <input className="singup-text-input" type="button" value="버튼" />
+              <input
+                className="singup-text-input"
+                type="button"
+                value="주소api 가져오기"
+              />
             </div>
             <div className="singup-input-container">
               <label className="singup-text-id">성별</label>

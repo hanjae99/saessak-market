@@ -15,12 +15,12 @@ import Footer from "../main/Footer";
 const Game = () => {
   const game = useSelector((state) => state.game);
   const score = useSelector((state) => state.score.no);
-  console.log("score : " + score);
+  // console.log("score : " + score);
   const dispatch = useDispatch();
   const gameBtn = useRef(null);
 
   const [index, setIndex] = useState(0);
-  const [inputprice, setInputprice] = useState();
+  const [inputprice, setInputprice] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -55,8 +55,8 @@ const Game = () => {
     const money = parseInt(
       game[index].price.replaceAll(",", "").replace("원", "")
     );
-    console.log("inputprice :" + inputprice);
-    console.log("money : " + money);
+    // console.log("inputprice :" + inputprice);
+    // console.log("money : " + money);
 
     if (!inputprice) {
       setInputprice(0);
@@ -69,12 +69,12 @@ const Game = () => {
     const per50 = Percentage(money, 50);
 
     let calc = Math.abs(inputprice - money);
-    console.log("calc" + calc);
+    // console.log("calc" + calc);
 
-    console.log("오십퍼센트" + per50);
-    console.log("사십퍼센트" + per40);
-    console.log("삼십퍼센트" + per30);
-    console.log("이십퍼센트" + per20);
+    // console.log("오십퍼센트" + per50);
+    // console.log("사십퍼센트" + per40);
+    // console.log("삼십퍼센트" + per30);
+    // console.log("이십퍼센트" + per20);
 
     if (calc >= per50) {
       setResult(2);
@@ -92,10 +92,10 @@ const Game = () => {
 
     setModalOpen(true);
   }, [game, index, inputprice]);
-  console.log("result :" + result);
+  // console.log("result :" + result);
 
   useEffect(() => {
-    console.log("useEffect : ", index);
+    // console.log("useEffect : ", index);
     if (index === 10) {
       setIndex(9);
       navigate("/gameresult/" + score);
@@ -119,13 +119,13 @@ const Game = () => {
 
               <div className="game-products">
                 <div>
-                  <lable className="game-productslable">제품명:</lable>
+                  <label className="game-productslable">제품명</label>
                   <div className="game-productslablediv">
                     {game[index] && game[index].name}
                   </div>
                 </div>
 
-                <lable className="game-productslable">제품설명:</lable>
+                <label className="game-productslable">제품설명</label>
                 <div className="game-productstext">
                   <div className="game-productsdivtext">
                     {game[index] && game[index].text}

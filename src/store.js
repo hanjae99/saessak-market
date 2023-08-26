@@ -215,8 +215,8 @@ const store = configureStore({
     blacklist: blacklist.reducer,
     ntcData: ntcData.reducer,
     objecttion: objecttion.reducer,
-    login:login.reducer,
-    comments:comments.reducer,
+    login: login.reducer,
+    comments: comments.reducer,
   },
 });
 
