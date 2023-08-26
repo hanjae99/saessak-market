@@ -24,6 +24,7 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId='' }) => {
           <textarea />
         </div>
         <button onClick={e => {
+          if (e.target.previousSibling.children[0].value==='') return;
           let tmp = {
             parent: parent,
             parentId: parentId,
@@ -52,7 +53,6 @@ const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId='' })
       return lv;
     }
   }
-  console.log(parentCommentId, comments.filter(p => p.parent === parent && p.parentId === parentId && p.parentCommentId === parentCommentId))
   return (
     <>
     {comments.filter(p => p.parent === parent && p.parentId === parentId && p.parentCommentId === parentCommentId).map(p =>
@@ -83,9 +83,6 @@ const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId='' })
 
 const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
   const comments = useSelector(state => state.comments);
-  const users = useSelector(state => state.user);
-  console.log(comments)
-
   return (
     <div className='commentBox'>
       <CmtInputBox isAnonymous={isAnonymous} parent={parent} parentId={parentId} />
