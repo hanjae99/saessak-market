@@ -19,7 +19,6 @@ const ADBoardNtcBd = ({ page, setViewPage }) => {
   function onClick(e, p) {
     setViewPage(['2', p.id]);
   }
-  console.log(dummy.slice((page - 1) * 15, page * 15))
   return (
     <>
       <div className="search">
