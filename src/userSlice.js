@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AddProduct from "./components/addProduct/AddProduct";
 
 const user = createSlice({
   name: "user",

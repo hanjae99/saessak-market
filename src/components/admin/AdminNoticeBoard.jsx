@@ -7,7 +7,6 @@ import CommentViewer from './CommentViewer';
 
 const ADBoardNtcBd = ({ page, setViewPage }) => {
   const dummy = useSelector((state) => state.ntcData);
-  const num = dummy.length;
 
   const viewList = {
     id: '번호',

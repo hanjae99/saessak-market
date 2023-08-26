@@ -2,7 +2,6 @@ import React from "react";
 import "./Detail.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { parse } from "qs";
 import Header from "../main/Header";
 import Kakao from "./Kakao";
 import Footer from "../main/Footer";
