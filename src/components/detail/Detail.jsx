@@ -103,7 +103,9 @@ const Detail = () => {
                           alt=""
                         />
                       </div>
-                      <span>{up.name}</span>
+                      <div className="detail-textobx">
+                        <span>{up.name}</span>
+                      </div>
                       <br />
                       <span>{up.price}</span>
                     </div>
@@ -143,8 +145,12 @@ const Detail = () => {
                           alt=""
                         />
                       </div>
-                      <p>제품명:{e.name}</p>
-                      <p>제품가격:{e.price}</p>
+                      <div>
+                        <span>제품명:{e.name}</span>
+                      </div>
+                      <div>
+                        <span>제품가격:{e.price}</span>
+                      </div>
                     </div>
                   ))
                 ) : (
