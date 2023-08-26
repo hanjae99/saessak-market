@@ -8,7 +8,8 @@ const NoticeBoardList = () => {
   return (
     <div className="notice-box">
       <ul className="notice-list">
-        <h3>소통</h3>
+        <h3 className="board-list-h3">소통</h3>
+        <hr />
         <li value="자유게시판" className="board_li">
           <Link to="/boardmain" className="board_1">
             {post[0]}
@@ -16,7 +17,8 @@ const NoticeBoardList = () => {
         </li>
       </ul>
       <ul className="notice-list">
-        <h3>고객센터</h3>
+        <h3 className="board-list-h3">고객센터</h3>
+        <hr />
         <li value="고객의 소리" className="board_li">
           <Link to="/boardmain/1" className="board_1">
             {post[2]}
