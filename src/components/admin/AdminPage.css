@@ -4,8 +4,8 @@
   margin: 0;
   /* border: 1px solid gray; */
   box-sizing: border-box;
-
   list-style: none;
+  z-index: 10;
 }
 
 .adminPage {
@@ -180,12 +180,11 @@
 
 .adminViewer>div:first-child {
   width: 100%;
-  height: 15%;
+  height: 10%;
 }
 
 .adminViewer>div:last-child {
   width: 100%;
-  height: 85%;
 }
 
 .viewrHead {
@@ -202,11 +201,99 @@
   top: 30px;
 }
 
-.viewerBody,
-.viewerBody>span {
+/* .viewerBody, */
+.adminViewer>span {
   padding: 0px 10px 2px;
-  border: 1px solid black;
+  margin-top: 10px;
+  display: inline-block;
+  height: 37px;
+  position: relative;
+  bottom: 0px;
+  vertical-align :top; 
+  transform: translateY(-2px);
+
 }
+.adminViewer>span:nth-child(2) {
+  width: 170px;
+  padding-top: 10px;
+  text-align: center;
+}
+.adminViewer>span:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 50%;
+  height: 100%;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-top-left-radius: 5px;
+}
+.adminViewer>span:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-top-right-radius: 5px;
+}
+.adminViewer>span:nth-child(3) {
+  width: calc(100% - 170px);
+}
+
+.adminViewer>span:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 50%;
+  left: 0px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-left-radius: 5px;
+}
+.viewerBody {
+  height: 85%;
+ padding: 5px;
+}
+/* .viewerBody .bd {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  
+  z-index: 1;
+}
+.viewerBody .bd.no1 {
+  top: 0px;
+  left: 0px;
+  border-left: 1px solid black;
+}
+.viewerBody .bd.no2 {
+  top: 0px;
+  left: 50%;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-top-right-radius: 10px;
+}
+.viewerBody .bd.no3 {
+  top: 50%;
+  left: 0px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-left-radius: 10px;
+}
+.viewerBody .bd.no4 {
+  top: 50%;
+  left: 50%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-right-radius: 10px;
+} */
+
 
 .adminUserPage {
   width: 90%;
@@ -241,6 +328,76 @@
 }
 
 
+
+
+.adminBoardBody {
+  margin-left: 30px;
+  width: 80%;
+}
+
+.cmtInput {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: rgb(255, 249, 243);
+  padding: 15px;
+  margin: 15px 0px;
+}
+
+.cmtInput > :last-child {
+  margin-bottom: 15px;
+}
+
+.cmtInput > .cmt_info {
+  display: flex;
+  height: 30px;
+}
+
+.cmtInput > .cmt_info > * {
+  display: block;
+  font-size: 0.9rem;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 5px;
+}
+.cmtInput > .cmt_info > *:first-child {
+  width: 30px;
+  background: url(../../img/leaf1.png);
+  background-size: cover;
+}
+
+.cmtInput_textbox {
+  display: flex;
+  width: 100%;
+  height: 60px;
+}
+.cmtInput_textbox > * {
+  display: block;
+  height: 60px;
+}
+
+.cmtInput_textbox > *:nth-child(1) {
+  width: 60px;
+  font-size: 1.5rem;
+  line-height: 60px;
+  text-align: center;
+  border: 1px solid #ddd;
+  background: #eee;
+  color: #ccc;
+}
+
+.cmtInput_textbox > *:nth-child(2) {
+  width: calc(100% - 120px);
+}
+.cmtInput_textbox > *:nth-child(2) > textarea {
+  width: calc(100% - 24px);
+  margin: 0px 12px;
+  height: 100%;
+  resize: none;
+}
+.cmtInput_textbox > *:nth-child(3) {
+  width: 60px;
+}
 
 
 

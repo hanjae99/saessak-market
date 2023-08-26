@@ -12,7 +12,7 @@ export const Layout = () => {
 
   return (
     <div>
-      <div style={{ padding: "0 10%" }}>
+      <div className="layout-main">
         <Header />
         <div
           style={{
@@ -36,18 +36,14 @@ export const Layout = () => {
         ></div> */}
         </div>
         <div className="newmain3" style={{ display: "flex", width: "100%" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div
-              className="menuBtn1"
-              style={{
-                // backgroundColor: "greenyellow",
-                padding: "35px",
-                backgroundImage: "url(../../img/saessak.png)",
-                backgroundSize: "84%",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "top",
-              }}
-            ></div>
+          <div className="layout-1">
+            <div className="menuBtn1">
+              <img
+                src="../../img/saessak.png"
+                alt=""
+                className="menuBtn1-img"
+              />
+            </div>
             <div className="menuBtn" onClick={() => navigate("/user/mypage")}>
               마이페이지
             </div>
@@ -58,14 +54,7 @@ export const Layout = () => {
               찜 목록
             </div>
           </div>
-          <div
-            className="newmain4"
-            style={{
-              padding: "0 3rem 0 4rem",
-              height: "100%",
-              width: "100%",
-            }}
-          >
+          <div className="newmain4">
             <Routes>
               <Route path="/mypage" element={<MyPage />}></Route>
               <Route path="/check" element={<Check />}></Route>

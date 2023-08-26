@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
-import "./AddProduct.css";
+import "./AddProduct.scss";
 
 const AddProduct = () => {
   const [imgSrc, setImgSrc] = useState([]);
@@ -71,15 +71,17 @@ const AddProduct = () => {
                 disabled={imgCount === 3}
               />
             </div>
-            {imgSrc.map((src) => (
-              <div className="imgItem" key={src}>
-                <img className="imgItem" src={src} alt="예시이미지" />
-                <button onClick={() => removeImg(src)}>삭제</button>
-              </div>
-            ))}
+            <div className="previewImg">
+              {imgSrc.map((src) => (
+                <div className="imgItem" key={src}>
+                  <img className="imgItem" src={src} alt="예시이미지" />
+                  <button onClick={() => removeImg(src)}>삭제</button>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="addContents">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="content-form">
               <div className="addName">
                 <input
                   type="text"
