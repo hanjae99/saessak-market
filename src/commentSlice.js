@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
+let commentId = 10000;
 const comments = createSlice({
   name: 'comments',
   initialState: [
     {
-      commentId: '10000',
+      commentId: '9999',
       upTime: "2023.08.21 05:39",
       fixTime: "2023.08.21 05:39",
       parent: 'objection',
@@ -16,8 +16,18 @@ const comments = createSlice({
     },
   ],
   reducers: {
-    addSP: (state, action) => {
-      state.select_pitem.indexOf(action.payload) >= 0 ? console.log() : state.select_pitem.push(action.payload);
+    add: (state, action) => {
+      let tmp = {
+        commentId: commentId++ + '',
+        upTime: new Date().toUTCString(),
+        fixTime: "",
+        parent: "",
+        parentId: "",
+        parentCommentId:"",
+        writer: "",
+        content : ""
+      }
+      state.push(({...tmp, ...action.payload}))
     }
   }
 });

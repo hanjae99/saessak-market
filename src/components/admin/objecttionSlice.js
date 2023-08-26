@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let commentId = 10000;
+let id = 10000;
 const objecttion = createSlice({
   name: 'objecttion',
   initialState: [
     {
-      commentId: commentId++ +'',
+      id: id++ +'',
       upTime: "2023.08.21 05:39",
       fixTime: "2023.08.21 05:39",
       title: '제가 왜 정지당한거죠???',

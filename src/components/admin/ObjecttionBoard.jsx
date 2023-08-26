@@ -14,15 +14,14 @@ const ObjecttionBoard = ({setViewPage}) => {
   const objecttionData = useSelector(state => state.objecttion);
   const users = useSelector(state => state.user);
   const viewList = {
-    commentId: '글번호',
+    id: '글번호',
     title: '제목',
     writer: '작성자',
     upTime: "작성시간",
     viewCount: "조회수"
   }
   function onClick(e,p) {
-    setViewPage(['2',e.id]);
-    // p.id
+    setViewPage(['2',p.id]);
   }
   return (
     <div className='objectionBoard'>

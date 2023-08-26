@@ -10,7 +10,6 @@ const ObjecttionDetail = ({ viewPage, setViewPage }) => {
   const dummy = useSelector((state) => state.objecttion);
   const users = useSelector(state=>state.user)
   const ntcData = dummy.find((p) => p.id === id);
-
   return (
     <div className='objecttionDetail'>
         <div className="board-center">
@@ -23,7 +22,7 @@ const ObjecttionDetail = ({ viewPage, setViewPage }) => {
           </div>
           <hr />
           <div className="info_board">{ntcData.content}</div>
-          <CommentViewer isAnonymous={false} parent={dummy} parentId={id} />
+          <CommentViewer isAnonymous={false} parent={'objecttion'} parentId={id} />
         </div>
     </div>
   );

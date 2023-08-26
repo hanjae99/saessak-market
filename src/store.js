@@ -9,6 +9,7 @@ import blacklist from "./blackListSlice";
 import ntcData from "./components/board/NtcSlice";
 import objecttion from "./components/admin/objecttionSlice";
 import login from "./loginSlice";
+import comments from "./commentSlice";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -215,6 +216,7 @@ const store = configureStore({
     ntcData: ntcData.reducer,
     objecttion: objecttion.reducer,
     login:login.reducer,
+    comments:comments.reducer,
   },
 });
 

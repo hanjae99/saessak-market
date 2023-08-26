@@ -89,10 +89,9 @@ const Detail = () => {
                 <h2>닉네임 님의 다른 판매상품 정보</h2>
                 <div className="detail-imgbox-grid">
                   {userproduct.slice(0, 3).map((up) => (
-                    <div className="detail-itembox">
+                    <div className="detail-itembox" key={up.id}>
                       <div
                         className="detail-imgbox1"
-                        key={up.id}
                         onClick={() => {
                           navigate("/detail/" + up.id);
                         }}

@@ -1,9 +1,9 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-const CmtInputBox = (parent,parentId,isAnonymous) => {
-  const login = useSelector(state => state.login)
-  console.log(login.id)
+const CmtInputBox = ({parent, parentId, isAnonymous}) => {
+  const login = useSelector(state => state.login);
+  const dispatch = useDispatch();
   return (
     <div className='cmtInput'>
       <div className='cmt_info'>
@@ -16,7 +16,15 @@ const CmtInputBox = (parent,parentId,isAnonymous) => {
         <div>
           <textarea />
         </div>
-        <button>등록</button>
+        <button onClick={e => {
+          const tmp = {
+            parent: parent,
+            parentId: parentId,
+            writer: login.id,
+            content: e.target.previousSibling.children[0].value
+          }
+          dispatch({type:'comments/add', payload:tmp})
+        }}>등록</button>
       </div>
       {isAnonymous ? <div></div> : ''}
     </div>
@@ -24,10 +32,19 @@ const CmtInputBox = (parent,parentId,isAnonymous) => {
 }
 
 
-const CommentViewer = (parent,parentId,isAnonymous=false) => {
+const CommentViewer = ({parent, parentId, isAnonymous = false}) => {
+  const comments = useSelector(state=>state.comments);
+  const users = useSelector(state=>state.user);
+  const textareaStyle = {resize:'none', border:'none', outline:'none'};
+  console.log(comments)
   return (
     <div className='commentBox'>
       <CmtInputBox isAnonymous={isAnonymous} parent={parent} parentId={parentId} />
+      {comments.filter(p=>p.parent===parent && p.parentId===parentId && p.parentCommentId === '').map(p=> <div key={p.commentId}>
+        {users.find(q=>q.id===p.writer).nickname} <br />
+        <textarea value={p.content} style={textareaStyle} readonly='true' /> <br />
+        {p.upTime} <br />
+      </div>)}
     </div>
   )
 }
