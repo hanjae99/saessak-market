@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './BoardMain.css';
 import './BoardInfo.css';
 import NoticeBoardList from './NoticeBoardList';
 import Header from '../main/Header';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
+import CommentViewer from '../admin/CommentViewer';
+import { RxEraser } from 'react-icons/rx';
+import { BsPencil } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const BoardInfo = () => {
-  const [page, setPage] = useState(1);
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const infoData = useSelector((state) => state.board);
   const selectData = infoData.find((p) => p.id === id / 1);
+
+  const handleDel = (e) => {
+    dispatch({ type: 'board/del', payload: id });
+    navigate('/boardmain');
+  };
+
+  const handleFix = (e) => {
+    navigate('/boardwrite?id=' + id);
+  };
+
   return (
     <>
       <Header />
@@ -25,23 +42,18 @@ const BoardInfo = () => {
             <span className="board-info-head-left">{selectData.writer}</span>
             <span className="board-info-head-center">{selectData.clicked}</span>
             <span className="board-info-head-right">{new Date(selectData.date).toLocaleString()}</span>
+            <div onClick={handleFix}>
+              <BsPencil />
+              <span>수정</span>
+            </div>
+            <div onClick={handleDel}>
+              <RxEraser />
+              <span>삭제</span>
+            </div>
           </div>
           <hr />
           <div className="info_board">{selectData.content}</div>
-          <div className="info_comment">
-            <div>작성자</div>
-            <div>댓글</div>
-            <div>
-              작성일자 <span>답글쓰기</span>
-            </div>
-          </div>
-          <div className="info_comment">
-            <div>작성자</div>
-            <div>댓글</div>
-            <div>
-              작성일자 <span>답글쓰기</span>
-            </div>
-          </div>
+          <CommentViewer isAnonymous={false} parent={'board'} parentId={id} />
         </div>
         <div className="board-rigth"></div>
       </div>

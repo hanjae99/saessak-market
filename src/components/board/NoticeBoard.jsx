@@ -57,11 +57,11 @@ const NoticeBoard = ({ page }) => {
               new Date().getDate() === new Date(p.date).getDate()
                 ? new Date(p.date).toLocaleTimeString()
                 : new Date(p.date).toLocaleDateString(),
-            onclick: () => {
-              navigate('info/' + p.id);
-            },
           }))}
-        viewList={viewList}
+        viewList={viewList} 
+        onClick={(e,p) => {
+          navigate('info/' + p.id)} 
+        }
       />
     </>
   );

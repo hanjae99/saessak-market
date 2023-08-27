@@ -15,7 +15,8 @@ const Header = () => {
   }, []);
 
   const onSearch = () => {
-    navigate("/search/" + value);
+    let str = "/search";
+    navigate(value ? str + "/" + value : str);
   };
 
   const enterCheck = (e) => {
@@ -36,9 +37,9 @@ const Header = () => {
             <Link to="/">
               <img src="../../img/saessak.png" alt="logo" />
             </Link>
-            <div>
+            <div className="logo-text">
               <Link to="/">
-                <span className="logo-text">새싹 마켓</span>
+                <img src="../../img/logo.png" alt="새싹마켓 logo" />
               </Link>
             </div>
           </div>
@@ -70,8 +71,12 @@ const Header = () => {
             >
               {login.id === "" ? "로그인" : "로그아웃"}
             </button>
-            <button style={{ color: "white" }}>
-              <Link>마이페이지</Link>
+            <button
+              onClick={() => {
+                navigate("/user/mypage");
+              }}
+            >
+              마이페이지
             </button>
           </div>
         </div>

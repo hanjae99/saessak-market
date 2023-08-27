@@ -42,4 +42,10 @@
   .board_1 {
     font-size: 13px;
   }
+  .board-list-h3 {
+    font-size: 18px;
+  }
+  .board_li {
+    padding-left: 3px;
+  }
 }

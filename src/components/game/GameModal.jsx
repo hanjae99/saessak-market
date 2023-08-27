@@ -9,7 +9,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
     onIncrease();
   };
   // const dispatch = useDispatch();
-  console.log(game);
+  // console.log(game);
 
   function comma(no) {
     no += "";

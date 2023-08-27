@@ -14,9 +14,9 @@ const ntcData = createSlice({
     .map((p) => ({
       ...p,
       date: getRandomDate(new Date(2023, 7, 10), new Date()).toUTCString(),
-      id: boardtId++,
+      clicked: Math.floor(Math.random()*50+1)
     }))
-    .sort((a, b) => (Date.parse(a.date) < Date.parse(b.date) ? 1 : -1)),
+    .sort((a, b) => (Date.parse(a.date) > Date.parse(b.date) ? 1 : -1)).map(p=>({...p, id: boardtId++,})).sort((a, b) => (Date.parse(a.date) < Date.parse(b.date) ? 1 : -1)),
   // [
   //   {
   //     "title": "술안주",
@@ -37,7 +37,7 @@ const ntcData = createSlice({
         clicked: 0,
         date: new Date().toUTCString(),
       };
-      state.push(tmp);
+      state.unshift(tmp);
     },
     del: (state, action) => {
       // payload: id

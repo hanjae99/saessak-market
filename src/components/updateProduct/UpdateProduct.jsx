@@ -66,8 +66,7 @@ const UpdateProduct = () => {
     };
 
     dispatch({ type: "product/fix", payload: newProduct });
-    navigate("/search/" + name);
-    console.log(state);
+    navigate("/detail/" + id);
   };
 
   const handleName = (e) => {

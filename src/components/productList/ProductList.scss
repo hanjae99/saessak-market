@@ -135,8 +135,9 @@
 }
 
 .moveBtn {
+  display: flex;
   margin-top: 20px;
-  text-align: center;
+  justify-content: center;
 }
 
 .moveBtn button {
@@ -146,6 +147,7 @@
   border-radius: 5px;
   background-color: #f5f5f5;
   border: 1px solid #f4f4f4;
+  cursor: pointer;
 }
 
 .moveBtn button:hover {
