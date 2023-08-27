@@ -5,6 +5,7 @@ import AdminModal from './AdminModal'
 import './AdminPage.css';
 import AdminContentBox from './AdminContentBox'
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const AdminPage = () => {
   let {page} = useParams();
@@ -18,7 +19,11 @@ const AdminPage = () => {
     )
   });
   const [rsl, setRsl] = useState([]);
-  useEffect(()=>{setSelectedCg()},[page])
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    setSelectedCg()
+    dispatch({type:'login/login',payload:'admin'})
+  },[page])
   return (
     <div className='adminPage'>
       <AdminNav setModalData={setModalData} />
