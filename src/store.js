@@ -170,27 +170,30 @@ const board = createSlice({
         id: boardtId++,
         title: action.payload.title,
         content: action.payload.content,
-        writer: action.payload.writer,
+        writer: action.payload.writer || "새싹방문자",
         clicked: 0,
         date: new Date().toUTCString(),
       };
-      state.push(tmp);
+      state.unshift(tmp);
     },
     del: (state, action) => {
       // payload: id
       // state = state.filter(p => p.id !== action.payload);
       state.forEach((p, i) =>
-        p.id === action.payload ? state.splice(i, 1) : ""
+        p.id === action.payload / 1 ? state.splice(i, 1) : ""
       );
     },
     fix: (state, action) => {
       // payload: {id, title, content, }
       let tmp = {
+        id: action.payload.id,
         title: action.payload.title,
         content: action.payload.content,
       };
       // state = state.map(p => p.id === tmp.id ? {...p, ...tmp} : p);
-      state.forEach((p, i) => (p.id === tmp.id ? state.splice(i, 1, tmp) : ""));
+      state.forEach((p, i) =>
+        p.id === tmp.id / 1 ? state.splice(i, 1, { ...p, ...tmp }) : ""
+      );
     },
     clickedUp: (state, action) => {
       // payload: id
