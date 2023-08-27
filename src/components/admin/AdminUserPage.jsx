@@ -1,9 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const AdminUserPage = ({ selectedCg, setModalData }) => {
   const users = useSelector(state => state.user);
   const blackUser = useSelector(state => state.blacklist.blackUser)
+  const dispatch = useDispatch();
+  // event.currentTarget
   return (
     <div className='adminUserPage'>
       {users.filter(p =>
@@ -11,8 +13,24 @@ const AdminUserPage = ({ selectedCg, setModalData }) => {
           p :
           selectedCg === '1' ?
             blackUser.find(q => p.id === q) === undefined :
-            blackUser.find(q => p.id === q) !== undefined).filter(p=>p.gender !== 'admin').map(p =>
-              <div key={p.id} className='adminUserBox'>
+            blackUser.find(q => p.id === q) !== undefined).filter(p => p.gender !== 'admin').map(p =>
+              <div key={p.id} className='adminUserBox'
+                onMouseOver={selectedCg === '' || selectedCg === undefined ?
+                  e => { } : selectedCg === '1' ?
+                    e => { e.currentTarget.style.background = 'red' } :
+                    e => { e.currentTarget.style.background = 'blue' }
+                }
+                onMouseOut={selectedCg === '' || selectedCg === undefined ?
+                  e => { } : selectedCg === '1' ?
+                    e => { e.currentTarget.style.background = 'none' } :
+                    e => { e.currentTarget.style.background = 'none' }
+                }
+                onClick={selectedCg === '' || selectedCg === undefined ?
+                  e => { } : selectedCg === '1' ?
+                    e => { dispatch({ type: 'blacklist/addBLU', payload: p.id }) } :
+                    e => { dispatch({ type: 'blacklist/delBLU', payload: p.id }) }
+                }
+              >
                 <div>
                   {p.img ?? <><img src={p.img} alt="" /></>}
                 </div>
@@ -21,16 +39,6 @@ const AdminUserPage = ({ selectedCg, setModalData }) => {
                   <span>phone : {p.phone}</span><span>email : {p.email}</span><br />
                   <span>address : {p.address}</span>
                 </div>
-                { (()=>{
-                  if (!(selectedCg === '' || selectedCg === undefined)){
-                    return (
-                      selectedCg === '1' ? 
-                      <button>차단하기</button>:
-                      <button>차단해제</button>
-                    )
-                  }
-                })() }
-               
               </div>
             )}
     </div>

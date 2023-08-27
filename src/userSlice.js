@@ -13,7 +13,7 @@ const user = createSlice({
       address: "관악구",
       gender: "admin",
       userproduct: [],
-      profileImg:'',
+      profileImg:'../../img/saessak.png',
     },
     {
       id: "koo",

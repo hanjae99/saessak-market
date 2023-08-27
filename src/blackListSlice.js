@@ -32,7 +32,7 @@ const adminData = createSlice({
     },
     delBLU : (state, action) => {
       // state.blackUser = state.blackUser.map(p=>p!==action.payload);
-      state.blackUser.forEach((p,i)=>p.id===action.payload?state.blackUser.splice(i,1):'');
+      state.blackUser.forEach((p,i)=>p===action.payload?state.blackUser.splice(i,1):'');
     }
   }
 });
