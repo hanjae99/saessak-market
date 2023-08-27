@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./SingUp.css";
 import Header from "../main/Header";
@@ -7,7 +7,9 @@ import Footer from "../main/Footer";
 
 const SingUp = () => {
   const user = useSelector((state) => state.user);
-  const [singFailed, setSingFailed] = useState(false); // 상태 추가
+  const [singFailed, setSingFailed] = useState(false);
+  const [idCheck, setIdCheck] = useState(0);
+  const [nicknameCheck, setNicknameCheck] = useState(0);
   console.log(user);
   const dispatch = useDispatch();
   const navigator = useNavigate();
@@ -38,6 +40,8 @@ const SingUp = () => {
       !newUser.id ||
       !newUser.nickname ||
       !newUser.pwd ||
+      idCheck !== -1 ||
+      nicknameCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
       !newUser.phone ||
@@ -106,6 +110,32 @@ const SingUp = () => {
     }));
   };
 
+  const onidCheck = (e) => {
+    e.preventDefault();
+    const checkid = user.find((u) => u.id === newUser.id);
+    if (checkid) {
+      setIdCheck(1);
+    } else {
+      setIdCheck(-1);
+    }
+  };
+
+  const onNicknameCheck = (e) => {
+    e.preventDefault();
+    const checkNickname = user.find((u) => u.nickname === newUser.nickname);
+    if (checkNickname) {
+      setNicknameCheck(1);
+    } else {
+      setNicknameCheck(-1);
+    }
+  };
+  useEffect(() => {
+    setIdCheck(0);
+  }, [newUser.id]);
+
+  useEffect(() => {
+    setNicknameCheck(0);
+  }, [newUser.nickname]);
   return (
     <>
       <div className="singup-container1">
@@ -123,9 +153,26 @@ const SingUp = () => {
                 type="text"
                 placeholder="아이디를 입력해주세요"
                 onChange={onId}
+                autoFocus={true}
+                // style={idCheck ? { outlineColor: "red" } : {}}
               />
-              <button className="singup-bt1">중복확인</button>
+              <button onClick={onidCheck} className="singup-bt1">
+                중복확인
+              </button>
             </div>
+            {idCheck === 1 ? (
+              <p className="singup-duplicated-msg">
+                이미 사용 중인 아이디입니다.
+              </p>
+            ) : (
+              ""
+            )}
+            {idCheck === -1 ? (
+              <p className="singup-duplicated1-msg">사용가능한 아이디입니다.</p>
+            ) : (
+              ""
+            )}
+
             <div className="singup-input-container">
               <label className="singup-text-id">닉네임</label>
               <input
@@ -134,8 +181,22 @@ const SingUp = () => {
                 placeholder="닉네임을 입력해주세요"
                 onChange={onNickname}
               />
-              <button className="singup-bt1">중복확인</button>
+              <button onClick={onNicknameCheck} className="singup-bt1">
+                중복확인
+              </button>
             </div>
+            {nicknameCheck === 1 ? (
+              <p className="singup-duplicated-msg">
+                이미 사용 중인 닉네임입니다.
+              </p>
+            ) : (
+              ""
+            )}
+            {nicknameCheck === -1 ? (
+              <p className="singup-duplicated1-msg">사용가능한 닉네임입니다.</p>
+            ) : (
+              ""
+            )}
             <div className="singup-input-container">
               <label className="singup-text-id">비밀번호</label>
               <input
@@ -185,7 +246,11 @@ const SingUp = () => {
             </div>
             <div className="singup-input-container">
               <label className="singup-text-id">주소</label>
-              <input className="singup-text-input" type="button" value="버튼" />
+              <input
+                className="singup-text-input"
+                type="button"
+                value="주소api 가져오기"
+              />
             </div>
             <div className="singup-input-container">
               <label className="singup-text-id">성별</label>
@@ -210,7 +275,7 @@ const SingUp = () => {
             </div>
             {singFailed && (
               <p className="singup-failed-msg">
-                필수 정보를 모두 입력해주세요.
+                필수 정보를 모두 입력해주세요.(중복확인 필수!)
               </p>
             )}
             <br />

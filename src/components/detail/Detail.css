@@ -4,6 +4,7 @@
 .detail-container {
   width: 80%;
   margin: auto;
+  margin-top: 20px;
   padding: 20px;
   background-color: rgba(199, 138, 67, 0.05);
   border: 1px solid #ccc;
@@ -84,7 +85,6 @@
   border-radius: 10px;
   border: 0px;
 }
-/* 상품 수정 임시로 추가 */
 .detail-productsitem-btn3 {
   width: 100%;
   height: 3rem;
@@ -95,13 +95,32 @@
   border-radius: 10px;
   border: 0px;
 }
+.detail-imgBox {
+  width: 100%; /* 부모 요소의 전체 너비를 활용 */
+  height: 100%;
+  border-radius: 40px;
+  margin-right: 20px;
+  max-height: 410px;
+}
 .detail-imgBox > img {
-  width: 100%;
+  width: 100%; /* 부모 요소의 전체 너비를 활용 */
+  height: 100%;
+  border-radius: 40px;
+  margin-right: 20px;
+  max-width: 550px;
+}
+.detail-imgBox > .carousel-root {
+  /* width: 100%;
   height: 30vw;
   border-radius: 40px;
   margin-right: 20px;
-  max-height: 300px;
-  max-width: 400px;
+  max-height: 300px; */
+  border-radius: 40px;
+  margin-right: 20px;
+  max-height: 410px;
+  width: 100%;
+  height: 100%; /* .detail-imgBox 전체 영역을 채우도록 설정 */
+  /* object-fit: cover; 이미지 종횡비 유지 */
 }
 .detail-imgbox-grid {
   display: grid;
@@ -113,6 +132,11 @@
   width: 100%;
   height: 6rem;
   border-radius: 10px;
+}
+.detail-textobx {
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detail-divRecommend {
@@ -147,8 +171,62 @@
   background-color: rgba(113, 74, 11, 0.692);
   transition: all 0.6s;
 }
-/* 상품 수정 임시로 추가 */
 .detail-productsitem-btn3:hover {
   background-color: rgba(234, 189, 42, 0.7);
   transition: all 0.6s;
+}
+.detail-productsitem-div-name {
+  font-size: large;
+  font-weight: bold;
+  /* padding-left: 10px; */
+}
+.detail-productsitem-div-price {
+  font-size: large;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 425px) {
+  .detail-contentsBox1,
+  .detail-contentsBox2 {
+    display: block;
+    width: 100%;
+  }
+  .detail-imgBox {
+    height: auto;
+  }
+  .detail-productsitem1 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  .detail-productsitem2 {
+    border-top: 1px solid #ccc;
+    width: 100%;
+    padding-left: 0px;
+  }
+  .detail-productsitem3 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  .detail-productsitem4 {
+    border-top: 1px solid #ccc;
+    width: 100%;
+    padding-left: 0px;
+  }
+  .detail-divRecommend {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 10px;
+  }
+  .detail-recommend-img {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+  .detail-recommend-name {
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

@@ -7,7 +7,7 @@ const score = createSlice({
   initialState: { no: finalResult },
   reducers: {
     resultadd: (state, action) => {
-      console.log("scoreslice ====" + state.no);
+      // console.log("scoreslice ====" + state.no);
       state.no += action.payload;
     },
   },
