@@ -25,13 +25,13 @@ const Check = () => {
                   <div key={i}>
                     <div className="table-main">
                       <div className="table-body">
-                        <div className="table-day">"2023. 08. 23 주문"</div>
+                        <div className="table-day">"2023. 08. 23 등록"</div>
                       </div>
                       <div className="td-main">
                         <div className="td-1">
                           <div className="td-1-1">
                             <div className="td-1-1-1">
-                              <span className="td-1-1-1-1">구매확정</span>
+                              <span className="td-1-1-1-1">판매중</span>
                             </div>
                           </div>
                           <div>
