@@ -14,7 +14,7 @@ const user = createSlice({
       address: "관악구",
       gender: "admin",
       userproduct: [],
-      profileImg:'',
+      profileImg: "",
     },
     {
       id: "koo",
@@ -70,7 +70,7 @@ const user = createSlice({
           categories: "1055,111,2",
         },
       ],
-      profileImg:'',
+      profileImg: "",
     },
     {
       id: "jin",
@@ -127,7 +127,7 @@ const user = createSlice({
           categories: "1053,111,2",
         },
       ],
-      profileImg:'',
+      profileImg: "",
     },
     {
       id: "kgs",
@@ -139,7 +139,7 @@ const user = createSlice({
       address: "관악구",
       gender: "male",
       userproduct: [],
-      profileImg:'',
+      profileImg: "",
     },
     {
       id: "lhj",
@@ -151,7 +151,7 @@ const user = createSlice({
       address: "관악구",
       gender: "male",
       userproduct: [],
-      profileImg:'',
+      profileImg: "",
     },
     {
       id: "psh",
@@ -163,7 +163,7 @@ const user = createSlice({
       address: "관악구",
       gender: "male",
       userproduct: [],
-      profileImg:'',
+      profileImg: "",
     },
   ],
   reducers: {
@@ -207,7 +207,11 @@ const user = createSlice({
         imgsrc2: action.payload.imgsrc2,
         categories: action.payload.categories,
       };
-      state[2].userproduct.push(product);
+      state[2].userproduct.unshift(product);
+    },
+    idCheck(state, action) {
+      const existingUser = state.find((user) => user.id === action.payload);
+      return existingUser !== undefined;
     },
   },
 });
