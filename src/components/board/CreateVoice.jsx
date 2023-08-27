@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router';
 import { BiSearchAlt2 } from 'react-icons/bi';
 
 const CreateVoice = ({ page }) => {
-  const num = dummy.length;
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   const onChange = useCallback((e) => {

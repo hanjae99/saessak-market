@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './BoardMain.css';
 import './BoardInfo.css';
 import NoticeBoardList from './NoticeBoardList';
@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import CommentViewer from '../admin/CommentViewer';
 
 const BoardNtcInfo = () => {
-  const [page, setPage] = useState(1);
   const { id } = useParams();
   const dummy = useSelector((state) => state.ntcData);
   const ntcData = dummy.find((p) => p.id === id / 1);
