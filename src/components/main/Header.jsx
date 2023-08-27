@@ -63,7 +63,7 @@ const Header = () => {
               로그인
             </button>
             <button style={{ color: "white" }}>
-              <Link to="/user/mypage">마이페이지</Link>
+              <Link>마이페이지</Link>
             </button>
           </div>
         </div>
