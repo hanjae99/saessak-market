@@ -37,9 +37,9 @@ const Header = () => {
             <Link to="/">
               <img src="../../img/saessak.png" alt="logo" />
             </Link>
-            <div>
+            <div className="logo-text">
               <Link to="/">
-                <span className="logo-text">새싹 마켓</span>
+                <img src="../../img/logo.png" alt="새싹마켓 logo" />
               </Link>
             </div>
           </div>

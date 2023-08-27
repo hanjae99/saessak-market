@@ -11,6 +11,7 @@ import "./ProductList.scss";
 const ProductList = () => {
   const { searchItem } = useParams();
   const location = useLocation();
+  console.log(location);
   const navigate = useNavigate();
   const [pageNumLength, setpageNumLength] = useState(0);
 
