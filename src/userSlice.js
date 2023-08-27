@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AddProduct from "./components/addProduct/AddProduct";
 
 const user = createSlice({
   name: "user",
@@ -14,7 +13,7 @@ const user = createSlice({
       address: "관악구",
       gender: "admin",
       userproduct: [],
-      profileImg: "",
+      profileImg: "../../img/saessak.png",
     },
     {
       id: "koo",

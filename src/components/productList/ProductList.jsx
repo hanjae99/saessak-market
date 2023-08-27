@@ -11,13 +11,20 @@ import "./ProductList.scss";
 const ProductList = () => {
   const { searchItem } = useParams();
   const location = useLocation();
+  console.log(location);
   const navigate = useNavigate();
-  const [pageNum, setpageNum] = useState(1);
+  const [pageNumLength, setpageNumLength] = useState(0);
 
   // 쿼리스트링 category 번호값, page 번호값 가져옴
-  const { category } = qs.parse(location.search, {
+  // 여러개의 쿼리스트링이 있을 땐 & 로 구분
+  let { category, page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+  // console.log(
+  //   qs.parse(location.search, {
+  //     ignoreQueryPrefix: true,
+  //   })
+  // );
 
   const products = useSelector((state) => state.product);
   const searchedItem = products.filter((p) => p.name.includes(searchItem));
@@ -26,11 +33,14 @@ const ProductList = () => {
       p.categories &&
       p.categories.split(",").find((ps) => ps === category) === category
   );
+  const pageNum = page === undefined ? 1 : page;
 
   // 페이징 처리(한 페이지당 30개의 상품 노출)
+  const [pageBtns, setPageBtns] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
+    // setpageNumLength(0);
     if (searchItem) {
       setTotalPage(Math.ceil(searchedItem.length / 30));
     } else if (category) {
@@ -38,28 +48,66 @@ const ProductList = () => {
     } else {
       setTotalPage(Math.ceil(products.length / 30));
     }
+    const makePageBtn = () => {
+      const pageBtns = [];
+      // page 버튼 6개씩 보여주기
+      for (
+        let i = 1 + 5 * pageNumLength;
+        i < 1 + 5 * (pageNumLength + 1);
+        i++
+      ) {
+        if (i > totalPage) {
+          break;
+        }
+        const pageBtn = (
+          <button onClick={() => movePage(i)} key={i}>
+            {i}
+          </button>
+        );
+        pageBtns.push(pageBtn);
+      }
+      setPageBtns(pageBtns);
+    };
+    makePageBtn();
+  }, [searchItem, category, products, totalPage, pageNumLength]);
+
+  // 카테고리, 검색 넘어갈 시 페이지 구분 초기화
+  useEffect(() => {
+    setpageNumLength(0);
   }, [searchItem, category, products]);
+
+  const movePage = useCallback(
+    (i) => {
+      searchItem
+        ? navigate("?page=" + i)
+        : category
+        ? navigate("?category=" + category + "&page=" + i)
+        : navigate("?page=" + i);
+      window.scrollTo(0, 0);
+    },
+    [searchItem, category]
+  );
 
   // category 번호로 category 이름 가져옴
   let categoryName = "";
   if (category) {
-    categoryName = categoryData.filter((p) => p.categoryno === category)[0]
-      .categoryname;
+    categoryName = categoryData.find(
+      (p) => p.categoryno === category
+    ).categoryname;
   }
 
   const removeSearch = useCallback(() => {
     navigate("/search");
   }, [navigate]);
 
-  const prevpage = useCallback(() => {
-    setpageNum(pageNum - 1);
-    window.scrollTo(0, 0);
-  }, [pageNum]);
+  // page 버튼 6개씩 보여주기
+  const prevPageNumLength = useCallback(() => {
+    setpageNumLength(pageNumLength - 1);
+  }, [pageNumLength]);
 
-  const nextpage = useCallback(() => {
-    setpageNum(pageNum + 1);
-    window.scrollTo(0, 0);
-  }, [pageNum]);
+  const nextPageNumLength = useCallback(() => {
+    setpageNumLength(pageNumLength + 1);
+  }, [pageNumLength]);
 
   return (
     <div>
@@ -254,11 +302,15 @@ const ProductList = () => {
                 })}
           </div>
           <div className="moveBtn">
-            <button onClick={prevpage} disabled={pageNum === 1}>
-              이전
+            <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
+              prev
             </button>
-            <button onClick={nextpage} disabled={pageNum === totalPage}>
-              다음
+            {pageBtns.map((btn) => btn)}
+            <button
+              onClick={nextPageNumLength}
+              disabled={Math.ceil(totalPage / 5) === pageNumLength + 1}
+            >
+              next
             </button>
           </div>
         </div>

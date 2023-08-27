@@ -27,16 +27,19 @@ header {
 .logo img {
   width: 80px;
 }
+.logo-text {
+  height: 90px;
+  padding-top: 20px;
+}
+.logo-text img {
+  width: 150px;
+}
 
 .logo div {
   font-size: 2rem;
   line-height: 90px;
   margin-left: 20px;
   min-width: 120px;
-}
-
-.logo-text {
-  font-family: "Gaegu", cursive;
 }
 
 .logo div a:link {
@@ -249,8 +252,8 @@ header {
   .logo > div {
     margin-left: 0;
   }
-  .logo-text {
-    font-size: 1.3rem;
+  .logo-text img {
+    width: 120px;
   }
   .userBtn {
     button:nth-of-type(1) {

@@ -2,7 +2,6 @@ import React from "react";
 import "./Detail.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { parse } from "qs";
 import Header from "../main/Header";
 import Kakao from "./Kakao";
 import Footer from "../main/Footer";
@@ -73,6 +72,16 @@ const Detail = () => {
               <div>
                 <button onClick={onClick} className="detail-productsitem-btn2">
                   찜
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    navigate("/updateproduct/" + id);
+                  }}
+                  className="detail-productsitem-btn3"
+                >
+                  상품 수정
                 </button>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import Check from "./Check";
 import Changing from "./Changing";
 import ChangingPwd from "./ChangingPwd";
