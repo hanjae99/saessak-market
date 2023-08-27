@@ -17,6 +17,7 @@ const DetailCarousel = ({ item }) => {
       infiniteLoop={true}
       showThumbs={false}
       selectedItem={item}
+      width="25vw"
     >
       {imgBox}
     </Carousel>

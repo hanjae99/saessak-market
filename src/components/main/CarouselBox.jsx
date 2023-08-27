@@ -138,6 +138,7 @@ const CarouselBox = () => {
   return (
     <Carousel
       showArrows={true}
+      showStatus={false}
       autoPlay={true}
       infiniteLoop={true}
       showThumbs={false}
