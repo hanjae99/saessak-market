@@ -37,7 +37,14 @@ const WishList = () => {
                           <div className="text-1">
                             <div className="text-1-1">
                               <div className="text-2">
-                                <div className="text-2-1">
+                                <div
+                                  className="text-2-1"
+                                  onClick={() =>
+                                    movePage(
+                                      "/detail/" + users[2].userproduct[i].id
+                                    )
+                                  }
+                                >
                                   <div className="text-2-img">
                                     <img
                                       className="img1"
