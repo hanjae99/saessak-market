@@ -73,7 +73,7 @@ const Header = () => {
             </button>
             <button
               onClick={() => {
-                navigate("/user");
+                navigate("/user/mypage");
               }}
             >
               마이페이지
