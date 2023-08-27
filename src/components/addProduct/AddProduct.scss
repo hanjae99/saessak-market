@@ -9,12 +9,13 @@
 .imgUploadBox {
   display: flex;
   align-items: center;
+  height: 500px;
 }
 .previewImg {
   width: 100%;
   display: flex;
   overflow: auto;
-  height: 30vw;
+  height: 500px;
   align-items: center;
 }
 .labelButton {
@@ -115,6 +116,9 @@
 
 // 태블릿 미디어쿼리
 @media screen and (max-width: 768px) and (min-width: 425px) {
+  .content-form input {
+    width: 80%;
+  }
   .labelButton {
     width: 150px;
     height: 150px;
@@ -128,6 +132,12 @@
     width: 200px;
     height: 200px;
   }
+  .imgUploadBox {
+    display: block;
+  }
+  .previewImg {
+    height: 300px;
+  }
 }
 
 // 모바일 미디어쿼리
@@ -136,9 +146,14 @@
     width: 80%;
   }
   .imgUploadBox {
+    display: block;
     > div:first-of-type {
       width: 150px;
     }
+    height: 400px;
+  }
+  .previewImg {
+    height: 250px;
   }
   .labelButton {
     width: 100px;
