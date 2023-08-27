@@ -1,10 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-
-const Logo = () => {
+const Logo2 = () => {
+  let store = useSelector(state => state);
+  const [gogo, setGogo] = useState({text:'asd'});
+  const gogoj = JSON.stringify(gogo)
+  console.log(gogoj)
+  const gogotj = JSON.parse(gogoj);
+  console.log(gogotj)
   return (
-    <h1><NavLink to='/admin' >관리자모드</NavLink></h1>
+    <div>
+     <textarea onKeyUp={(e)=>{console.log(e.target.value); setGogo({text:e.target.value});}}></textarea>
+     <textarea value={gogotj.text}></textarea>
+    </div>
+  )
+}
+
+const Logo = ({setModalData}) => {
+  
+  return (
+    <h1 onClick={e=>{
+      let modalData = {
+        att: {
+          style: {
+            display: 'block',
+            top: '200px',
+            left: '200px',
+            background: 'black',
+            color: '#fff',
+            width: '70%',
+            height: '600px'
+          },
+          onClick: (e) => setModalData({ ...modalData, att: { ...modalData.att, style: {} } })
+        },
+        children: (
+           (
+              <Logo2 />
+            )
+        ),
+        Logo2:Logo2
+      }
+      setModalData(modalData);
+    }}>관리자모드</h1>
   )
 }
 
@@ -19,10 +57,10 @@ const NavItem = () => {
   )
 }
 
-const AdminNav = React.memo(() => {
+const AdminNav = React.memo(({setModalData}) => {
   return (
     <div className='adminNav'>
-      <Logo />
+      <Logo setModalData={setModalData} />
       <NavItem />
     </div>
   )

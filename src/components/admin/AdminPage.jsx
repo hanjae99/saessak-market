@@ -21,7 +21,7 @@ const AdminPage = () => {
   useEffect(()=>{setSelectedCg()},[page])
   return (
     <div className='adminPage'>
-      <AdminNav />
+      <AdminNav setModalData={setModalData} />
       <AdminCategory page={page} setSelectedCg={setSelectedCg} />
       <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
       <AdminModal modalData={modalData} />

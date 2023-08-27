@@ -32,10 +32,16 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
           className="modal-imgBox"
         />
       </div>
-      <label>입력하신 가격 :</label>
-      <p>{comma(inputprice)}원</p>
-      <label>중고 가격 :</label>
-      <p>{game[index].price}</p>
+
+      <div className="modal-labelbox">
+        <label className="modal-label">입력하신 가격</label>
+        <div className="modal-p">{comma(inputprice)}원</div>
+      </div>
+
+      <div className="modal-labelbox">
+        <label className="modal-label">중고 가격 </label>
+        <div className="modal-p">{game[index].price}</div>
+      </div>
       <h1>점수 : {result} 점</h1>
       <button className="modal-btn" onClick={onClick}>
         다음문제

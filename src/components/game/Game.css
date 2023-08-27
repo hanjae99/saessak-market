@@ -2,7 +2,7 @@
   width: 80%;
   margin: auto;
   padding: 20px;
-  background-color: white;
+  background-color: rgba(199, 138, 67, 0.05);
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -33,7 +33,10 @@
   width: 100%;
   height: 500px;
   text-align: left;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+.game-products::-webkit-scrollbar {
+  display: none;
 }
 .game-divinput {
   margin-top: 20px;
@@ -138,7 +141,22 @@
 }
 .game-process {
   height: 10px;
-  background-color: rgb(109, 200, 42);
+  background-color: rgba(109, 200, 42, 0.7);
   border-radius: 2px;
   transition: width 0.3s ease-in-out;
+}
+.modal-label {
+  font-weight: bolder;
+  font-size: large;
+}
+.modal-p {
+  font-weight: bolder;
+  font-size: x-large;
+}
+.modal-labelbox {
+  padding-top: 10px;
+}
+.game-productslablediv,
+.game-productsdivtext {
+  margin-left: 10px;
 }

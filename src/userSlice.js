@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import AddProduct from "./components/addProduct/AddProduct";
 
 const user = createSlice({
   name: "user",
@@ -189,6 +190,18 @@ const user = createSlice({
       });
       num = state[2].userproduct.indexOf(num);
       state[2].userproduct.splice(num, 1);
+    },
+    addProduct(state, action) {
+      let product = {
+        id: action.payload.id,
+        name: action.payload.name,
+        price: action.payload.price,
+        text: action.payload.text,
+        imgsrc1: action.payload.imgsrc1,
+        imgsrc2: action.payload.imgsrc2,
+        categories: action.payload.categories,
+      };
+      state[2].userproduct.push(product);
     },
   },
 });

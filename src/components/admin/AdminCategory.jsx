@@ -24,9 +24,7 @@ const AdminCategory = ({ page, setSelectedCg }) => {
   } else if (page === 'adminboard') {
     mainCtg = [
       {categoryno:"1",categoryname:"공지사항",categorypr:"null"},
-      {categoryno:"2",categoryname:"고객의소리",categorypr:"null"},
-      {categoryno:"3",categoryname:"신고 게시판",categorypr:"null"},
-      {categoryno:"4",categoryname:"이의제기 게시판",categorypr:"null"},
+      {categoryno:"2",categoryname:"이의제기 게시판",categorypr:"null"},
     ]
   }
 
@@ -94,11 +92,11 @@ const AdminCategory = ({ page, setSelectedCg }) => {
         let tp = e.target.nodeName === 'svg' ? e.target.parentElement.parentElement :  e.target.nodeName === 'path' ? e.target.parentElement.parentElement.parentElement :  e.target.parentElement;
         if (tp.children[1].style.display === 'none') {
           tp.children[1].style.display = 'block'
-          tp.children[2].style.display = 'block'
+          if (tp.children[2]) tp.children[2].style.display = 'block'
         }
         else {
           tp.children[1].style.display = 'none'
-          tp.children[2].style.display = 'none'
+          if (tp.children[2]) tp.children[2].style.display = 'none'
         }
           
       }}>
