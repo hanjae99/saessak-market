@@ -29,8 +29,9 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
   const btns = (<div onClick={e=>{
     e.currentTarget.parentElement.parentElement.parentElement.style.display = 'none'
   }}><FaXmark />닫기</div>);
+  console.log(login)
   return (
-    <div className={parentCommentId === '' ? 'cmtInput' : 'cmtInput2'}>
+    login.id!=='' && <div className={parentCommentId === '' ? 'cmtInput' : 'cmtInput2'}>
       {parentCommentId === '' ? '' : <CmtBtnBox cs={{ right: '20px' }}>{btns}</CmtBtnBox>}
       <div className={parentCommentId === '' ? 'cmt_info' : 'cmt_info2'}>
         {parentCommentId === '' ? <div></div> : <span style={{ color: '#aaa', fontSize: '1.3rem' }}><BsArrowReturnRight /></span>}<strong>댓글쓰기</strong>
@@ -44,7 +45,7 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
           if (e.target.previousSibling.children[0].value === '') return;
           let tmp = {
             parent: parent,
-            parentId: parentId,
+            parentId: parentId+'',
             writer: login.id,
             content: e.target.previousSibling.children[0].value
           }
@@ -59,6 +60,7 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
 }
 
 const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId = '' }) => {
+  parentId += '';
   const comments = useSelector(state => state.comments);
   const users = useSelector(state => state.user);
   const level = parentCommentId === '' ? 0 : ck(parentCommentId, 0);
@@ -83,7 +85,7 @@ const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId = '' 
   );
   return (
     <>
-      {comments.filter(p => p.parent === parent && p.parentId === parentId && p.parentCommentId === parentCommentId).map(p =>
+      {comments.filter(p => p.parent === parent && p.parentId === parentId && p.parentCommentId+'' === parentCommentId+'').map(p =>
         <div key={p.commentId} style={{ position: 'relative' }}
           onMouseOver={e => {
             e.stopPropagation();
