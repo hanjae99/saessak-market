@@ -6,6 +6,7 @@
   height: 700px;
   flex-basis: 15%;
   box-sizing: content-box;
+  padding-right: 15px;
 }
 .board-center {
   height: 800px;
