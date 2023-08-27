@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import { BiSearchAlt2 } from 'react-icons/bi';
-import { MdReorder } from 'react-icons/md';
-import './Header.scss';
-import { Link, useNavigate } from 'react-router-dom';
-import category from '../../category.json';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useState } from "react";
+import { BiSearchAlt2 } from "react-icons/bi";
+import { MdReorder } from "react-icons/md";
+import "./Header.scss";
+import { Link, useNavigate } from "react-router-dom";
+import category from "../../category.json";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const [value, setValue] = useState("");
@@ -15,7 +15,8 @@ const Header = () => {
   }, []);
 
   const onSearch = () => {
-    navigate("/search/" + value);
+    let str = "/search";
+    navigate(value ? str + "/" + value : str);
   };
 
   const enterCheck = (e) => {
@@ -25,7 +26,7 @@ const Header = () => {
     }
   };
 
-  const login = useSelector(state=>state.login);
+  const login = useSelector((state) => state.login);
   const dispatch = useDispatch();
 
   return (
@@ -61,16 +62,22 @@ const Header = () => {
           <div className="userBtn">
             <button
               onClick={() => {
-                if (login.id === '') {
-                  navigate("/login")
+                if (login.id === "") {
+                  navigate("/login");
                 } else {
-                  dispatch({type:'login/logout'});
+                  dispatch({ type: "login/logout" });
                 }
               }}
             >
-              {login.id === '' ? '로그인' : '로그아웃'}
+              {login.id === "" ? "로그인" : "로그아웃"}
             </button>
-            <button>마이페이지</button>
+            <button
+              onClick={() => {
+                navigate("/user");
+              }}
+            >
+              마이페이지
+            </button>
           </div>
         </div>
       </div>

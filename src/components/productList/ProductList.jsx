@@ -78,10 +78,10 @@ const ProductList = () => {
   const movePage = useCallback(
     (i) => {
       searchItem
-        ? navigate("/search/" + searchItem + "?page=" + i)
+        ? navigate("?page=" + i)
         : category
-        ? navigate("/search?category=" + category + "&page=" + i)
-        : navigate("/search?page=" + i);
+        ? navigate("?category=" + category + "&page=" + i)
+        : navigate("?page=" + i);
       window.scrollTo(0, 0);
     },
     [searchItem, category]

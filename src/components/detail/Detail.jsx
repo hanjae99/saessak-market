@@ -68,6 +68,16 @@ const Detail = () => {
                   찜
                 </button>
               </div>
+              <div>
+                <button
+                  onClick={() => {
+                    navigate("/updateproduct/" + id);
+                  }}
+                  className="detail-productsitem-btn3"
+                >
+                  상품 수정
+                </button>
+              </div>
             </div>
           </div>
 

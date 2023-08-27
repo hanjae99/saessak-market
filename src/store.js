@@ -86,8 +86,8 @@ const product = createSlice({
   initialState: productJSON
     .map((p) => ({
       ...p,
-      imgsrc1: p.imgsrc1 === "null" ? null : p.imgsrc1,
-      imgsrc2: p.imgsrc2 === "null" ? null : p.imgsrc2,
+      imgsrc1: p.imgsrc1 === "null" ? "" : p.imgsrc1,
+      imgsrc2: p.imgsrc2 === "null" ? "" : p.imgsrc2,
       imgsrc3: "",
       uptime: getRandomDate(new Date(2023, 7, 20), new Date()).toUTCString(),
       writer: userinitialState[Math.floor(Math.random() * 5) + 1].nickname,
@@ -215,8 +215,8 @@ const store = configureStore({
     blacklist: blacklist.reducer,
     ntcData: ntcData.reducer,
     objecttion: objecttion.reducer,
-    login:login.reducer,
-    comments:comments.reducer,
+    login: login.reducer,
+    comments: comments.reducer,
   },
 });
 
