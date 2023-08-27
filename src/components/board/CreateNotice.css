@@ -27,6 +27,8 @@
   height: 80px;
   border: 1px solid #ccc;
   box-shadow: 4px 4px 5px #ccc;
+  background-color: rgba(109, 200, 42, 0.7);
+  border-radius: 10px;
 }
 
 .notice-title {

@@ -2,7 +2,6 @@ import React from "react";
 import "./Detail.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { parse } from "qs";
 import Header from "../main/Header";
 import Kakao from "./Kakao";
 import Footer from "../main/Footer";
@@ -56,10 +55,16 @@ const Detail = () => {
             </div>
             <div className="detail-productsitem2">
               <div>
-                <p>제품명:{item.name}</p>
+                <h1>제품명</h1>
+              </div>
+              <div className="detail-productsitem-divname">
+                <p className="detail-productsitem-div-name">{item.name}</p>
               </div>
               <div>
-                <p>가격:{item.price}</p>
+                <h1>가격</h1>
+              </div>
+              <div className="detail-productsitem-divprice">
+                <p className="detail-productsitem-div-price">{item.price}</p>
               </div>
               <div>
                 <button className="detail-productsitem-btn1">채팅 하기</button>
@@ -67,6 +72,16 @@ const Detail = () => {
               <div>
                 <button onClick={onClick} className="detail-productsitem-btn2">
                   찜
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    navigate("/updateproduct/" + id);
+                  }}
+                  className="detail-productsitem-btn3"
+                >
+                  상품 수정
                 </button>
               </div>
             </div>
@@ -102,7 +117,9 @@ const Detail = () => {
                           alt=""
                         />
                       </div>
-                      <span>{up.name}</span>
+                      <div className="detail-textobx">
+                        <span>{up.name}</span>
+                      </div>
                       <br />
                       <span>{up.price}</span>
                     </div>
@@ -142,8 +159,12 @@ const Detail = () => {
                           alt=""
                         />
                       </div>
-                      <p>제품명:{e.name}</p>
-                      <p>제품가격:{e.price}</p>
+                      <div className="detail-recommend-name">
+                        <span>{e.name}</span>
+                      </div>
+                      <div>
+                        <span>{e.price}</span>
+                      </div>
                     </div>
                   ))
                 ) : (
