@@ -468,7 +468,7 @@
 .menuBtn1-img {
   position: absolute;
   width: 200px;
-  height: 170px;
+  height: 150px;
   transition: all 1s linear;
 }
 
@@ -786,7 +786,7 @@
   }
 }
 
-@media screen and (min-width: 425px) and (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .layout-1 {
     flex-direction: row;
     height: 150px;
@@ -796,7 +796,7 @@
   .manu-2-1-1 {
     height: 50%;
     flex: 1.5;
-    width: 600px;
+    width: 700px;
   }
 
   .manu-3 {
@@ -839,6 +839,7 @@
 
   .newmain4 {
     padding: 0 0 0 4%;
+    width: 800px;
   }
 
   .mypage-1 > div > label {
@@ -878,5 +879,9 @@
 
   .Changing-1 {
     width: 600px;
+  }
+
+  .mypage-1 {
+    margin: 0 auto;
   }
 }

@@ -28,11 +28,7 @@ export const Layout = () => {
         <div className="newmain3" style={{ display: "flex", width: "100%" }}>
           <div className="layout-1">
             <div className="menuBtn1">
-              <img
-                src="../../img/saessak.png"
-                alt=""
-                className="menuBtn1-img"
-              />
+              <img src="../../img/leaf2.png" alt="" className="menuBtn1-img" />
             </div>
             <div className="menuBtn" onClick={() => navigate("/user/mypage")}>
               마이페이지

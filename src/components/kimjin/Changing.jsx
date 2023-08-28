@@ -53,7 +53,13 @@ const Changing = () => {
 
     //이메일 입력안했을때
     if (newEmail === "") {
-      alert("이메일을 입력해주세요");
+      setNewEmail(users[2].email);
+      return;
+    }
+
+    //닉네임을 입력안했을때
+    if (newNickName === "") {
+      setNewNickName(users[2].nickname);
       return;
     }
 
@@ -70,17 +76,27 @@ const Changing = () => {
       return;
     }
 
+    //주소를 적지않았을때
+    if (newAddress === "") {
+      setNewAddress(users[2].address);
+      return;
+    }
+
     //비밀번호가 맞을 때
     if (new_pwd !== "") {
+      const updatedUser = {
+        ...users.find((p) => p.id === "jin"),
+        email: newEmail,
+        nickname: newNickName,
+        pwd: new_pwd,
+        address: newAddress,
+      };
       dispatch({
         type: "user/update",
-        payload: {
-          ...users.find((p) => p.id === "jin"),
-          nickname: newNickName,
-          pwd: new_pwd,
-          address: newAddress,
-        },
+        payload: updatedUser,
       });
+
+      // 상태 업데이트 후에 이동하는 로직
       setNewNickName("");
       setNow_pwd("");
       setNew_pwd("");
@@ -88,12 +104,6 @@ const Changing = () => {
       setNewAddress("");
       movePage("/user/mypage");
     }
-
-    //주소를 적지않았을때
-    if (newAddress === "") {
-      setNewEmail(users[2].email);
-    }
-    return;
   };
 
   return (
