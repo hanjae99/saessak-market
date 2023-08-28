@@ -10,7 +10,7 @@ const SingUp = () => {
   const [singFailed, setSingFailed] = useState(false);
   const [idCheck, setIdCheck] = useState(0);
   const [nicknameCheck, setNicknameCheck] = useState(0);
-  console.log(user);
+  //console.log(user);
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [newUser, setNewUser] = useState({
@@ -115,6 +115,8 @@ const SingUp = () => {
     const checkid = user.find((u) => u.id === newUser.id);
     if (checkid) {
       setIdCheck(1);
+    } else if (checkid === undefined && newUser.id === "") {
+      setIdCheck(0);
     } else {
       setIdCheck(-1);
     }
@@ -125,6 +127,8 @@ const SingUp = () => {
     const checkNickname = user.find((u) => u.nickname === newUser.nickname);
     if (checkNickname) {
       setNicknameCheck(1);
+    } else if (checkNickname === undefined && newUser.nickname === "") {
+      setNicknameCheck(0);
     } else {
       setNicknameCheck(-1);
     }

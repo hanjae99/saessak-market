@@ -14,7 +14,7 @@ import Footer from "../main/Footer";
 
 const Game = () => {
   const game = useSelector((state) => state.game);
-  console.log(game);
+  // console.log(game);
   const score = useSelector((state) => state.score.no);
   // console.log("score : " + score);
   const dispatch = useDispatch();
