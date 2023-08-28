@@ -1,6 +1,7 @@
 .board-main {
   display: flex;
   padding-top: 180px;
+  margin: 0 auto;
 }
 .board-left {
   height: 700px;
@@ -91,7 +92,7 @@
 @media all and (min-width: 300px) and (max-width: 425px) {
   .board-left {
     flex-basis: 10%;
-    width: 80px;
+    width: 30%;
   }
   .board-center {
     margin-left: 5px;
