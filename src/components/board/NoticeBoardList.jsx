@@ -1,9 +1,9 @@
-import React from 'react';
-import './NoticeBoardList.css';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./NoticeBoardList.css";
+import { Link } from "react-router-dom";
 
 const NoticeBoardList = () => {
-  const post = ['자유게시판', '자주 찾는 질문', '고객의 소리', '공지사항'];
+  const post = ["자유게시판", "자주 찾는 질문", "고객의 소리", "공지사항"];
 
   return (
     <div className="notice-box">
