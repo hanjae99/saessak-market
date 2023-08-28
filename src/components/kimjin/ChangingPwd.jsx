@@ -1,18 +1,11 @@
-import Password from "antd/es/input/Password";
 import React, { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import { loginUser } from "../../userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ChangingPwd = () => {
   const movePage = useNavigate();
   const [password, setPassword] = useState("");
-  const [massage, setMassage] = useState("");
   const users = useSelector((state) => state.user);
-
-  const dispatch = useDispatch();
-
-  // const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const pwdChange = (e) => {
     setPassword(e.target.value);
@@ -26,8 +19,6 @@ const ChangingPwd = () => {
     } else {
       alert("비밀번호가 올바르지 않습니다.");
     }
-
-    // dispatch({ type: "user/loginUser", payload: {id: "jin" , password} });
   };
 
   return (
@@ -88,7 +79,6 @@ const ChangingPwd = () => {
               </button>
             </div>
           </form>
-          <p>{massage}</p>
         </div>
       </div>
     </div>
