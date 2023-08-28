@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import category from '../../category.json'
 import { PiMinusSquareBold, PiPlusSquareBold } from 'react-icons/pi'
 import { CgMenu } from 'react-icons/cg'
@@ -28,6 +28,9 @@ const AdminCategory = ({ page, setSelectedCg }) => {
     ]
   }
 
+  useEffect(()=>{
+    page === 'adminboard' ? setClickedCtg(1) : setClickedCtg(0)
+  },[page])
 
 
   const onContextMenu = (e) => {
@@ -105,7 +108,7 @@ const AdminCategory = ({ page, setSelectedCg }) => {
       {page!=='adminboard' ? <div style={clickedCtg===0?{background:'rgb(238, 255, 213)'}:{}} onClick={(e) => { setClickedCtg(0); setSelectedCg('');}}>전부보기</div> : ''}
       <ul>
         {mainCtg.map(mainCt =>
-          <li key={mainCt.categoryno} onClick={(e) => onClick(e, mainCt.categoryno)} style={clickedCtg===mainCt.categoryno?{background:'rgb(238, 255, 213)'}:{}}>
+          <li key={mainCt.categoryno} onClick={(e) => onClick(e, mainCt.categoryno)} style={clickedCtg+''===mainCt.categoryno?{background:'rgb(238, 255, 213)'}:{}}>
             <div style={{ width: '80%'}}>{mainCt.categoryname}</div>
             <div style={{ width: '20%', textAlign: 'center', position: 'absolute', right: '0px', top: '0px', display: middleCtg.filter(p => p.categorypr === mainCt.categoryname).length > 0 ? 'block' : 'none'  }} onClick={onContextMenu} ><PiPlusSquareBold /><PiMinusSquareBold style={{display:'none'}} /></div>
             <ul style={{ display: 'none' }}>

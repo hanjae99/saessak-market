@@ -29,7 +29,6 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
   const btns = (<div onClick={e=>{
     e.currentTarget.parentElement.parentElement.parentElement.style.display = 'none'
   }}><FaXmark />닫기</div>);
-  console.log(login)
   return (
     login.id!=='' && <div className={parentCommentId === '' ? 'cmtInput' : 'cmtInput2'}>
       {parentCommentId === '' ? '' : <CmtBtnBox cs={{ right: '20px' }}>{btns}</CmtBtnBox>}
@@ -52,6 +51,7 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
           tmp = parentCommentId === '' ? tmp : { ...tmp, parentCommentId };
           dispatch({ type: 'comments/add', payload: tmp })
           e.target.previousSibling.children[0].value = '';
+          parentCommentId === '' ? console.log() : e.currentTarget.parentElement.parentElement.parentElement.style.display = 'none'
         }}>등록</button>
       </div>
       {isAnonymous ? <div></div> : ''}
@@ -74,8 +74,8 @@ const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId = '' 
   }
   const btns = (
     <>
-      <div><BsPencil /><span>수정</span></div>
-      <div><RxEraser /><span>삭제</span></div>
+      {/* <div><BsPencil /><span>수정</span></div> */}
+      {/* <div><RxEraser /><span>삭제</span></div> */}
       <div onClick={e=>{
         let tmp = e.currentTarget.parentElement.nextSibling;
         tmp = tmp.children[tmp.children.length-1];
@@ -132,7 +132,6 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
           {comments
             .filter(p => p.parent === parent && p.parentId === parentId).length > 0 ?
             comments.filter(p => p.parent === parent && p.parentId === parentId).length : 0}
-
         </strong>'
       </div>
       <Comments isAnonymous={isAnonymous} parent={parent} parentId={parentId} />
