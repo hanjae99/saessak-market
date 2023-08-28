@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import ViewBoard from './ViewBoard';
 
 const ViewerHeader = ({ viewMode, setViewMode }) => {
   const [text, setText] = useState('');
@@ -36,7 +37,7 @@ const ViewerHeader = ({ viewMode, setViewMode }) => {
           <option value="ImageOnly">ImageOnly</option>
           <option value="Line">Line</option>
         </select>
-        <input type='range' min='1' max='5' defaultValue={1} onChange={(e) => { setViewMode({ ...viewMode, viewSize: e.target.value }) }} />
+        <input type='range' min='1' max='5' defaultValue={1} onChange={(e) => { setViewMode({ ...viewMode, viewSize: e.target.value }) }} style={{display:viewMode.mode==='ImageOnly' ? 'inline' : 'none'}} />
       </div>
     </div>
   )
@@ -110,7 +111,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
           let ct = Math.floor(wd / (82 * viewSize + mg));
 
           if (page === 'productboard' || page === '') {
-            return rs.map((p, i) =>
+            return mode === 'ImageOnly' ? (rs.map((p, i) =>
               <div
                 onClick={
                   (e) => {
@@ -146,7 +147,7 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                     setModalData(modalData);
                   }
                 }
-                onContextMenu={e => { e.preventDefault(); dispatch({ type: mode === 'ImageOnly' ? 'adminData/addSP' : 'adminData/addSB', payload: p.id }) }}
+                onContextMenu={e => { e.preventDefault(); dispatch({ type: 'adminData/addSP', payload: p.id }) }}
                 key={p.id}
                 style={mode === 'ImageOnly' ?
                   {
@@ -164,7 +165,56 @@ const ViewerBody = ({ viewMode, setViewMode, setModalData, page, rsl, setRsl, se
                     {p.imgsrc2 && <img src={p.imgsrc2} alt='' style={{ width: 80 * viewSize - 2 + 'px', height: 80 * viewSize - 3 + 'px' }}></img>}
                   </>
                 ) : ''}
-              </div>)
+              </div>)) : (
+              <>
+                <ViewBoard dataAry={rs.map(e => ({
+          ...e, uptime: new Date().getDate() === new Date(e.uptime).getDate()
+            ? new Date(e.uptime).toLocaleTimeString()
+            : new Date(e.uptime).toLocaleDateString()
+        }))}
+                  viewList={{
+                    id: '글번호',
+                    name: '제목',
+                    writer: '작성자',
+                    uptime: "작성시간",
+                    price: "가격"
+                  }}
+                  onClick={
+                    (e, p) => {
+                      let modalData = {
+                        att: {
+                          style: {
+                            display: 'block',
+                            top: '200px',
+                            left: '200px',
+                            background: 'black',
+                            color: '#fff',
+                            width: '70%',
+                            height: '600px'
+                          },
+                          onClick: (e) => setModalData({ ...modalData, att: { ...modalData.att, style: {} } })
+                        },
+                        children: (
+                          <div style={{ display: 'flex' }}>
+                            <div style={{ width: '360px', height: '600px', padding: '10px' }}>
+                              <img src={p.imgsrc1} alt="" style={{ width: '280px', height: '270px' }} /> <br /><br />
+                              <img src={p.imgsrc2} alt="" style={{ width: '280px', height: '270px' }} />
+                            </div>
+                            <div>
+                              {p.categories}<br />
+                              제목 : {p.name} <br />
+                              가격 : {p.price}<br />
+                              내용 <br />
+                              {p.text}<br />
+                            </div>
+                          </div>
+                        )
+                      }
+                      setModalData(modalData);
+                    }}
+                    onContextMenu={(e,p) => { e.preventDefault(); dispatch({ type: 'adminData/addSP', payload: p.id }) }} />
+              </>
+            );
           } else if (page === 'freeboard') {
             return rs.map((p, i) =>
 

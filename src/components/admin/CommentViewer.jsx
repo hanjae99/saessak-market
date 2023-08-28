@@ -29,7 +29,6 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
   const btns = (<div onClick={e=>{
     e.currentTarget.parentElement.parentElement.parentElement.style.display = 'none'
   }}><FaXmark />닫기</div>);
-  console.log(login)
   return (
     login.id!=='' && <div className={parentCommentId === '' ? 'cmtInput' : 'cmtInput2'}>
       {parentCommentId === '' ? '' : <CmtBtnBox cs={{ right: '20px' }}>{btns}</CmtBtnBox>}
