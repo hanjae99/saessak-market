@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Manu.css";
 import { Button } from "react-bootstrap";
-import { deleteItem } from "../../userSlice";
 
 const Check = () => {
   const movePage = useNavigate();
@@ -15,9 +14,6 @@ const Check = () => {
     <div className="section">
       <div className="manu-2">
         <div className="manu-2-1">
-          {/* <div className="manu-2-1-1">
-                    <span className="section-title">회원정보</span>
-                  </div> */}
           <div className="tbody-1">
             <div className="text-0">
               {users[1].userproduct &&

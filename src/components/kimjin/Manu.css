@@ -460,6 +460,11 @@
   margin-top: 10px;
 }
 
+.layout-1 {
+  display: flex;
+  flex-direction: column;
+}
+
 .menuBtn {
   cursor: pointer;
   background-color: rgba(199, 138, 67, 0.4);
@@ -578,18 +583,13 @@
 .newmain4 {
   padding: 0 3rem 0 4rem;
   height: 100%;
-  width: 100%;
+  width: 1000px;
 }
 
 .changing-h1 {
   font-size: 40px;
   margin-top: 0;
   margin-bottom: 40px;
-}
-
-.layout-1 {
-  display: flex;
-  flex-direction: column;
 }
 
 .layout-main {
