@@ -47,6 +47,7 @@ const Game = () => {
     const money = parseInt(
       game[index].price.replaceAll(",", "").replace("원", "")
     );
+
     // console.log("inputprice :" + inputprice);
     // console.log("money : " + money);
 
@@ -54,7 +55,6 @@ const Game = () => {
       setInputprice(0);
     }
 
-    const per10 = Percentage(money, 10);
     const per20 = Percentage(money, 20);
     const per30 = Percentage(money, 30);
     const per40 = Percentage(money, 40);
@@ -78,10 +78,8 @@ const Game = () => {
 
     setModalOpen(true);
   }, [game, index, inputprice]);
-  // console.log("result :" + result);
 
   useEffect(() => {
-    // console.log("useEffect : ", index);
     if (index === 10) {
       setIndex(9);
       navigate("/gameresult/" + score);
