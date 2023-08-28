@@ -9,7 +9,7 @@ const GameResult = () => {
   const { finalresult } = useParams();
   const navigate = useNavigate();
   const [resultscore, setResultscore] = useState("");
-  console.log(finalresult);
+  //console.log(finalresult);
   // const 받을변수 = useParams().key;
   const game = useSelector((state) => state.game);
 

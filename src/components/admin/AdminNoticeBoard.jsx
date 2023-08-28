@@ -21,8 +21,7 @@ const ADBoardNtcBd = ({ page, setViewPage }) => {
   return (
     <>
       <div className="search">
-        <input type="text" placeholder="제목 검색" />
-        <FaSearch className="search-icon" size="30" />
+        
       </div>
       <div className='objectionBoard'>
         <ViewBoard dataAry={dummy.slice((page - 1) * 15, page * 15).map(e => ({

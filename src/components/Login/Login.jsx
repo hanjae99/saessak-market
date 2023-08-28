@@ -12,23 +12,23 @@ const Login = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [loginFailed, setLoginFailed] = useState(false); // 상태 추가
-  console.log(user[1].id);
+  //console.log(user[1].id);
 
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
-      console.log("asdaasd:" + inputid);
-      console.log("dasdasdasd:" + inputpwd);
+      // console.log("asdaasd:" + inputid);
+      // console.log("dasdasdasd:" + inputpwd);
       const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
 
-      console.log("login" + login);
+      // console.log("login" + login);
 
       if (!login) {
-        console.log("아이디 비밀 번호를 다시입력해주세요");
+        // console.log("아이디 비밀 번호를 다시입력해주세요");
         setLoginFailed(true);
       } else {
-        dispatch({type:'login/login',payload:login.id})
+        dispatch({ type: "login/login", payload: login.id });
         if (login.gender === "admin") {
           navigate("/admin");
         } else {
@@ -49,13 +49,13 @@ const Login = () => {
   const onClick = (e) => {
     e.preventDefault();
 
-    console.log("회원가입 페이지로 이동");
+    //   console.log("회원가입 페이지로 이동");
 
     navigate("/singup");
   };
 
-  console.log("아이디: " + inputid);
-  console.log("비밀번호: " + inputpwd);
+  //  console.log("아이디: " + inputid);
+  //console.log("비밀번호: " + inputpwd);
 
   return (
     <>

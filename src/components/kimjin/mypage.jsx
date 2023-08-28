@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import ImgUpdate from "./ImgUpdate";
-// import './Manu.css'
 import { useSelector } from "react-redux";
 
 const MyPage = () => {
