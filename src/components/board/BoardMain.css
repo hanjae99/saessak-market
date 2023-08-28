@@ -1,6 +1,7 @@
 .board-main {
   display: flex;
   padding-top: 180px;
+  margin: 0 10%;
 }
 .board-left {
   height: 700px;

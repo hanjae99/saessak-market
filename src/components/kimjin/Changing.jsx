@@ -51,13 +51,6 @@ const Changing = () => {
   const pwdSubmit = (e) => {
     e.preventDefault();
 
-    // //아이디
-    // if(newName !== ""){
-    //   dispatch({type: "user/update", payload: {...users.find(p => p.id === "jin"), name: newName}})
-    // }
-
-    //------------------------------------------------------------------------------------
-
     //이메일 입력안했을때
     if (newEmail === "") {
       alert("이메일을 입력해주세요");
@@ -209,14 +202,6 @@ const Changing = () => {
                 />
               </div>
             </div>
-            {/* <div>
-            </div>
-            <div>
-            </div>
-            <div>
-            </div>
-            <div>
-            </div> */}
             <div
               style={{
                 marginTop: "130px",
@@ -224,7 +209,6 @@ const Changing = () => {
                 marginRight: "10px",
               }}
             >
-              {/* <button onClick={() => movePage('mypage')}>수정 완료</button> */}
               <button type="submit" className="changing-com-button">
                 수정 완료
               </button>
