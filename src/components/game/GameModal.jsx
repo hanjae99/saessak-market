@@ -8,8 +8,6 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
     setModalOpen(false);
     onIncrease();
   };
-  // const dispatch = useDispatch();
-  // console.log(game);
 
   function comma(no) {
     no += "";
