@@ -11,7 +11,6 @@ import "./ProductList.scss";
 const ProductList = () => {
   const { searchItem } = useParams();
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
   const [pageNumLength, setpageNumLength] = useState(0);
 
@@ -20,11 +19,6 @@ const ProductList = () => {
   let { category, page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
-  // console.log(
-  //   qs.parse(location.search, {
-  //     ignoreQueryPrefix: true,
-  //   })
-  // );
 
   const products = useSelector((state) => state.product);
   const searchedItem = products.filter((p) => p.name.includes(searchItem));
@@ -40,7 +34,6 @@ const ProductList = () => {
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    // setpageNumLength(0);
     if (searchItem) {
       setTotalPage(Math.ceil(searchedItem.length / 30));
     } else if (category) {
