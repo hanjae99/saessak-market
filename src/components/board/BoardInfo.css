@@ -44,10 +44,18 @@
   width: 20%;
 }
 
-@media all and (min-width: 769px) and (max-width: 880px) {
+.board-info-btn {
+  cursor: pointer;
+  margin: auto;
+}
+
+@media all and (min-width: 769px) and (max-width: 1024px) {
   .board-center {
     font-size: 13px;
     overflow: hidden;
+  }
+  .board-info-btn-text {
+    display: none;
   }
 }
 
@@ -57,11 +65,17 @@
     width: 80%;
     overflow: hidden;
   }
+  .board-info-btn-text {
+    display: none;
+  }
 }
 
 @media all and (min-width: 300px) and (max-width: 425px) {
   .board-center {
     width: 70%;
     overflow: hidden;
+  }
+  .board-info-btn-text {
+    display: none;
   }
 }
