@@ -41,7 +41,7 @@
   text-overflow: ellipsis;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 578px) {
   .gr-imgBoxs {
     width: 100%;
     display: grid;

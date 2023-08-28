@@ -185,15 +185,15 @@
   font-weight: bold;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 574px) {
   .detail-contentsBox1,
   .detail-contentsBox2 {
     display: block;
     width: 100%;
   }
-  .detail-imgBox {
+  /* .detail-imgBox {
     height: auto;
-  }
+  } */
   .detail-productsitem1 {
     width: 100%;
     height: auto;

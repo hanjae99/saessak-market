@@ -125,7 +125,6 @@ const product = createSlice({
       );
     },
     fix: (state, action) => {
-      console.log(action);
       // payload: {id, name [, price, text, imgsrc1, imgsrc2, categories]}
       let tmp = {
         id: action.payload.id,

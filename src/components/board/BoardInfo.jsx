@@ -42,13 +42,13 @@ const BoardInfo = () => {
             <span className="board-info-head-left">{selectData.writer}</span>
             <span className="board-info-head-center">{selectData.clicked}</span>
             <span className="board-info-head-right">{new Date(selectData.date).toLocaleString()}</span>
-            <div onClick={handleFix}>
+            <div onClick={handleFix} className="board-info-btn">
               <BsPencil />
-              <span>수정</span>
+              <span className="board-info-btn-text">수정</span>
             </div>
-            <div onClick={handleDel}>
+            <div onClick={handleDel} className="board-info-btn">
               <RxEraser />
-              <span>삭제</span>
+              <span className="board-info-btn-text">삭제</span>
             </div>
           </div>
           <hr />
