@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./Game.css";
 import { useDispatch, useSelector } from "react-redux";
 import GameModal from "./GameModal";
@@ -16,9 +10,7 @@ const Game = () => {
   const game = useSelector((state) => state.game);
   // console.log(game);
   const score = useSelector((state) => state.score.no);
-  // console.log("score : " + score);
   const dispatch = useDispatch();
-  const gameBtn = useRef(null);
 
   const [index, setIndex] = useState(0);
   const [inputprice, setInputprice] = useState("");
@@ -31,7 +23,6 @@ const Game = () => {
     if (index < 10) {
       setIndex(index + 1);
       dispatch({ type: "score/resultadd", payload: result });
-      // console.log("asdasdasdsadasasdasdasd" + score.sta;
     } else {
       navigate("/gameresult/" + score);
     }
@@ -56,6 +47,7 @@ const Game = () => {
     const money = parseInt(
       game[index].price.replaceAll(",", "").replace("원", "")
     );
+
     // console.log("inputprice :" + inputprice);
     // console.log("money : " + money);
 
@@ -63,42 +55,31 @@ const Game = () => {
       setInputprice(0);
     }
 
-    const per10 = Percentage(money, 10);
     const per20 = Percentage(money, 20);
     const per30 = Percentage(money, 30);
     const per40 = Percentage(money, 40);
     const per50 = Percentage(money, 50);
 
     let calc = Math.abs(inputprice - money);
-    // console.log("calc" + calc);
-
-    // console.log("오십퍼센트" + per50);
-    // console.log("사십퍼센트" + per40);
-    // console.log("삼십퍼센트" + per30);
-    // console.log("이십퍼센트" + per20);
 
     if (calc >= per50) {
-      setResult(2);
+      setResult(2); //오십퍼 이상 5000원 이상
     } else if (calc >= per40) {
-      setResult(4);
+      setResult(4); //사십퍼 이상 4000원 이상
     } else if (calc >= per30) {
-      setResult(6);
+      setResult(6); //삼십퍼 이상 3000원 이상
     } else if (calc >= per20) {
-      setResult(8);
-    } else if (calc >= per10) {
-      setResult(10);
-    } else if (calc === 0) {
-      setResult(10);
+      setResult(8); //이십퍼 이상 2000원 이상
+    } else if (calc >= 0) {
+      setResult(10); //10퍼 이상 0원 이상
     } else {
-      setResult(0);
+      setResult(2);
     }
 
     setModalOpen(true);
   }, [game, index, inputprice]);
-  // console.log("result :" + result);
 
   useEffect(() => {
-    // console.log("useEffect : ", index);
     if (index === 10) {
       setIndex(9);
       navigate("/gameresult/" + score);
