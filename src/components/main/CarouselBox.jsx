@@ -12,7 +12,9 @@ const CarouselBox = () => {
   const sliceState = state.slice(10, 20);
   const imageBox = sliceState.map((s) => (
     <div key={s.id} className="slide-item">
-      <img src={s.imgsrc1} alt={s.name} />
+      <div>
+        <img src={s.imgsrc1} alt={s.name} />
+      </div>
       <div className="slide-textBox">
         <div className="slide-title">
           <p className="slide-text">{s.name}</p>
@@ -45,7 +47,7 @@ const CarouselBox = () => {
       onChange={handleChange}
       onClickItem={handleClick}
       centerMode={true}
-      centerSlidePercentage={50}
+      centerSlidePercentage={35}
       className="carousel-style"
     >
       {imageBox}
