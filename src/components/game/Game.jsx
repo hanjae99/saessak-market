@@ -71,7 +71,7 @@ const Game = () => {
     } else if (calc >= per20) {
       setResult(8); //이십퍼 이상 2000원 이상
     } else if (calc >= 0) {
-      setResult(10); //10퍼 이상 0원 이상
+      setResult(10); //10퍼 이상 0원 이상!
     } else {
       setResult(2);
     }
