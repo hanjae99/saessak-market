@@ -22,7 +22,7 @@ const ObjecttionDetail = ({ viewPage, setViewPage }) => {
           </div>
           <hr />
           <div className="info_board">{ntcData.content}</div>
-          <CommentViewer isAnonymous={false} parent={'objecttion'} parentId={id} />
+          <CommentViewer parent={'objecttion'} parentId={id} />
         </div>
     </div>
   );

@@ -59,7 +59,7 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
   )
 }
 
-const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId = '' }) => {
+const Comments = ({ parent, parentId, isAnonymous, parentCommentId = '' }) => {
   parentId += '';
   const comments = useSelector(state => state.comments);
   const users = useSelector(state => state.user);
@@ -74,8 +74,8 @@ const Comments = ({ parent, parentId, isAnonymous = false, parentCommentId = '' 
   }
   const btns = (
     <>
-      {/* <div><BsPencil /><span>수정</span></div> */}
-      {/* <div><RxEraser /><span>삭제</span></div> */}
+      <div style={{display:'none'}}><BsPencil /><span>수정</span></div>
+      <div style={{display:'none'}}><RxEraser /><span>삭제</span></div>
       <div onClick={e=>{
         let tmp = e.currentTarget.parentElement.nextSibling;
         tmp = tmp.children[tmp.children.length-1];
@@ -141,11 +141,17 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
 
 export default CommentViewer
 
-// commentId: '10000',
-// upTime: "2023.08.21 05:39",
-// fixTime: "2023.08.21 05:39",
-// parent: 'objection',
-// parentId: '100000',
-// parentCommentId:'1234',
-// writer: 'psh',
-// content : '풀어줘요!!'
+
+// const test = {
+
+//   commentId: '10000',
+//   parent: 'objection',
+//   parentId: '100000',
+//   parentCommentId:'1234',
+//   writer: 'psh',
+//   content : '풀어줘요!!',
+//   upTime: "2023.08.21 05:39",
+//   fixTime: "2023.08.21 05:59",
+
+
+//   };
