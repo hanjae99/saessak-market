@@ -33,10 +33,20 @@ main {
   padding: 0 20px;
   cursor: pointer;
 }
-
-.slide-item > img {
+.slide-item > div:first-child {
   width: 25vw;
   height: 25vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide-item img {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  // width: 25vw;
+  // height: 25vw;
 }
 
 .slide-textBox {
