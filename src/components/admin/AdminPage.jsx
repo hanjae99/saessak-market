@@ -26,7 +26,7 @@ const AdminPage = () => {
   },[page])
   return (
     <div className='adminPage'>
-      <AdminNav setModalData={setModalData} />
+      <AdminNav page={page} setModalData={setModalData} />
       <AdminCategory page={page} setSelectedCg={setSelectedCg} />
       <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
       <AdminModal modalData={modalData} />
