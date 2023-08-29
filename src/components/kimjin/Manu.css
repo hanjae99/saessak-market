@@ -208,7 +208,7 @@
 .manu-2-1-1 {
   height: 50%;
   flex: 1.5;
-  width: 900px;
+  width: 700px;
 }
 
 .manu-2-1-1 > div {
@@ -227,7 +227,7 @@
 }
 
 .manu-3 {
-  width: 900px;
+  width: 700px;
   transition: all 1s linear;
   flex: 1;
 }
@@ -800,7 +800,7 @@
   .manu-2-1-1 {
     height: 50%;
     flex: 1.5;
-    width: 680px;
+    width: 700px;
   }
 
   .menuBtn1 {
@@ -993,7 +993,7 @@
   .manu-2-1-1 {
     height: 50%;
     flex: 1.5;
-    width: 700px;
+    width: 650px;
   }
 
   .manu-3 {
