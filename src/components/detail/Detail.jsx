@@ -67,7 +67,12 @@ const Detail = () => {
                 <p className="detail-productsitem-div-price">{item.price}</p>
               </div>
               <div>
-                <button className="detail-productsitem-btn1">채팅 하기</button>
+                <button
+                  onClick={() => navigate("/chatting")}
+                  className="detail-productsitem-btn1"
+                >
+                  채팅 하기
+                </button>
               </div>
               <div>
                 <button onClick={onClick} className="detail-productsitem-btn2">

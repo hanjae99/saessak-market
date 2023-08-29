@@ -17,6 +17,7 @@ import BoardNtc from "./components/board/BoardNtc";
 import BoardNtcInfo from "./components/board/BoardNtcInfo";
 import UpdateProduct from "./components/updateProduct/UpdateProduct";
 import { Layout } from "./components/kimjin/layout";
+import Chatting from "./components/kimjin/Chatting";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -40,6 +41,7 @@ function App() {
         <Route path="/boardmain/ntc" element={<BoardNtc />}></Route>
         <Route path="/boardmain/ntc/:id?" element={<BoardNtcInfo />}></Route>
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
+        <Route path="/chatting" element={<Chatting />}></Route>
       </Routes>
     </div>
   );
