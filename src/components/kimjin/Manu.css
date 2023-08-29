@@ -584,6 +584,203 @@
   border-radius: 3px;
 }
 
+.chatting-all {
+  margin: 0 10%;
+  margin-top: 30px;
+  /* width: 1250px; */
+  /* height: 50vh; */
+}
+
+.chatting-main {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 100%;
+  height: 100vh;
+}
+
+.chatting-header {
+  width: 100%;
+  height: 80px;
+  border-bottom: 0;
+  background-color: rgba(109, 200, 42, 0.3);
+}
+
+.chatting-logo {
+  width: 70px;
+  height: 70px;
+}
+
+.chatting-textlogo {
+  width: 100px;
+  height: 80px;
+  padding-top: 20px;
+}
+
+.chatting-section {
+  width: 100%;
+  height: 1100px;
+  background-color: rgba(109, 200, 42, 0.3);
+  border-top: 0;
+}
+
+.chatting-footer {
+  width: 100%;
+  height: 150px;
+  border-top: 1px solid black;
+  display: flex;
+}
+
+.chatting-icon {
+  font-size: 50px;
+  margin: 10px 15px 0 0;
+  /* text-align: right; */
+  float: right;
+}
+
+.chatting-section1 {
+  width: 100%;
+  height: 500px;
+}
+
+.chatting-section2 {
+  width: 100%;
+  height: 100px;
+}
+
+.chatting-img1 {
+  display: flex;
+}
+
+.chatting-section2 > div > img {
+  background-color: white;
+  border-radius: 40%;
+  width: 64px;
+  height: 64px;
+  margin-left: 20px;
+}
+
+.chatting-section2 > div > div {
+  width: 100px;
+  background-color: white;
+  margin-left: 20px;
+  border-radius: 20%;
+}
+
+.chatting-text {
+  font-size: 30px;
+  text-align: center;
+  line-height: 80px;
+}
+
+.chatting-text2 {
+  font-size: 30px;
+  text-align: center;
+  line-height: 80px;
+  background-color: white;
+  border-radius: 20%;
+}
+
+.chatting-icon2 {
+  position: relative;
+  width: 200px;
+  height: 80px;
+  border-radius: 10px;
+}
+
+.chatting-icon2::after {
+  content: "";
+  border-top: 16px solid white;
+  border-left: 25px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  position: absolute;
+  top: 15px;
+  left: -18px;
+}
+
+/* .chatting-icon3 {
+  position: relative;
+  width: 100px;
+  height: 80px;
+  border-radius: 10px;
+} */
+
+.chatting-icon3::after {
+  content: "";
+  border-top: 0px solid transparent;
+  border-left: 0px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 16px solid white;
+  position: absolute;
+  top: 15px;
+  right: -18px;
+}
+
+.chatting-section3 {
+  width: 100%;
+  height: 100px;
+  float: right;
+}
+
+.chatting-icon3 {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.chatting-section3 > div > img {
+  background-color: white;
+  border-radius: 40%;
+  width: 64px;
+  height: 64px;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.chatting-img2 {
+  display: flex;
+  flex-direction: row;
+  float: right;
+}
+
+.chatting-footer1 {
+  width: 1200px;
+  height: 150px;
+}
+
+.chatting-footer1-1 {
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  color: #dbd9d9;
+}
+
+.chatting-footer2 {
+  width: 100px;
+  border-radius: 5px;
+  background-color: #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatting-footer2-0 {
+  height: 90px;
+  background-color: white;
+}
+
+.chatting-footer2-1 {
+  width: 100px;
+  height: 60px;
+  font-size: 30px;
+  color: #dbd9d9;
+  text-align: center;
+  line-height: 60px;
+}
+
 @media screen and (min-width: 795px) and (max-width: 1023px) {
   .menuBtn {
     width: 130px;
