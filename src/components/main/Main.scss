@@ -34,19 +34,21 @@ main {
   cursor: pointer;
 }
 .slide-item > div:first-child {
-  width: 25vw;
-  height: 25vw;
-  overflow: hidden;
-  position: relative;
+  // width: 25vw;
+  // height: 25vw;
+  // overflow: hidden;
+  // position: relative;
 }
 
 .slide-item img {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  // width: 25vw;
-  // height: 25vw;
+  // position: absolute;
+  // top: 50%;
+  // left: 0;
+  // transform: translateY(-50%);
+  width: 25vw;
+  height: 25vw;
+  object-fit: scale-down;
+  object-position: 50% 50%;
 }
 
 .slide-textBox {
