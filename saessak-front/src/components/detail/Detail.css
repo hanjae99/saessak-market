@@ -101,12 +101,14 @@
   border-radius: 40px;
   margin-right: 20px;
   max-height: 410px;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* position: relative; */
 }
 .detail-imgBox > img {
-  /* width: 100%; 부모 요소의 전체 너비를 활용 */
-  /* height: 100%; */
+  width: inherit; /* 부모 요소의 전체 너비를 활용 */
+  height: inherit;
+  object-fit: contain;
+  object-position: 50% 50%;
   /* position: absolute; */
   /* border: 1px solid black;
   top: 50%;

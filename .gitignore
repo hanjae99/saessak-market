@@ -1,15 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+/saessak-front/node_modules
+/saessak-front/.pnp
 .pnp.js
 
 # testing
-/coverage
+/saessak-front/coverage
 
 # production
-/build
+/saessak-front/build
 
 # misc
 .DS_Store
