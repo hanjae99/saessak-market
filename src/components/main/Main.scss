@@ -33,12 +33,12 @@ main {
   padding: 0 20px;
   cursor: pointer;
 }
-.slide-item > div:first-child {
-  // width: 25vw;
-  // height: 25vw;
-  // overflow: hidden;
-  // position: relative;
-}
+// .slide-item > div:first-child {
+//   width: 25vw;
+//   height: 25vw;
+//   overflow: hidden;
+//   position: relative;
+// }
 
 .slide-item img {
   // position: absolute;
@@ -47,7 +47,7 @@ main {
   // transform: translateY(-50%);
   width: 25vw;
   height: 25vw;
-  object-fit: scale-down;
+  object-fit: contain;
   object-position: 50% 50%;
 }
 
