@@ -20,8 +20,12 @@ public class Product extends BaseTimeEntity {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
-  private Member member;
+  @JoinColumn(name = "sell_member_id")
+  private Member sellMember;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "order_member_id")
+  private Member orderMember;
+
 
   private String title;
 
