@@ -23,12 +23,11 @@ public class ChatBox extends BaseTimeEntity {
   private Product product;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id1")
-  private Member member1;
-
+  @JoinColumn(name = "sell_member_id")
+  private Member sellMember;
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id2")
-  private Member member2;
+  @JoinColumn(name = "order_member_id")
+  private Member orderMember;
 
   private int chatCount;
 
