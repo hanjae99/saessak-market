@@ -22,4 +22,12 @@ public class Image extends BaseTimeEntity {
   private String oriName;
   private String imgUrl;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "board_id")
+  private Board board;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "product_id")
+  private Product product;
+
 }
