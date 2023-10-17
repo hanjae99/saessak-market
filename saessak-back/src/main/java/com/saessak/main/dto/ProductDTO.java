@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+// 메인, 검색 상품 조회에 사용될 DTO
 @Builder
 @Getter
 @Setter
