@@ -1,4 +1,4 @@
-package com.saessak.board;
+package com.saessak.repository;
 
 import com.saessak.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
