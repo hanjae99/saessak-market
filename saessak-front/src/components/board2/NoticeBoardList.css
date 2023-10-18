@@ -1,0 +1,78 @@
+.board_1 {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  font-size: 1.25rem;
+  transition: all 0.5s linear;
+}
+
+.menuBtn1-img {
+  height: 140px;
+}
+
+.board_1:hover {
+  color: rgb(255, 255, 255);
+  font-size: 23px;
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.board_li {
+  list-style-type: none;
+  list-style-position: inside;
+  box-sizing: content-box;
+  padding-left: 10px;
+  min-width: 100px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.notice-list {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+
+.notice-hr {
+  border: 1px solid white;
+}
+
+.notice-box {
+  padding-left: 10px;
+  color: white;
+}
+
+.notice-box > ul {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(199, 138, 67, 0.4);
+  cursor: pointer;
+  text-align: center;
+}
+
+.board-list-h3 {
+  margin: 0 10px 10px 10px;
+}
+
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  .board_1 {
+    font-size: 16px;
+  }
+}
+@media all and (min-width: 426px) and (max-width: 767px) {
+  .board_1 {
+    font-size: 16px;
+  }
+}
+@media all and (min-width: 300px) and (max-width: 425px) {
+  .board_1 {
+    font-size: 13px;
+  }
+  .board-list-h3 {
+    font-size: 15px;
+  }
+  .board_li {
+    padding-left: 3px;
+  }
+}
