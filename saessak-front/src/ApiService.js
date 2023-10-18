@@ -3,7 +3,7 @@ import { API_BASE_URL } from "./ApiConfig";
 // API 호출을 수행하는 함수를 정의합니다.
 export function call(api, method, request) {
   let headers = new Headers({
-    // "Content-Type": "application/json",
+    "Content-Type": "application/json",
   });
 
   // const accessToken =localStorage.getItem("ACCESS_TOKEN")
