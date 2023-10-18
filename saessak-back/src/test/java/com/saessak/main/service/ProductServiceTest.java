@@ -32,7 +32,7 @@ class ProductServiceTest {
 
     public void createSample(){
         Product product = new Product();
-        product.setTitle("아이폰 싸게 팝니다");
+        product.setTitle("시간 삽니다");
         product.setContent("얼마 사용안한 아이폰 싸게 팝니다");
         product.setPrice(50000);
         product.setSellStatus(SellStatus.SELL);
