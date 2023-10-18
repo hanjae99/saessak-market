@@ -2,14 +2,19 @@ import React, { useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import Header from '../main/Header';
 import NoticeBoardList from './NoticeBoardList';
+import { call } from '../../ApiService';
 
 const BoardPage = () => {
   const {boardName} = useParams();
   const [searchParams, setSearchParams] = useSearchParams()
-  console.log(boardName,searchParams.get("page"),window.location.search);
 
   useEffect(()=>{
 
+    const url = "/board/"+(boardName!==undefined?boardName:"main")+(searchParams.get("page")?"/"+searchParams.get("page"):"/1");
+    console.log("url :", url)
+    call(url,"GET").then(response => {
+      console.log(response);
+    })
     
 
   },[boardName,window.location.search])
