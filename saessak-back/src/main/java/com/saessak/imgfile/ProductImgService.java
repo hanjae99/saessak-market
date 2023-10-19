@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +40,7 @@ public class ProductImgService {
         imageRepository.save(image);
     }
 
-    public void updateProductImg(Long imageId, MultipartFile productImgFile) throws Exception{
+    public void updateProductImg(Long imageId, MultipartFile productImgFile, String oriName) throws Exception{
 
         if (!productImgFile.isEmpty()){
             Image savedProductImg = imageRepository.findById(imageId)
@@ -49,9 +50,10 @@ public class ProductImgService {
                 fileService.deleteFile(productImgLocation + "/" + savedProductImg.getImgName());
             }
 
-            String oriImgName = productImgFile.getOriginalFilename();
+            // 이미지 바뀌어도 원래 이름은 그대로
+            String oriImgName = oriName;
             String imgName = fileService.uploadFile(productImgLocation, oriImgName, productImgFile.getBytes());
-            String imgUrl = "/images/item/" + imgName;
+            String imgUrl = "/images/product/" + imgName;
             // find 메소드로 savedProductImg 객체는 이미 영속 상태에 올려져있음
             // 이후 Repository.save 메소드 호출 필요없이 변경감지 기능으로 트랜잭션이 끝날 때 update 쿼리 자동 실행
             savedProductImg.setOriName(oriImgName);
@@ -60,4 +62,10 @@ public class ProductImgService {
 
         }
     }
+
+    public void deleteProductImg(Long imageId, String imgName) throws Exception {
+        imageRepository.deleteById(imageId);
+        fileService.deleteFile(productImgLocation + imgName);
+    }
+
 }

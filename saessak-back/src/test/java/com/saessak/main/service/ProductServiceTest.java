@@ -52,7 +52,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 검색 테스트")
     public void read(){
-        this.createSample();
+//        this.createSample();
 
         ProductDTO productDTO = ProductDTO.builder()
                 .title("아이패드")

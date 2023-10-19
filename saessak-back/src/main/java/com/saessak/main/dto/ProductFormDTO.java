@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -19,9 +20,11 @@ import java.util.List;
 @ToString
 public class ProductFormDTO {
 
+    private Long id;
+
     private String title;
 
-    private int price;
+    private Integer price;
 
     private String content;
 
@@ -29,9 +32,9 @@ public class ProductFormDTO {
 
     private String mapData;
 
-//    private List<ProductImageDTO> imageDTOList = new ArrayList<>();
-//
-//    private List<MultipartFile> imageFileList = new ArrayList<>();
+    private List<ProductImageDTO> imageDTOList = new ArrayList<>();
+
+//    private List<Long> productImgIds = new ArrayList<>();
 
     private static ModelMapper modelMapper = new ModelMapper();
 

@@ -55,17 +55,36 @@
 .addContents {
   padding-left: 10vw;
   margin-top: 20px;
-  position: relative;
+  // position: relative;
 }
 
-.addContents input,
-.addContents textarea {
+// .addContents input,
+// .addContents textarea {
+//   border-radius: 5px;
+//   border: 1px solid rgba(199, 138, 67, 0.7);
+//   outline-color: rgba(199, 138, 67, 0.9);
+// }
+
+.addName,
+.addPrice,
+.addLocal {
+  input {
+    border-radius: 5px;
+    border: 1px solid rgba(199, 138, 67, 0.7);
+    outline-color: rgba(199, 138, 67, 0.9);
+  }
+}
+.addText textarea {
   border-radius: 5px;
   border: 1px solid rgba(199, 138, 67, 0.7);
   outline-color: rgba(199, 138, 67, 0.9);
 }
 
-.addContents > form > div {
+.addName,
+.addPrice,
+.addLocal,
+.addText,
+.submitBtn {
   margin-bottom: 30px;
 }
 
@@ -95,7 +114,7 @@
 
 // .submitBtn {
 //   position: absolute;
-//   bottom: -35%;
+//   bottom: -15%;
 //   right: 20%;
 // }
 
@@ -147,7 +166,7 @@
   }
   .imgUploadBox {
     display: block;
-    > div:first-of-type {
+    > div:nth-of-type(2) {
       width: 150px;
     }
     height: 400px;

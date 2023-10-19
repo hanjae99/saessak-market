@@ -41,9 +41,7 @@ export function call(api, method, request) {
 }
 
 export function uploadProduct(api, method, request) {
-  let headers = new Headers({
-    // "Content-Type": "multipart/form-data",
-  });
+  let headers = new Headers({});
 
   // API 호출에 사용할 옵션 객체를 설정합니다.
   let options = {
@@ -56,7 +54,8 @@ export function uploadProduct(api, method, request) {
   return fetch(options.url, options)
     .then((response) => {
       if (response.status === 200) {
-        window.location.href = "/search";
+        // window.location.href = "/search";
+        return response.json();
       } else if (response.status === 400) {
         alert("등록실패! 상품 등록 정보를 확인해주세요");
         // window.location.href = "/addproduct";

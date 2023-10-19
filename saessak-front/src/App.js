@@ -19,6 +19,7 @@ import UpdateProduct from "./components/updateProduct/UpdateProduct";
 import { Layout } from "./components/kimjin/layout";
 import Chatting from "./components/kimjin/Chatting";
 import AddProduct2 from "./components/addProduct/AddProduct2";
+import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -29,7 +30,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/search/:searchItem?" element={<ProductList />} />
         <Route path="/addproduct" element={<AddProduct2 />} />
-        <Route path="/updateproduct/:id" element={<UpdateProduct />} />
+        <Route path="/updateproduct/:id" element={<UpdateProduct2 />} />
         <Route path="/game" element={<Game />} />
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />
