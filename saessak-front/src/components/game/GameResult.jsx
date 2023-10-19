@@ -11,8 +11,9 @@ const GameResult = () => {
   const [resultscore, setResultscore] = useState("");
   //console.log(finalresult);
   // const 받을변수 = useParams().key;
-  const game = useSelector((state) => state.game);
+  const game = useSelector((state) => state.game.data);
 
+  console.log("게임결과페이지", game);
   const finalresultint = parseInt(finalresult);
 
   useEffect(() => {
@@ -28,42 +29,45 @@ const GameResult = () => {
       setResultscore("이사람 심부름 시키면 개비싼거사옴 ㄷㄷ;;");
     }
   }, [finalresultint]);
-  return (
-    <>
-      <div className="gr-container1">
-        <Header />
-        <main>
-          <h3> 당신의 점수는 ?!</h3>
-          <h1>{finalresult}점</h1>
-          <h3>{resultscore}</h3>
-          <p>지금 보신 상품은 어떠신가요?</p>
+  if (JSON.stringify(game) === "{}") {
+    navigate("/game");
+  } else {
+    return (
+      <>
+        <div className="gr-container1">
+          <Header />
+          <main>
+            <h3> 당신의 점수는 ?!</h3>
+            <h1>{finalresult}점</h1>
+            <h3>{resultscore}</h3>
+            <p>지금 보신 상품은 어떠신가요?</p>
 
-          <div className="gr-imgBoxs">
-            {game &&
-              game.map((p) => (
-                <div key={p.id}>
-                  <div
-                    className="gr-imgBox1"
-                    onClick={() => {
-                      navigate("/detail/" + p.id);
-                    }}
-                  >
-                    <img className="gr-img1" src={p.imgsrc1} alt="이미지1" />
-                    <div className="gr-text1">
-                      <div className="gr-textTitle">
-                        <span>{p.name}</span>
+            <div className="gr-imgBoxs">
+              {game &&
+                game.map((p) => (
+                  <div key={p.productId}>
+                    <div
+                      className="gr-imgBox1"
+                      onClick={() => {
+                        navigate("/detail/" + p.productId);
+                      }}
+                    >
+                      <img className="gr-img1" src={p.imgUrl} alt="이미지1" />
+                      <div className="gr-text1">
+                        <div className="gr-textTitle">
+                          <span>{p.title}</span>
+                        </div>
+                        <p>{p.price}</p>
                       </div>
-                      <p>{p.price}</p>
                     </div>
                   </div>
-                </div>
-              ))}
-          </div>
-        </main>
-      </div>
-      <Footer />
-    </>
-  );
+                ))}
+            </div>
+          </main>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 };
-
 export default GameResult;

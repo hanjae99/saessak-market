@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
-import SingUp from "./components/Login/SingUp";
+import SignUp from "./components/Login/SignUp";
 import AddProduct from "./components/addProduct/AddProduct";
 import AdminPage from "./components/admin/AdminPage";
 import BoardMain from "./components/board/BoardMain";
@@ -33,7 +33,7 @@ function App() {
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/singup" element={<SingUp />} />
+        <Route path="/singup" element={<SignUp />} />
         <Route path="/boardmain" element={<BoardMain page={page} />} />
         <Route path="/boardwrite" element={<CreateNotice />} />
         <Route path="/boardmain/1" element={<CreateVoice page={page} />} />

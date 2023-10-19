@@ -1,6 +1,6 @@
 /* SignUp.css */
 
-.singup-container1 {
+.signup-container1 {
   width: 80%;
   margin: auto;
   padding: 20px;
@@ -11,17 +11,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.singup-title {
+.signup-title {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-.singup-form {
+.signup-form {
   display: flex;
   flex-direction: column;
 }
 
-.singup-checkbtn {
+.signup-checkbtn {
   background-color: rgba(109, 200, 42, 0.7);
   color: #fff;
   border: none;
@@ -31,20 +31,20 @@
   font-size: 18px;
   margin-top: 20px;
 }
-.singup-input-container {
+.signup-input-container {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
 
 /* 라벨에 대한 공통 스타일 */
-.singup-text-id {
+.signup-text-id {
   width: 15%;
   font-weight: bold;
 }
 
 /* 텍스트 입력 필드에 대한 공통 스타일 */
-.singup-text-input {
+.signup-text-input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -59,9 +59,9 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 버튼 스타일 */
-.singup-bt1,
-.singup-bt2,
-.singup-bt3 {
+.signup-bt1,
+.signup-bt2,
+.signup-bt3 {
   padding: 8px 12px;
   border: none;
   background-color: rgba(109, 200, 42, 0.7);
@@ -73,22 +73,22 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 라디오 버튼에 대한 추가 스타일 */
-.singup-text-radio {
+.signup-text-radio {
   margin-right: 5px;
 }
 
 /* 체크박스 스타일 */
-.singup-Divcheckbox {
+.signup-Divcheckbox {
   margin-top: 15px;
 }
 
 /* 체크박스 라벨 스타일 */
-.singup-checktype {
+.signup-checktype {
   margin: 5px 0;
 }
 
 /* 제출 버튼 */
-.singup-checkbtn {
+.signup-checkbtn {
   background-color: rgba(109, 200, 42, 0.7);
   color: #fff;
   border: none;
@@ -99,45 +99,45 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-top: 20px;
   width: 40vw;
 }
-.singup-divtitle {
+.signup-divtitle {
   text-align: center;
 }
-.singup-Divcheckbox {
+.signup-Divcheckbox {
   border-top: 1px solid lightgray;
   padding-top: 30px;
 }
-.singup-divcheckbtn {
+.signup-divcheckbtn {
   text-align: center;
 }
-.singup-failed-msg {
+.signup-failed-msg {
   color: red;
 }
-.singup-duplicated-msg {
+.signup-duplicated-msg {
   color: red;
   font-size: small;
   font-weight: bold;
 }
-.singup-duplicated1-msg {
+.signup-duplicated1-msg {
   color: blue;
   font-size: small;
   font-weight: bold;
 }
 
 @media screen and (max-width: 768px) and (min-width: 425px) {
-  .singup-text-id {
+  .signup-text-id {
     width: 22%;
     font-weight: bold;
   }
-  .singup-text-input {
+  .signup-text-input {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 55%;
     outline-color: rgba(109, 200, 42, 0.7);
   }
-  .singup-bt1,
-  .singup-bt2,
-  .singup-bt3 {
+  .signup-bt1,
+  .signup-bt2,
+  .signup-bt3 {
     padding: 8px 12px;
     border: none;
     background-color: rgba(109, 200, 42, 0.7);
@@ -149,22 +149,22 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 @media screen and (max-width: 425px) {
-  .singup-text-id {
+  .signup-text-id {
     display: none;
 
     font-size: 0.9rem;
     font-weight: bold;
   }
-  .singup-text-input {
+  .signup-text-input {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
     outline-color: rgba(109, 200, 42, 0.7);
   }
-  .singup-bt1,
-  .singup-bt2,
-  .singup-bt3 {
+  .signup-bt1,
+  .signup-bt2,
+  .signup-bt3 {
     padding: 8px 12px;
     border: none;
     background-color: rgba(109, 200, 42, 0.7);

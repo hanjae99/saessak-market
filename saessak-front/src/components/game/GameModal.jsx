@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
-  const game = useSelector((state) => state.game);
+  const game = useSelector((state) => state.game.data);
 
   const onClick = () => {
     setModalOpen(false);
@@ -25,7 +25,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
     <div className="modal-container">
       <div>
         <img
-          src={game && game[index].imgsrc1}
+          src={game && game[index].imgUrl}
           alt="이미지"
           className="modal-imgBox"
         />
@@ -38,7 +38,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
 
       <div className="modal-labelbox">
         <label className="modal-label">중고 가격 </label>
-        <div className="modal-p">{game[index].price}</div>
+        <div className="modal-p">{comma(game[index].price)}원</div>
       </div>
       <h1>점수 : {result} 점</h1>
       <button className="modal-btn" onClick={onClick}>

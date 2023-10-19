@@ -5,12 +5,23 @@ import GameModal from "./GameModal";
 import { useNavigate } from "react-router-dom";
 import Header from "../main/Header";
 import Footer from "../main/Footer";
+import { call } from "../../ApiService";
+import { setGameData } from "../../gameSlice";
 
 const Game = () => {
-  const game = useSelector((state) => state.game);
-  // console.log(game);
-  const score = useSelector((state) => state.score.no);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    call("/game", "GET", null).then((response) => {
+      console.log(response.data);
+      dispatch(setGameData(response.data));
+    });
+  }, []);
+
+  const game = useSelector((state) => state.game.data);
+  const score = useSelector((state) => state.score.no);
+
+  console.log("나게임1 : ", game);
 
   const [index, setIndex] = useState(0);
   const [inputprice, setInputprice] = useState("");
@@ -45,7 +56,7 @@ const Game = () => {
 
   const onsubmit = useCallback(() => {
     const money = parseInt(
-      game[index].price.replaceAll(",", "").replace("원", "")
+      (game[index].price + "").replaceAll(",", "").replace("원", "")
     );
 
     // console.log("inputprice :" + inputprice);
@@ -85,6 +96,9 @@ const Game = () => {
       navigate("/gameresult/" + score);
     }
   }, [index, navigate, score]);
+  if (game === null) {
+    return null;
+  }
   return (
     <>
       <div className="game-container">
@@ -95,7 +109,7 @@ const Game = () => {
             <div className="game-contentsBox2">
               <div className="game-products1">
                 <img
-                  src={game[index] && game[index].imgsrc1}
+                  src={game[index] && game[index].imgUrl}
                   alt="이미지"
                   className="game-imgBox"
                 />
@@ -105,14 +119,14 @@ const Game = () => {
                 <div>
                   <label className="game-productslable">제품명</label>
                   <div className="game-productslablediv">
-                    {game[index] && game[index].name}
+                    {game[index] && game[index].title}
                   </div>
                 </div>
 
                 <label className="game-productslable">제품설명</label>
                 <div className="game-productstext">
                   <div className="game-productsdivtext">
-                    {game[index] && game[index].text}
+                    {game[index] && game[index].content}
                   </div>
                 </div>
               </div>
