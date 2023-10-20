@@ -35,9 +35,9 @@ const Login = () => {
           localStorage.setItem("ACCESS_TOKEN", response.token);
           console.log("response : ", response);
           if (response.role === "ADMIN") {
-            window.location.href = "/admin";
+            return (window.location.href = "/admin");
           }
-          window.location.href = "/";
+          return (window.location.href = "/");
         }
       });
 
