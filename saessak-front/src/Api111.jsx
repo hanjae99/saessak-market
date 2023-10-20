@@ -6,10 +6,10 @@ export function call(api, method, request) {
     "Content-Type": "application/json",
   });
 
-  // const accessToken =localStorage.getItem("ACCESS_TOKEN")
-  // if(accessToken && accessToken != null){
-  //     headers.append("Authorization","Bearer "+accessToken);
-  // }
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if (accessToken && accessToken != null) {
+    headers.append("Authorization", "Bearer " + accessToken);
+  }
 
   // API 호출에 사용할 옵션 객체를 설정합니다.
   let options = {
@@ -49,5 +49,9 @@ export function signout() {
 }
 
 export function signup(signUpDTO) {
-  return call("/signup", "POST", signUpDTO);
+  return call(
+    `/signup/${localStorage.getItem("ACCESS_TOKEN")}`,
+    "POST",
+    signUpDTO
+  );
 }

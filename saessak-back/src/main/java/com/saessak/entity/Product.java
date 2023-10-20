@@ -33,7 +33,6 @@ public class Product extends BaseTimeEntity {
   private String content;
 
   private int price;
-
   private int clickCount;
 
   @Enumerated(EnumType.STRING)

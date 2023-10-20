@@ -56,7 +56,7 @@ const SignUp = () => {
       signup(newUser).then((response) => {
         console.log(response);
         alert("계정이 성공적으로 생성되었습니다.");
-        //window.location.href = "/login";
+        window.location.href = "/login";
       });
       //navigator("/login");
     }

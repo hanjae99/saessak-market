@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product,Long> ,ProductRepositoryCustom{
 
     @Query( value = "SELECT * FROM PRODUCT  ORDER BY RAND() LIMIT 10 ", nativeQuery = true)
     List<Product> gameRamdomdata();
+
+    Product findByTitle(String title);
 }

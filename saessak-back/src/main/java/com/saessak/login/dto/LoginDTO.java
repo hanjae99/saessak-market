@@ -26,6 +26,8 @@ public class LoginDTO {
     @NotBlank(message = "비밀번호를 입력해주세요.")
     private String password;
 
+    private String name;
+
     private Role role;
 
 }

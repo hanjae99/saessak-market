@@ -39,6 +39,7 @@ public class LoginController {
             log.info(token);
             final LoginDTO responseUserDTO = LoginDTO.builder()
                     .userId(user.getUserId())
+                    .name(user.getName())
                     .role(user.getRole())
                     .token(token)
                     .build();
