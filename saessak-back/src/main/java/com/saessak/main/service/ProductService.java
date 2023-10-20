@@ -2,6 +2,7 @@ package com.saessak.main.service;
 
 import com.saessak.constant.SellStatus;
 import com.saessak.entity.Image;
+import com.saessak.entity.Member;
 import com.saessak.entity.Product;
 import com.saessak.imgfile.FileService;
 import com.saessak.imgfile.ProductImgService;
@@ -9,6 +10,7 @@ import com.saessak.main.dto.ProductDTO;
 import com.saessak.main.dto.ProductFormDTO;
 import com.saessak.main.dto.ProductImageDTO;
 import com.saessak.repository.ImageRepository;
+import com.saessak.repository.MemberRepository;
 import com.saessak.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,6 +33,7 @@ public class ProductService {
     private final ImageRepository imageRepository;
     private final ProductImgService productImgService;
     private final FileService fileService;
+    private final MemberRepository memberRepository;
 
     // 메인, 상품 검색 시 상품 목록 페이징 결과 읽어오기
     public Page<ProductDTO> read(ProductDTO productDTO, Pageable pageable){
@@ -37,14 +41,36 @@ public class ProductService {
     }
 
     // 상품 디테일, 상품 업데이트 시 기존 상품 하나 값 읽어오기
-    public ProductFormDTO readOneProduct(ProductFormDTO productFormDTO){
+    public ProductFormDTO readOneProduct(ProductFormDTO productFormDTO, String memberId){
+        try {
+            Product product = productRepository.findById(productFormDTO.getId())
+                    .orElseThrow(EntityNotFoundException::new);
+
+            // 해당 상품을 등록한 유저가 아닌 경우
+            Optional<Long> savedProductMemberId = Optional.ofNullable(product.getSellMember())
+                    .map(sellMember -> sellMember.getId());
+            if (savedProductMemberId.isEmpty() || savedProductMemberId.get() != Long.parseLong(memberId)){
+                return null;
+            }
+
+        }catch (EntityNotFoundException e){
+            // 존재하지 않는 상품일 경우
+            throw e;
+        }
+
         return productRepository.getSearchedProduct(productFormDTO);
     }
 
     public Long saveProduct(ProductFormDTO productFormDTO,
-                         List<MultipartFile> productImgFileList)throws Exception{
+                         List<MultipartFile> productImgFileList,
+                            String memberId)throws Exception{
+        //상품 등록하는 유저 검색
+        Member member = memberRepository.findById(Long.parseLong(memberId))
+                .orElseThrow(EntityNotFoundException::new);
+
         //초기 등록 -> 판매중
         productFormDTO.setSellStatus(SellStatus.SELL);
+        productFormDTO.setSellMember(member);
 
         //상품 등록
         Product product = productFormDTO.createProduct();
@@ -101,6 +127,8 @@ public class ProductService {
 
     // 상품 + 이미지 업데이트
     public Long updateProduct(ProductFormDTO productFormDTO) throws Exception {
+//        Member member = memberRepository.findById(Long.parseLong(memberId))
+//                .orElseThrow(EntityNotFoundException::new);
         // 상품 정보만 업데이트
         Long productId = updateProductOnly(productFormDTO);
 
@@ -114,7 +142,7 @@ public class ProductService {
         // 기존 상품 등록정보가 있을 경우 (변경점 찾아서 업데이트)
         if (!imgDTOList.isEmpty()) {
             for (ProductImageDTO imgDTO : imgDTOList) {
-                System.out.println("image/product 로 시작함!");
+                System.out.println("images/product 로 시작함!");
 
                 // 원활한 비교를 위해 mulfipart 타입으로 변경
                 MultipartFile imgMultiFile = fileService.fileToMultipart(
