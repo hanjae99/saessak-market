@@ -1,8 +1,6 @@
 package com.saessak.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +9,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class LoginData extends BaseTimeEntity {
 
   @Id

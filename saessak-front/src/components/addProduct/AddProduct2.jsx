@@ -54,7 +54,13 @@ const AddProduct2 = () => {
     // navigate("/search");
 
     uploadProduct("/product/new", "POST", formData).then((response) => {
-      console.log(response);
+      const result = response.data[0];
+      if (result === "success") {
+        alert(result);
+        navigate("/search");
+      } else {
+        alert(result);
+      }
     });
   };
 
@@ -114,7 +120,6 @@ const AddProduct2 = () => {
                     onChange={getImgSrc}
                     disabled={imgCount === 3}
                   />
-                  <button type="submit">테스트</button>
                 </div>
                 <div className="previewImg">
                   {imgFile.map((file) => (

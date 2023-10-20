@@ -1,9 +1,7 @@
 package com.saessak.entity;
 
 import com.saessak.constant.ShowStatus;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +10,9 @@ import javax.persistence.*;
 @Setter
 @Getter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Board extends BaseTimeEntity {
 
   @Id

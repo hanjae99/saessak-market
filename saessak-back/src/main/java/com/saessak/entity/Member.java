@@ -2,10 +2,7 @@ package com.saessak.entity;
 
 import com.saessak.constant.Gender;
 import com.saessak.constant.Role;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,6 +11,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
   @Id

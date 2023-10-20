@@ -7,9 +7,8 @@ import com.saessak.constant.SellStatus;
 import com.saessak.entity.Product;
 import com.saessak.entity.QImage;
 import com.saessak.entity.QProduct;
-import com.saessak.entity.QProductCategory;
-import com.saessak.main.dto.ProductDTO;
-import com.saessak.main.dto.QProductDTO;
+import com.saessak.imgfile.FileService;
+import com.saessak.main.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +19,8 @@ import java.util.List;
 public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
     private JPAQueryFactory queryFactory;
+
+    private final FileService fileService = new FileService();
 
     public ProductRepositoryCustomImpl(EntityManager em){
         this.queryFactory = new JPAQueryFactory(em);
@@ -41,6 +42,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return searchQuery == null ? null : QProduct.product.title.like("%" + searchQuery + "%");
     }
 
+    // 페이징 처리된 상품 검색 목록 가져오기
     @Override
     public Page<ProductDTO> getSearchedProductPage(ProductDTO productDTO, Pageable pageable) {
 
@@ -73,4 +75,39 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return new PageImpl<>(content, pageable, total);
 
     }
+
+    @Override
+    public ProductFormDTO getSearchedProduct(ProductFormDTO productFormDTO) {
+        QProduct product = QProduct.product;
+        QImage image = QImage.image;
+
+        List<ProductImageDTO> imageDTOList = queryFactory
+                .select(new QProductImageDTO(
+                        image.id,
+                        image.imgName,
+                        image.oriName,
+                        image.imgUrl
+                ))
+                .from(image)
+                .where(image.product.id.eq(productFormDTO.getId()))
+                .fetch();
+
+        Product searchedProduct = queryFactory
+                .select(product)
+                .from(product)
+                .where(product.id.eq(productFormDTO.getId()))
+                .fetchOne();
+
+        productFormDTO.setTitle(searchedProduct.getTitle());
+        productFormDTO.setPrice(searchedProduct.getPrice());
+        productFormDTO.setContent(searchedProduct.getContent());
+        productFormDTO.setSellStatus(searchedProduct.getSellStatus());
+        productFormDTO.setMapData(searchedProduct.getMapData());
+        productFormDTO.setImageDTOList(imageDTOList);
+
+        return productFormDTO;
+
+    }
+
+
 }

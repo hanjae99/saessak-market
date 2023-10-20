@@ -1,9 +1,7 @@
 package com.saessak.entity;
 
 import com.saessak.constant.SellStatus;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +10,9 @@ import javax.persistence.*;
 @Setter
 @Getter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Product extends BaseTimeEntity {
 
   @Id
@@ -25,7 +26,6 @@ public class Product extends BaseTimeEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "order_member_id")
   private Member orderMember;
-
 
   private String title;
 

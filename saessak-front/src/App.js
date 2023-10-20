@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
-import SingUp from "./components/Login/SingUp";
+import SignUp from "./components/Login/SignUp";
 import AddProduct from "./components/addProduct/AddProduct";
 import AdminPage from "./components/admin/AdminPage";
 import BoardMain from "./components/board/BoardMain";
@@ -19,6 +19,7 @@ import UpdateProduct from "./components/updateProduct/UpdateProduct";
 import { Layout } from "./components/kimjin/layout";
 import Chatting from "./components/kimjin/Chatting";
 import AddProduct2 from "./components/addProduct/AddProduct2";
+import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardPage from "./components/board2/BoardPage";
 
 function App() {
@@ -30,12 +31,12 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/search/:searchItem?" element={<ProductList />} />
         <Route path="/addproduct" element={<AddProduct2 />} />
-        <Route path="/updateproduct/:id" element={<UpdateProduct />} />
+        <Route path="/updateproduct/:id" element={<UpdateProduct2 />} />
         <Route path="/game" element={<Game />} />
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/singup" element={<SingUp />} />
+        <Route path="/singup" element={<SignUp />} />
         <Route path="/boardmain" element={<BoardMain page={page} />} />
         <Route path="/boardwrite" element={<CreateNotice />} />
         <Route path="/boardmain/1" element={<CreateVoice page={page} />} />
