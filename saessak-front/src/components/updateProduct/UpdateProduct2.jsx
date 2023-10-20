@@ -18,19 +18,41 @@ const UpdateProduct2 = () => {
   const [productSellStatus, setProductSellStatus] = useState("");
   const [productMapData, setProductMapData] = useState("");
   const [imageDTOList, setImageDTOList] = useState([]);
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    call("/product/searchOne", "POST", { id: id }).then((response) => {
-      // console.log(response);
-      setProductTitle(response.data[0].title);
-      setProductContent(response.data[0].content);
-      setProductPrice(response.data[0].price);
-      setProductSellStatus(response.data[0].sellStatus);
-      setProductMapData(response.data[0].mapData);
-      const responseImgFileList = response.data[0].imageDTOList;
-      setImgCount(responseImgFileList.length);
-      setImageDTOList(responseImgFileList);
-    });
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    if (accessToken !== "") {
+      // 로그인한 상태
+      setIsLogin(true);
+
+      call("/product/searchone", "POST", { id: id }).then((response) => {
+        console.log("error: " + response.error);
+        if (response.error && response.error !== "") {
+          if (response.error === "no authority") {
+            alert("상품 수정권한이 없습니다");
+            navigate(-1);
+            return;
+          } else if (response.error === "no product") {
+            alert("존재하지 않는 상품입니다");
+            navigate(-1);
+            return;
+          }
+        }
+
+        setProductTitle(response.data[0].title);
+        setProductContent(response.data[0].content);
+        setProductPrice(response.data[0].price);
+        setProductSellStatus(response.data[0].sellStatus);
+        setProductMapData(response.data[0].mapData);
+        const responseImgFileList = response.data[0].imageDTOList;
+        setImgCount(responseImgFileList.length);
+        setImageDTOList(responseImgFileList);
+      });
+    } else {
+      alert("로그인 후 이용해주세요!");
+      navigate("/login");
+    }
   }, [id]);
 
   const getImgSrc = (e) => {
@@ -92,12 +114,7 @@ const UpdateProduct2 = () => {
     // 상품 및 기존 이미지 정보만 먼저 업데이트
     call("/product/update", "POST", request).then((response) => {
       const result = response.data[0];
-      if (result === "success") {
-        alert(result);
-        navigate("/search");
-      } else {
-        alert(result);
-      }
+      alert(result);
     });
 
     // 새로 추가한 이미지 업로드
@@ -108,7 +125,11 @@ const UpdateProduct2 = () => {
     }
 
     uploadProduct("/product/upload", "POST", uploadImg).then((response) => {
-      alert(response.data[0]);
+      const result = response.data[0];
+      alert(result);
+      if (result === "imgUpload success") {
+        navigate("/search");
+      }
     });
   };
 
@@ -128,109 +149,115 @@ const UpdateProduct2 = () => {
     setProductMapData(e.target.value);
   };
 
-  return (
-    <div>
-      <Header />
-      <main>
-        <div className="addProductContainer">
-          <div className="addContents">
-            <form
-              onSubmit={handleSubmit}
-              encType="multipart/form-data"
-              className="content-form"
-              method="POST"
-            >
-              <div className="imgUploadBox">
-                <div>
-                  <div className="labelButton">
-                    <label htmlFor="chooseFile">
-                      이미지를 넣어주세요! (최대 3장)
-                    </label>
-                  </div>
+  let content = <div></div>;
 
+  if (isLogin) {
+    content = (
+      <div>
+        <Header />
+        <main>
+          <div className="addProductContainer">
+            <div className="addContents">
+              <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="content-form"
+                method="POST"
+              >
+                <div className="imgUploadBox">
+                  <div>
+                    <div className="labelButton">
+                      <label htmlFor="chooseFile">
+                        이미지를 넣어주세요! (최대 3장)
+                      </label>
+                    </div>
+
+                    <input
+                      type="file"
+                      name="chooseFile"
+                      id="chooseFile"
+                      accept="image/*"
+                      onChange={getImgSrc}
+                      disabled={imgCount === 3}
+                    />
+                  </div>
+                  <div className="previewImg">
+                    {imageDTOList.map((imgDTO) => (
+                      <div className="imgItem" key={imgDTO.imgUrl}>
+                        <img
+                          className="imgItem"
+                          src={
+                            imgDTO.imgUrl.includes("/images/product")
+                              ? "http://localhost:8888" + imgDTO.imgUrl
+                              : imgDTO.imgUrl
+                          }
+                          alt="예시이미지"
+                        />
+                        <button onClick={() => removeImg(imgDTO)}>삭제</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="addName">
                   <input
-                    type="file"
-                    name="chooseFile"
-                    id="chooseFile"
-                    accept="image/*"
-                    onChange={getImgSrc}
-                    disabled={imgCount === 3}
+                    type="text"
+                    placeholder="새로운 새싹에게 이름을 지어주세요!"
+                    name="name"
+                    value={productTitle}
+                    onChange={handleTitle}
                   />
                 </div>
-                <div className="previewImg">
-                  {imageDTOList.map((imgDTO) => (
-                    <div className="imgItem" key={imgDTO.imgUrl}>
-                      <img
-                        className="imgItem"
-                        src={
-                          imgDTO.imgUrl.includes("/images/product")
-                            ? "http://localhost:8888" + imgDTO.imgUrl
-                            : imgDTO.imgUrl
-                        }
-                        alt="예시이미지"
-                      />
-                      <button onClick={() => removeImg(imgDTO)}>삭제</button>
-                    </div>
-                  ))}
+                <div className="addPrice">
+                  <input
+                    type="text"
+                    placeholder="새싹의 가격은?"
+                    name="price"
+                    value={productPrice}
+                    onChange={handlePrice}
+                  />
                 </div>
-              </div>
-              <div className="addName">
-                <input
-                  type="text"
-                  placeholder="새로운 새싹에게 이름을 지어주세요!"
-                  name="name"
-                  value={productTitle}
-                  onChange={handleTitle}
-                />
-              </div>
-              <div className="addPrice">
-                <input
-                  type="text"
-                  placeholder="새싹의 가격은?"
-                  name="price"
-                  value={productPrice}
-                  onChange={handlePrice}
-                />
-              </div>
-              <div className="addLocal">
-                <input
-                  type="text"
-                  placeholder="거래희망 지역을 알려주세요!"
-                  name="wantPlace"
-                  value={productMapData}
-                  onChange={handleMapData}
-                />
-              </div>
-              <div className="addText">
-                <textarea
-                  name="text"
-                  id=""
-                  cols=""
-                  rows="10"
-                  placeholder="새싹의 정보를 알려주세요!"
-                  onChange={handleContent}
-                  value={productContent}
-                ></textarea>
-              </div>
-              <div className="submitBtn">
-                <button type="submit">새싹 심기!</button>
-                <button
-                  type="reset"
-                  onClick={() => {
-                    const resetImgFile = [];
-                    setImgFile(resetImgFile);
-                  }}
-                >
-                  취소하기
-                </button>
-              </div>
-            </form>
+                <div className="addLocal">
+                  <input
+                    type="text"
+                    placeholder="거래희망 지역을 알려주세요!"
+                    name="wantPlace"
+                    value={productMapData}
+                    onChange={handleMapData}
+                  />
+                </div>
+                <div className="addText">
+                  <textarea
+                    name="text"
+                    id=""
+                    cols=""
+                    rows="10"
+                    placeholder="새싹의 정보를 알려주세요!"
+                    onChange={handleContent}
+                    value={productContent}
+                  ></textarea>
+                </div>
+                <div className="submitBtn">
+                  <button type="submit">새싹 심기!</button>
+                  <button
+                    type="reset"
+                    onClick={() => {
+                      const resetImgFile = [];
+                      setImgFile(resetImgFile);
+                    }}
+                  >
+                    취소하기
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return content;
 };
 
 export default UpdateProduct2;

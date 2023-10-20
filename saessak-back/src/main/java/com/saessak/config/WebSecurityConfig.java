@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/board/ntc/**",
                         "/boardmain/**",
                         "/boardmain",
-                        "/imges/**",
+                        "/images/**",
                         "/swagger-resources/**", "/swagger-ui/**",
                         "/swagger/**","/v3/api-docs").permitAll()
                 .anyRequest().authenticated();

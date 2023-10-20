@@ -1,6 +1,7 @@
 package com.saessak.main.dto;
 
 import com.saessak.constant.SellStatus;
+import com.saessak.entity.Member;
 import com.saessak.entity.Product;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,8 @@ public class ProductFormDTO {
     private String mapData;
 
     private List<ProductImageDTO> imageDTOList = new ArrayList<>();
+
+    private Member sellMember;
 
 //    private List<Long> productImgIds = new ArrayList<>();
 

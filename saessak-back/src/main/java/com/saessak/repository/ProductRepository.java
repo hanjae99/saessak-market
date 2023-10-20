@@ -13,4 +13,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> ,ProductR
     List<Product> gameRamdomdata();
 
     Product findByTitle(String title);
+
+    List<Product> findBySellMemberId(Long memberId);
 }

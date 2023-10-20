@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
 import "./Header.scss";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const [value, setValue] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
   const onChange = useCallback((e) => {
@@ -26,8 +27,38 @@ const Header = () => {
     }
   };
 
-  const login = useSelector((state) => state.login);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    if (accessToken !== "") {
+      // 로그인한 상태
+      setIsLogin(true);
+    }
+  }, []);
+
+  // const login = useSelector((state) => state.login);
+  // const dispatch = useDispatch();
+
+  const handleLogInAndOut = () => {
+    if (isLogin) {
+      localStorage.setItem("ACCESS_TOKEN", "");
+      alert("로그아웃 되었습니다.");
+      setIsLogin(false);
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const handleCreateProduct = (e) => {
+    e.preventDefault();
+
+    if (isLogin) {
+      navigate("/addproduct");
+    } else {
+      alert("로그인 후 이용해주세요!");
+      navigate("/login");
+    }
+  };
 
   return (
     <header>
@@ -60,16 +91,8 @@ const Header = () => {
             </form>
           </div>
           <div className="userBtn">
-            <button
-              onClick={() => {
-                if (login.id === "") {
-                  navigate("/login");
-                } else {
-                  dispatch({ type: "login/logout" });
-                }
-              }}
-            >
-              {login.id === "" ? "로그인" : "로그아웃"}
+            <button onClick={handleLogInAndOut}>
+              {isLogin ? "로그아웃" : "로그인"}
             </button>
             <button
               onClick={() => {
@@ -129,7 +152,7 @@ const Header = () => {
               <Link to="/game">새싹 게임</Link>
             </div>
             <div className="menuItem">
-              <Link to="/addproduct">상품 등록</Link>
+              <Link onClick={handleCreateProduct}>상품 등록</Link>
             </div>
           </nav>
         </div>
