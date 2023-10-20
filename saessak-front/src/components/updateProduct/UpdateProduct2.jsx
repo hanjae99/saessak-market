@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../main/Footer";
@@ -89,12 +89,19 @@ const UpdateProduct2 = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (imageDTOList && imageDTOList.length === 0) {
+      alert("이미지는 적어도 하나 이상 있어야 합니다.");
+      return;
+    }
+
     // 이미지 DTO 추가
     let newImageDTOList = [];
-    for (let i = 0; i < imageDTOList.length; i++) {
-      // 기존에 가져왔던 데이터만 다시 실어서 보냄
-      if (imageDTOList[i].id !== "") {
-        newImageDTOList.push(imageDTOList[i]);
+    if (imageDTOList && imageDTOList.length > 0) {
+      for (let i = 0; i < imageDTOList.length; i++) {
+        // 기존에 가져왔던 데이터만 다시 실어서 보냄
+        if (imageDTOList[i].id !== "") {
+          newImageDTOList.push(imageDTOList[i]);
+        }
       }
     }
 
@@ -115,22 +122,27 @@ const UpdateProduct2 = () => {
     call("/product/update", "POST", request).then((response) => {
       const result = response.data[0];
       alert(result);
-    });
-
-    // 새로 추가한 이미지 업로드
-    const uploadImg = new FormData();
-    uploadImg.append("id", id);
-    for (let i = 0; i < imgFile.length; i++) {
-      uploadImg.append("productImgList", imgFile[i]);
-    }
-
-    uploadProduct("/product/upload", "POST", uploadImg).then((response) => {
-      const result = response.data[0];
-      alert(result);
-      if (result === "imgUpload success") {
+      if (result === "success") {
         navigate("/search");
       }
     });
+
+    // 새로 추가한 이미지 업로드
+    if (imgFile && imgFile.length > 0) {
+      const uploadImg = new FormData();
+      uploadImg.append("id", id);
+      for (let i = 0; i < imgFile.length; i++) {
+        uploadImg.append("productImgList", imgFile[i]);
+      }
+
+      uploadProduct("/product/upload", "POST", uploadImg).then((response) => {
+        const result2 = response.data[0];
+        alert(result2);
+        if (result2 === "imgUpload success") {
+          navigate("/search");
+        }
+      });
+    }
   };
 
   const handleTitle = (e) => {
