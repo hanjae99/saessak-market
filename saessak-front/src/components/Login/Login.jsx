@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Header from "../main/Header";
 import Footer from "../main/Footer";
+import { login } from "../../ApiService";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [inputid, setInputid] = useState("");
-  const [inputpwd, setInputpwd] = useState("");
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  // const [inputid, setInputid] = useState("");
+  // const [inputpwd, setInputpwd] = useState("");
+  //const user = useSelector((state) => state.user);
+  const [loginDTO, setLoginDTO] = useState({
+    userId: "",
+    password: "",
+  });
+  // const dispatch = useDispatch();
   const [loginFailed, setLoginFailed] = useState(false); // 상태 추가
   //console.log(user[1].id);
 
@@ -20,30 +25,48 @@ const Login = () => {
 
       // console.log("asdaasd:" + inputid);
       // console.log("dasdasdasd:" + inputpwd);
-      const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
-
+      //const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
       // console.log("login" + login);
-
-      if (!login) {
-        // console.log("아이디 비밀 번호를 다시입력해주세요");
-        setLoginFailed(true);
-      } else {
-        dispatch({ type: "login/login", payload: login.id });
-        if (login.gender === "admin") {
-          navigate("/admin");
+      login(loginDTO).then((response) => {
+        console.log("response : ", response);
+        if (!response) {
+          return setLoginFailed(true);
         } else {
-          navigate("/");
+          localStorage.setItem("ACCESS_TOKEN", response.token);
+          console.log("response : ", response);
+          if (response.role === "ADMIN") {
+            window.location.href = "/admin";
+          }
+          window.location.href = "/";
         }
-      }
+      });
+
+      // if (!login) {
+      //   // console.log("아이디 비밀 번호를 다시입력해주세요");
+      //   setLoginFailed(true);
+      // } else {
+      //   //dispatch({ type: "login/login", payload: login.id });
+      //   if (login.gender === "ADMIN") {
+      //     navigate("/admin");
+      //   } else {
+      //     navigate("/");
+      //   }
+      // }
     },
-    [inputid, inputpwd, navigate, user]
+    [loginDTO]
   );
   const onChangeId = (e) => {
-    setInputid(e.target.value);
+    setLoginDTO((prevUser) => ({
+      ...prevUser,
+      userId: e.target.value,
+    }));
   };
 
   const onChangepwd = (e) => {
-    setInputpwd(e.target.value);
+    setLoginDTO((prevUser) => ({
+      ...prevUser,
+      password: e.target.value,
+    }));
   };
 
   const onClick = (e) => {
@@ -69,7 +92,7 @@ const Login = () => {
                 className="login-inputBox1"
                 type="text"
                 placeholder="아이디를 입력해주세요"
-                value={inputid}
+                value={loginDTO.userId}
                 onChange={onChangeId}
               />
             </div>
@@ -78,7 +101,7 @@ const Login = () => {
                 className="login-inputBox2"
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
-                value={inputpwd}
+                value={loginDTO.password}
                 onChange={onChangepwd}
               />
             </div>

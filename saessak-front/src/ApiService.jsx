@@ -40,11 +40,7 @@ export function call(api, method, request) {
 }
 
 export function login(loginDTO) {
-  return call("/signin", "POST", loginDTO).then((response) => {
-    localStorage.setItem("ACCESS_TOKEN", response.token);
-    console.log("response : ", response);
-    window.location.href = "/";
-  });
+  return call("/login", "POST", loginDTO);
 }
 
 export function signout() {

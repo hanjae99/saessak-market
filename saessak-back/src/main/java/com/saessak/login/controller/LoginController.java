@@ -39,14 +39,12 @@ public class LoginController {
             log.info(token);
             final LoginDTO responseUserDTO = LoginDTO.builder()
                     .userId(user.getUserId())
+                    .role(user.getRole())
                     .token(token)
                     .build();
             return ResponseEntity.ok().body(responseUserDTO);
         }else {
-            ResponseDTO responseDTO = ResponseDTO.builder()
-                    .error("Login error")
-                    .build();
-            return ResponseEntity.badRequest().body(responseDTO);
+            return ResponseEntity.ok().body(false);
         }
 
     }

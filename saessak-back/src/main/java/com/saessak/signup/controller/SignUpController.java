@@ -28,7 +28,6 @@ public class SignUpController {
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDTO){
         try{
-
         Member member =Member.builder()
                 .userId(signUpDTO.getUserId())
                 .nickName(signUpDTO.getNickName())
