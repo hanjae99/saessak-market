@@ -14,6 +14,6 @@ public class CategoryProductDTO {
     private String title;
     private int price;
     private String imgUrl;
-    private List<CategoryDTO> categoryDTOLong;
+    private CategoryDTO categoryId;
 
 }
