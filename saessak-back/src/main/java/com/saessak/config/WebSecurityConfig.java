@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/signup",
                         "/signup/**",
                         "/signup/**/**",
+                        "/signup/emailConfirm/**",
                         "/login",
                         "/login/**",
                         "/search/**",

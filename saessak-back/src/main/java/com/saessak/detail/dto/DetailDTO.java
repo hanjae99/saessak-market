@@ -24,24 +24,24 @@ public class DetailDTO {
     private String mapData;
     private List<CategoryProductDTO> categoryProductDTO;
 
-    public DetailDTO(){}
-    public DetailDTO(Long productId,
-                     DetailMemberDTO memberDTO,
-                     String title,
-                     String content,
-                     int price,
-                     int clickCount,
-                     SellStatus sellStatus,
-                     String mapData,
-                     List<CategoryProductDTO> categoryProductDTO) {
-        this.productId = productId;
-        MemberDTO = memberDTO;
-        this.title = title;
-        this.content = content;
-        this.price = price;
-        this.clickCount = clickCount;
-        this.sellStatus = sellStatus;
-        this.mapData = mapData;
-        this.categoryProductDTO = categoryProductDTO;
-    }
+//    public DetailDTO(){}
+//    public DetailDTO(Long productId,
+//                     DetailMemberDTO memberDTO,
+//                     String title,
+//                     String content,
+//                     int price,
+//                     int clickCount,
+//                     SellStatus sellStatus,
+//                     String mapData,
+//                     List<CategoryProductDTO> categoryProductDTO) {
+//        this.productId = productId;
+//        MemberDTO = memberDTO;
+//        this.title = title;
+//        this.content = content;
+//        this.price = price;
+//        this.clickCount = clickCount;
+//        this.sellStatus = sellStatus;
+//        this.mapData = mapData;
+//        this.categoryProductDTO = categoryProductDTO;
+//    }
 }
