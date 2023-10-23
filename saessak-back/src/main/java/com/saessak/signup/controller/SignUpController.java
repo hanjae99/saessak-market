@@ -57,7 +57,7 @@ public class SignUpController {
 
         return ResponseEntity.ok().body(responseDTO);
     }catch (Exception e){
-        ResponseDTO responseDTO = ResponseDTO.builder()
+        ResponseDTO<?> responseDTO = ResponseDTO.builder()
                 .error(e.getMessage())
                 .build();
         return ResponseEntity.badRequest().body(responseDTO);
