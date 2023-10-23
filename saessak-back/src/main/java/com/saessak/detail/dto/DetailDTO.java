@@ -1,6 +1,7 @@
 package com.saessak.detail.dto;
 
 import com.saessak.constant.SellStatus;
+import com.saessak.entity.Image;
 import com.saessak.entity.Member;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class DetailDTO {
     private DetailMemberDTO MemberDTO;
     private String title;
     private String content;
+    private List<String> imagesUrl;
     private int price;
     private int clickCount;
     private SellStatus sellStatus;

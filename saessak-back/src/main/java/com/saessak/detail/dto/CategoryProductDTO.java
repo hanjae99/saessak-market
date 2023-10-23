@@ -11,9 +11,9 @@ import java.util.List;
 @Builder
 public class CategoryProductDTO {
     private Long productId;
+    private Long categoryId;
     private String title;
     private int price;
     private String imgUrl;
-    private CategoryDTO categoryId;
 
 }

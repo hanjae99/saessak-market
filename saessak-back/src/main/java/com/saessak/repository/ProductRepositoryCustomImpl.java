@@ -4,9 +4,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.saessak.constant.SellStatus;
-import com.saessak.entity.Product;
-import com.saessak.entity.QImage;
-import com.saessak.entity.QProduct;
+import com.saessak.detail.dto.DetailDTO;
+import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
 import com.saessak.main.dto.*;
 import org.springframework.data.domain.Page;
@@ -107,6 +106,14 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
         return productFormDTO;
 
+    }
+
+    @Override
+    public DetailDTO getDetailDTO(Long productId) {
+        QProduct product = QProduct.product;
+        QCategory category =QCategory.category;
+        QMember member = QMember.member;
+        return null;
     }
 
 
