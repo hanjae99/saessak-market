@@ -4,6 +4,7 @@ package com.saessak.board;
 import com.saessak.repository.BoardRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -36,16 +37,26 @@ public class BoardController {
 
 
     int pageSize = 15;
+    String role = "any";
+
+    if (!userId.equals("anonymousUser")) {
+      role = boardService.getUserRole(userId);
+    }
+
 
 
     Pageable pageable = PageRequest.of(page,pageSize);
-    List<BoardDTO> list = boardService.read(boardSearchDTO, pageable).getContent();
+    Page<BoardDTO> pb = boardService.read(boardSearchDTO, pageable);
+    List<BoardDTO> list = pb.getContent();
+    int totalPageSize = pb.getTotalPages();
+
 
     BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
         .list(list)
         .isMaster("m")
-        .viewerRole("USER")
-        .msg(pageSize+"")
+        .viewerRole(role)
+        .pageSize(pageSize)
+        .totalPageSize(totalPageSize)
         .build();
 
 

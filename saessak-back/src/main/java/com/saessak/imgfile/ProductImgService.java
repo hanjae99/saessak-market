@@ -16,8 +16,8 @@ import java.util.List;
 @Transactional
 public class ProductImgService {
 
-    @Value("${productImgLocation}")
-    private String productImgLocation;
+    @Value("${imgLocation}")
+    private String imgLocation;
 
     private final ImageRepository imageRepository;
 
@@ -29,8 +29,8 @@ public class ProductImgService {
         String imgUrl = "";
 
         if (oriImgName != null){
-            imgName = fileService.uploadFile(productImgLocation, oriImgName, productImgFile.getBytes());
-            imgUrl = "/images/product/" + imgName;
+            imgName = fileService.uploadFile(imgLocation+"/product", oriImgName, productImgFile.getBytes());
+            imgUrl = "/images " + imgName;
         }
 
         image.setOriName(oriImgName);

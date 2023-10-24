@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import Header from '../main/Header';
 import NoticeBoardList from './NoticeBoardList';
 import { call } from '../../ApiService';
 import BoardListViewer from './BoardListViewer';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const BoardPage = () => {
-  const {boardName} = useParams();
+  const { boardName } = useParams();
   const [searchParams, setSearchParams] = useSearchParams()
   const [viewData, setVeiwData] = useState([]);
   const [viewList, setViewList] = useState({
@@ -17,45 +18,72 @@ const BoardPage = () => {
     clicked: '조회수',
   });
   const [pageSize, setPageSize] = useState(15);
+  const [totalPageSize, setTotalPageSize] = useState(1);
+  const [userRole, setUserRole] = useState("any");
+  const bn = boardName !== undefined ? boardName : "main";
 
-  useEffect(()=>{
-    const url = "/board/"+(boardName!==undefined?boardName:"main")+(searchParams.get("page")?"/"+searchParams.get("page"):"/1");
+  useEffect(() => {
+    const url = "/board/" + bn + (searchParams.get("page") ? "/" + searchParams.get("page") : "/1");
     console.log("url :", url)
-    call(url,"GET").then(response => {
+    call(url, "GET").then(response => {
       console.log(response);
-      setVeiwData(response.list);
-      setPageSize(response.msg);
+      if (response !== undefined) {
+        setVeiwData(response.list);
+        setPageSize(response.pageSize);
+        setTotalPageSize(response.totalPageSize);
+        setUserRole(response.viewerRole);
+      }
     })
-  },[boardName,window.location.search])
+  }, [boardName, window.location.search])
 
 
-  
 
-  const onViewListClick = (e,p) => {Navigate('info/' + p.id)} 
+
+  const onViewListClick = (e, p) => { Navigate('info/' + p.id) }
 
   if (viewData.length < pageSize) {
     const dumy = pageSize - viewData.length;
-    for ( let i=0; i<dumy; i++ ) {
-      viewData.push({id:"nodata"})
+    for (let i = 0; i < dumy; i++) {
+      viewData.push({ id: "nodata" })
     }
   }
-  
+
   return (
     <>
-    <Header />
-    <div className="board-main">
-      <div className="board-left">
-        <NoticeBoardList />
+      <Header />
+      <div className="board-main">
+        <div className="board-left">
+          <NoticeBoardList />
+        </div>
+        <div className="board-center">
+          <BoardListViewer
+            dataAry={viewData}
+            viewList={viewList}
+            onClick={onViewListClick} />
+          <div className="board-footer">
+            <ul className="pagination">
+              <li className="page-item">
+                <button className="page-link">
+                  <FaArrowLeft />
+                </button>
+              </li>
+              <li className="page-item">
+                <button className="page-link">
+                  <FaArrowRight />
+                </button>
+              </li>
+            </ul>
+            {(() => {
+              return userRole !== "any" ? (<Link to={"/board/writer/"+bn}>
+                <button className="new-text">작성</button>
+              </Link>) : "";
+            })()}
+          </div>
+        </div>
+
+        <div className="board-rigth"></div>
       </div>
-      <div className="board-center">
-      <BoardListViewer
-        dataAry={viewData}
-        viewList={viewList} 
-        onClick={onViewListClick}/>
-      </div>
-      <div className="board-rigth"></div>
-    </div>
-  </>
+    </>
   )
 }
 

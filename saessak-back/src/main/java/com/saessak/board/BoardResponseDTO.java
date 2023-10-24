@@ -18,5 +18,7 @@ public class BoardResponseDTO<T> {
   private List<T> list;
   private String viewerRole;
   private String isMaster;
+  private int totalPageSize;
+  private int pageSize;
 
 }

@@ -21,6 +21,7 @@ import Chatting from "./components/kimjin/Chatting";
 import AddProduct2 from "./components/addProduct/AddProduct2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardPage from "./components/board2/BoardPage";
+import BoardEditorPage from "./components/board2/BoardEditorPage";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -45,8 +46,8 @@ function App() {
         <Route path="/boardmain/ntc/:id?" element={<BoardNtcInfo />}></Route>
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
         <Route path="/chatting" element={<Chatting />}></Route>
-        <Route path="/board" element={<BoardPage />}></Route>
-        <Route path="/board/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/board/write/:boardName?" element={<BoardEditorPage />}></Route>
       </Routes>
     </div>
   );
