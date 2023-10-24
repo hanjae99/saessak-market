@@ -35,15 +35,17 @@ public class BoardController {
 
 
 
+    int pageSize = 15;
 
 
-    Pageable pageable = PageRequest.of(page,15);
+    Pageable pageable = PageRequest.of(page,pageSize);
     List<BoardDTO> list = boardService.read(boardSearchDTO, pageable).getContent();
 
     BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
         .list(list)
         .isMaster("m")
         .viewerRole("USER")
+        .msg(pageSize+"")
         .build();
 
 
