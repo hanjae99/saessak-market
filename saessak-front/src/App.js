@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/admin/:page?" element={<AdminPage />} />
         <Route path="/" element={<Main />} />
-        <Route path="/search/:searchItem?" element={<ProductList />} />
+        <Route path="/search/:searchItem" element={<ProductList />} />
         <Route path="/addproduct" element={<AddProduct2 />} />
         <Route path="/updateproduct/:id" element={<UpdateProduct2 />} />
         <Route path="/game" element={<Game />} />

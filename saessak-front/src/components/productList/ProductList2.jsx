@@ -1,10 +1,106 @@
-// import React from 'react'
-// import { Link, useParams } from 'react-router-dom'
-// import Header from '../main/Header';
-// import { MdClose } from 'react-icons/md';
+// import qs from "qs";
+// import React, { useCallback, useEffect, useState } from "react";
+// import { MdClose } from "react-icons/md";
+// import { useSelector } from "react-redux";
+// import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+// import categoryData from "../../category.json";
+// import Footer from "../main/Footer";
+// import Header from "../main/Header";
+// import "./ProductList.scss";
 
 // const ProductList2 = () => {
 //   const { searchItem } = useParams();
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const [pageNumLength, setpageNumLength] = useState(0);
+
+//   // 쿼리스트링 category 번호값, page 번호값 가져옴
+//   // 여러개의 쿼리스트링이 있을 땐 & 로 구분
+//   let { category, page } = qs.parse(location.search, {
+//     ignoreQueryPrefix: true,
+//   });
+
+//   const products = useSelector((state) => state.product);
+//   const searchedItem = products.filter((p) => p.name.includes(searchItem));
+//   const searchedCate = products.filter(
+//     (p) =>
+//       p.categories &&
+//       p.categories.split(",").find((ps) => ps === category) === category
+//   );
+//   const pageNum = page === undefined ? 1 : page;
+
+//   // 페이징 처리(한 페이지당 30개의 상품 노출)
+//   const [pageBtns, setPageBtns] = useState([]);
+//   const [totalPage, setTotalPage] = useState(0);
+
+//   useEffect(() => {
+//     if (searchItem) {
+//       setTotalPage(Math.ceil(searchedItem.length / 30));
+//     } else if (category) {
+//       setTotalPage(Math.ceil(searchedCate.length / 30));
+//     } else {
+//       setTotalPage(Math.ceil(products.length / 30));
+//     }
+//     const makePageBtn = () => {
+//       const pageBtns = [];
+//       // page 버튼 6개씩 보여주기
+//       for (
+//         let i = 1 + 5 * pageNumLength;
+//         i < 1 + 5 * (pageNumLength + 1);
+//         i++
+//       ) {
+//         if (i > totalPage) {
+//           break;
+//         }
+//         const pageBtn = (
+//           <button onClick={() => movePage(i)} key={i}>
+//             {i}
+//           </button>
+//         );
+//         pageBtns.push(pageBtn);
+//       }
+//       setPageBtns(pageBtns);
+//     };
+//     makePageBtn();
+//   }, [searchItem, category, products, totalPage, pageNumLength]);
+
+//   // 카테고리, 검색 넘어갈 시 페이지 구분 초기화
+//   useEffect(() => {
+//     setpageNumLength(0);
+//   }, [searchItem, category, products]);
+
+//   const movePage = useCallback(
+//     (i) => {
+//       searchItem
+//         ? navigate("?page=" + i)
+//         : category
+//         ? navigate("?category=" + category + "&page=" + i)
+//         : navigate("?page=" + i);
+//       window.scrollTo(0, 0);
+//     },
+//     [searchItem, category]
+//   );
+
+//   // category 번호로 category 이름 가져옴
+//   let categoryName = "";
+//   if (category) {
+//     categoryName = categoryData.find(
+//       (p) => p.categoryno === category
+//     ).categoryname;
+//   }
+
+//   const removeSearch = useCallback(() => {
+//     navigate("/search");
+//   }, [navigate]);
+
+//   // page 버튼 6개씩 보여주기
+//   const prevPageNumLength = useCallback(() => {
+//     setpageNumLength(pageNumLength - 1);
+//   }, [pageNumLength]);
+
+//   const nextPageNumLength = useCallback(() => {
+//     setpageNumLength(pageNumLength + 1);
+//   }, [pageNumLength]);
 
 //   return (
 //     <div>
@@ -14,7 +110,7 @@
 //           <div>
 //             <div className="filterBox">
 //               <h2>필터</h2>
-//               {/* {searchItem ? (
+//               {searchItem ? (
 //                 <button className="filter" onClick={removeSearch}>
 //                   {searchItem} <MdClose />
 //                 </button>
@@ -24,13 +120,13 @@
 //                 </button>
 //               ) : (
 //                 ""
-//               )} */}
+//               )}
 //             </div>
 //             <hr />
 //             <div>
 //               <h3>카테고리</h3>
 //             </div>
-//             {/* <ul>
+//             <ul>
 //               {categoryData
 //                 .filter((c) => c.categoryno <= 20)
 //                 .sort((a, b) =>
@@ -51,7 +147,7 @@
 //                     </li>
 //                   );
 //                 })}
-//             </ul> */}
+//             </ul>
 //           </div>
 //         </div>
 //         <div className="contentContainer">
@@ -63,7 +159,7 @@
 //               <li>
 //                 <Link to="/search">&gt; 검색</Link>
 //               </li>
-//               {/* <li>
+//               <li>
 //                 {searchItem ? (
 //                   <Link to={"/search/" + searchItem}>&gt; {searchItem}</Link>
 //                 ) : category ? (
@@ -73,7 +169,7 @@
 //                 ) : (
 //                   ""
 //                 )}
-//               </li> */}
+//               </li>
 //             </ul>
 //           </div>
 //           <div className="result">
@@ -81,14 +177,14 @@
 //               <h1>검색 결과</h1>
 //             </div>
 //             <div>
-//               {/* <span>
+//               <span>
 //                 {searchItem
 //                   ? searchedItem.length
 //                   : category
 //                   ? searchedCate.length
 //                   : products.length}{" "}
 //                 개의 상품
-//               </span> */}
+//               </span>
 //             </div>
 //           </div>
 //           <div className="contents">
@@ -215,6 +311,6 @@
 //       <Footer />
 //     </div>
 //   );
-// }
+// };
 
-// export default ProductList2
+// export default ProductList2;
