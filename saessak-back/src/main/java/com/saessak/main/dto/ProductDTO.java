@@ -17,6 +17,8 @@ import java.util.List;
 @ToString
 public class ProductDTO {
 
+    private Long id;
+
     private String title;
 
     private Integer price;
@@ -29,16 +31,20 @@ public class ProductDTO {
 
     private LocalDateTime updateTime;
 
+    private String searchBy;
+
+    private String searchQuery;
 
     @QueryProjection
-    public ProductDTO(String title, int price, SellStatus sellStatus, String imgUrl,
-                      LocalDateTime regTime, LocalDateTime updateTime){
+    public ProductDTO(Long id, String title, Integer price, SellStatus sellStatus, String imgUrl, LocalDateTime regTime, LocalDateTime updateTime, String searchBy, String searchQuery) {
+        this.id = id;
         this.title = title;
         this.price = price;
         this.sellStatus = sellStatus;
         this.imgUrl = imgUrl;
         this.regTime = regTime;
         this.updateTime = updateTime;
+        this.searchBy = searchBy;
+        this.searchQuery = searchQuery;
     }
-
 }

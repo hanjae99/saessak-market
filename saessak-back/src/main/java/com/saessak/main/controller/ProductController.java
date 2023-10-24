@@ -35,27 +35,25 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping({"/search", "/search/{page}"})
+    @PostMapping({"/search", "/search/{page}"})
     public ResponseEntity<?> selectProduct(@RequestBody ProductDTO productDTO,
                                            @PathVariable("page")Optional<Integer> page){
 
+        System.out.println("=============");
+
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 30);
 
-        Page<ProductDTO> result = productService.read(productDTO, pageable);
-
         try {
+            Page<ProductDTO> result = productService.read(productDTO, pageable);
+
+            return ResponseEntity.ok().body(result);
+        }catch (Exception e){
             ResponseDTO<ProductDTO> response = ResponseDTO.<ProductDTO>builder()
-                    .data(result.getContent())
+                    .error("no product")
                     .build();
             return ResponseEntity.ok().body(response);
-        }catch (Exception e){
-            String errorMsg = e.getMessage();
-
-            ResponseDTO<ProductDTO> response = ResponseDTO.<ProductDTO>builder()
-                    .error(errorMsg)
-                    .build();
-            return ResponseEntity.badRequest().body(response);
         }
+
     }
 
     @PostMapping("/searchone")
