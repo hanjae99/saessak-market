@@ -146,6 +146,8 @@ header {
   opacity: 0;
   z-index: 999;
   visibility: hidden;
+  height: 500px;
+  overflow: auto;
 }
 
 .category:hover > #categoryBox {

@@ -34,9 +34,8 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
-    private final FileService fileService;
 
-    @GetMapping({"/", "/{page}"})
+    @GetMapping({"/search", "/search/{page}"})
     public ResponseEntity<?> selectProduct(@RequestBody ProductDTO productDTO,
                                            @PathVariable("page")Optional<Integer> page){
 

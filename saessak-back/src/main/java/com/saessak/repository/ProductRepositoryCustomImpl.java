@@ -1,8 +1,11 @@
 package com.saessak.repository;
 
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.sql.SQLExpressions;
 import com.saessak.constant.SellStatus;
 import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
@@ -115,5 +118,51 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
     }
 
+    @Override
+    public List<MainProductFormDTO> getRandomProduct() {
+        QProduct product = QProduct.product;
+        QImage image = QImage.image;
 
+        List<MainProductFormDTO> content = queryFactory
+                .select(new QMainProductFormDTO(
+                        product.id,
+                        product.title,
+                        product.price,
+                        image.imgUrl,
+                        product.updateTime
+                ))
+                .from(image)
+                .join(image.product, product)
+                .where(searchSellStatusEq(SellStatus.SELL))
+                .groupBy(product.id)
+                .orderBy(Expressions.numberTemplate(Double.class, "rand()").asc())
+                .limit(10)
+                .fetch();
+
+        return content;
+    }
+
+    @Override
+    public List<MainProductFormDTO> getNewestProduct() {
+        QProduct product = QProduct.product;
+        QImage image = QImage.image;
+
+        List<MainProductFormDTO> content = queryFactory
+                .select(new QMainProductFormDTO(
+                        product.id,
+                        product.title,
+                        product.price,
+                        image.imgUrl,
+                        product.updateTime
+                ))
+                .from(image)
+                .join(image.product, product)
+                .where(searchSellStatusEq(SellStatus.SELL))
+                .groupBy(product.id)
+                .orderBy(product.updateTime.desc())
+                .limit(4)
+                .fetch();
+
+        return content;
+    }
 }

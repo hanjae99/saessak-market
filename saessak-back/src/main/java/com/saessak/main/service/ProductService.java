@@ -4,10 +4,7 @@ import com.saessak.constant.SellStatus;
 import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
 import com.saessak.imgfile.ProductImgService;
-import com.saessak.main.dto.CategoryDTO;
-import com.saessak.main.dto.ProductDTO;
-import com.saessak.main.dto.ProductFormDTO;
-import com.saessak.main.dto.ProductImageDTO;
+import com.saessak.main.dto.*;
 import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -173,7 +170,7 @@ public class ProductService {
 
                 // 원활한 비교를 위해 mulfipart 타입으로 변경
                 MultipartFile imgMultiFile = fileService.fileToMultipart(
-                        imgDTO.getImgName());
+                        "/Users/hanjae/saessak-image/images/product/" + imgDTO.getImgName());
                 savedFileList.add(imgMultiFile);
                 savedFileOriNameList.add(imgDTO.getOriName());
             }
@@ -203,5 +200,16 @@ public class ProductService {
         }
 
         return productId;
+    }
+
+    // 메인 상품 처리
+    // 캐러셀 부분
+    public List<MainProductFormDTO> searchRandomProduct(){
+        return productRepository.getRandomProduct();
+    }
+
+    // 신규 상품 부분
+    public List<MainProductFormDTO> searchNewestProduct(){
+        return productRepository.getNewestProduct();
     }
 }

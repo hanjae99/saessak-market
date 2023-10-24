@@ -21,11 +21,6 @@ import java.util.UUID;
 @Log
 public class FileService {
 
-    @Value("${productImgLocation2}")
-    private String productImgLocation2;
-//    private String productImgLocation = "/Users/hanjae/saessak-image/images/product/";
-
-
     public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception{
         UUID uuid = UUID.randomUUID();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -50,12 +45,13 @@ public class FileService {
     }
 
     // file 을 multipartfile 으로 변환하는 메소드
-    public MultipartFile fileToMultipart(String imgName){
+    public MultipartFile fileToMultipart(String filePath){
 
         try {
-            File file = new File(productImgLocation2 + imgName);
-            System.out.println(productImgLocation2);
-            System.out.println(productImgLocation2 + imgName);
+            File file = new File(filePath);
+//            System.out.println(productImgLocation);
+//            System.out.println(productImgLocation + imgName);
+//            System.out.println(productImgLocation + imgName);
             FileItem fileItem = new DiskFileItem("changeMultipart", Files.probeContentType(file.toPath()),
                     false, file.getName(), (int) file.length(), file.getParentFile());
             InputStream input = new FileInputStream(file);

@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { call } from "../../ApiService";
 
 const NewProduct = () => {
-  const state = useSelector((state) => state.product);
+  // const state = useSelector((state) => state.product);
   const navigate = useNavigate();
   const now = new Date().getTime();
+  const [newProductDTO, setNewProductDTO] = useState([]);
+
+  useEffect(() => {
+    call("/main/searchnewest", "GET").then((response) => {
+      if (response.error && response.error != null) {
+        alert(response.error);
+        return;
+      }
+      setNewProductDTO(response.data);
+    });
+  }, []);
 
   return (
     <div className="newProductContainer">
-      {state.slice(0, 4).map((d) => {
+      {/* {state.slice(0, 4).map((d) => {
         return (
           <div
             className="newItem"
@@ -26,7 +38,25 @@ const NewProduct = () => {
             <p>{Math.floor((now - Date.parse(d.uptime)) / 1000 / 60)}분전</p>
           </div>
         );
-      })}
+      })} */}
+      {newProductDTO.map((dto) => (
+        <div
+          className="newItem"
+          key={dto.id}
+          onClick={() => {
+            navigate("/detail/" + dto.id);
+          }}
+        >
+          <img src={`http://localhost:8888${dto.imgUrl}`} alt={dto.title} />
+          <div className="newItemTitle">
+            <span>{dto.title}</span>
+          </div>
+          <p>{dto.price}원</p>
+          <p>
+            {Math.floor((now - Date.parse(dto.updateTime)) / 1000 / 60)}분전
+          </p>
+        </div>
+      ))}
     </div>
   );
 };
