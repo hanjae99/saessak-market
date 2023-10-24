@@ -37,6 +37,10 @@ public class ProductFormDTO {
 
     private Member sellMember;
 
+    private Long categoryId;
+
+    private String categoryName;
+
 //    private List<Long> productImgIds = new ArrayList<>();
 
     private static ModelMapper modelMapper = new ModelMapper();

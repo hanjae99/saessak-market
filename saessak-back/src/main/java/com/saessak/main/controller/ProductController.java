@@ -2,6 +2,7 @@ package com.saessak.main.controller;
 
 import com.saessak.dto.ResponseDTO;
 import com.saessak.imgfile.FileService;
+import com.saessak.main.dto.CategoryDTO;
 import com.saessak.main.dto.ProductDTO;
 import com.saessak.main.dto.ProductFormDTO;
 import com.saessak.main.dto.ProductImageDTO;
@@ -87,6 +88,17 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/searchcate")
+    public ResponseEntity<?> selectCate(){
+        List<CategoryDTO> categoryDTOList = productService.readCate();
+
+        ResponseDTO<CategoryDTO> response = ResponseDTO.<CategoryDTO>builder()
+                .data(categoryDTOList)
+                .build();
+
+        return ResponseEntity.ok().body(response);
+    }
+
     @PostMapping("/new")
     public ResponseEntity<?> createProduct(ProductFormDTO productFormDTO,
                                            @RequestPart List<MultipartFile> productImgFileList,
@@ -122,7 +134,6 @@ public class ProductController {
     @PostMapping("/update")
     public ResponseEntity<?> updateProduct(@RequestBody ProductFormDTO productFormDTO){
 
-        // 받아온 데이터에서 기존에 등록된 파일의 url 로 multipart 파일 생성
         try {
             productService.updateProduct(productFormDTO);
 
