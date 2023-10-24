@@ -1,5 +1,6 @@
 package com.saessak.detail.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.saessak.entity.Product;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +17,12 @@ public class CategoryProductDTO {
     private int price;
     private String imgUrl;
 
+
+    public CategoryProductDTO(Long productId, Long categoryId, String title, int price, String imgUrl) {
+        this.productId = productId;
+        this.categoryId = categoryId;
+        this.title = title;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
 }

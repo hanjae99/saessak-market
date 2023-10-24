@@ -14,7 +14,7 @@ import java.util.List;
 public class DetailDTO {
 
     private Long productId;
-    private DetailMemberDTO MemberDTO;
+    private DetailMemberDTO memberDTO;
     private String title;
     private String content;
     private List<String> imagesUrl;
@@ -23,25 +23,30 @@ public class DetailDTO {
     private SellStatus sellStatus;
     private String mapData;
     private List<CategoryProductDTO> categoryProductDTO;
+    private String isWriter;
 
-    public DetailDTO(){}
+
     public DetailDTO(Long productId,
                      DetailMemberDTO memberDTO,
                      String title,
                      String content,
+                     List<String> imagesUrl,
                      int price,
                      int clickCount,
                      SellStatus sellStatus,
                      String mapData,
-                     List<CategoryProductDTO> categoryProductDTO) {
+                     List<CategoryProductDTO> categoryProductDTO,
+                     String isWriter) {
         this.productId = productId;
-        MemberDTO = memberDTO;
+        this.memberDTO = memberDTO;
         this.title = title;
         this.content = content;
+        this.imagesUrl = imagesUrl;
         this.price = price;
         this.clickCount = clickCount;
         this.sellStatus = sellStatus;
         this.mapData = mapData;
         this.categoryProductDTO = categoryProductDTO;
+        this.isWriter = isWriter;
     }
 }

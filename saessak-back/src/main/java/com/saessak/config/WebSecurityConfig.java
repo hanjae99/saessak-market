@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/login",
                         "/login/**",
                         "/search/**",
-                        "/Detail/**",
+                        "/detail/**",
                         "/boardmain/**",
                         "/boardmain",
                         "/images/**",

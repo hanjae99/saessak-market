@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 @Builder
 public class MemberProductDTO {
     private Long productId;
-    private Long memberId;
     private String title;
     private int price;
     private String imgUrl;

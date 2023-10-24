@@ -35,6 +35,7 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/detail" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/singup" element={<SignUp />} />
         <Route path="/boardmain" element={<BoardMain page={page} />} />
