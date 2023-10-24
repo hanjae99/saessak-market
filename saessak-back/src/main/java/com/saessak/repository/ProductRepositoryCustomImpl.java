@@ -4,9 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.saessak.constant.SellStatus;
-import com.saessak.entity.Product;
-import com.saessak.entity.QImage;
-import com.saessak.entity.QProduct;
+import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
 import com.saessak.main.dto.*;
 import org.springframework.data.domain.Page;
@@ -80,6 +78,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     public ProductFormDTO getSearchedProduct(ProductFormDTO productFormDTO) {
         QProduct product = QProduct.product;
         QImage image = QImage.image;
+        QProductCategory productCategory = QProductCategory.productCategory;
 
         List<ProductImageDTO> imageDTOList = queryFactory
                 .select(new QProductImageDTO(
@@ -98,12 +97,19 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .where(product.id.eq(productFormDTO.getId()))
                 .fetchOne();
 
+        ProductCategory searchedProductCate = queryFactory
+                .select(productCategory)
+                        .from(productCategory)
+                                .where(productCategory.product.id.eq(productFormDTO.getId()))
+                                        .fetchOne();
+
         productFormDTO.setTitle(searchedProduct.getTitle());
         productFormDTO.setPrice(searchedProduct.getPrice());
         productFormDTO.setContent(searchedProduct.getContent());
         productFormDTO.setSellStatus(searchedProduct.getSellStatus());
         productFormDTO.setMapData(searchedProduct.getMapData());
         productFormDTO.setImageDTOList(imageDTOList);
+        productFormDTO.setCategoryId(searchedProductCate.getId());
 
         return productFormDTO;
 
