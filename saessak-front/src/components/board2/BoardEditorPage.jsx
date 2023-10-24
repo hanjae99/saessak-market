@@ -19,7 +19,7 @@ const BoardEditorPage = () => {
     e.preventDefault();
     const boardTitle = e.target.elements.title.value;
     
-    let imgs = images.filter(p=>contents.includes(p.url));
+    let imgs = images.filter(p=>contents.includes(p.url)).map(p=>p.file);
     imgs.forEach(p=>{
       
     })

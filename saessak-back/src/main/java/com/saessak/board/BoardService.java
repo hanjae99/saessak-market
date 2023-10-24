@@ -1,5 +1,6 @@
 package com.saessak.board;
 
+import com.saessak.entity.Image;
 import com.saessak.imgfile.FileService;
 import com.saessak.main.dto.ProductDTO;
 import com.saessak.repository.BoardRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -33,6 +35,25 @@ public class BoardService {
   public String getUserRole(String userid) {
     return memberRepository.findById(Long.parseLong(userid)).orElseThrow(EntityNotFoundException::new).getRole().toString();
   }
+
+  public void saveImg(Image image, MultipartFile productImgFile)throws Exception{
+    String oriImgName = productImgFile.getOriginalFilename();
+    String imgName = "";
+    String imgUrl = "";
+
+    if (oriImgName != null){
+      imgName = fileService.uploadFile(imgLocation + "/images/board", oriImgName, productImgFile.getBytes());
+      imgUrl = "/images/board/" + imgName;
+    }
+
+    image.setOriName(oriImgName);
+    image.setImgName(imgName);
+    image.setImgUrl(imgUrl);
+
+    imageRepository.save(image);
+  }
+
+
 
 
 }

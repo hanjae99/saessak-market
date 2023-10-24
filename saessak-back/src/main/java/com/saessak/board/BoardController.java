@@ -53,7 +53,6 @@ public class BoardController {
 
     BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
         .list(list)
-        .isMaster("m")
         .viewerRole(role)
         .pageSize(pageSize)
         .totalPageSize(totalPageSize)
