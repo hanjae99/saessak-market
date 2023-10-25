@@ -34,13 +34,14 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return QProduct.product.sellStatus.eq(sellStatus);
     }
 
-    private BooleanExpression productTitleLike(String searchQuery){
-//        if (searchBy.equals("product_title")){
-//           return QProduct.product.title.like("%" + searchQuery + "%");
-//        }else if (searchBy.equals("category_num")){
-//            return QProductCategory.productCategory.category.in
-//        }
-        return searchQuery == null ? null : QProduct.product.title.like("%" + searchQuery + "%");
+    private BooleanExpression productTitleCateLike(String searchBy, String searchQuery){
+        if (searchBy.equals("product_title")){
+           return QProduct.product.title.like("%" + searchQuery + "%");
+        }else if (searchBy.equals("category_num")){
+            return QProductCategory.productCategory.category.id.eq(Long.valueOf(searchQuery));
+        }
+
+        return null;
     }
 
     // 페이징 처리된 상품 검색 목록 가져오기
@@ -49,29 +50,37 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
         QProduct product = QProduct.product;
         QImage image = QImage.image;
+        QProductCategory productCategory = QProductCategory.productCategory;
 
         List<ProductDTO> content = queryFactory
                 .select(new QProductDTO(
+                        product.id,
                         product.title,
                         product.price,
                         product.sellStatus,
                         image.imgUrl,
                         product.regTime,
-                        product.updateTime
+                        product.updateTime,
+                        product.title,
+                        product.title
                 ))
-                .from(image)
-                .join(image.product, product)
+                .from(product, image, productCategory)
+                .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
-                        productTitleLike(productDTO.getTitle()))
+                        productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
+                .groupBy(product.id)
                 .orderBy(product.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        long total = queryFactory.select(Wildcard.count).from(product)
+        long total = queryFactory.select(product.id.countDistinct()).from(product, image, productCategory)
+                .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
-                        productTitleLike(productDTO.getTitle()))
+                        productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .fetchOne();
+
+//        System.out.println("============" + total);
 
         return new PageImpl<>(content, pageable, total);
 
