@@ -34,16 +34,16 @@ const Header = () => {
     if (accessToken !== "") {
       // 로그인한 상태
       setIsLogin(true);
-
-      // 카테고리 정보 가져오기
-      call("/product/searchcate", "GET").then((response) => {
-        // console.log(response.data);
-        if (response.data && response.data != null) {
-          setCategoryDTO(response.data);
-        }
-        console.log(categoryDTO);
-      });
     }
+
+    // 카테고리 정보 가져오기
+    call("/product/searchcate", "GET").then((response) => {
+      // console.log(response.data);
+      if (response.data && response.data != null) {
+        setCategoryDTO(response.data);
+      }
+      console.log(categoryDTO);
+    });
   }, []);
 
   // const login = useSelector((state) => state.login);
