@@ -1,17 +1,11 @@
 package com.saessak.main.service;
 
 import com.saessak.constant.SellStatus;
-import com.saessak.entity.Image;
-import com.saessak.entity.Member;
-import com.saessak.entity.Product;
+import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
 import com.saessak.imgfile.ProductImgService;
-import com.saessak.main.dto.ProductDTO;
-import com.saessak.main.dto.ProductFormDTO;
-import com.saessak.main.dto.ProductImageDTO;
-import com.saessak.repository.ImageRepository;
-import com.saessak.repository.MemberRepository;
-import com.saessak.repository.ProductRepository;
+import com.saessak.main.dto.*;
+import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +28,8 @@ public class ProductService {
     private final ProductImgService productImgService;
     private final FileService fileService;
     private final MemberRepository memberRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
     // 메인, 상품 검색 시 상품 목록 페이징 결과 읽어오기
     public Page<ProductDTO> read(ProductDTO productDTO, Pageable pageable){
@@ -61,6 +57,21 @@ public class ProductService {
         return productRepository.getSearchedProduct(productFormDTO);
     }
 
+    public List<CategoryDTO> readCate(){
+        List<Category> categoryList = categoryRepository.findAll();
+
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        for (Category category : categoryList){
+            CategoryDTO categoryDTO = new CategoryDTO();
+            categoryDTO.setId(category.getId());
+            categoryDTO.setName(category.getName());
+            categoryDTOList.add(categoryDTO);
+        }
+
+        return categoryDTOList;
+
+    }
+
     public Long saveProduct(ProductFormDTO productFormDTO,
                          List<MultipartFile> productImgFileList,
                             String memberId)throws Exception{
@@ -72,9 +83,15 @@ public class ProductService {
         productFormDTO.setSellStatus(SellStatus.SELL);
         productFormDTO.setSellMember(member);
 
-        //상품 등록
+        //상품 등록 (카테고리 포함)
         Product product = productFormDTO.createProduct();
         productRepository.save(product);
+        ProductCategory productCategory = new ProductCategory();
+        productCategory.setProduct(product);
+        Category category = categoryRepository.findById(productFormDTO.getCategoryId())
+                .orElseThrow(EntityNotFoundException::new);
+        productCategory.setCategory(category);
+        productCategoryRepository.save(productCategory);
 
         //이미지 등록
         for (int i=0; i<productImgFileList.size(); i++){
@@ -101,6 +118,13 @@ public class ProductService {
         product.setPrice(productFormDTO.getPrice());
         product.setSellStatus(productFormDTO.getSellStatus());
         product.setMapData(productFormDTO.getMapData());
+
+        // 카테고리 정보 업데이트
+        List<ProductCategory> productCategories = productCategoryRepository.findByProductId(product.getId());
+        ProductCategory productCategory = productCategories.get(0);
+        Category category = categoryRepository.findById(productFormDTO.getCategoryId())
+                        .orElseThrow(EntityNotFoundException::new);
+        productCategory.setCategory(category);
 
         return product.getId();
     }
@@ -146,7 +170,7 @@ public class ProductService {
 
                 // 원활한 비교를 위해 mulfipart 타입으로 변경
                 MultipartFile imgMultiFile = fileService.fileToMultipart(
-                        imgDTO.getImgName());
+                        "/Users/hanjae/saessak-image/images/product/" + imgDTO.getImgName());
                 savedFileList.add(imgMultiFile);
                 savedFileOriNameList.add(imgDTO.getOriName());
             }
@@ -176,5 +200,16 @@ public class ProductService {
         }
 
         return productId;
+    }
+
+    // 메인 상품 처리
+    // 캐러셀 부분
+    public List<MainProductFormDTO> searchRandomProduct(){
+        return productRepository.getRandomProduct();
+    }
+
+    // 신규 상품 부분
+    public List<MainProductFormDTO> searchNewestProduct(){
+        return productRepository.getNewestProduct();
     }
 }

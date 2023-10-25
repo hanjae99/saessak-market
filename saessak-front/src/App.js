@@ -21,6 +21,7 @@ import Chatting from "./components/kimjin/Chatting";
 import AddProduct2 from "./components/addProduct/AddProduct2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardPage from "./components/board2/BoardPage";
+import ProductList2 from "./components/productList/ProductList2";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -29,7 +30,7 @@ function App() {
       <Routes>
         <Route path="/admin/:page?" element={<AdminPage />} />
         <Route path="/" element={<Main />} />
-        <Route path="/search/:searchItem?" element={<ProductList />} />
+        <Route path="/search/:searchItem?" element={<ProductList2 />} />
         <Route path="/addproduct" element={<AddProduct2 />} />
         <Route path="/updateproduct/:id" element={<UpdateProduct2 />} />
         <Route path="/game" element={<Game />} />

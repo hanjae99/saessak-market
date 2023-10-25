@@ -74,11 +74,12 @@ public class DetailService {
 
 
         //카테고리 아이디 알아오기
-        ProductCategory productCateId = productCategoryRepository.findByProductId(productId);
+        List<ProductCategory> productCateId = productCategoryRepository.findByProductId(productId);
+
 
 
         //카테고리로 랜덤 데이터 가져옴  productDTOList에 넣어놨음
-        List<CateProductInter> list=productCategoryRepository.categoryRandomData(productCateId.getCategory().getId());
+        List<CateProductInter> list=productCategoryRepository.categoryRandomData(productCateId.get(0).getCategory().getId());
         List<CategoryProductDTO> productDTOList =new ArrayList<>();
 
         for(CateProductInter productDTO : list){

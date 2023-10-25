@@ -11,6 +11,14 @@ const SignUp = () => {
   const [signFailed, setSignFailed] = useState(false);
   const [idCheck, setIdCheck] = useState(0);
   const [nicknameCheck, setNicknameCheck] = useState(0);
+  const [emailCheck, setEmailCheck] = useState(0);
+  const [emailCheckData, setEmailCheckData] = useState("");
+  const [emailCheckInput, setEmailCheckInput] = useState("");
+  const [emailPassCheck, setEmailPassCheck] = useState(0);
+  const [emailId, setEmailId] = useState(""); // 이메일 아이디 상태
+
+  const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
+  const [customDomain, setCustomDomain] = useState(""); // 직접 도메인 입력
   //console.log(user);
   const dispatch = useDispatch();
   const navigator = useNavigate();
@@ -28,21 +36,13 @@ const SignUp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log("id", newUser.id);
-    // console.log("nickname", newUser.nickname);
-    // console.log("pwd", newUser.pwd);
-    // console.log("name", newUser.name);
-    // console.log("email", newUser.email);
-    // console.log("phone", newUser.phone);
-    // console.log("address", newUser.address);
-    // console.log("gender", newUser.gender);
-
     if (
       !newUser.userId ||
       !newUser.nickName ||
       !newUser.password ||
       idCheck !== -1 ||
       nicknameCheck !== -1 ||
+      emailPassCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
       !newUser.phone ||
@@ -96,12 +96,27 @@ const SignUp = () => {
       name: e.target.value,
     }));
   };
+
   const onEmail = (e) => {
-    setNewUser((prevUser) => ({
-      ...prevUser,
-      email: e.target.value,
-    }));
+    const value = e.target.value;
+    setEmailId(value);
   };
+
+  const onEmailDomain = (e) => {
+    const value = e.target.value;
+    if (value === "custom") {
+      setEmailDomain("");
+    } else {
+      setEmailDomain(value);
+    }
+  };
+
+  const onCustomDomain = (e) => {
+    console.log(e.target.value);
+    const value = e.target.value;
+    setCustomDomain(value);
+  };
+
   const onPhone = (e) => {
     setNewUser((prevUser) => ({
       ...prevUser,
@@ -150,6 +165,45 @@ const SignUp = () => {
     //   setNicknameCheck(-1);
     // }
   };
+
+  const onEmailCheck = (e) => {
+    e.preventDefault();
+    const domain = emailDomain === "" ? customDomain : emailDomain;
+    const email = emailId + "@" + domain;
+    console.log("이메일 들어갔음", email);
+
+    if (email === "@" || domain === "") {
+      return setEmailCheck(1);
+    }
+    setNewUser((prevUser) => ({
+      ...prevUser,
+      email: email,
+    }));
+
+    call(`/signup/emailConfirm/${email}`, "POST").then((response) => {
+      console.log("서버에서 값 받아옴 ", response.message);
+      if (response.message === "1") {
+        return setEmailCheck(1);
+      }
+      setEmailCheckData(response.message);
+
+      setEmailCheck(-1);
+    });
+  };
+
+  const onEmailPass = (e) => {
+    const value = e.target.value;
+    setEmailCheckInput(value);
+  };
+
+  const onEmailCheckPass = (e) => {
+    e.preventDefault();
+    if (emailCheckInput === emailCheckData) {
+      return setEmailPassCheck(-1);
+    }
+    setEmailPassCheck(1);
+  };
+
   useEffect(() => {
     setIdCheck(0);
   }, [newUser.userId]);
@@ -248,13 +302,69 @@ const SignUp = () => {
             <div className="signup-input-container">
               <label className="signup-text-id">이메일</label>
               <input
-                className="signup-text-input"
+                className="signup-text-input-email"
                 type="text"
-                placeholder="ex):saessak@gamil.com"
+                placeholder="ex):saessak"
                 onChange={onEmail}
               />
-              <button className="signup-bt2">이메일 인증</button>
+              <span>@</span>
+              <select
+                className="signup-text-input-select"
+                onChange={onEmailDomain}
+              >
+                <option value="custom">이메일 선택</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="naver.com">naver.com</option>
+                <option value="daum.net">daum.net</option>
+                <option value="hanmail.com">hanmail.com</option>
+              </select>
+              <input
+                className="signup-text-input-email"
+                type="text"
+                placeholder="ex):mail.com"
+                onChange={onCustomDomain}
+              />
+              <button className="signup-bt2" onClick={onEmailCheck}>
+                인증번호발송
+              </button>
             </div>
+            {emailCheck === 1 ? (
+              <p className="signup-duplicated-msg">
+                사용할수 없는 이메일 입니다.
+              </p>
+            ) : (
+              ""
+            )}
+            {emailCheck === -1 ? (
+              <div className="signup-input-container">
+                <label className="signup-text-id">인증 번호</label>
+                <input
+                  className="signup-text-input"
+                  type="text"
+                  placeholder="ex):복사한 인증키를 입력해주세요"
+                  onChange={onEmailPass}
+                />
+                <button className="signup-bt2" onClick={onEmailCheckPass}>
+                  인증
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+            {emailPassCheck === 1 ? (
+              <p className="signup-duplicated-msg">
+                인증 번호를 다시 확인 해주세요
+              </p>
+            ) : (
+              ""
+            )}
+            {emailPassCheck === -1 ? (
+              <p className="signup-duplicated1-msg">
+                이메일 인증이 확인 되셨습니다.
+              </p>
+            ) : (
+              ""
+            )}
             <div className="signup-input-container">
               <label className="signup-text-id">휴대폰</label>
               <input
@@ -263,7 +373,7 @@ const SignUp = () => {
                 placeholder="숫자만 입력해주세요"
                 onChange={onPhone}
               />
-              <button className="signup-bt3">전화번호 인증</button>
+              <button className="signup-bt3">인증</button>
             </div>
             <div className="signup-input-container">
               <label className="signup-text-id">주소</label>

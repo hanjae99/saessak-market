@@ -5,6 +5,11 @@ import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "../addProduct/AddProduct.scss";
 import { call, uploadProduct } from "../../ApiService";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const UpdateProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);
@@ -19,12 +24,23 @@ const UpdateProduct2 = () => {
   const [productMapData, setProductMapData] = useState("");
   const [imageDTOList, setImageDTOList] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
+  const [categoryDTO, setCategoryDTO] = useState([]);
+  const [selectedCate, setSelectedCate] = useState(0);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken !== "") {
       // 로그인한 상태
       setIsLogin(true);
+
+      // 카테고리 정보 가져오기
+      call("/product/searchcate", "GET").then((response) => {
+        // console.log(response.data);
+        if (response.data && response.data != null) {
+          setCategoryDTO(response.data);
+        }
+        console.log(categoryDTO);
+      });
 
       call("/product/searchone", "POST", { id: id }).then((response) => {
         console.log("error: " + response.error);
@@ -48,6 +64,7 @@ const UpdateProduct2 = () => {
         const responseImgFileList = response.data[0].imageDTOList;
         setImgCount(responseImgFileList.length);
         setImageDTOList(responseImgFileList);
+        setSelectedCate(response.data[0].categoryId);
       });
     } else {
       alert("로그인 후 이용해주세요!");
@@ -90,7 +107,7 @@ const UpdateProduct2 = () => {
     e.preventDefault();
 
     if (imageDTOList && imageDTOList.length === 0) {
-      alert("이미지는 적어도 하나 이상 있어야 합니다.");
+      alert("이미지는 적어도 하나 이상 있어야 해요!");
       return;
     }
 
@@ -113,6 +130,7 @@ const UpdateProduct2 = () => {
       mapData: productMapData,
       sellStatus: productSellStatus,
       imageDTOList: newImageDTOList,
+      categoryId: selectedCate,
     };
 
     // dispatch({ type: "product/add", payload: newProduct });
@@ -161,6 +179,15 @@ const UpdateProduct2 = () => {
     setProductMapData(e.target.value);
   };
 
+  const handleSellStatus = (e) => {
+    setProductSellStatus(e.target.value);
+  };
+
+  const handleSelect = (e) => {
+    setSelectedCate(e.target.value);
+    console.log(e.target.value);
+  };
+
   let content = <div></div>;
 
   if (isLogin) {
@@ -176,12 +203,13 @@ const UpdateProduct2 = () => {
                 className="content-form"
                 method="POST"
               >
+                <div className="imgBoxTitle">
+                  <h3>새싹 이미지를 넣어주세요!</h3>
+                </div>
                 <div className="imgUploadBox">
                   <div>
                     <div className="labelButton">
-                      <label htmlFor="chooseFile">
-                        이미지를 넣어주세요! (최대 3장)
-                      </label>
+                      <label htmlFor="chooseFile">저를 클릭해봐요!</label>
                     </div>
 
                     <input
@@ -210,25 +238,84 @@ const UpdateProduct2 = () => {
                     ))}
                   </div>
                 </div>
+                <div className="addCategory">
+                  <h3>어떤 종류의 새싹일까요??</h3>
+                  <FormControl
+                    required
+                    sx={{ m: 1, minWidth: 140 }}
+                    size="small"
+                  >
+                    <InputLabel id="demo-simple-select-required-label">
+                      종류를 선택!
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={selectedCate === 0 ? "" : selectedCate}
+                      // label="Age *"
+                      onChange={handleSelect}
+                    >
+                      {categoryDTO.map((cate) => (
+                        <MenuItem value={cate.id} key={cate.id}>
+                          {cate.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>
+                      꼭 선택해주세요! (필수 입력값)
+                    </FormHelperText>
+                  </FormControl>
+                </div>
+                <div className="addSellStatus">
+                  <h3>현재 새싹의 상태에요!</h3>
+                  <FormControl
+                    required
+                    sx={{ m: 1, minWidth: 140 }}
+                    size="small"
+                  >
+                    <InputLabel id="demo-simple-select-required-label">
+                      판매상태를 선택!
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={productSellStatus === "" ? "" : productSellStatus}
+                      // label="Age *"
+                      onChange={handleSellStatus}
+                    >
+                      <MenuItem value="SELL">판매중</MenuItem>
+                      <MenuItem value="SOLD_OUT">판매완료</MenuItem>
+                      <MenuItem value="HIDDEN">숨김상태</MenuItem>
+                    </Select>
+                    <FormHelperText>
+                      꼭 선택해주세요! (필수 입력값)
+                    </FormHelperText>
+                  </FormControl>
+                </div>
                 <div className="addName">
+                  <h3>새싹의 이름은 뭘까요??</h3>
                   <input
                     type="text"
-                    placeholder="새로운 새싹에게 이름을 지어주세요!"
+                    placeholder="이름을 지어주세요!"
                     name="name"
                     value={productTitle}
                     onChange={handleTitle}
+                    required
                   />
                 </div>
                 <div className="addPrice">
+                  <h3>새싹의 가격은 얼마일까요??</h3>
                   <input
                     type="text"
-                    placeholder="새싹의 가격은?"
+                    placeholder="과연 얼마?"
                     name="price"
                     value={productPrice}
                     onChange={handlePrice}
+                    required
                   />
                 </div>
                 <div className="addLocal">
+                  <h3>새 인연을 만날 장소를 정해요!</h3>
                   <input
                     type="text"
                     placeholder="거래희망 지역을 알려주세요!"
@@ -238,6 +325,7 @@ const UpdateProduct2 = () => {
                   />
                 </div>
                 <div className="addText">
+                  <h3>새싹에 대해 자랑해주세요!</h3>
                   <textarea
                     name="text"
                     id=""

@@ -18,10 +18,11 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
 
-    public static final String ePw = createKey();
+    private String ePw;
 
-    private MimeMessage createMessage(String to)throws Exception{
-        System.out.println("보내는 대상 : "+ to);
+    @Override
+    public MimeMessage createMessage(String to)throws Exception{
+        System.out.println("받는 대상 : "+ to);
         System.out.println("인증 번호 : "+ePw);
         MimeMessage  message = mailSender.createMimeMessage();
 
@@ -30,7 +31,7 @@ public class EmailServiceImpl implements EmailService {
 
         String msgg="";
         msgg+= "<div style='margin:20px;'>";
-        msgg+= "<h1> 안녕하세요 쌔싹마켓 입니다. </h1>";
+        msgg+= "<h1> 안녕하세요 새싹마켓 입니다. </h1>";
         msgg+= "<br>";
         msgg+= "<p>아래 코드를 복사해 입력해주세요<p>";
         msgg+= "<br>";
@@ -74,7 +75,9 @@ public class EmailServiceImpl implements EmailService {
     }
     @Override
     public String sendSimpleMessage(String to)throws Exception {
-        // TODO Auto-generated method stub
+
+        ePw = createKey();
+
         MimeMessage message = createMessage(to);
         try{//예외처리
             mailSender.send(message);

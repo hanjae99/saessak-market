@@ -85,12 +85,22 @@ public class SignUpController {
     }
 
     @PostMapping("/emailConfirm/{email}")
-    public String emailConfirm(@PathVariable("email") String email) throws Exception {
+    public ResponseEntity<?> emailConfirm(@PathVariable("email") String email) throws Exception {
 
-        String confirm = emailService.sendSimpleMessage(email);
+        boolean emailCheck = signUpService.existsEmail(email);
 
-        log.info("인증문자 확인"+confirm);
+        String result = emailCheck ? "1" : "-1";
+        if(emailCheck){
+            ResponseDTO response=ResponseDTO.builder().message(result).build();
 
-        return null;
+         return ResponseEntity.ok().body(response);
+        }else {
+            String confirm = emailService.sendSimpleMessage(email);
+
+            log.info("인증문자 확인 : " + confirm);
+
+            ResponseDTO response=ResponseDTO.builder().message(confirm).build();
+            return ResponseEntity.ok().body(response);
+        }
     }
 }

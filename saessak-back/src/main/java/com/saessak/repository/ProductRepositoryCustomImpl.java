@@ -1,8 +1,11 @@
 package com.saessak.repository;
 
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.sql.SQLExpressions;
 import com.saessak.constant.SellStatus;
 import com.saessak.detail.dto.DetailDTO;
 import com.saessak.entity.*;
@@ -32,13 +35,14 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return QProduct.product.sellStatus.eq(sellStatus);
     }
 
-    private BooleanExpression productTitleLike(String searchQuery){
-//        if (searchBy.equals("product_title")){
-//           return QProduct.product.title.like("%" + searchQuery + "%");
-//        }else if (searchBy.equals("category_num")){
-//            return QProductCategory.productCategory.category.in
-//        }
-        return searchQuery == null ? null : QProduct.product.title.like("%" + searchQuery + "%");
+    private BooleanExpression productTitleCateLike(String searchBy, String searchQuery){
+        if (searchBy.equals("product_title")){
+           return QProduct.product.title.like("%" + searchQuery + "%");
+        }else if (searchBy.equals("category_num")){
+            return QProductCategory.productCategory.category.id.eq(Long.valueOf(searchQuery));
+        }
+
+        return null;
     }
 
     // 페이징 처리된 상품 검색 목록 가져오기
@@ -47,29 +51,37 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
         QProduct product = QProduct.product;
         QImage image = QImage.image;
+        QProductCategory productCategory = QProductCategory.productCategory;
 
         List<ProductDTO> content = queryFactory
                 .select(new QProductDTO(
+                        product.id,
                         product.title,
                         product.price,
                         product.sellStatus,
                         image.imgUrl,
                         product.regTime,
-                        product.updateTime
+                        product.updateTime,
+                        product.title,
+                        product.title
                 ))
-                .from(image)
-                .join(image.product, product)
+                .from(product, image, productCategory)
+                .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
-                        productTitleLike(productDTO.getTitle()))
+                        productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
+                .groupBy(product.id)
                 .orderBy(product.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        long total = queryFactory.select(Wildcard.count).from(product)
+        long total = queryFactory.select(product.id.countDistinct()).from(product, image, productCategory)
+                .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
-                        productTitleLike(productDTO.getTitle()))
+                        productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .fetchOne();
+
+//        System.out.println("============" + total);
 
         return new PageImpl<>(content, pageable, total);
 
@@ -79,6 +91,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     public ProductFormDTO getSearchedProduct(ProductFormDTO productFormDTO) {
         QProduct product = QProduct.product;
         QImage image = QImage.image;
+        QProductCategory productCategory = QProductCategory.productCategory;
 
         List<ProductImageDTO> imageDTOList = queryFactory
                 .select(new QProductImageDTO(
@@ -97,12 +110,19 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .where(product.id.eq(productFormDTO.getId()))
                 .fetchOne();
 
+        ProductCategory searchedProductCate = queryFactory
+                .select(productCategory)
+                        .from(productCategory)
+                                .where(productCategory.product.id.eq(productFormDTO.getId()))
+                                        .fetchOne();
+
         productFormDTO.setTitle(searchedProduct.getTitle());
         productFormDTO.setPrice(searchedProduct.getPrice());
         productFormDTO.setContent(searchedProduct.getContent());
         productFormDTO.setSellStatus(searchedProduct.getSellStatus());
         productFormDTO.setMapData(searchedProduct.getMapData());
         productFormDTO.setImageDTOList(imageDTOList);
+        productFormDTO.setCategoryId(searchedProductCate.getId());
 
         return productFormDTO;
 
@@ -116,5 +136,51 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return null;
     }
 
+    public List<MainProductFormDTO> getRandomProduct() {
+        QProduct product = QProduct.product;
+        QImage image = QImage.image;
 
+
+        List<MainProductFormDTO> content = queryFactory
+                .select(new QMainProductFormDTO(
+                        product.id,
+                        product.title,
+                        product.price,
+                        image.imgUrl,
+                        product.updateTime
+                ))
+                .from(image)
+                .join(image.product, product)
+                .where(searchSellStatusEq(SellStatus.SELL))
+                .groupBy(product.id)
+                .orderBy(Expressions.numberTemplate(Double.class, "rand()").asc())
+                .limit(10)
+                .fetch();
+
+        return content;
+    }
+
+    @Override
+    public List<MainProductFormDTO> getNewestProduct() {
+        QProduct product = QProduct.product;
+        QImage image = QImage.image;
+
+        List<MainProductFormDTO> content = queryFactory
+                .select(new QMainProductFormDTO(
+                        product.id,
+                        product.title,
+                        product.price,
+                        image.imgUrl,
+                        product.updateTime
+                ))
+                .from(image)
+                .join(image.product, product)
+                .where(searchSellStatusEq(SellStatus.SELL))
+                .groupBy(product.id)
+                .orderBy(product.updateTime.desc())
+                .limit(4)
+                .fetch();
+
+        return content;
+    }
 }

@@ -2,6 +2,7 @@ package com.saessak.main.controller;
 
 import com.saessak.dto.ResponseDTO;
 import com.saessak.imgfile.FileService;
+import com.saessak.main.dto.CategoryDTO;
 import com.saessak.main.dto.ProductDTO;
 import com.saessak.main.dto.ProductFormDTO;
 import com.saessak.main.dto.ProductImageDTO;
@@ -33,29 +34,26 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
-    private final FileService fileService;
 
-    @GetMapping({"/", "/{page}"})
+    @PostMapping({"/search", "/search/{page}"})
     public ResponseEntity<?> selectProduct(@RequestBody ProductDTO productDTO,
                                            @PathVariable("page")Optional<Integer> page){
 
+        System.out.println("=============");
+
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 30);
 
-        Page<ProductDTO> result = productService.read(productDTO, pageable);
-
         try {
+            Page<ProductDTO> result = productService.read(productDTO, pageable);
+
+            return ResponseEntity.ok().body(result);
+        }catch (Exception e){
             ResponseDTO<ProductDTO> response = ResponseDTO.<ProductDTO>builder()
-                    .data(result.getContent())
+                    .error("no product")
                     .build();
             return ResponseEntity.ok().body(response);
-        }catch (Exception e){
-            String errorMsg = e.getMessage();
-
-            ResponseDTO<ProductDTO> response = ResponseDTO.<ProductDTO>builder()
-                    .error(errorMsg)
-                    .build();
-            return ResponseEntity.badRequest().body(response);
         }
+
     }
 
     @PostMapping("/searchone")
@@ -85,6 +83,17 @@ public class ProductController {
                     .build();
             return ResponseEntity.ok().body(response);
         }
+    }
+
+    @GetMapping("/searchcate")
+    public ResponseEntity<?> selectCate(){
+        List<CategoryDTO> categoryDTOList = productService.readCate();
+
+        ResponseDTO<CategoryDTO> response = ResponseDTO.<CategoryDTO>builder()
+                .data(categoryDTOList)
+                .build();
+
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/new")
@@ -122,7 +131,6 @@ public class ProductController {
     @PostMapping("/update")
     public ResponseEntity<?> updateProduct(@RequestBody ProductFormDTO productFormDTO){
 
-        // 받아온 데이터에서 기존에 등록된 파일의 url 로 multipart 파일 생성
         try {
             productService.updateProduct(productFormDTO);
 

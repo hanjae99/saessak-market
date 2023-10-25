@@ -16,8 +16,10 @@ import java.util.List;
 @Transactional
 public class ProductImgService {
 
-    @Value("${productImgLocation}")
-    private String productImgLocation;
+    @Value("${imgLocation}")
+    private String imgLocation;
+    // 이미지 저장할 로컬 드라이브 내 최상 폴더 입력
+    // ex C://saessak-image
 
     private final ImageRepository imageRepository;
 
@@ -29,7 +31,7 @@ public class ProductImgService {
         String imgUrl = "";
 
         if (oriImgName != null){
-            imgName = fileService.uploadFile(productImgLocation, oriImgName, productImgFile.getBytes());
+            imgName = fileService.uploadFile(imgLocation + "/images/product", oriImgName, productImgFile.getBytes());
             imgUrl = "/images/product/" + imgName;
         }
 
@@ -47,12 +49,12 @@ public class ProductImgService {
                     .orElseThrow(EntityNotFoundException::new);
             //기존 이미지 파일 삭제
             if (savedProductImg.getImgName() != null){
-                fileService.deleteFile(productImgLocation + "/" + savedProductImg.getImgName());
+                fileService.deleteFile(imgLocation + "/images/product/" + savedProductImg.getImgName());
             }
 
             // 이미지 바뀌어도 원래 이름은 그대로
             String oriImgName = oriName;
-            String imgName = fileService.uploadFile(productImgLocation, oriImgName, productImgFile.getBytes());
+            String imgName = fileService.uploadFile(imgLocation + "/images/product", oriImgName, productImgFile.getBytes());
             String imgUrl = "/images/product/" + imgName;
             // find 메소드로 savedProductImg 객체는 이미 영속 상태에 올려져있음
             // 이후 Repository.save 메소드 호출 필요없이 변경감지 기능으로 트랜잭션이 끝날 때 update 쿼리 자동 실행
@@ -65,7 +67,7 @@ public class ProductImgService {
 
     public void deleteProductImg(Long imageId, String imgName) throws Exception {
         imageRepository.deleteById(imageId);
-        fileService.deleteFile(productImgLocation + imgName);
+        fileService.deleteFile(imgLocation + "/images/product/" + imgName);
     }
 
 }

@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/game",
                         "/gameResul/**",
                         "/search",
+                        "/search/**",
                         "/signup",
                         "/signup/**",
                         "/signup/**/**",
@@ -40,6 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/boardmain/**",
                         "/boardmain",
                         "/images/**",
+                        "/main/**",
+                        "/product/searchcate",
+                        "/product/search",
+                        "/product/search/**",
                         "/swagger-resources/**", "/swagger-ui/**",
                         "/swagger/**","/v3/api-docs").permitAll()
                 .anyRequest().authenticated();
