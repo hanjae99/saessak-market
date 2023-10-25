@@ -84,8 +84,8 @@ const Detail = () => {
               {/* <div className="detail-imgBox">
                 <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
               </div> */}
-              {detaildatas.imgUrl && (
-                <DetailCarousel detaildatas={detaildatas.imgUrl} />
+              {detaildatas.imagesUrl && (
+                <DetailCarousel detaildatas={detaildatas.imagesUrl} />
               )}
             </div>
             <div className="detail-productsitem2">
@@ -147,9 +147,12 @@ const Detail = () => {
                 <div>닉네임: {detaildatas.memberDTO.nickName}</div>
               </div>
               <div>
-                <h2>닉네임 님의 다른 판매상품 정보</h2>
+                <h2>
+                  {detaildatas.memberDTO.nickName} 님의 다른 판매상품 정보
+                </h2>
                 <div className="detail-imgbox-grid">
                   {detaildatas.memberDTO.productDTOList
+                    .filter((dto) => dto.productId !== id)
                     .slice(0, 3)
                     .map((up) => (
                       <div className="detail-itembox" key={up.productId}>
@@ -161,7 +164,7 @@ const Detail = () => {
                         >
                           <img
                             className="detail-imgbox1"
-                            src={up.imgUrl}
+                            src={`http://localhost:8888${up.imgUrl}`}
                             alt=""
                           />
                         </div>
@@ -169,7 +172,7 @@ const Detail = () => {
                           <span>{up.title}</span>
                         </div>
                         <br />
-                        <span>{up.price}</span>
+                        <span>{up.price}원</span>
                       </div>
                     ))}
                 </div>
@@ -192,26 +195,26 @@ const Detail = () => {
 
               <div className="detail-divRecommend">
                 {detaildatas.categoryProductDTO ? (
-                  detaildatas.categoryProductDTO.slice(0, 4).map((e) => (
+                  detaildatas.categoryProductDTO.map((cp) => (
                     <div
                       className="detail-recommend"
-                      key={e.productId}
+                      key={cp.productId}
                       onClick={() => {
-                        navigate(`/detail/${e.productId}`);
+                        navigate(`/detail/${cp.productId}`);
                       }}
                     >
                       <div className="detail-recommend-img">
                         <img
                           className="detail-recommend-img"
-                          src={e.imgUrl}
+                          src={`http://localhost:8888${cp.imgUrl}`}
                           alt=""
                         />
                       </div>
                       <div className="detail-recommend-name">
-                        <span>{e.title}</span>
+                        <span>{cp.title}</span>
                       </div>
                       <div>
-                        <span>{e.price}</span>
+                        <span>{cp.price}원</span>
                       </div>
                     </div>
                   ))
