@@ -30,42 +30,54 @@ const UpdateProduct2 = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken !== "") {
-      // 로그인한 상태
-      setIsLogin(true);
+      // 토큰 유효시간 검사
+      const expiration = localStorage.getItem("EXPIREDATE");
+      if (expiration && expiration != "") {
+        const now = new Date().getTime();
+        // 토큰 만료
+        if (now >= Date.parse(expiration)) {
+          localStorage.setItem("ACCESS_TOKEN", "");
+          localStorage.setItem("EXPIREDATE", "");
+          setIsLogin(false);
+          alert("로그인 시간이 만료되었습니다");
+          navigate("/login");
+        } else {
+          // 토큰 유지, 로그인 유지
+          setIsLogin(true);
 
-      // 카테고리 정보 가져오기
-      call("/product/searchcate", "GET").then((response) => {
-        // console.log(response.data);
-        if (response.data && response.data != null) {
-          setCategoryDTO(response.data);
+          // 카테고리 정보 가져오기
+          call("/product/searchcate", "GET").then((response) => {
+            // console.log(response.data);
+            if (response.data && response.data != null) {
+              setCategoryDTO(response.data);
+            }
+          });
+
+          call("/product/searchone", "POST", { id: id }).then((response) => {
+            if (response.error && response.error !== "") {
+              if (response.error === "no authority") {
+                alert("상품 수정권한이 없습니다");
+                navigate(-1);
+                return;
+              } else if (response.error === "no product") {
+                alert("존재하지 않는 상품입니다");
+                navigate(-1);
+                return;
+              }
+            }
+
+            setProductTitle(response.data[0].title);
+            setProductContent(response.data[0].content);
+            setProductPrice(response.data[0].price);
+            setProductSellStatus(response.data[0].sellStatus);
+            setProductMapData(response.data[0].mapData);
+            const responseImgFileList = response.data[0].imageDTOList;
+            setImgCount(responseImgFileList.length);
+            setImageDTOList(responseImgFileList);
+            setSelectedCate(response.data[0].categoryId);
+          });
         }
-        console.log(categoryDTO);
-      });
-
-      call("/product/searchone", "POST", { id: id }).then((response) => {
-        console.log("error: " + response.error);
-        if (response.error && response.error !== "") {
-          if (response.error === "no authority") {
-            alert("상품 수정권한이 없습니다");
-            navigate(-1);
-            return;
-          } else if (response.error === "no product") {
-            alert("존재하지 않는 상품입니다");
-            navigate(-1);
-            return;
-          }
-        }
-
-        setProductTitle(response.data[0].title);
-        setProductContent(response.data[0].content);
-        setProductPrice(response.data[0].price);
-        setProductSellStatus(response.data[0].sellStatus);
-        setProductMapData(response.data[0].mapData);
-        const responseImgFileList = response.data[0].imageDTOList;
-        setImgCount(responseImgFileList.length);
-        setImageDTOList(responseImgFileList);
-        setSelectedCate(response.data[0].categoryId);
-      });
+      }
     } else {
       alert("로그인 후 이용해주세요!");
       navigate("/login");
