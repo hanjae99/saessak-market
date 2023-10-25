@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import Footer from "../main/Footer";
-import Header from "../main/Header";
-import "../addProduct/AddProduct.scss";
-import { call, uploadProduct } from "../../ApiService";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { call, uploadProduct } from "../../ApiService";
+import "../addProduct/AddProduct.scss";
+import Footer from "../main/Footer";
+import Header from "../main/Header";
 
 const UpdateProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);

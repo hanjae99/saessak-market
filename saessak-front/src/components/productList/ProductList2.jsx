@@ -1,18 +1,17 @@
-import qs from "qs";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MdClose } from "react-icons/md";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import Footer from "../main/Footer";
-import Header from "../main/Header";
-import "./ProductList.scss";
-import { call } from "../../ApiService";
 import {
   Pagination,
   PaginationItem,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { lime, purple } from "@mui/material/colors";
+import qs from "qs";
+import React, { useCallback, useEffect, useState } from "react";
+import { MdClose } from "react-icons/md";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { call } from "../../ApiService";
+import Footer from "../main/Footer";
+import Header from "../main/Header";
+import "./ProductList.scss";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();

@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
-import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
-import category from "../../category.json";
-import { useDispatch, useSelector } from "react-redux";
-import { call, validateExpired } from "../../ApiService";
+import { call } from "../../ApiService";
+import "./Header.scss";
 
 const Header = () => {
   const [value, setValue] = useState("");
