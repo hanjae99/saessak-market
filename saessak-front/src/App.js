@@ -19,9 +19,7 @@ import { Layout } from "./components/kimjin/layout";
 import Main from "./components/main/Main";
 import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
-import BoardPage from "./components/board2/BoardPage";
 import BoardEditorPage from "./components/board2/BoardEditorPage";
-import ProductList2 from "./components/productList/ProductList2";
 import BoardViewerPage from "./components/board2/BoardViewerPage";
 
 function App() {
