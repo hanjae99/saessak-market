@@ -16,7 +16,7 @@ const NoticeBoardList = () => {
         </h3>
         <hr className="notice-hr" />
         <li value="자유게시판" className="board_li">
-          <Link to="/board/main" className="board_1">
+          <Link to="/board/list/main" className="board_1">
             {post[0]}
           </Link>
         </li>
@@ -27,12 +27,12 @@ const NoticeBoardList = () => {
         </h3>
         <hr className="notice-hr" />
         <li value="고객의 소리" className="board_li">
-          <Link to="/board/voc" className="board_1">
+          <Link to="/board/list/voc" className="board_1">
             {post[2]}
           </Link>
         </li>
         <li value="공지사항" className="board_li">
-          <Link to="/board/ntc" className="board_1">
+          <Link to="/board/list/ntc" className="board_1">
             {post[3]}
           </Link>
         </li>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import Header from '../main/Header';
 import NoticeBoardList from './NoticeBoardList';
 import { call } from '../../ApiService';
@@ -14,19 +14,20 @@ const BoardPage = () => {
     id: '글번호',
     title: '제목',
     writer: '작성자',
-    date: '작성시간',
-    clicked: '조회수',
+    regTime: '작성시간',
+    recommend: '조회수',
   });
   const [pageSize, setPageSize] = useState(15);
   const [totalPageSize, setTotalPageSize] = useState(1);
   const [userRole, setUserRole] = useState("any");
   const bn = boardName !== undefined ? boardName : "main";
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const url = "/board/" + bn + (searchParams.get("page") ? "/" + searchParams.get("page") : "/1");
-    console.log("url :", url)
+    const url = "/board/" + bn + (searchParams.get("page")>0 ? "/" + searchParams.get("page") : "/1");
+    // console.log("url :", url);
     call(url, "GET").then(response => {
-      console.log(response);
+      // console.log("response",response);
       if (response !== undefined) {
         setVeiwData(response.list);
         setPageSize(response.pageSize);
@@ -39,7 +40,7 @@ const BoardPage = () => {
 
 
 
-  const onViewListClick = (e, p) => { Navigate('info/' + p.id) }
+  const onViewListClick = (e, p) => { navigate('/board/detail/'+boardName+'/' + p.id) }
 
   if (viewData.length < pageSize) {
     const dumy = pageSize - viewData.length;

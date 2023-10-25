@@ -23,6 +23,7 @@ import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardPage from "./components/board2/BoardPage";
 import BoardEditorPage from "./components/board2/BoardEditorPage";
 import ProductList2 from "./components/productList/ProductList2";
+import BoardViewerPage from "./components/board2/BoardViewerPage";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -49,6 +50,7 @@ function App() {
         <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
         <Route path="/board/write/:boardName?" element={<BoardEditorPage />}></Route>
+        <Route path="/board/detail/:boardName/:boardId" element={<BoardViewerPage />}></Route>
       </Routes>
     </div>
   );

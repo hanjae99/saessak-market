@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,8 +34,41 @@ public class BoardController {
   @Autowired
   private MemberRepository memberRepository;
 
+
+  @GetMapping("/board/{boardName}/detail/{boardId}")
+  public ResponseEntity<?> readBoardDetail(@PathVariable("boardName") String boardName,
+                                           @PathVariable("boardId") String boardId,
+                                           @AuthenticationPrincipal String userId) {
+    List<BoardDTO> list = new ArrayList<>();
+    Board board = boardRepository.findById(Long.parseLong(boardId)).orElseThrow(EntityNotFoundException::new);
+    BoardDTO boardDTO = BoardDTO.builder()
+        .title(board.getTitle())
+        .content(board.getContent())
+        .recommend(board.getRecommend())
+        .regTime(board.getRegTime())
+        .updateTime(board.getUpdateTime())
+        .writer(board.getMember().getNickName())
+        .build();
+    list.add(boardDTO);
+
+    String role = "any";
+
+    if (!userId.equals("anonymousUser")) {
+      role = boardService.getUserRole(userId);
+    }
+
+    BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
+        .list(list)
+        .viewerRole(role)
+        .isMaster()
+        .build();
+
+    return null;
+  }
+//  title:"", content:"", clickCount:"", recommend:"", regTime:Date.now(), writer:""
+
   @GetMapping("/{boardName}/{page}")
-  public ResponseEntity<?> board(@PathVariable("boardName") String boardName, @PathVariable int page, @AuthenticationPrincipal String userId, BoardSearchDTO boardSearchDTO) {
+  public ResponseEntity<?> readBoardList(@PathVariable("boardName") String boardName, @PathVariable("page") int page, @AuthenticationPrincipal String userId, BoardSearchDTO boardSearchDTO) {
 
     log.info("boardName : " + boardName);
     log.info("page : " + page);
@@ -56,8 +90,11 @@ public class BoardController {
 
 
 
-    Pageable pageable = PageRequest.of(page,pageSize);
+    Pageable pageable = PageRequest.of(page-1,pageSize);
     Page<BoardDTO> pb = boardService.read(boardSearchDTO, pageable);
+
+    log.info("pb : " + pb.toString());
+
     List<BoardDTO> list = pb.getContent();
     int totalPageSize = pb.getTotalPages();
 
