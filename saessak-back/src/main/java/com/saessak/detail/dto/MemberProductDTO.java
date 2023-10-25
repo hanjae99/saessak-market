@@ -1,5 +1,6 @@
 package com.saessak.detail.dto;
 
+import com.saessak.entity.Member;
 import com.saessak.entity.Product;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +14,10 @@ public class MemberProductDTO {
     private int price;
     private String imgUrl;
 
-    private static ModelMapper modelMapper = new ModelMapper();
 
-    public Product createProduct(){
-        return modelMapper.map(this, Product.class);
-    }
+//    private static ModelMapper modelMapper = new ModelMapper();
+//
+//    public Product createProduct(){
+//        return modelMapper.map(this, Product.class);
+//    }
 }

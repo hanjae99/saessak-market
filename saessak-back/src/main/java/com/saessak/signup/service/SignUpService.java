@@ -42,4 +42,7 @@ public class SignUpService {
     public boolean existsNickName(String nickName){
         return memberRepository.existsByNickName(nickName);
     }
+    public boolean existsEmail(String email){
+        return memberRepository.existsByEmail(email);
+    }
 }

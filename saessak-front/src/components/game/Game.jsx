@@ -12,7 +12,7 @@ const Game = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    call("/game", "GET", null).then((response) => {
+    call("/game", "GET").then((response) => {
       console.log(response.data);
       dispatch(setGameData(response.data));
     });

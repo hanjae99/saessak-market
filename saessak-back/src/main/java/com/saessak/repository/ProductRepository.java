@@ -9,10 +9,13 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> ,ProductRepositoryCustom{
 
-    @Query( value = "SELECT * FROM PRODUCT  ORDER BY RAND() LIMIT 10 ", nativeQuery = true)
+    @Query( value = "SELECT * FROM PRODUCT WHERE sell_status ='SELL'  ORDER BY RAND() LIMIT 10 ", nativeQuery = true)
     List<Product> gameRamdomdata();
 
     Product findByTitle(String title);
 
     List<Product> findBySellMemberId(Long memberId);
+
+
+
 }

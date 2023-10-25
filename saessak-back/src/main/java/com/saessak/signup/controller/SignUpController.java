@@ -4,10 +4,10 @@ import com.saessak.constant.Role;
 import com.saessak.entity.Member;
 import com.saessak.game.dto.ResponseDTO;
 import com.saessak.signup.dto.SignUpDTO;
+import com.saessak.signup.service.EmailService;
 import com.saessak.signup.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +21,7 @@ public class SignUpController {
 
 
     private final SignUpService signUpService;
+    private final EmailService emailService;
 
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -81,5 +82,25 @@ public class SignUpController {
         Integer result = check ? 1 : -1;
 
         return ResponseEntity.ok().body(result);
+    }
+
+    @PostMapping("/emailConfirm/{email}")
+    public ResponseEntity<?> emailConfirm(@PathVariable("email") String email) throws Exception {
+
+        boolean emailCheck = signUpService.existsEmail(email);
+
+        String result = emailCheck ? "1" : "-1";
+        if(emailCheck){
+            ResponseDTO response=ResponseDTO.builder().message(result).build();
+
+         return ResponseEntity.ok().body(response);
+        }else {
+            String confirm = emailService.sendSimpleMessage(email);
+
+            log.info("인증문자 확인 : " + confirm);
+
+            ResponseDTO response=ResponseDTO.builder().message(confirm).build();
+            return ResponseEntity.ok().body(response);
+        }
     }
 }
