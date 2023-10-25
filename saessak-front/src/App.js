@@ -2,23 +2,22 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
 import SignUp from "./components/Login/SignUp";
-import AddProduct from "./components/addProduct/AddProduct";
+import AddProduct2 from "./components/addProduct/AddProduct2";
 import AdminPage from "./components/admin/AdminPage";
+import BoardInfo from "./components/board/BoardInfo";
 import BoardMain from "./components/board/BoardMain";
+import BoardNtc from "./components/board/BoardNtc";
+import BoardNtcInfo from "./components/board/BoardNtcInfo";
 import CreateNotice from "./components/board/CreateNotice";
 import CreateVoice from "./components/board/CreateVoice";
+import BoardPage from "./components/board2/BoardPage";
 import Detail from "./components/detail/Detail";
 import Game from "./components/game/Game";
 import GameResult from "./components/game/GameResult";
-import Main from "./components/main/Main";
-import ProductList from "./components/productList/ProductList";
-import BoardInfo from "./components/board/BoardInfo";
-import BoardNtc from "./components/board/BoardNtc";
-import BoardNtcInfo from "./components/board/BoardNtcInfo";
-import UpdateProduct from "./components/updateProduct/UpdateProduct";
-import { Layout } from "./components/kimjin/layout";
 import Chatting from "./components/kimjin/Chatting";
-import AddProduct2 from "./components/addProduct/AddProduct2";
+import { Layout } from "./components/kimjin/layout";
+import Main from "./components/main/Main";
+import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardPage from "./components/board2/BoardPage";
 import BoardEditorPage from "./components/board2/BoardEditorPage";
@@ -38,6 +37,7 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/gameresult/:finalresult" element={<GameResult />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/detail" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/singup" element={<SignUp />} />
         <Route path="/boardmain" element={<BoardMain page={page} />} />

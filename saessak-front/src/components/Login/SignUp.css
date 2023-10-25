@@ -51,7 +51,23 @@
   width: 60%;
   outline-color: rgba(109, 200, 42, 0.7);
 }
-
+.signup-text-input-email {
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 18%;
+  margin-right: 8px;
+  border-radius: 4px;
+  outline-color: rgba(109, 200, 42, 0.7);
+}
+.signup-text-input-select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 18%;
+  margin-right: 8px;
+  margin-left: 8px;
+  border-radius: 4px;
+  outline-color: rgba(109, 200, 42, 0.7);
+}
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;

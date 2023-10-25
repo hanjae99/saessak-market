@@ -2,22 +2,20 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const DetailCarousel = ({ item }) => {
-  const { imgsrc1, imgsrc2, imgsrc3 } = item;
-  const imgList = [imgsrc1, imgsrc2, imgsrc3].filter((il) => il !== "");
-  // console.log(imgList);
-  const imgBox = imgList.map((il) => (
-    <div key={il} className="detail-imgBox">
-      <img src={il} alt="캐러셀이미지" />
+const DetailCarousel = ({ detaildatas }) => {
+  const imgBox = detaildatas.map((imgUrl) => (
+    <div key={imgUrl} className="detail-imgBox">
+      <img src={`http://localhost:8888${imgUrl}`} alt="캐러셀이미지" />
     </div>
   ));
   return (
     <Carousel
       showArrows={true}
-      autoPlay={false}
+      autoPlay={true}
       infiniteLoop={true}
       showThumbs={false}
       showStatus={false}
+      selectedItem={detaildatas.length}
     >
       {imgBox}
     </Carousel>

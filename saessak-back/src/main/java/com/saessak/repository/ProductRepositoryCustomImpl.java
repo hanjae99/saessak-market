@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.sql.SQLExpressions;
 import com.saessak.constant.SellStatus;
+import com.saessak.detail.dto.DetailDTO;
 import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
 import com.saessak.main.dto.*;
@@ -128,9 +129,17 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     }
 
     @Override
+    public DetailDTO getDetailDTO(Long productId) {
+        QProduct product = QProduct.product;
+        QCategory category =QCategory.category;
+        QMember member = QMember.member;
+        return null;
+    }
+
     public List<MainProductFormDTO> getRandomProduct() {
         QProduct product = QProduct.product;
         QImage image = QImage.image;
+
 
         List<MainProductFormDTO> content = queryFactory
                 .select(new QMainProductFormDTO(

@@ -1,15 +1,14 @@
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { call, uploadProduct } from "../../ApiService";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "./AddProduct.scss";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
 const AddProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);
@@ -17,23 +16,36 @@ const AddProduct2 = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [categoryDTO, setCategoryDTO] = useState([]);
   const [selectedCate, setSelectedCate] = useState(0);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken !== "") {
-      // 로그인한 상태
-      setIsLogin(true);
+      // 토큰 유효시간 검사
+      const expiration = localStorage.getItem("EXPIREDATE");
+      if (expiration && expiration != "") {
+        const now = new Date().getTime();
+        // 토큰 만료
+        if (now >= Date.parse(expiration)) {
+          localStorage.setItem("ACCESS_TOKEN", "");
+          localStorage.setItem("EXPIREDATE", "");
+          setIsLogin(false);
+          alert("로그인 시간이 만료되었습니다");
+          navigate("/login");
+        } else {
+          // 토큰 유지, 로그인 유지
+          setIsLogin(true);
 
-      // 카테고리 정보 가져오기
-      call("/product/searchcate", "GET").then((response) => {
-        // console.log(response.data);
-        if (response.data && response.data != null) {
-          setCategoryDTO(response.data);
+          // 카테고리 정보 가져오기
+          call("/product/searchcate", "GET").then((response) => {
+            // console.log(response.data);
+            if (response.data && response.data != null) {
+              setCategoryDTO(response.data);
+            }
+            console.log(categoryDTO);
+          });
         }
-        console.log(categoryDTO);
-      });
+      }
     } else {
       alert("로그인 후 이용해주세요!");
       navigate("/login");
