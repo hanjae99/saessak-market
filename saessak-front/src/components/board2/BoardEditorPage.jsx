@@ -1,28 +1,67 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../main/Header';
 import NoticeBoardList from './NoticeBoardList';
-import { call } from '../../ApiService';
-import BoardListViewer from './BoardListViewer';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import BoardEditor from './BoardEditor';
+import { call, uploadProduct } from '../../ApiService';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+
+import '@toast-ui/editor/dist/i18n/ko-kr';
+
+let imageList = [];
 const BoardEditorPage = () => {
-  let title;
+  let titleData;
   const [contents, setContents] = useState("");
-  const [images, setImages] = useState([]);
+  const navigate = useNavigate();
+  const {boardName} = useParams();
+  const editorRef = useRef();
 
-  console.log(contents);
-  console.log(images);
+
+  const onChange = () => {
+    setContents(editorRef.current.getInstance().getHTML());
+  };
+
+  const onUploadImage = (blob, callback) => {
+    const url = window.URL.createObjectURL(blob)
+    const myNewFile = new File([blob], url+'?'+blob.name, {type: blob.type});
+    imageList.push(myNewFile);
+    callback(url, '');
+    return false;
+  };
+
+  console.log("contests : ",contents);
+  console.log("imageList : ",imageList);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const boardTitle = e.target.elements.title.value;
+    const title = e.target.elements.titleData.value;
+    let imgs = imageList.filter(p=>contents.includes(p.name.split('?')[0]));
     
-    let imgs = images.filter(p=>contents.includes(p.url)).map(p=>p.file);
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("content", contents);
     imgs.forEach(p=>{
-      
+      formData.append("imgs", p);
     })
+    uploadProduct("/board/create/"+boardName, "POST", formData).then((response) => {
+      console.log(response)
+      // if (result === "success") {
+      //   alert(result);
+      //   navigate("/search");
+      // } else {
+      //   alert(result);
+      // }
+    });
+
+
+
+
+
 
   }
 
@@ -49,8 +88,8 @@ const BoardEditorPage = () => {
                   type="text"
                   placeholder="제목을 입력하세요"
                   className="notice-title"
-                  name="title"
-                  defaultValue={title!==undefined?title:""}
+                  name="titleData"
+                  defaultValue={titleData!==undefined?titleData:""}
                 />
               </div>
               <div className="cartegory-top-right">
@@ -62,7 +101,27 @@ const BoardEditorPage = () => {
                 </button>
               </div>
             </div>
-            <BoardEditor contents={contents} setContents={setContents} images={images} setImages={setImages} />
+            <div className="edit_wrap">
+      <Editor
+        initialValue={contents || ''}
+        previewStyle="vertical"
+        height="600px"
+        initialEditType="wysiwyg"
+        useCommandShortcut={false}
+        plugins={[colorSyntax]}
+        language="ko-KR"
+        toolbarItems={[
+          ['heading', 'bold', 'italic', 'strike'],
+          ['image', 'link'],
+          ['codeblock'],
+        ]}       
+        ref={editorRef}
+        onChange={onChange} 
+        hooks={{
+          addImageBlobHook: onUploadImage
+        }}
+      />
+    </div>
           </form>
         </div>
         <div className="board-rigth"></div>

@@ -9,6 +9,7 @@ import com.saessak.board.QBoardDTO;
 import com.saessak.constant.ShowStatus;
 import com.saessak.entity.QBoard;
 import com.saessak.entity.QMember;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Log
 public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
   private final JPAQueryFactory queryFactory;
@@ -36,6 +38,8 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
   private BooleanExpression searchCheck(String searchQuery, String searchBy){
 
+
+
     if ( searchQuery == null || searchBy == null ) {
       return null;
     }
@@ -55,10 +59,6 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
 
     return null;
-//
-//
-//    return searchQuery == null ? null :
-//        QProduct.product.title.like("%" + searchQuery + "%");
   }
 
   @Override

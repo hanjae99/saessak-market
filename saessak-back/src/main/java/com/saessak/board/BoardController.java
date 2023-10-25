@@ -1,7 +1,12 @@
 package com.saessak.board;
 
 
+import com.saessak.constant.ShowStatus;
+import com.saessak.entity.Board;
+import com.saessak.entity.Image;
+import com.saessak.entity.Member;
 import com.saessak.repository.BoardRepository;
+import com.saessak.repository.MemberRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 
@@ -21,6 +28,10 @@ public class BoardController {
 
   @Autowired
   private BoardService boardService;
+  @Autowired
+  private BoardRepository boardRepository;
+  @Autowired
+  private MemberRepository memberRepository;
 
   @GetMapping("/{boardName}/{page}")
   public ResponseEntity<?> board(@PathVariable("boardName") String boardName, @PathVariable int page, @AuthenticationPrincipal String userId, BoardSearchDTO boardSearchDTO) {
@@ -62,5 +73,40 @@ public class BoardController {
     return ResponseEntity.ok().body(responseDTO);
   }
 
+
+  @PostMapping("/create/{boardName}")
+  public ResponseEntity<?> createBoard(@PathVariable("boardName") String boardName,
+                                       @AuthenticationPrincipal String userId,
+                                       @RequestPart List<MultipartFile> imgs,
+                                       BoardDTO boardDTO) {
+
+    Member writer = memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new);
+    Board board = new Board();
+    board.setMember(writer);
+    log.info(boardDTO.getBoardName());
+    board.setBoardName(boardDTO.getBoardName());
+    board.setShowStatus(ShowStatus.SHOW);
+    board.setContent(boardDTO.getContent());
+    board.setTitle(boardDTO.getTitle());
+    Board savedBoard = boardRepository.save(board);
+
+
+    if (imgs!=null) {
+      imgs.forEach(p->{
+        Image image = new Image();
+        image.setBoard(savedBoard);
+        try {
+          boardService.saveImg(image, p);
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+        savedBoard.setContent(savedBoard.getContent().replace(p.getOriginalFilename().split("\\?")[0],image.getImgUrl()));
+      });
+    }
+
+
+    return ResponseEntity.ok().body("ok");
+
+  }
 
 }

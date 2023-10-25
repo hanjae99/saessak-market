@@ -9,17 +9,25 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 
 import '@toast-ui/editor/dist/i18n/ko-kr';
 
-const BoardEditor = ({ contents, setContents, images, setImages }) => {
-
+const BoardEditor = (props) => {
+  const {images, setImages, contents, setContents} = props;
+  console.log(props);
   const editorRef = useRef();
 
   const onChange = () => {
-    setContents(editorRef.current.getInstance().getHTML())
+    setContents(editorRef.current.getInstance().getHTML());
   };
 
   const onUploadImage = async (blob, callback) => {
     const url = window.URL.createObjectURL(blob)
-    setImages([...images, {file:blob, url:url}])
+    let i1 = [];
+    let i2 = i1.concat(images);
+    let i3 = i2.concat([{file:blob, url:url}])
+    console.log("i1 : " , i1);
+    console.log("i2 : " , i2);
+    console.log("i3 : " , i3);
+    setImages(i3);
+    console.log("i4 : ",images);
     callback(url, '');
     return false;
   };

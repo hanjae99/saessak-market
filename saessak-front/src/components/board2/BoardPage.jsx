@@ -74,7 +74,7 @@ const BoardPage = () => {
               </li>
             </ul>
             {(() => {
-              return userRole !== "any" ? (<Link to={"/board/writer/"+bn}>
+              return userRole !== "any" ? (<Link to={"/board/write/"+bn}>
                 <button className="new-text">작성</button>
               </Link>) : "";
             })()}

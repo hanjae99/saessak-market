@@ -37,7 +37,7 @@ public class BoardService {
   }
 
   public void saveImg(Image image, MultipartFile productImgFile)throws Exception{
-    String oriImgName = productImgFile.getOriginalFilename();
+    String oriImgName = productImgFile.getOriginalFilename().split("\\?")[1];
     String imgName = "";
     String imgUrl = "";
 
