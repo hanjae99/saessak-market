@@ -49,6 +49,7 @@ function App() {
         <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board" element={<BoardPage />}></Route>
         <Route path="/board/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/login/oauth2/kakao?" />
       </Routes>
     </div>
   );
