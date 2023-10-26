@@ -22,6 +22,7 @@ import AddProduct2 from "./components/addProduct/AddProduct2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardPage from "./components/board2/BoardPage";
 import ProductList2 from "./components/productList/ProductList2";
+import KakaoLogin from "./components/Login/KakaoLogin";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -49,7 +50,7 @@ function App() {
         <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board" element={<BoardPage />}></Route>
         <Route path="/board/:boardName?" element={<BoardPage />}></Route>
-        <Route path="/login/oauth2/kakao?" />
+        <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
       </Routes>
     </div>
   );
