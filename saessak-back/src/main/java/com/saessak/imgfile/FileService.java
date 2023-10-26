@@ -22,6 +22,21 @@ import java.util.UUID;
 public class FileService {
 
     public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception{
+
+        File Folder = new File(uploadPath);
+        if (!Folder.exists()) {
+            try{
+                if (Folder.mkdir()) {
+                    log.info("이미지 저장 폴더 생성");
+                } else {
+                    log.info("이미지 저장 폴더 생성 실패");
+                }
+            }
+            catch(Exception e){
+                log.info(e.getMessage());
+            }
+        }
+
         UUID uuid = UUID.randomUUID();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String savedFileName = uuid.toString() + extension;

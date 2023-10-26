@@ -156,11 +156,11 @@ public class BoardController {
         realUrl.add("$back$"+image.getImgUrl());
       });
     }
-    log.info(content);
+//    log.info(content);
     for (int i = 0; i < blobUrl.size(); i++) {
       content = content.replace(blobUrl.get(i), realUrl.get(i));
     }
-    log.info(content);
+//    log.info("컨--------텐트---------------"+content);
     savedBoard.setContent(content);
     boardRepository.save(savedBoard);
 
