@@ -170,10 +170,10 @@ const Header = () => {
             <div
               className="menuItem"
               onClick={() => {
-                navigate("/boardmain");
+                navigate("/board/list");
               }}
             >
-              <Link to="/boardmain">새싹 게시판</Link>
+              <Link to="/board/list">새싹 게시판</Link>
             </div>
             <div className="menuItem">
               <Link to="/game">새싹 게임</Link>

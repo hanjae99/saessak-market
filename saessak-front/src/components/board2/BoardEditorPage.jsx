@@ -49,7 +49,8 @@ const BoardEditorPage = () => {
       formData.append("imgs", p);
     })
     uploadProduct("/board/create/"+boardName, "POST", formData).then((response) => {
-      console.log(response)
+      navigate('/board/list/'+boardName);
+      // console.log(response)
       // if (result === "success") {
       //   alert(result);
       //   navigate("/search");
