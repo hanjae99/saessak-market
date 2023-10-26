@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -29,5 +30,7 @@ public class LoginDTO {
     private String name;
 
     private Role role;
+
+    private Date expiration;
 
 }

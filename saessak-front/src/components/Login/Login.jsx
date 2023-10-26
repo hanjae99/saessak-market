@@ -33,6 +33,7 @@ const Login = () => {
           return setLoginFailed(true);
         } else {
           localStorage.setItem("ACCESS_TOKEN", response.token);
+          localStorage.setItem("EXPIREDATE", response.expiration);
           console.log("response : ", response);
           if (response.role === "ADMIN") {
             return (window.location.href = "/admin");

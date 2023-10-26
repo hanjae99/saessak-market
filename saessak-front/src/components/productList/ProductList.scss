@@ -140,24 +140,24 @@
   justify-content: center;
 }
 
-.moveBtn button {
-  width: 70px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  border: 1px solid #f4f4f4;
-  cursor: pointer;
-}
+// .moveBtn button {
+//   width: 70px;
+//   height: 40px;
+//   margin-right: 10px;
+//   border-radius: 5px;
+//   background-color: #f5f5f5;
+//   border: 1px solid #f4f4f4;
+//   cursor: pointer;
+// }
 
-.moveBtn button:hover {
-  background-color: rgba(109, 200, 42, 0.7);
-  transition: all 0.7s;
-}
+// .moveBtn button:hover {
+//   background-color: rgba(109, 200, 42, 0.7);
+//   transition: all 0.7s;
+// }
 
-.moveBtn button:disabled {
-  background-color: #f5f5f5;
-}
+// .moveBtn button:disabled {
+//   background-color: #f5f5f5;
+// }
 
 /* 태블릿 미디어쿼리 */
 @media screen and (max-width: 768px) and (min-width: 425px) {

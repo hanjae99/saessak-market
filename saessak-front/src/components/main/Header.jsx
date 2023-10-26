@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
-import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
-import category from "../../category.json";
-import { useDispatch, useSelector } from "react-redux";
 import { call } from "../../ApiService";
+import "./Header.scss";
 
 const Header = () => {
   const [value, setValue] = useState("");
@@ -32,18 +30,31 @@ const Header = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken !== "") {
-      // 로그인한 상태
-      setIsLogin(true);
-
-      // 카테고리 정보 가져오기
-      call("/product/searchcate", "GET").then((response) => {
-        // console.log(response.data);
-        if (response.data && response.data != null) {
-          setCategoryDTO(response.data);
+      // 토큰 유효시간 검사
+      const expiration = localStorage.getItem("EXPIREDATE");
+      if (expiration && expiration != "") {
+        const now = new Date().getTime();
+        // 토큰 만료
+        if (now >= Date.parse(expiration)) {
+          localStorage.setItem("ACCESS_TOKEN", "");
+          localStorage.setItem("EXPIREDATE", "");
+          setIsLogin(false);
+          alert("로그인 시간이 만료되었습니다");
+          navigate("/login");
+        } else {
+          // 토큰 유지, 로그인 유지
+          setIsLogin(true);
         }
-        console.log(categoryDTO);
-      });
+      }
     }
+
+    // 카테고리 정보 가져오기
+    call("/product/searchcate", "GET").then((response) => {
+      // console.log(response.data);
+      if (response.data && response.data != null) {
+        setCategoryDTO(response.data);
+      }
+    });
   }, []);
 
   // const login = useSelector((state) => state.login);
