@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -36,4 +37,7 @@ public class SignUpDTO {
     private Gender gender;
 
     private Role role;
+
+    private LocalDateTime regDateTime;
+    
 }

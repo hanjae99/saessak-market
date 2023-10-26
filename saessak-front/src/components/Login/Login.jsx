@@ -78,6 +78,17 @@ const Login = () => {
     navigate("/singup");
   };
 
+  const KakaoLoginAPI = `https://kauth.kakao.com/oauth/authorize?
+client_id=${"a72ff07499a78a559bb7e6bccb465597"}&redirect_uri=${"http://localhost:3000/login/oauth2/kakao"}&response_type=code`;
+
+  /**온클릭 이벤트
+   * 카카오 로그인용 새창을 띄운다.
+   */
+
+  const openKakaoLogin = () => {
+    window.open(KakaoLoginAPI, "_self");
+  };
+
   //  console.log("아이디: " + inputid);
   //console.log("비밀번호: " + inputpwd);
 
@@ -126,7 +137,9 @@ const Login = () => {
                 </button>
               </div>
               <div>
-                <button className="login-button2">카카오 로그인</button>
+                <button className="login-button2" onClick={openKakaoLogin}>
+                  카카오 로그인
+                </button>
               </div>
               <div>
                 <button className="login-button4">NAVER로그인</button>

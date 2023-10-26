@@ -13,9 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -50,5 +47,15 @@ public class LoginController {
         }
 
     }
+
+    @GetMapping("/auth/kakao")
+    public ResponseEntity<?> kakaologin(@RequestParam(value = "code")String code){
+        log.info("@@@@@@@@@@@@@@@@@@@@@@@@ :" +code);
+
+        return null;
+    }
+
+
+
 
 }
