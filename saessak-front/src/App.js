@@ -19,6 +19,7 @@ import { Layout } from "./components/kimjin/layout";
 import Main from "./components/main/Main";
 import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
+import SmsTest from "./components/SmsTest";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -46,6 +47,7 @@ function App() {
         <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board" element={<BoardPage />}></Route>
         <Route path="/board/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/smstest" element={<SmsTest />} />
       </Routes>
     </div>
   );

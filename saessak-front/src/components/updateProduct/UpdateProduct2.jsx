@@ -10,6 +10,7 @@ import { call, uploadProduct } from "../../ApiService";
 import "../addProduct/AddProduct.scss";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const UpdateProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);
@@ -240,7 +241,7 @@ const UpdateProduct2 = () => {
                           className="imgItem"
                           src={
                             imgDTO.imgUrl.includes("/images/product")
-                              ? "http://localhost:8888" + imgDTO.imgUrl
+                              ? API_BASE_URL + imgDTO.imgUrl
                               : imgDTO.imgUrl
                           }
                           alt="예시이미지"

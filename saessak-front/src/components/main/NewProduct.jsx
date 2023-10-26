@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const NewProduct = () => {
   // const state = useSelector((state) => state.product);
@@ -47,7 +48,7 @@ const NewProduct = () => {
             navigate("/detail/" + dto.id);
           }}
         >
-          <img src={`http://localhost:8888${dto.imgUrl}`} alt={dto.title} />
+          <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
           <div className="newItemTitle">
             <span>{dto.title}</span>
           </div>

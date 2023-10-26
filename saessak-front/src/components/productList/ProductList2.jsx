@@ -12,6 +12,7 @@ import { call } from "../../ApiService";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "./ProductList.scss";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();
@@ -397,10 +398,7 @@ const ProductList2 = () => {
                     navigate("/detail/" + dto.id);
                   }}
                 >
-                  <img
-                    src={`http://localhost:8888${dto.imgUrl}`}
-                    alt={dto.title}
-                  />
+                  <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
