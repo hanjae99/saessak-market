@@ -88,11 +88,11 @@ const Header = () => {
         <div className="headContent">
           <div className="logo">
             <Link to="/">
-              <img src="../../img/saessak.png" alt="logo" />
+              <img src="/img/saessak.png" alt="logo" />
             </Link>
             <div className="logo-text">
               <Link to="/">
-                <img src="../../img/logo.png" alt="새싹마켓 logo" />
+                <img src="/img/logo.png" alt="새싹마켓 logo" />
               </Link>
             </div>
           </div>

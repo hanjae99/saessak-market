@@ -21,6 +21,7 @@ import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardEditorPage from "./components/board2/BoardEditorPage";
 import BoardViewerPage from "./components/board2/BoardViewerPage";
+import SmsTest from "./components/SmsTest";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -50,6 +51,7 @@ function App() {
         <Route path="/board/write/:boardName?" element={<BoardEditorPage />}></Route>
         <Route path="/board/detail/:boardName/:boardId" element={<BoardViewerPage />}></Route>
         <Route path="/login/oauth2/kakao?" />
+        <Route path="/smstest" element={<SmsTest />} />
       </Routes>
     </div>
   );
