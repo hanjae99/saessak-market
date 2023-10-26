@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -35,7 +37,7 @@ public class BoardController {
   private MemberRepository memberRepository;
 
 
-  @GetMapping("/board/{boardName}/detail/{boardId}")
+  @GetMapping("/{boardName}/detail/{boardId}")
   public ResponseEntity<?> readBoardDetail(@PathVariable("boardName") String boardName,
                                            @PathVariable("boardId") String boardId,
                                            @AuthenticationPrincipal String userId) {
@@ -52,18 +54,29 @@ public class BoardController {
     list.add(boardDTO);
 
     String role = "any";
-
+    String isMaster = "no";
     if (!userId.equals("anonymousUser")) {
       role = boardService.getUserRole(userId);
+      Member member = memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new);
+      if (boardDTO.getWriter().equals(member.getNickName())) {
+        isMaster = "master";
+      }
     }
+
+
+
+
+
+
+
 
     BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
         .list(list)
         .viewerRole(role)
-        .isMaster()
+        .isMaster(isMaster)
         .build();
 
-    return null;
+    return ResponseEntity.ok().body(responseDTO);
   }
 //  title:"", content:"", clickCount:"", recommend:"", regTime:Date.now(), writer:""
 
@@ -123,10 +136,12 @@ public class BoardController {
     log.info(boardDTO.getBoardName());
     board.setBoardName(boardDTO.getBoardName());
     board.setShowStatus(ShowStatus.SHOW);
-    board.setContent(boardDTO.getContent());
     board.setTitle(boardDTO.getTitle());
     Board savedBoard = boardRepository.save(board);
 
+    String content = boardDTO.getContent();
+    List<String> blobUrl = new ArrayList<>();
+    List<String> realUrl = new ArrayList<>();
 
     if (imgs!=null) {
       imgs.forEach(p->{
@@ -137,10 +152,14 @@ public class BoardController {
         } catch (Exception e) {
           throw new RuntimeException(e);
         }
-        savedBoard.setContent(savedBoard.getContent().replace(p.getOriginalFilename().split("\\?")[0],image.getImgUrl()));
+        blobUrl.add(p.getOriginalFilename().split("\\?")[0]);
+        realUrl.add("$back$"+image.getImgUrl());
       });
     }
 
+    for (int i = 0; i < blobUrl.size(); i++) {
+      content = content.replace(blobUrl.get(i), realUrl.get(i));
+    }
 
     return ResponseEntity.ok().body("ok");
 

@@ -17,18 +17,18 @@ const BoardViewerPage = () => {
   const { boardName, boardId } = useParams();
   const bn = boardName !== undefined ? boardName : "main";
   const [data, setData] = useState({title:"", content:"", clickCount:"", recommend:"", regTime:Date.now(), writer:""});
+
+
   useEffect(() => {
     const url = "/board/" + bn + "/detail/" + boardId;
     // console.log("url :", url);
     call(url, "GET").then(response => {
-      // console.log("response",response);
+      console.log("response",response);
       if (response !== undefined) {
-        setData(response.list??response.list[0]);
+        setData(response);
       }
     })
-  }, [boardId])
-
-
+  }, [boardName,boardId])
 
 
 
@@ -47,20 +47,22 @@ const BoardViewerPage = () => {
     navigate('/boardwrite?id=');
   };
 
+  console.log(data.list&&data.list[0]);
+
   return (
     <>
-      <Header />
+      {/* <Header />
       <div className="board-main">
         <div className="board-left">
           <NoticeBoardList />
         </div>
         <div className="board-center">
           <h3>카테고리</h3>
-          <h1>{data.title}</h1>
+          <h1>{data.list&&data.list[0].title}</h1>
           <div className="board-info-head">
-            <span className="board-info-head-left">{data.writer}</span>
-            <span className="board-info-head-center">{data.clickCount},{data.recommend}</span>
-            <span className="board-info-head-right">{new Date(data.regTime).toLocaleString()}</span>
+            <span className="board-info-head-left">{data.list&&data.list[0].writer}</span>
+            <span className="board-info-head-center">{data.list&&data.list[0].clickCount},{data.list&&data.list[0].recommend}</span>
+            <span className="board-info-head-right">{new Date(data.list&&data.list[0].regTime).toLocaleString()}</span>
             <div onClick={handleFix} className="board-info-btn">
               <BsPencil />
               <span className="board-info-btn-text">수정</span>
@@ -71,13 +73,13 @@ const BoardViewerPage = () => {
             </div>
           </div>
           <hr />
-          <div className="info_board">
-            <BoardViewer contents={data.content} />
-          </div>
+          <div className="info_board"> */}
+            <BoardViewer contents={data.list&&data.list[0].content} />
+          {/* </div>
           <CommentViewer isAnonymous={false} parent={'board/main'} parentId={boardId} />
         </div>
         <div className="board-rigth"></div>
-      </div>
+      </div> */}
     </>
   );
 };

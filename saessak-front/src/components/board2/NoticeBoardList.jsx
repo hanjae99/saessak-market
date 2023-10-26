@@ -8,7 +8,7 @@ const NoticeBoardList = () => {
   return (
     <div className="notice-box">
       <div className="menuBtn1">
-        <img src="../../img/leaf2.png" alt="" className="menuBtn1-img" />
+        <img src="/img/leaf2.png" alt="" className="menuBtn1-img" />
       </div>
       <ul className="notice-list">
         <h3 style={{ fontSize: "30px" }} className="board-list-h3">

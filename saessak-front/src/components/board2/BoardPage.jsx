@@ -40,7 +40,7 @@ const BoardPage = () => {
 
 
 
-  const onViewListClick = (e, p) => { navigate('/board/detail/'+boardName+'/' + p.id) }
+  const onViewListClick = (e, p) => { navigate('/board/detail/'+bn+'/' + p.id) }
 
   if (viewData.length < pageSize) {
     const dumy = pageSize - viewData.length;
