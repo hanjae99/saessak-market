@@ -51,7 +51,7 @@ const Header = () => {
     // 카테고리 정보 가져오기
     call("/product/searchcate", "GET").then((response) => {
       // console.log(response.data);
-      if (response.data && response.data != null) {
+      if (response && response.data && response.data != null) {
         setCategoryDTO(response.data);
       }
     });

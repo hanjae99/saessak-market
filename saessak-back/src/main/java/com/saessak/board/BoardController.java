@@ -156,10 +156,13 @@ public class BoardController {
         realUrl.add("$back$"+image.getImgUrl());
       });
     }
-
+    log.info(content);
     for (int i = 0; i < blobUrl.size(); i++) {
       content = content.replace(blobUrl.get(i), realUrl.get(i));
     }
+    log.info(content);
+    savedBoard.setContent(content);
+    boardRepository.save(savedBoard);
 
     return ResponseEntity.ok().body("ok");
 
