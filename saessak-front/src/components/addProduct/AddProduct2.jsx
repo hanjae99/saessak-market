@@ -70,13 +70,10 @@ const AddProduct2 = () => {
 
   const getImgSrc = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     const newImgFile = [...imgFile, file];
 
     setImgFile(newImgFile);
     setImgCount(imgCount + 1);
-
-    console.log(imgFile);
   };
 
   const removeImg = (file) => {
