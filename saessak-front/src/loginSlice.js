@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 
 const login = createSlice({
   name: "login",
   initialState: {
-    id: "",
+    url: "/",
   },
   reducers: {
-    login: (state, action) => {
-      state.id = action.payload;
-    },
-    logout: (state, action) => {
-      state.id = "";
-    },
+    setUrl: (state, action) => {
+      state.url = action.payload;
+    }
   },
 });
+
+
 
 export default login;

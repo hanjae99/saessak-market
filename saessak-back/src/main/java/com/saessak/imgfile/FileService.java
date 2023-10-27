@@ -15,7 +15,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Log
@@ -23,13 +25,23 @@ public class FileService {
 
     public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception{
 
-        File Folder = new File(uploadPath);
-        if (!Folder.exists()) {
+        File folder = new File(uploadPath);
+        if (!folder.exists()) {
             try{
-                if (Folder.mkdir()) {
-                    log.info("이미지 저장 폴더 생성");
+                if (folder.mkdir()) {
+                    log.info("이미지 저장 폴더 생성 성공");
                 } else {
-                    log.info("이미지 저장 폴더 생성 실패");
+
+                    File folder2 = new File(Arrays.stream(uploadPath.split("/")).limit(uploadPath.split("/").length-1).collect(Collectors.joining("/")));
+                    if (folder2.mkdir()) {
+                        if (folder.mkdir()) {
+                            log.info("이미지 저장 폴더 생성 성공");
+                        } else {
+                            log.info("이미지 저장 폴더 생성 실패2");
+                        }
+                    } else {
+                        log.info("이미지 저장 폴더 생성 실패");
+                    }
                 }
             }
             catch(Exception e){

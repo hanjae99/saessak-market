@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../main/Header';
 import NoticeBoardList from './NoticeBoardList';
@@ -20,6 +20,9 @@ const BoardEditorPage = () => {
   const {boardName} = useParams();
   const editorRef = useRef();
 
+  useEffect(()=>{
+    imageList = [];
+  },[])
 
   const onChange = () => {
     setContents(editorRef.current.getInstance().getHTML());
@@ -33,8 +36,8 @@ const BoardEditorPage = () => {
     return false;
   };
 
-  console.log("contests : ",contents);
-  console.log("imageList : ",imageList);
+  // console.log("contests : ",contents);
+  // console.log("imageList : ",imageList);
 
   const onSubmit = (e) => {
     e.preventDefault();
