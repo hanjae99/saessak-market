@@ -23,6 +23,7 @@ import BoardEditorPage from "./components/board2/BoardEditorPage";
 import BoardViewerPage from "./components/board2/BoardViewerPage";
 import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
+import ChatTest from "./components/ChatTest";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -59,6 +60,7 @@ function App() {
         ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
+        <Route path="/chatTest" element={<ChatTest />} />
       </Routes>
     </div>
   );
