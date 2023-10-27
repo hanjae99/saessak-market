@@ -72,6 +72,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.item-info {
+  div {
+    min-width: 55px;
+  }
+}
 
 /* 왼쪽 필터 부분 */
 .filterContainer {

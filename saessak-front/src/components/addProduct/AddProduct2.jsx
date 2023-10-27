@@ -260,6 +260,7 @@ const AddProduct2 = () => {
                   id="wantPlace"
                   readOnly
                   onClick={onClickAddr}
+                  required
                 />
                 <div id="map_add" className="map"></div>
               </div>

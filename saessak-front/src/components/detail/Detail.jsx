@@ -14,8 +14,6 @@ const Detail = () => {
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
   const { kakao, daum } = window;
-  const [map, setMap] = useState();
-  const [marker, setMarker] = useState();
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -40,42 +38,41 @@ const Detail = () => {
       if (response === 1) {
         navigate("/");
       }
-      setDetaildatas(response);
-    });
+      setDetaildatas({ ...detaildatas, response });
 
-    // 지도 가져오기
-    kakao.maps.load(() => {
-      const container = document.getElementById("map_detail");
-      const options = {
-        // center: new kakao.maps.LatLng(33.450701, 126.570667),
-        center: new kakao.maps.LatLng(37.489972, 126.927158),
-        level: 3,
-      };
+      if (response && response.mapData) {
+        // 지도 가져오기
+        kakao.maps.load(() => {
+          const geocoder = new kakao.maps.services.Geocoder();
 
-      setMap(new kakao.maps.Map(container, options));
-      setMarker(new kakao.maps.Marker());
-    });
-  }, [id]);
+          geocoder.addressSearch(response.mapData, function (results, status) {
+            // 정상적으로 검색 완료
+            if (status === kakao.maps.services.Status.OK) {
+              const result = results[0];
 
-  // 상품에 판매하는 주소가 있는 경우
-  if (detaildatas && detaildatas.mapData && map && marker) {
-    const geocoder = new kakao.maps.services.Geocoder();
+              // 해당 주소에 대한 좌표를 받아
+              // const searchPos = new kakao.maps.LatLng(result.y, result.x);
 
-    geocoder.addressSearch(detaildatas.mapData, function (results, status) {
-      // 정상적으로 검색 완료
-      if (status === kakao.maps.services.Status.OK) {
-        const result = results[0];
+              const container = document.getElementById("map_detail");
+              const options = {
+                // center: new kakao.maps.LatLng(33.450701, 126.570667),
+                center: new kakao.maps.LatLng(result.y, result.x),
+                level: 3,
+              };
 
-        // 해당 주소에 대한 좌표를 받아
-        const searchPos = new kakao.maps.LatLng(result.y, result.x);
-        // 지도에 표시
-        map.panTo(searchPos);
-        marker.setMap(null);
-        marker.setPosition(searchPos);
-        marker.setMap(map);
+              const sellMap = new kakao.maps.Map(container, options);
+              const sellMapMarker = new kakao.maps.Marker({
+                position: sellMap.getCenter(),
+              });
+              sellMapMarker.setMap(sellMap);
+            } else {
+              setDetaildatas({ ...detaildatas, mapData: "" });
+            }
+          });
+        });
       }
     });
-  }
+  }, [id]);
 
   // console.log(detaildatas);
   // console.log(detaildatas.productId);
@@ -230,7 +227,24 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <div id="map_detail"></div>
+                <div
+                  id="map_detail"
+                  style={
+                    detaildatas && detaildatas.mapData
+                      ? {
+                          width: "100%",
+                          height: "400px",
+                          borderRadius: "10px",
+                        }
+                      : { width: "100%" }
+                  }
+                >
+                  {detaildatas && detaildatas.mapData ? (
+                    ""
+                  ) : (
+                    <div>거래 희망 장소가 없어요 ㅠㅠ</div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

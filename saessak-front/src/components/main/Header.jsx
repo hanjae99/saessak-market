@@ -4,6 +4,9 @@ import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
 import "./Header.scss";
+import { Button } from "@mui/material";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import PersonIcon from "@mui/icons-material/Person";
 
 const Header = () => {
   const [value, setValue] = useState("");
@@ -113,7 +116,24 @@ const Header = () => {
             </form>
           </div>
           <div className="userBtn">
-            <button onClick={handleLogInAndOut}>
+            <Button
+              variant="text"
+              // color="success"
+              startIcon={<VpnKeyIcon />}
+              onClick={handleLogInAndOut}
+            >
+              {isLogin ? "로그아웃" : "로그인"}
+            </Button>
+            <Button
+              variant="text"
+              startIcon={<PersonIcon />}
+              onClick={() => {
+                navigate("/user/mypage");
+              }}
+            >
+              마이페이지
+            </Button>
+            {/* <button onClick={handleLogInAndOut}>
               {isLogin ? "로그아웃" : "로그인"}
             </button>
             <button
@@ -122,7 +142,7 @@ const Header = () => {
               }}
             >
               마이페이지
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -183,6 +203,13 @@ const Header = () => {
             </div>
           </nav>
         </div>
+        {isLogin ? (
+          <div className="loginedUserId">
+            환영해요, {localStorage.getItem("USERID")} 님
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </header>
   );
