@@ -79,7 +79,7 @@ public class DetailService {
 
 
         //카테고리로 랜덤 데이터 가져옴  productDTOList에 넣어놨음
-        List<CateProductInter> list=productCategoryRepository.categoryRandomData(productCateId.get(0).getCategory().getId() ,productId);
+        List<CateProductInter> list=productCategoryRepository.categoryRandomData(productCateId.get(0).getCategory().getId(), productId);
         List<CategoryProductDTO> productDTOList =new ArrayList<>();
 
         for(CateProductInter productDTO : list){
@@ -120,7 +120,7 @@ public class DetailService {
     }
     public void listget(Long categoryID){
         //카테고리로 랜덤 데이터 가져옴  productDTOList에 넣어놨음
-        List<CateProductInter> list=productCategoryRepository.categoryRandomData(categoryID ,1L);
+        List<CateProductInter> list=productCategoryRepository.categoryRandomData(categoryID, 1L);
         List<CategoryProductDTO> productDTOList =new ArrayList<>();
 
         for(CateProductInter productDTO : list){

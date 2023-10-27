@@ -1,11 +1,18 @@
+import {
+  Pagination,
+  PaginationItem,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import qs from "qs";
 import React, { useCallback, useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { call } from "../../ApiService";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "./ProductList.scss";
-import { call } from "../../ApiService";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();
@@ -21,6 +28,10 @@ const ProductList2 = () => {
   let { category, page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+  // page 초기 값 세팅
+  if (!page) {
+    page = 1;
+  }
   console.log(searchItem);
   console.log(category, page);
 
@@ -31,9 +42,8 @@ const ProductList2 = () => {
       if (response.data && response.data != null) {
         setCategoryDTO(response.data);
       }
-      console.log(categoryDTO);
     });
-  }, []);
+  }, [searchDTO]);
 
   useEffect(() => {
     let request = {
@@ -50,16 +60,16 @@ const ProductList2 = () => {
       request.searchBy = "category_num";
       request.searchQuery = category;
     }
-    call(`/product/search/${page ? page : 0}`, "POST", request).then(
-      (response) => {
-        // if (response.error && response.error != null) {
-        //   alert(response.error);
-        //   return;
-        // }
-        console.log(response);
-        setSearchDTO(response);
-      }
-    );
+    console.log("useEffect!!!!!");
+    console.log(request);
+    call(`/product/search/${page}`, "POST", request).then((response) => {
+      // if (response.error && response.error != null) {
+      //   alert(response.error);
+      //   return;
+      // }
+      console.log(response);
+      setSearchDTO(response);
+    });
   }, [searchItem, category, page]);
 
   // if (categoryDTO && categoryDTO != null) {
@@ -151,6 +161,14 @@ const ProductList2 = () => {
   //   setpageNumLength(pageNumLength + 1);
   // }, [pageNumLength]);
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#90DA6D",
+      },
+    },
+  });
+
   return (
     <div>
       <Header />
@@ -163,11 +181,12 @@ const ProductList2 = () => {
                 <button className="filter" onClick={removeSearch}>
                   {searchItem} <MdClose />
                 </button>
-              ) : category ? (
+              ) : category && categoryDTO && categoryDTO.length > 0 ? (
                 <button className="filter" onClick={removeSearch}>
-                  {categoryDTO &&
+                  {
                     categoryDTO.find((dto) => dto.id === parseFloat(category))
-                      .name}{" "}
+                      .name
+                  }{" "}
                   <MdClose />
                 </button>
               ) : (
@@ -222,10 +241,11 @@ const ProductList2 = () => {
                 ) : category ? (
                   <Link to={"/search?category=" + category}>
                     &gt;{" "}
-                    {
-                      categoryDTO.find((dto) => dto.id === parseFloat(category))
-                        .name
-                    }
+                    {categoryDTO && categoryDTO.length > 0
+                      ? categoryDTO.find(
+                          (dto) => dto.id === parseFloat(category)
+                        ).name
+                      : ""}
                   </Link>
                 ) : (
                   ""
@@ -378,10 +398,7 @@ const ProductList2 = () => {
                     navigate("/detail/" + dto.id);
                   }}
                 >
-                  <img
-                    src={`http://localhost:8888${dto.imgUrl}`}
-                    alt={dto.title}
-                  />
+                  <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
@@ -405,8 +422,8 @@ const ProductList2 = () => {
                 </div>
               ))}
           </div>
-          <div className="moveBtn">
-            {/* <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
+          {/* <div className="moveBtn">
+            <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
               prev
             </button>
             {pageBtns.map((btn) => btn)}
@@ -415,7 +432,45 @@ const ProductList2 = () => {
               disabled={Math.ceil(totalPage / 5) === pageNumLength + 1}
             >
               next
-            </button> */}
+            </button>
+          </div> */}
+          <div className="moveBtn">
+            {category ? (
+              <ThemeProvider theme={theme}>
+                <Pagination
+                  // variant="outlined"
+                  count={searchDTO.totalPages}
+                  color="primary"
+                  page={parseInt(page)}
+                  renderItem={(item) => (
+                    <PaginationItem
+                      component={Link}
+                      to={`/search?category=${category}?page=${item.page}`}
+                      {...item}
+                    />
+                  )}
+                />
+              </ThemeProvider>
+            ) : (
+              <ThemeProvider theme={theme}>
+                <Pagination
+                  count={searchDTO.totalPages}
+                  color="primary"
+                  page={parseInt(page)}
+                  renderItem={(item) => (
+                    <PaginationItem
+                      component={Link}
+                      to={
+                        searchItem
+                          ? `/search/${searchItem}?page=${item.page}`
+                          : `/search?page=${item.page}`
+                      }
+                      {...item}
+                    />
+                  )}
+                />
+              </ThemeProvider>
+            )}
           </div>
         </div>
       </main>

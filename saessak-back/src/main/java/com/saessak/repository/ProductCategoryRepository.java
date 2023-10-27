@@ -26,11 +26,11 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
                     "JOIN image I ON P.product_id = I.product_id " +
                     "WHERE PC.category_id = :categoryId " +
                     "AND P.SELL_STATUS = 'SELL' " +
-                    "AND P.product_id Not In :productId"+
+                    "AND P.product_id != :productId "+
                     "GROUP BY P.product_id " +
                     "ORDER BY RAND() " +
                     "LIMIT 4", nativeQuery = true)
-    List<CateProductInter> categoryRandomData(@Param("categoryId") Long categoryId,@Param("productId") Long ProductId);
+    List<CateProductInter> categoryRandomData(@Param("categoryId") Long categoryId,@Param("productId") Long productId);
 
 
 }

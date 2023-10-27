@@ -2,6 +2,7 @@ package com.saessak.security;
 
 import com.saessak.entity.Member;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ public class TokenProvider {
 
     public String create(Member member){
         Date expireDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
+//        Date expireDate = Date.from(Instant.now().plus(5, ChronoUnit.MINUTES));
 
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
@@ -29,6 +31,20 @@ public class TokenProvider {
                 .compact();
     }
 
+//    public String createSmsToken(String verifyKey){
+//
+//        // 문자 인증 토큰 만료시간
+//        Date expireDate = Date.from(Instant.now().plus(5, ChronoUnit.MINUTES));
+//
+//        return Jwts.builder()
+//                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+//                .setSubject(verifyKey)
+//                .setIssuer("saessak-sms")
+//                .setIssuedAt(new Date())
+//                .setExpiration(expireDate)
+//                .compact();
+//    }
+
     public String validateAndGetUserId(String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET_KEY)
@@ -36,5 +52,14 @@ public class TokenProvider {
                 .getBody();
 
         return claims.getSubject();
+    }
+
+    public Date getExpiration(String token){
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getExpiration();
     }
 }

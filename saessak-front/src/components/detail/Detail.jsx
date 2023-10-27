@@ -13,6 +13,9 @@ const Detail = () => {
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
+  const { kakao, daum } = window;
+  const [map, setMap] = useState();
+  const [marker, setMarker] = useState();
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -39,11 +42,44 @@ const Detail = () => {
       }
       setDetaildatas(response);
     });
+
+    // 지도 가져오기
+    kakao.maps.load(() => {
+      const container = document.getElementById("map_detail");
+      const options = {
+        // center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.489972, 126.927158),
+        level: 3,
+      };
+
+      setMap(new kakao.maps.Map(container, options));
+      setMarker(new kakao.maps.Marker());
+    });
   }, [id]);
 
-  console.log(detaildatas);
-  console.log(detaildatas.productId);
-  console.log(detaildatas.memberDTO.productDTOList);
+  // 상품에 판매하는 주소가 있는 경우
+  if (detaildatas && detaildatas.mapData && map && marker) {
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.addressSearch(detaildatas.mapData, function (results, status) {
+      // 정상적으로 검색 완료
+      if (status === kakao.maps.services.Status.OK) {
+        const result = results[0];
+
+        // 해당 주소에 대한 좌표를 받아
+        const searchPos = new kakao.maps.LatLng(result.y, result.x);
+        // 지도에 표시
+        map.panTo(searchPos);
+        marker.setMap(null);
+        marker.setPosition(searchPos);
+        marker.setMap(map);
+      }
+    });
+  }
+
+  // console.log(detaildatas);
+  // console.log(detaildatas.productId);
+  // console.log(detaildatas.memberDTO.productDTOList);
 
   // const userproduct = useSelector((state) => state.user[1].userproduct);
   // const recommends = product.filter((i) => {
@@ -84,8 +120,8 @@ const Detail = () => {
               {/* <div className="detail-imgBox">
                 <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
               </div> */}
-              {detaildatas.imgUrl && (
-                <DetailCarousel detaildatas={detaildatas.imgUrl} />
+              {detaildatas.imagesUrl && (
+                <DetailCarousel detaildatas={detaildatas.imagesUrl} />
               )}
             </div>
             <div className="detail-productsitem2">
@@ -144,34 +180,47 @@ const Detail = () => {
             <div className="detail-productsitem4">
               <div>
                 <h2>새싹 정보</h2>
-                <div>닉네임: {detaildatas.memberDTO.nickName}</div>
+                <div>
+                  닉네임:{" "}
+                  {detaildatas &&
+                    detaildatas.memberDTO &&
+                    detaildatas.memberDTO.nickName}
+                </div>
               </div>
               <div>
-                <h2>닉네임 님의 다른 판매상품 정보</h2>
+                <h2>
+                  {detaildatas &&
+                    detaildatas.memberDTO &&
+                    detaildatas.memberDTO.nickName}{" "}
+                  님의 다른 판매상품 정보
+                </h2>
                 <div className="detail-imgbox-grid">
-                  {detaildatas.memberDTO.productDTOList
-                    .slice(0, 3)
-                    .map((up) => (
-                      <div className="detail-itembox" key={up.productId}>
-                        <div
-                          className="detail-imgbox1"
-                          onClick={() => {
-                            navigate(`/detail/${up.productId}`);
-                          }}
-                        >
-                          <img
+                  {detaildatas &&
+                    detaildatas.memberDTO &&
+                    detaildatas.memberDTO.productDTOList
+                      .filter((dto) => dto.productId !== id)
+                      .slice(0, 3)
+                      .map((up) => (
+                        <div className="detail-itembox" key={up.productId}>
+                          <div
                             className="detail-imgbox1"
-                            src={up.imgUrl}
-                            alt=""
-                          />
+                            onClick={() => {
+                              navigate(`/detail/${up.productId}`);
+                            }}
+                          >
+                            <img
+                              className="detail-imgbox1"
+                              src={`http://localhost:8888${up.imgUrl}`}
+                              alt=""
+                            />
+                          </div>
+                          <div className="detail-textobx">
+                            <span>{up.title}</span>
+                          </div>
+                          <br />
+                          <span>{up.price}원</span>
                         </div>
-                        <div className="detail-textobx">
-                          <span>{up.title}</span>
-                        </div>
-                        <br />
-                        <span>{up.price}</span>
-                      </div>
-                    ))}
+                      ))}
                 </div>
               </div>
             </div>
@@ -181,7 +230,7 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <Kakao />
+                <div id="map_detail"></div>
               </div>
             </div>
           </div>
@@ -192,26 +241,26 @@ const Detail = () => {
 
               <div className="detail-divRecommend">
                 {detaildatas.categoryProductDTO ? (
-                  detaildatas.categoryProductDTO.slice(0, 4).map((e) => (
+                  detaildatas.categoryProductDTO.map((cp) => (
                     <div
                       className="detail-recommend"
-                      key={e.productId}
+                      key={cp.productId}
                       onClick={() => {
-                        navigate(`/detail/${e.productId}`);
+                        navigate(`/detail/${cp.productId}`);
                       }}
                     >
                       <div className="detail-recommend-img">
                         <img
                           className="detail-recommend-img"
-                          src={e.imgUrl}
+                          src={`http://localhost:8888${cp.imgUrl}`}
                           alt=""
                         />
                       </div>
                       <div className="detail-recommend-name">
-                        <span>{e.title}</span>
+                        <span>{cp.title}</span>
                       </div>
                       <div>
-                        <span>{e.price}</span>
+                        <span>{cp.price}원</span>
                       </div>
                     </div>
                   ))

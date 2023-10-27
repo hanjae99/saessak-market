@@ -1,7 +1,7 @@
 package com.saessak.login.controller;
 
+import com.saessak.dto.ResponseDTO;
 import com.saessak.entity.Member;
-import com.saessak.game.dto.ResponseDTO;
 import com.saessak.login.dto.LoginDTO;
 import com.saessak.login.service.LoginService;
 import com.saessak.repository.MemberRepository;
@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +29,7 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping
-    public ResponseEntity<?> athunticate(@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<?> authenticate(@RequestBody LoginDTO loginDTO){
         Member user = loginService.getByCredentials(
                 loginDTO.getUserId(), loginDTO.getPassword(), passwordEncoder);
 
@@ -39,6 +42,7 @@ public class LoginController {
                     .name(user.getName())
                     .role(user.getRole())
                     .token(token)
+                    .expiration(tokenProvider.getExpiration(token))
                     .build();
             return ResponseEntity.ok().body(responseUserDTO);
         }else {
