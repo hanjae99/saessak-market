@@ -45,7 +45,7 @@ const Detail = () => {
 
     // 지도 가져오기
     kakao.maps.load(() => {
-      const container = document.getElementById("map");
+      const container = document.getElementById("map_detail");
       const options = {
         // center: new kakao.maps.LatLng(33.450701, 126.570667),
         center: new kakao.maps.LatLng(37.489972, 126.927158),
@@ -230,7 +230,7 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <div id="map"></div>
+                <div id="map_detail"></div>
               </div>
             </div>
           </div>

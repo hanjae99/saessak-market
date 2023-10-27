@@ -3,7 +3,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { call, uploadProduct } from "../../ApiService";
@@ -30,6 +30,7 @@ const UpdateProduct2 = () => {
   const { kakao, daum } = window;
   const [map, setMap] = useState();
   const [marker, setMarker] = useState();
+  const placeTag = useRef();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
@@ -59,7 +60,7 @@ const UpdateProduct2 = () => {
 
           // 지도 가져오기
           kakao.maps.load(() => {
-            const container = document.getElementById("map");
+            const container = document.getElementById("map_update");
             const options = {
               // center: new kakao.maps.LatLng(33.450701, 126.570667),
               center: new kakao.maps.LatLng(37.489972, 126.927158),
@@ -241,13 +242,14 @@ const UpdateProduct2 = () => {
             marker.setMap(null);
             marker.setPosition(searchPos);
             marker.setMap(map);
+            setProductMapData(addr);
           }
         });
       },
     }).open();
   };
 
-  // 상품에 판매하는 주소가 있는 경우
+  // 상품에 판매하는 주소가 이미 있는 경우
   if (productMapData && map && marker) {
     const geocoder = new kakao.maps.services.Geocoder();
 
@@ -267,180 +269,174 @@ const UpdateProduct2 = () => {
     });
   }
 
-  let content = <div></div>;
-
-  if (isLogin) {
-    content = (
-      <div>
-        <Header />
-        <main>
-          <div className="addProductContainer">
-            <div className="addContents">
-              <form
-                onSubmit={handleSubmit}
-                encType="multipart/form-data"
-                className="content-form"
-                method="POST"
-              >
-                <div className="imgBoxTitle">
-                  <h3>새싹 이미지를 넣어주세요!</h3>
-                </div>
-                <div className="imgUploadBox">
-                  <div>
-                    <div className="labelButton">
-                      <label htmlFor="chooseFile">저를 클릭해봐요!</label>
-                    </div>
-
-                    <input
-                      type="file"
-                      name="chooseFile"
-                      id="chooseFile"
-                      accept="image/*"
-                      onChange={getImgSrc}
-                      disabled={imgCount === 3}
-                    />
-                  </div>
-                  <div className="previewImg">
-                    {imageDTOList.map((imgDTO) => (
-                      <div className="imgItem" key={imgDTO.imgUrl}>
-                        <img
-                          className="imgItem"
-                          src={
-                            imgDTO.imgUrl.includes("/images/product")
-                              ? API_BASE_URL + imgDTO.imgUrl
-                              : imgDTO.imgUrl
-                          }
-                          alt="예시이미지"
-                        />
-                        <button onClick={() => removeImg(imgDTO)}>삭제</button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="addCategory">
-                  <h3>어떤 종류의 새싹일까요??</h3>
-                  <FormControl
-                    required
-                    sx={{ m: 1, minWidth: 140 }}
-                    size="small"
-                  >
-                    <InputLabel id="demo-simple-select-required-label">
-                      종류를 선택!
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-required-label"
-                      id="demo-simple-select-required"
-                      value={selectedCate === 0 ? "" : selectedCate}
-                      // label="Age *"
-                      onChange={handleSelect}
-                    >
-                      {categoryDTO.map((cate) => (
-                        <MenuItem value={cate.id} key={cate.id}>
-                          {cate.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <FormHelperText>
-                      꼭 선택해주세요! (필수 입력값)
-                    </FormHelperText>
-                  </FormControl>
-                </div>
-                <div className="addSellStatus">
-                  <h3>현재 새싹의 상태에요!</h3>
-                  <FormControl
-                    required
-                    sx={{ m: 1, minWidth: 140 }}
-                    size="small"
-                  >
-                    <InputLabel id="demo-simple-select-required-label">
-                      판매상태를 선택!
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-required-label"
-                      id="demo-simple-select-required"
-                      value={productSellStatus === "" ? "" : productSellStatus}
-                      // label="Age *"
-                      onChange={handleSellStatus}
-                    >
-                      <MenuItem value="SELL">판매중</MenuItem>
-                      <MenuItem value="SOLD_OUT">판매완료</MenuItem>
-                      <MenuItem value="HIDDEN">숨김상태</MenuItem>
-                    </Select>
-                    <FormHelperText>
-                      꼭 선택해주세요! (필수 입력값)
-                    </FormHelperText>
-                  </FormControl>
-                </div>
-                <div className="addName">
-                  <h3>새싹의 이름은 뭘까요??</h3>
-                  <input
-                    type="text"
-                    placeholder="이름을 지어주세요!"
-                    name="name"
-                    value={productTitle}
-                    onChange={handleTitle}
-                    required
-                  />
-                </div>
-                <div className="addPrice">
-                  <h3>새싹의 가격은 얼마일까요??</h3>
-                  <input
-                    type="number"
-                    placeholder="과연 얼마?"
-                    name="price"
-                    value={productPrice}
-                    onChange={handlePrice}
-                    required
-                  />
-                </div>
-                <div className="addLocal">
-                  <h3>새 인연을 만날 장소를 정해요!</h3>
-                  <input
-                    type="text"
-                    placeholder="거래희망 지역을 알려주세요!"
-                    name="wantPlace"
-                    id="wantPlace"
-                    readOnly
-                    value={productMapData}
-                    onChange={handleMapData}
-                    onClick={onClickAddr}
-                  />
-                  <div id="map"></div>
-                </div>
-                <div className="addText">
-                  <h3>새싹에 대해 자랑해주세요!</h3>
-                  <textarea
-                    name="text"
-                    id=""
-                    cols=""
-                    rows="10"
-                    placeholder="새싹의 정보를 알려주세요!"
-                    onChange={handleContent}
-                    value={productContent}
-                  ></textarea>
-                </div>
-                <div className="submitBtn">
-                  <button type="submit">새싹 심기!</button>
-                  <button
-                    type="reset"
-                    onClick={() => {
-                      const resetImgFile = [];
-                      setImgFile(resetImgFile);
-                    }}
-                  >
-                    취소하기
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+  // 로그인 하지 않은 유저
+  if (
+    localStorage.getItem("ACCESS_TOKEN") === null ||
+    localStorage.getItem("ACCESS_TOKEN") === ""
+  ) {
+    navigate("/login");
   }
 
-  return content;
+  return (
+    <div>
+      <Header />
+      <main>
+        <div className="addProductContainer">
+          <div className="addContents">
+            <form
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="content-form"
+              method="POST"
+            >
+              <div className="imgBoxTitle">
+                <h3>새싹 이미지를 넣어주세요!</h3>
+              </div>
+              <div className="imgUploadBox">
+                <div>
+                  <div className="labelButton">
+                    <label htmlFor="chooseFile">저를 클릭해봐요!</label>
+                  </div>
+
+                  <input
+                    type="file"
+                    name="chooseFile"
+                    id="chooseFile"
+                    accept="image/*"
+                    onChange={getImgSrc}
+                    disabled={imgCount === 3}
+                  />
+                </div>
+                <div className="previewImg">
+                  {imageDTOList.map((imgDTO) => (
+                    <div className="imgItem" key={imgDTO.imgUrl}>
+                      <img
+                        className="imgItem"
+                        src={
+                          imgDTO.imgUrl.includes("/images/product")
+                            ? API_BASE_URL + imgDTO.imgUrl
+                            : imgDTO.imgUrl
+                        }
+                        alt="예시이미지"
+                      />
+                      <button onClick={() => removeImg(imgDTO)}>삭제</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="addCategory">
+                <h3>어떤 종류의 새싹일까요??</h3>
+                <FormControl required sx={{ m: 1, minWidth: 140 }} size="small">
+                  <InputLabel id="demo-simple-select-required-label">
+                    종류를 선택!
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-required-label"
+                    id="demo-simple-select-required"
+                    value={selectedCate === 0 ? "" : selectedCate}
+                    // label="Age *"
+                    onChange={handleSelect}
+                  >
+                    {categoryDTO.map((cate) => (
+                      <MenuItem value={cate.id} key={cate.id}>
+                        {cate.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>
+                    꼭 선택해주세요! (필수 입력값)
+                  </FormHelperText>
+                </FormControl>
+              </div>
+              <div className="addSellStatus">
+                <h3>현재 새싹의 상태에요!</h3>
+                <FormControl required sx={{ m: 1, minWidth: 140 }} size="small">
+                  <InputLabel id="demo-simple-select-required-label">
+                    판매상태를 선택!
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-required-label"
+                    id="demo-simple-select-required"
+                    value={productSellStatus === "" ? "" : productSellStatus}
+                    // label="Age *"
+                    onChange={handleSellStatus}
+                  >
+                    <MenuItem value="SELL">판매중</MenuItem>
+                    <MenuItem value="SOLD_OUT">판매완료</MenuItem>
+                    <MenuItem value="HIDDEN">숨김상태</MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    꼭 선택해주세요! (필수 입력값)
+                  </FormHelperText>
+                </FormControl>
+              </div>
+              <div className="addName">
+                <h3>새싹의 이름은 뭘까요??</h3>
+                <input
+                  type="text"
+                  placeholder="이름을 지어주세요!"
+                  name="name"
+                  value={productTitle}
+                  onChange={handleTitle}
+                  required
+                />
+              </div>
+              <div className="addPrice">
+                <h3>새싹의 가격은 얼마일까요??</h3>
+                <input
+                  type="number"
+                  placeholder="과연 얼마?"
+                  name="price"
+                  value={productPrice}
+                  onChange={handlePrice}
+                  required
+                />
+              </div>
+              <div className="addLocal">
+                <h3>새 인연을 만날 장소를 정해요!</h3>
+                <input
+                  type="text"
+                  placeholder="거래희망 지역을 알려주세요!"
+                  name="wantPlace"
+                  id="wantPlace"
+                  readOnly
+                  value={productMapData}
+                  onChange={handleMapData}
+                  onClick={onClickAddr}
+                />
+                <div id="map_update" className="map"></div>
+              </div>
+              <div className="addText">
+                <h3>새싹에 대해 자랑해주세요!</h3>
+                <textarea
+                  name="text"
+                  id=""
+                  cols=""
+                  rows="10"
+                  placeholder="새싹의 정보를 알려주세요!"
+                  onChange={handleContent}
+                  value={productContent}
+                ></textarea>
+              </div>
+              <div className="submitBtn">
+                <button type="submit">새싹 심기!</button>
+                <button
+                  type="reset"
+                  onClick={() => {
+                    const resetImgFile = [];
+                    setImgFile(resetImgFile);
+                  }}
+                >
+                  취소하기
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default UpdateProduct2;
