@@ -41,7 +41,7 @@
   height: 35px;
   color: black;
 }
-.tr:nth-child(odd) {
+.tr:nth-child(2n) {
   background: #eaeaed;
 }
 .table,

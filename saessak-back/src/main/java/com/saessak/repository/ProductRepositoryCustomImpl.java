@@ -122,7 +122,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         productFormDTO.setSellStatus(searchedProduct.getSellStatus());
         productFormDTO.setMapData(searchedProduct.getMapData());
         productFormDTO.setImageDTOList(imageDTOList);
-        productFormDTO.setCategoryId(searchedProductCate.getId());
+        productFormDTO.setCategoryId(searchedProductCate.getCategory().getId());
 
         return productFormDTO;
 

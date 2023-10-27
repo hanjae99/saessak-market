@@ -19,6 +19,9 @@ import { Layout } from "./components/kimjin/layout";
 import Main from "./components/main/Main";
 import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
+import BoardEditorPage from "./components/board2/BoardEditorPage";
+import BoardViewerPage from "./components/board2/BoardViewerPage";
+import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
 
 function App() {
@@ -45,9 +48,17 @@ function App() {
         <Route path="/boardmain/ntc/:id?" element={<BoardNtcInfo />}></Route>
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
         <Route path="/chatting" element={<Chatting />}></Route>
-        <Route path="/board" element={<BoardPage />}></Route>
-        <Route path="/board/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
+        <Route
+          path="/board/write/:boardName?"
+          element={<BoardEditorPage />}
+        ></Route>
+        <Route
+          path="/board/detail/:boardName/:boardId"
+          element={<BoardViewerPage />}
+        ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
+        <Route path="/smstest" element={<SmsTest />} />
       </Routes>
     </div>
   );

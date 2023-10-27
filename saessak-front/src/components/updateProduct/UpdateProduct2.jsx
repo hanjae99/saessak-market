@@ -10,6 +10,7 @@ import { call, uploadProduct } from "../../ApiService";
 import "../addProduct/AddProduct.scss";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const UpdateProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);
@@ -26,13 +27,16 @@ const UpdateProduct2 = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [categoryDTO, setCategoryDTO] = useState([]);
   const [selectedCate, setSelectedCate] = useState(0);
+  const { kakao, daum } = window;
+  const [map, setMap] = useState();
+  const [marker, setMarker] = useState();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken !== "") {
       // 토큰 유효시간 검사
       const expiration = localStorage.getItem("EXPIREDATE");
-      if (expiration && expiration != "") {
+      if (expiration && expiration !== "") {
         const now = new Date().getTime();
         // 토큰 만료
         if (now >= Date.parse(expiration)) {
@@ -51,6 +55,19 @@ const UpdateProduct2 = () => {
             if (response.data && response.data != null) {
               setCategoryDTO(response.data);
             }
+          });
+
+          // 지도 가져오기
+          kakao.maps.load(() => {
+            const container = document.getElementById("map");
+            const options = {
+              // center: new kakao.maps.LatLng(33.450701, 126.570667),
+              center: new kakao.maps.LatLng(37.489972, 126.927158),
+              level: 3,
+            };
+
+            setMap(new kakao.maps.Map(container, options));
+            setMarker(new kakao.maps.Marker());
           });
 
           call("/product/searchone", "POST", { id: id }).then((response) => {
@@ -200,6 +217,56 @@ const UpdateProduct2 = () => {
     console.log(e.target.value);
   };
 
+  const onClickAddr = () => {
+    // 주소 -> 좌표 변환 객체 생성
+    const geocoder = new kakao.maps.services.Geocoder();
+    // 주소 검색
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 검색한 주소명
+        const addr = data.address;
+
+        // 주소 정보를 해당 input 태그에 입력
+        document.getElementById("wantPlace").value = addr;
+        // 주소로 상세 정보 검색
+        geocoder.addressSearch(addr, function (results, status) {
+          // 정상적으로 검색 완료
+          if (status === kakao.maps.services.Status.OK) {
+            const result = results[0];
+
+            // 해당 주소에 대한 좌표를 받아
+            const searchPos = new kakao.maps.LatLng(result.y, result.x);
+            // 지도에 표시
+            map.panTo(searchPos);
+            marker.setMap(null);
+            marker.setPosition(searchPos);
+            marker.setMap(map);
+          }
+        });
+      },
+    }).open();
+  };
+
+  // 상품에 판매하는 주소가 있는 경우
+  if (productMapData && map && marker) {
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.addressSearch(productMapData, function (results, status) {
+      // 정상적으로 검색 완료
+      if (status === kakao.maps.services.Status.OK) {
+        const result = results[0];
+
+        // 해당 주소에 대한 좌표를 받아
+        const searchPos = new kakao.maps.LatLng(result.y, result.x);
+        // 지도에 표시
+        map.panTo(searchPos);
+        marker.setMap(null);
+        marker.setPosition(searchPos);
+        marker.setMap(map);
+      }
+    });
+  }
+
   let content = <div></div>;
 
   if (isLogin) {
@@ -240,7 +307,7 @@ const UpdateProduct2 = () => {
                           className="imgItem"
                           src={
                             imgDTO.imgUrl.includes("/images/product")
-                              ? "http://localhost:8888" + imgDTO.imgUrl
+                              ? API_BASE_URL + imgDTO.imgUrl
                               : imgDTO.imgUrl
                           }
                           alt="예시이미지"
@@ -318,7 +385,7 @@ const UpdateProduct2 = () => {
                 <div className="addPrice">
                   <h3>새싹의 가격은 얼마일까요??</h3>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="과연 얼마?"
                     name="price"
                     value={productPrice}
@@ -332,9 +399,13 @@ const UpdateProduct2 = () => {
                     type="text"
                     placeholder="거래희망 지역을 알려주세요!"
                     name="wantPlace"
+                    id="wantPlace"
+                    readOnly
                     value={productMapData}
                     onChange={handleMapData}
+                    onClick={onClickAddr}
                   />
+                  <div id="map"></div>
                 </div>
                 <div className="addText">
                   <h3>새싹에 대해 자랑해주세요!</h3>

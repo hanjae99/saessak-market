@@ -1,10 +1,13 @@
 package com.saessak.board;
 
 import com.querydsl.core.annotations.QueryProjection;
+import com.saessak.constant.ShowStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 
 @Data
@@ -17,7 +20,11 @@ public class BoardDTO {
   private String content;
   private Integer clickCount;
   private Integer recommend;
-  private String showStatus;
+  private ShowStatus showStatus;
+  private LocalDateTime regTime;
+  private LocalDateTime updateTime;
+
+  private String writer;
 
   @QueryProjection
   public BoardDTO(
@@ -27,7 +34,10 @@ public class BoardDTO {
       String content,
       Integer clickCount,
       Integer recommend,
-      String showStatus
+      ShowStatus showStatus,
+      LocalDateTime regTime,
+      LocalDateTime updateTime,
+      String writer
       ) {
 
     this.id = id;
@@ -37,5 +47,8 @@ public class BoardDTO {
     this.clickCount = clickCount;
     this.recommend = recommend;
     this.showStatus = showStatus;
+    this.regTime = regTime;
+    this.updateTime = updateTime;
+    this.writer = writer;
   }
 }

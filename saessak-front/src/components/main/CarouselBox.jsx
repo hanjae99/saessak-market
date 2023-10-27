@@ -4,6 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const CarouselBox = () => {
   // const state = useSelector((state) => state.product);
@@ -45,7 +46,7 @@ const CarouselBox = () => {
   const imageBox = randomDTO.map((dto) => (
     <div key={dto.id} className="slide-item">
       <div>
-        <img src={`http://localhost:8888${dto.imgUrl}`} alt={dto.title} />
+        <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
       </div>
       <div className="slide-textBox">
         <div className="slide-title">
