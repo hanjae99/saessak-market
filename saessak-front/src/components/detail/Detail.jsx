@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { createElement, useEffect, useState } from "react";
 import "./Detail.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
 import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
+import KakaoMap from "./KakaoMap";
 
 const Detail = () => {
   const { id } = useParams();
@@ -29,42 +30,12 @@ const Detail = () => {
     mapData: "",
     categoryProductDTO: [],
   });
-  const [map, setMap] = useState();
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
       console.log(response);
       if (response === 1) {
         navigate("/");
-      }
-
-      if (response && response.mapData) {
-        // 지도 가져오기
-        kakao.maps.load(() => {
-          const geocoder = new kakao.maps.services.Geocoder();
-
-          geocoder.addressSearch(response.mapData, function (results, status) {
-            // 정상적으로 검색 완료
-            if (status === kakao.maps.services.Status.OK) {
-              const result = results[0];
-
-              const container = document.getElementById("map_detail");
-              const options = {
-                // center: new kakao.maps.LatLng(33.450701, 126.570667),
-                center: new kakao.maps.LatLng(result.y, result.x),
-                level: 3,
-              };
-              // const searchPos = new kakao.maps.LatLng(result.y, result.x);
-
-              const sellMap = new kakao.maps.Map(container, options);
-              const sellMapMarker = new kakao.maps.Marker({
-                position: sellMap.getCenter(),
-              });
-              sellMapMarker.setMap(sellMap);
-              setMap(sellMap);
-            }
-          });
-        });
       }
 
       setDetaildatas(response);
@@ -228,9 +199,11 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <div id="map_detail" style={{ width: "100%", height: "400px" }}>
-                  {map && <div>판매 희망 지역이 등록되지 않았어요 ㅠㅠ</div>}
-                </div>
+                {detaildatas.mapData !== "" ? (
+                  <KakaoMap mapData={detaildatas.mapData} />
+                ) : (
+                  <div>등록된 판매장소가 없어요 ㅠㅠ</div>
+                )}
               </div>
             </div>
           </div>

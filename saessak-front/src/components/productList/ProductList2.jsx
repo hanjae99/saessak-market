@@ -39,6 +39,7 @@ const ProductList2 = () => {
   const [searchDTO, setSearchDTO] = useState({});
   const [sellChecked, setSellChecked] = useState(true);
   const [soldOutChecked, setSoldOutChecked] = useState(false);
+  const [sortBy, setSortBy] = useState("Date");
 
   const options = ["최신순", "찜순", "조회순"];
 
@@ -73,6 +74,7 @@ const ProductList2 = () => {
       searchBy: "",
       searchQuery: "",
       sellStatus: null,
+      sortBy: sortBy,
     };
 
     if (sellChecked && soldOutChecked) {
@@ -96,9 +98,9 @@ const ProductList2 = () => {
     call(`/product/search/${page}`, "POST", request).then((response) => {
       console.log(response);
       setSearchDTO(response);
-      setSelectedIndex(0);
+      // setSelectedIndex(0);
     });
-  }, [searchItem, category, page, sellChecked, soldOutChecked]);
+  }, [searchItem, category, page, sellChecked, soldOutChecked, sortBy]);
 
   const removeSearch = useCallback(() => {
     navigate("/search");
@@ -118,41 +120,44 @@ const ProductList2 = () => {
     setSoldOutChecked(!soldOutChecked);
   };
 
-  const sortByDate = () => {
-    const newSearchDTO = searchDTO;
-    searchDTO.content.sort((a, b) => (a.updateTime < b.updateTime ? 1 : -1));
+  // const sortByDate = () => {
+  //   const newSearchDTO = searchDTO;
+  //   searchDTO.content.sort((a, b) => (a.updateTime < b.updateTime ? 1 : -1));
 
-    setSearchDTO(newSearchDTO);
-  };
+  //   setSearchDTO(newSearchDTO);
+  // };
 
-  const sortByWish = () => {
-    const newSearchDTO = searchDTO;
-    searchDTO.content.sort((a, b) => (a.wishedCount < b.wishedCount ? 1 : -1));
+  // const sortByWish = () => {
+  //   const newSearchDTO = searchDTO;
+  //   searchDTO.content.sort((a, b) => (a.wishedCount < b.wishedCount ? 1 : -1));
 
-    setSearchDTO(newSearchDTO);
-  };
+  //   setSearchDTO(newSearchDTO);
+  // };
 
-  const sortByClick = () => {
-    const newSearchDTO = searchDTO;
-    searchDTO.content.sort((a, b) =>
-      a.clickedCount < b.clickedCount ? 1 : -1
-    );
+  // const sortByClick = () => {
+  //   const newSearchDTO = searchDTO;
+  //   searchDTO.content.sort((a, b) =>
+  //     a.clickedCount < b.clickedCount ? 1 : -1
+  //   );
 
-    setSearchDTO(newSearchDTO);
-  };
+  //   setSearchDTO(newSearchDTO);
+  // };
 
   const handleMenuItemClick = (e, index) => {
-    setSelectedIndex(index);
     setOpen(false);
+    setSelectedIndex(index);
     if (index === 0) {
       console.log("최신순");
-      sortByDate();
+      // sortByDate();
+      setSortBy("Date");
     } else if (index === 1) {
       console.log("찜순");
-      sortByWish();
+      // sortByWish();
+      setSortBy("Wish");
     } else if (index === 2) {
       console.log("조회순");
-      sortByClick();
+      // sortByClick();
+      setSortBy("Click");
     }
   };
 
