@@ -23,14 +23,20 @@ public class MainProductFormDTO {
 
     private String imgUrl;
 
+    private Integer clickedCount;
+
+    private Integer wishedCount;
+
     private LocalDateTime updateTime;
 
     @QueryProjection
-    public MainProductFormDTO(Long id, String title, Integer price, String imgUrl, LocalDateTime updateTime) {
+    public MainProductFormDTO(Long id, String title, Integer price, String imgUrl, Integer clickedCount, Integer wishedCount, LocalDateTime updateTime) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.imgUrl = imgUrl;
+        this.clickedCount = clickedCount;
+        this.wishedCount = wishedCount;
         this.updateTime = updateTime;
     }
 }

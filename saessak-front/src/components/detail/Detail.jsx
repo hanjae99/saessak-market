@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Detail.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
-import Kakao from "./Kakao";
 import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
@@ -13,9 +11,7 @@ const Detail = () => {
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
-  const { kakao, daum } = window;
-  const [map, setMap] = useState();
-  const [marker, setMarker] = useState();
+  const { kakao } = window;
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -33,6 +29,7 @@ const Detail = () => {
     mapData: "",
     categoryProductDTO: [],
   });
+  const [map, setMap] = useState();
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
@@ -40,42 +37,39 @@ const Detail = () => {
       if (response === 1) {
         navigate("/");
       }
+
+      if (response && response.mapData) {
+        // 지도 가져오기
+        kakao.maps.load(() => {
+          const geocoder = new kakao.maps.services.Geocoder();
+
+          geocoder.addressSearch(response.mapData, function (results, status) {
+            // 정상적으로 검색 완료
+            if (status === kakao.maps.services.Status.OK) {
+              const result = results[0];
+
+              const container = document.getElementById("map_detail");
+              const options = {
+                // center: new kakao.maps.LatLng(33.450701, 126.570667),
+                center: new kakao.maps.LatLng(result.y, result.x),
+                level: 3,
+              };
+              // const searchPos = new kakao.maps.LatLng(result.y, result.x);
+
+              const sellMap = new kakao.maps.Map(container, options);
+              const sellMapMarker = new kakao.maps.Marker({
+                position: sellMap.getCenter(),
+              });
+              sellMapMarker.setMap(sellMap);
+              setMap(sellMap);
+            }
+          });
+        });
+      }
+
       setDetaildatas(response);
     });
-
-    // 지도 가져오기
-    kakao.maps.load(() => {
-      const container = document.getElementById("map_detail");
-      const options = {
-        // center: new kakao.maps.LatLng(33.450701, 126.570667),
-        center: new kakao.maps.LatLng(37.489972, 126.927158),
-        level: 3,
-      };
-
-      setMap(new kakao.maps.Map(container, options));
-      setMarker(new kakao.maps.Marker());
-    });
   }, [id]);
-
-  // 상품에 판매하는 주소가 있는 경우
-  if (detaildatas && detaildatas.mapData && map && marker) {
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    geocoder.addressSearch(detaildatas.mapData, function (results, status) {
-      // 정상적으로 검색 완료
-      if (status === kakao.maps.services.Status.OK) {
-        const result = results[0];
-
-        // 해당 주소에 대한 좌표를 받아
-        const searchPos = new kakao.maps.LatLng(result.y, result.x);
-        // 지도에 표시
-        map.panTo(searchPos);
-        marker.setMap(null);
-        marker.setPosition(searchPos);
-        marker.setMap(map);
-      }
-    });
-  }
 
   // console.log(detaildatas);
   // console.log(detaildatas.productId);
@@ -120,8 +114,10 @@ const Detail = () => {
               {/* <div className="detail-imgBox">
                 <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
               </div> */}
-              {detaildatas.imagesUrl && (
+              {detaildatas && detaildatas.imagesUrl ? (
                 <DetailCarousel detaildatas={detaildatas.imagesUrl} />
+              ) : (
+                ""
               )}
             </div>
             <div className="detail-productsitem2">
@@ -155,7 +151,7 @@ const Detail = () => {
                 </button>
               </div>
               <div>
-                {detaildatas.isWriter && (
+                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
                   <button
                     onClick={() => {
                       navigate("/updateproduct/" + id);
@@ -164,6 +160,8 @@ const Detail = () => {
                   >
                     상품 수정
                   </button>
+                ) : (
+                  ""
                 )}
               </div>
             </div>
@@ -230,7 +228,9 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <div id="map_detail"></div>
+                <div id="map_detail" style={{ width: "100%", height: "400px" }}>
+                  {map && <div>판매 희망 지역이 등록되지 않았어요 ㅠㅠ</div>}
+                </div>
               </div>
             </div>
           </div>

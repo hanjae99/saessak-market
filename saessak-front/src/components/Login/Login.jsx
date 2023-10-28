@@ -35,6 +35,7 @@ const Login = () => {
         } else {
           localStorage.setItem("ACCESS_TOKEN", response.token);
           localStorage.setItem("EXPIREDATE", response.expiration);
+          localStorage.setItem("USERID", response.userId);
           console.log("response : ", response);
           if (response.role === "ADMIN") {
             return (window.location.href = "/admin");
@@ -124,7 +125,7 @@ client_id=${"a72ff07499a78a559bb7e6bccb465597"}&redirect_uri=${"http://localhost
               </p>
             )}
             <div className="login-idpwd">
-              <span>아이디찾기</span>| <span>비밀번호 찾기</span>
+              <span>아이디찾기</span>|<span> 비밀번호 찾기</span>
             </div>
             <div className="login-button-container">
               <div>

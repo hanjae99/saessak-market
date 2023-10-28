@@ -1,5 +1,6 @@
 package com.saessak.repository;
 
+import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -31,6 +32,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     private BooleanExpression searchSellStatusEq(SellStatus sellStatus){
         if (sellStatus == null){
             sellStatus = SellStatus.SELL;
+        }else if (sellStatus == SellStatus.SELL_AND_SOLD_OUT){
+            return QProduct.product.sellStatus.in(SellStatus.SELL, SellStatus.SOLD_OUT);
         }
         return QProduct.product.sellStatus.eq(sellStatus);
     }
@@ -52,6 +55,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         QProduct product = QProduct.product;
         QImage image = QImage.image;
         QProductCategory productCategory = QProductCategory.productCategory;
+        QWishList wishList = QWishList.wishList;
 
         List<ProductDTO> content = queryFactory
                 .select(new QProductDTO(
@@ -60,20 +64,32 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         product.price,
                         product.sellStatus,
                         image.imgUrl,
+                        product.clickCount,
+                        Expressions.asNumber(0),
                         product.regTime,
                         product.updateTime,
-                        product.title,
-                        product.title
+                        Expressions.asString(productDTO.getSearchBy()),
+                        Expressions.asString(productDTO.getSearchQuery())
                 ))
                 .from(product, image, productCategory)
                 .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
                         productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .groupBy(product.id)
-                .orderBy(product.id.desc())
+                .orderBy(product.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
+        // 찜 수 조회
+        for (ProductDTO dto : content){
+            Long wishedCount = queryFactory
+                    .select(wishList.id.count())
+                    .from(wishList)
+                    .where(wishList.product.id.eq(dto.getId()))
+                    .fetchOne();
+            dto.setWishedCount(wishedCount.intValue());
+        }
 
         long total = queryFactory.select(product.id.countDistinct()).from(product, image, productCategory)
                 .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
@@ -139,7 +155,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     public List<MainProductFormDTO> getRandomProduct() {
         QProduct product = QProduct.product;
         QImage image = QImage.image;
-
+        QWishList wishList = QWishList.wishList;
 
         List<MainProductFormDTO> content = queryFactory
                 .select(new QMainProductFormDTO(
@@ -147,6 +163,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         product.title,
                         product.price,
                         image.imgUrl,
+                        product.clickCount,
+                        Expressions.asNumber(0),
                         product.updateTime
                 ))
                 .from(image)
@@ -157,6 +175,16 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .limit(10)
                 .fetch();
 
+        // 찜 수 조회
+        for (MainProductFormDTO dto : content){
+            Long wishedCount = queryFactory
+                    .select(wishList.id.count())
+                    .from(wishList)
+                    .where(wishList.product.id.eq(dto.getId()))
+                    .fetchOne();
+            dto.setWishedCount(wishedCount.intValue());
+        }
+
         return content;
     }
 
@@ -164,6 +192,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     public List<MainProductFormDTO> getNewestProduct() {
         QProduct product = QProduct.product;
         QImage image = QImage.image;
+        QWishList wishList = QWishList.wishList;
 
         List<MainProductFormDTO> content = queryFactory
                 .select(new QMainProductFormDTO(
@@ -171,6 +200,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         product.title,
                         product.price,
                         image.imgUrl,
+                        product.clickCount,
+                        Expressions.asNumber(0),
                         product.updateTime
                 ))
                 .from(image)
@@ -180,6 +211,16 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .orderBy(product.updateTime.desc())
                 .limit(4)
                 .fetch();
+
+        // 찜 수 조회
+        for (MainProductFormDTO dto : content){
+            Long wishedCount = queryFactory
+                    .select(wishList.id.count())
+                    .from(wishList)
+                    .where(wishList.product.id.eq(dto.getId()))
+                    .fetchOne();
+            dto.setWishedCount(wishedCount.intValue());
+        }
 
         return content;
     }

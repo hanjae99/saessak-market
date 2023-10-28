@@ -4,14 +4,17 @@ import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
 import "./Header.scss";
-import { useDispatch } from "react-redux";
+import { Button } from "@mui/material";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import PersonIcon from "@mui/icons-material/Person";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 const Header = () => {
   const [value, setValue] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const [categoryDTO, setCategoryDTO] = useState([]);
-  const dispatch = useDispatch();
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -65,15 +68,14 @@ const Header = () => {
   const handleLogInAndOut = (e) => {
     if (isLogin) {
       localStorage.setItem("ACCESS_TOKEN", "");
+      localStorage.setItem("EXPIREDATE", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
       navigate("/");
     } else {
-      dispatch({type:'login/setUrl',payload:window.location.pathname});
       navigate("/login");
     }
   };
-
 
   const handleCreateProduct = (e) => {
     e.preventDefault();
@@ -117,7 +119,24 @@ const Header = () => {
             </form>
           </div>
           <div className="userBtn">
-            <button onClick={handleLogInAndOut}>
+            <Button
+              variant="text"
+              // color="success"
+              startIcon={<LockOpenIcon />}
+              onClick={handleLogInAndOut}
+            >
+              {isLogin ? "로그아웃" : "로그인"}
+            </Button>
+            <Button
+              variant="text"
+              startIcon={<PermIdentityIcon />}
+              onClick={() => {
+                navigate("/user/mypage");
+              }}
+            >
+              마이페이지
+            </Button>
+            {/* <button onClick={handleLogInAndOut}>
               {isLogin ? "로그아웃" : "로그인"}
             </button>
             <button
@@ -126,7 +145,7 @@ const Header = () => {
               }}
             >
               마이페이지
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -187,6 +206,13 @@ const Header = () => {
             </div>
           </nav>
         </div>
+        {isLogin ? (
+          <div className="loginedUserId">
+            환영해요, {localStorage.getItem("USERID")} 님
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </header>
   );
