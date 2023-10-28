@@ -3,7 +3,7 @@ import "./NoticeBoardList.css";
 import { Link } from "react-router-dom";
 
 const NoticeBoardList = () => {
-  const post = ["자유게시판", "자주 찾는 질문", "고객의 소리", "공지사항"];
+  const post = ["자유게시판", "자주 찾는 질문", "공지사항", "문의게시판"];
 
   return (
     <div className="notice-box">
@@ -26,13 +26,13 @@ const NoticeBoardList = () => {
           고객센터
         </h3>
         <hr className="notice-hr" />
-        <li value="고객의 소리" className="board_li">
-          <Link to="/board/list/voc" className="board_1">
+        <li value="공지사항" className="board_li">
+          <Link to="/board/list/ntc" className="board_1">
             {post[2]}
           </Link>
         </li>
-        <li value="공지사항" className="board_li">
-          <Link to="/board/list/ntc" className="board_1">
+        <li value="문의게시판" className="board_li">
+          <Link to="/board/list/voc" className="board_1">
             {post[3]}
           </Link>
         </li>

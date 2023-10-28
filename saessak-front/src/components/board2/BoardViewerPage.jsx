@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import BoardViewer from './BoardViewer';
 import { call } from '../../ApiService';
+import { API_BASE_URL } from '../../ApiConfig';
 
 const BoardViewerPage = () => {
   const { boardName, boardId } = useParams();
@@ -23,19 +24,12 @@ const BoardViewerPage = () => {
     const url = "/board/" + bn + "/detail/" + boardId;
     // console.log("url :", url);
     call(url, "GET").then(response => {
-      console.log("response",response);
+      // console.log("response",response);
       if (response !== undefined) {
         setData(response);
       }
     })
   }, [boardName,boardId])
-
-
-
-
-
-
-
 
   const navigate = useNavigate();
 
@@ -47,11 +41,11 @@ const BoardViewerPage = () => {
     navigate('/boardwrite?id=');
   };
 
-  console.log(data.list&&data.list[0]);
+  const contents = data.list&&data.list[0].content.split('"').join("'").split("$back$").join(API_BASE_URL);
 
   return (
     <>
-      {/* <Header />
+      <Header />
       <div className="board-main">
         <div className="board-left">
           <NoticeBoardList />
@@ -73,13 +67,13 @@ const BoardViewerPage = () => {
             </div>
           </div>
           <hr />
-          <div className="info_board"> */}
-            <BoardViewer contents={data.list&&data.list[0].content} />
-          {/* </div>
+          <div className="info_board">
+            {contents!==undefined?<BoardViewer contents={contents} />:""}
+          </div>
           <CommentViewer isAnonymous={false} parent={'board/main'} parentId={boardId} />
         </div>
         <div className="board-rigth"></div>
-      </div> */}
+      </div>
     </>
   );
 };
