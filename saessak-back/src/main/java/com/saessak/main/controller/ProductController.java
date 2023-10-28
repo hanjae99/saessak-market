@@ -39,7 +39,7 @@ public class ProductController {
     public ResponseEntity<?> selectProduct(@RequestBody ProductDTO productDTO,
                                            @PathVariable("page")Optional<Integer> page){
 
-        Pageable pageable = PageRequest.of(page.isEmpty() || page.get() <= 0  ? 0 : page.get() -1, 1);
+        Pageable pageable = PageRequest.of(page.isEmpty() || page.get() <= 0  ? 0 : page.get() -1, 10);
 
         try {
             Page<ProductDTO> result = productService.read(productDTO, pageable);

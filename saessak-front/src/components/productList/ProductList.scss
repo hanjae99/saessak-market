@@ -35,6 +35,11 @@
   color: rgb(145, 63, 63);
 }
 
+.chooseSellStatus {
+  display: flex;
+  justify-content: end;
+}
+
 .result {
   display: flex;
   align-items: center;
@@ -42,6 +47,9 @@
   padding-left: 30px;
 }
 
+.sortBtns {
+  padding-left: 30px;
+}
 .contents {
   display: grid;
   grid-template-columns: repeat(3, 33.3%);

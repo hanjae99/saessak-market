@@ -7,6 +7,8 @@ import "./Header.scss";
 import { Button } from "@mui/material";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import PersonIcon from "@mui/icons-material/Person";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 const Header = () => {
   const [value, setValue] = useState("");
@@ -119,14 +121,14 @@ const Header = () => {
             <Button
               variant="text"
               // color="success"
-              startIcon={<VpnKeyIcon />}
+              startIcon={<LockOpenIcon />}
               onClick={handleLogInAndOut}
             >
               {isLogin ? "로그아웃" : "로그인"}
             </Button>
             <Button
               variant="text"
-              startIcon={<PersonIcon />}
+              startIcon={<PermIdentityIcon />}
               onClick={() => {
                 navigate("/user/mypage");
               }}

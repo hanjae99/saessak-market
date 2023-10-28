@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Detail.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
-import Kakao from "./Kakao";
 import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
@@ -13,7 +11,7 @@ const Detail = () => {
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
-  const { kakao, daum } = window;
+  const { kakao } = window;
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -152,7 +150,7 @@ const Detail = () => {
                 </button>
               </div>
               <div>
-                {detaildatas.isWriter && (
+                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
                   <button
                     onClick={() => {
                       navigate("/updateproduct/" + id);
@@ -161,6 +159,8 @@ const Detail = () => {
                   >
                     상품 수정
                   </button>
+                ) : (
+                  ""
                 )}
               </div>
             </div>
@@ -242,7 +242,7 @@ const Detail = () => {
                   {detaildatas && detaildatas.mapData ? (
                     ""
                   ) : (
-                    <div>거래 희망 장소가 없어요 ㅠㅠ</div>
+                    <div>거래 희망 장소가 등록되지 않았어요!</div>
                   )}
                 </div>
               </div>

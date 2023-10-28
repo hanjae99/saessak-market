@@ -32,6 +32,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     private BooleanExpression searchSellStatusEq(SellStatus sellStatus){
         if (sellStatus == null){
             sellStatus = SellStatus.SELL;
+        }else if (sellStatus == SellStatus.SELL_AND_SOLD_OUT){
+            return QProduct.product.sellStatus.in(SellStatus.SELL, SellStatus.SOLD_OUT);
         }
         return QProduct.product.sellStatus.eq(sellStatus);
     }
@@ -74,7 +76,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
                         productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .groupBy(product.id)
-                .orderBy(product.id.desc())
+                .orderBy(product.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
