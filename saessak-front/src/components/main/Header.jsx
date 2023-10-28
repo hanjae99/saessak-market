@@ -4,12 +4,14 @@ import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
 import "./Header.scss";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const [value, setValue] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const [categoryDTO, setCategoryDTO] = useState([]);
+  const dispatch = useDispatch();
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -60,16 +62,18 @@ const Header = () => {
   // const login = useSelector((state) => state.login);
   // const dispatch = useDispatch();
 
-  const handleLogInAndOut = () => {
+  const handleLogInAndOut = (e) => {
     if (isLogin) {
       localStorage.setItem("ACCESS_TOKEN", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
       navigate("/");
     } else {
+      dispatch({type:'login/setUrl',payload:window.location.pathname});
       navigate("/login");
     }
   };
+
 
   const handleCreateProduct = (e) => {
     e.preventDefault();
@@ -170,10 +174,10 @@ const Header = () => {
             <div
               className="menuItem"
               onClick={() => {
-                navigate("/boardmain");
+                navigate("/board/list");
               }}
             >
-              <Link to="/boardmain">새싹 게시판</Link>
+              <Link to="/board/list">새싹 게시판</Link>
             </div>
             <div className="menuItem">
               <Link to="/game">새싹 게임</Link>

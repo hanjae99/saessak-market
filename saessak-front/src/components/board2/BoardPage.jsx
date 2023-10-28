@@ -17,7 +17,7 @@ const BoardPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [viewData, setVeiwData] = useState([]);
   const [viewList, setViewList] = useState({
-    id: "글번호",
+    boardNumber: "글번호",
     title: "제목",
     writer: "작성자",
     regTime: "작성시간",
@@ -37,7 +37,7 @@ const BoardPage = () => {
     // console.log("url :", url);
     call(url, "GET").then((response) => {
       // console.log("response",response);
-      if (response !== undefined) {
+      if (response && response.list !== undefined) {
         setVeiwData(response.list);
         setPageSize(response.pageSize);
         setTotalPageSize(response.totalPageSize);
@@ -84,13 +84,26 @@ const BoardPage = () => {
               </li>
             </ul>
             {(() => {
-              return userRole !== "any" ? (
-                <Link to={"/board/write/" + bn}>
-                  <button className="new-text">작성</button>
-                </Link>
-              ) : (
-                ""
-              );
+              switch (userRole) {
+                case "USER":
+                  return bn !== "ntc" ? (
+                    <Link to={"/board/write/" + bn}>
+                      <button className="new-text">작성</button>
+                    </Link>
+                  ) : (
+                    ""
+                  );
+                case "ADMIN":
+                  return bn === "ntc" ? (
+                    <Link to={"/board/write/" + bn}>
+                      <button className="new-text">작성</button>
+                    </Link>
+                  ) : (
+                    ""
+                  );
+                default:
+                  return "";
+              }
             })()}
           </div>
         </div>

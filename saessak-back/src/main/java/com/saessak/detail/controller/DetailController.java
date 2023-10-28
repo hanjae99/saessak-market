@@ -37,7 +37,7 @@ public class DetailController {
                 Long loginId = memberRepository.findById(Long.parseLong(memberId)).orElseThrow(EntityNotFoundException::new).getId();
 
                 if (Objects.equals(loginId, dto.getMemberDTO().getMemberId())) {
-                    dto.setIsWriter("ture");
+                    dto.setIsWriter("true");
                 }
             }
             return ResponseEntity.ok().body(dto);

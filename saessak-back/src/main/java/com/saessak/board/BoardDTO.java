@@ -25,6 +25,7 @@ public class BoardDTO {
   private LocalDateTime updateTime;
 
   private String writer;
+  private Long boardNumber;
 
   @QueryProjection
   public BoardDTO(
@@ -37,7 +38,8 @@ public class BoardDTO {
       ShowStatus showStatus,
       LocalDateTime regTime,
       LocalDateTime updateTime,
-      String writer
+      String writer,
+      Long boardNumber
       ) {
 
     this.id = id;
@@ -50,5 +52,6 @@ public class BoardDTO {
     this.regTime = regTime;
     this.updateTime = updateTime;
     this.writer = writer;
+    this.boardNumber = boardNumber;
   }
 }

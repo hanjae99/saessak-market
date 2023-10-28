@@ -8,6 +8,7 @@ import { login } from "../../ApiService";
 
 const Login = () => {
   const navigate = useNavigate();
+  const backUrl = useSelector(state => state.login.url);
   // const [inputid, setInputid] = useState("");
   // const [inputpwd, setInputpwd] = useState("");
   //const user = useSelector((state) => state.user);
@@ -38,7 +39,7 @@ const Login = () => {
           if (response.role === "ADMIN") {
             return (window.location.href = "/admin");
           }
-          return (window.location.href = "/");
+          return (window.location.href = backUrl);
         }
       });
 
