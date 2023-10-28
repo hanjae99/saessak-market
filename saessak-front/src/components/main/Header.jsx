@@ -65,9 +65,10 @@ const Header = () => {
   // const login = useSelector((state) => state.login);
   // const dispatch = useDispatch();
 
-  const handleLogInAndOut = () => {
+  const handleLogInAndOut = (e) => {
     if (isLogin) {
       localStorage.setItem("ACCESS_TOKEN", "");
+      localStorage.setItem("EXPIREDATE", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
       navigate("/");
@@ -192,10 +193,10 @@ const Header = () => {
             <div
               className="menuItem"
               onClick={() => {
-                navigate("/boardmain");
+                navigate("/board/list");
               }}
             >
-              <Link to="/boardmain">새싹 게시판</Link>
+              <Link to="/board/list">새싹 게시판</Link>
             </div>
             <div className="menuItem">
               <Link to="/game">새싹 게임</Link>

@@ -3,6 +3,7 @@ package com.saessak.login.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.saessak.constant.Gender;
 import com.saessak.constant.Role;
 import com.saessak.entity.Member;
 import com.saessak.login.dto.KakaoDTO;
@@ -67,7 +68,7 @@ public class LoginService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", 	"389cc5908fcd860e0a4e79072e5aafa6");
+        body.add("client_id", 	"a72ff07499a78a559bb7e6bccb465597");
         body.add("redirect_uri", "http://localhost:3000/login/auth/kakao");
         body.add("code", code);
 
@@ -100,23 +101,20 @@ public class LoginService {
         // 회원가입
         if (kakaoUser == null) {
             String kakaoNick = jsonNode.get("properties").get("nickname").asText();
-//            String kakaoName = jsonNode.get("properties").get("name").asText();
-//            String kakaoaddress = jsonNode.get("properties").get("address").asText();
- //           String kakaoaPhone = jsonNode.get("properties").get("phone").asText();
+            String kakaoUserId = kakaoId + UUID.randomUUID().toString();
 
             // password: random UUID
             String password = UUID.randomUUID().toString();
             String encodedPassword = passwordEncoder.encode(password);
 
             kakaoUser = Member.builder()
-                    .userId(kakaoId)
+                    .userId(kakaoUserId)
                     .email(kakaoId)
                     .name(kakaoNick)
-                    .nickName(kakaoNick+1)
+                    .nickName(kakaoNick+kakaoId)
                     .password(encodedPassword)
-                //    .phone(kakaoaPhone)
-                   // .address(kakaoaddress)
                     .role(Role.USER)
+                    .gender(Gender.HELICOPTER)
                     .build();
             memberRepository.save(kakaoUser);
         }

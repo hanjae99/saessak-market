@@ -29,6 +29,7 @@ const Detail = () => {
     mapData: "",
     categoryProductDTO: [],
   });
+  const [map, setMap] = useState();
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
@@ -36,7 +37,6 @@ const Detail = () => {
       if (response === 1) {
         navigate("/");
       }
-      setDetaildatas({ ...detaildatas, response });
 
       if (response && response.mapData) {
         // 지도 가져오기
@@ -48,27 +48,26 @@ const Detail = () => {
             if (status === kakao.maps.services.Status.OK) {
               const result = results[0];
 
-              // 해당 주소에 대한 좌표를 받아
-              // const searchPos = new kakao.maps.LatLng(result.y, result.x);
-
               const container = document.getElementById("map_detail");
               const options = {
                 // center: new kakao.maps.LatLng(33.450701, 126.570667),
                 center: new kakao.maps.LatLng(result.y, result.x),
                 level: 3,
               };
+              // const searchPos = new kakao.maps.LatLng(result.y, result.x);
 
               const sellMap = new kakao.maps.Map(container, options);
               const sellMapMarker = new kakao.maps.Marker({
                 position: sellMap.getCenter(),
               });
               sellMapMarker.setMap(sellMap);
-            } else {
-              setDetaildatas({ ...detaildatas, mapData: "" });
+              setMap(sellMap);
             }
           });
         });
       }
+
+      setDetaildatas(response);
     });
   }, [id]);
 
@@ -115,8 +114,10 @@ const Detail = () => {
               {/* <div className="detail-imgBox">
                 <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
               </div> */}
-              {detaildatas.imagesUrl && (
+              {detaildatas && detaildatas.imagesUrl ? (
                 <DetailCarousel detaildatas={detaildatas.imagesUrl} />
+              ) : (
+                ""
               )}
             </div>
             <div className="detail-productsitem2">
@@ -227,23 +228,8 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <div
-                  id="map_detail"
-                  style={
-                    detaildatas && detaildatas.mapData
-                      ? {
-                          width: "100%",
-                          height: "400px",
-                          borderRadius: "10px",
-                        }
-                      : { width: "100%" }
-                  }
-                >
-                  {detaildatas && detaildatas.mapData ? (
-                    ""
-                  ) : (
-                    <div>거래 희망 장소가 등록되지 않았어요!</div>
-                  )}
+                <div id="map_detail" style={{ width: "100%", height: "400px" }}>
+                  {map && <div>판매 희망 지역이 등록되지 않았어요 ㅠㅠ</div>}
                 </div>
               </div>
             </div>

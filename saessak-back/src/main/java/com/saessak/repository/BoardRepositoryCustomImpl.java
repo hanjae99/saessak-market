@@ -7,8 +7,7 @@ import com.saessak.board.BoardDTO;
 import com.saessak.board.BoardSearchDTO;
 import com.saessak.board.QBoardDTO;
 import com.saessak.constant.ShowStatus;
-import com.saessak.entity.QBoard;
-import com.saessak.entity.QMember;
+import com.saessak.entity.*;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -66,6 +65,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     QBoard board = QBoard.board;
     QMember member = QMember.member;
 
+
     List<BoardDTO> content = queryFactory
         .select(new QBoardDTO(
             board.id,
@@ -77,7 +77,8 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
             board.showStatus,
             board.regTime,
             board.updateTime,
-            member.nickName
+            member.nickName,
+            board.id
         ))
         .from(board)
         .join(board.member, member)
@@ -88,6 +89,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
+
 
 
 

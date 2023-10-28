@@ -1,12 +1,10 @@
 package com.saessak.board;
 
 
+import com.saessak.constant.Role;
 import com.saessak.constant.ShowStatus;
-import com.saessak.entity.Board;
-import com.saessak.entity.Image;
-import com.saessak.entity.Member;
-import com.saessak.repository.BoardRepository;
-import com.saessak.repository.MemberRepository;
+import com.saessak.entity.*;
+import com.saessak.repository.*;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -35,7 +31,12 @@ public class BoardController {
   private BoardRepository boardRepository;
   @Autowired
   private MemberRepository memberRepository;
-
+  @Autowired
+  private BoardMainRepository boardMainRepository;
+  @Autowired
+  private BoardNtcRepository boardNtcRepository;
+  @Autowired
+  private BoardVocRepository boardVocRepository;
 
   @GetMapping("/{boardName}/detail/{boardId}")
   public ResponseEntity<?> readBoardDetail(@PathVariable("boardName") String boardName,
@@ -106,9 +107,31 @@ public class BoardController {
     Pageable pageable = PageRequest.of(page-1,pageSize);
     Page<BoardDTO> pb = boardService.read(boardSearchDTO, pageable);
 
-    log.info("pb : " + pb.toString());
-
-    List<BoardDTO> list = pb.getContent();
+    List<BoardDTO> list = new ArrayList<>();
+    if (!pb.isEmpty()) {
+      list = pb.getContent().stream().peek(p -> {
+        switch (p.getBoardName()) {
+          case "main":
+            BoardMain boardMain = new BoardMain();
+            boardMain = boardMainRepository.findByBoardId(p.getId());
+            p.setBoardNumber(boardMain.getId());
+            break;
+          case "ntc":
+            BoardNtc boardNtc = new BoardNtc();
+            boardNtc = boardNtcRepository.findByBoardId(p.getId());
+            p.setBoardNumber(boardNtc.getId());
+            break;
+          case "voc":
+            BoardVoc boardVoc = new BoardVoc();
+            boardVoc = boardVocRepository.findByBoardId(p.getId());
+            p.setBoardNumber(boardVoc.getId());
+            break;
+        }
+      }).collect(Collectors.toList());
+      if (Objects.equals(boardName, "voc")) {
+        list = list.stream().filter(p->p.getWriter().equals(memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new).getNickName())).collect(Collectors.toList());
+      }
+    }
     int totalPageSize = pb.getTotalPages();
 
 
@@ -130,10 +153,14 @@ public class BoardController {
                                        @RequestPart List<MultipartFile> imgs,
                                        BoardDTO boardDTO) {
 
+
     Member writer = memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new);
+    if (boardName.equals("ntc") && !writer.getRole().equals(Role.ADMIN)) {
+      return ResponseEntity.badRequest().body("403");
+    }
     Board board = new Board();
     board.setMember(writer);
-    log.info(boardDTO.getBoardName());
+//    log.info(boardDTO.getBoardName());
     board.setBoardName(boardDTO.getBoardName());
     board.setShowStatus(ShowStatus.SHOW);
     board.setTitle(boardDTO.getTitle());
@@ -156,12 +183,34 @@ public class BoardController {
         realUrl.add("$back$"+image.getImgUrl());
       });
     }
-
+//    log.info(content);
     for (int i = 0; i < blobUrl.size(); i++) {
       content = content.replace(blobUrl.get(i), realUrl.get(i));
     }
+//    log.info("컨--------텐트---------------"+content);
+    savedBoard.setContent(content);
+    boardRepository.save(savedBoard);
 
-    return ResponseEntity.ok().body("ok");
+    switch (boardDTO.getBoardName()) {
+      case "main":
+        BoardMain boardMain = new BoardMain();
+        boardMain.setBoard(savedBoard);
+        boardMainRepository.save(boardMain);
+        break;
+      case "ntc":
+        BoardNtc boardNtc = new BoardNtc();
+        boardNtc.setBoard(savedBoard);
+        boardNtcRepository.save(boardNtc);
+        break;
+      case "voc":
+        BoardVoc boardVoc = new BoardVoc();
+        boardVoc.setBoard(savedBoard);
+        boardVocRepository.save(boardVoc);
+        break;
+    }
+
+
+    return ResponseEntity.ok().body("kk");
 
   }
 
