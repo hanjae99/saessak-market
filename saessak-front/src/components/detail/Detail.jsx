@@ -5,6 +5,7 @@ import Header from "../main/Header";
 import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
+import Chatting from "./../kimjin/Chatting";
 
 const Detail = () => {
   const { id } = useParams();
@@ -30,6 +31,11 @@ const Detail = () => {
     categoryProductDTO: [],
   });
   const [map, setMap] = useState();
+  const [chatting, setChatting] = useState({
+    productId: 0,
+    memberId: 0,
+    orderMemberId: 0,
+  });
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {

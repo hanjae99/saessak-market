@@ -47,6 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/product/searchcate",
                         "/product/search",
                         "/product/search/**",
+                        "/chatTest",
+                        "/chatTest/**",
                         "/swagger-resources/**", "/swagger-ui/**",
                         "/swagger/**","/v3/api-docs").permitAll()
                 .anyRequest().authenticated();

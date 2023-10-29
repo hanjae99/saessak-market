@@ -17,6 +17,8 @@ const KakaoLogin = () => {
         //계속 쓸 정보들( ex: 이름) 등은 localStorage에 저장해두자
         localStorage.setItem("ACCESS_TOKEN", response.token);
         //로그인이 성공하면 이동할 페이지
+        localStorage.setItem("EXPIREDATE", response.expiration);
+        localStorage.setItem("USERID", response.userId);
         navigate(backUrl);
       });
     };

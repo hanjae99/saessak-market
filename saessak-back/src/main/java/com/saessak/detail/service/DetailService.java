@@ -2,6 +2,7 @@ package com.saessak.detail.service;
 
 import com.saessak.detail.dto.*;
 import com.saessak.entity.*;
+import com.saessak.main.dto.ProductDTO;
 import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class DetailService {
     private final MemberRepository memberRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ImageRepository imageRepository;
+    private final ChatBoxRepository chatBoxRepository;
 
     public DetailDTO get(Long productId){
 
@@ -138,5 +140,23 @@ public class DetailService {
         }
         log.info(productDTOList.toString());
     }
+
+    public Long createChatBox(DetailDTO detailDTO , Long orderMemberId){
+
+        Product product =Product.builder().id(detailDTO.getProductId()).build();
+
+        Member sell_MemberId =Member.builder().id(detailDTO.getMemberDTO().getMemberId()).build();
+
+        Member order_MemberId = Member.builder().id(orderMemberId).build();
+
+        ChatBox chatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(order_MemberId).build();
+
+        chatBoxRepository.save(chatBox);
+
+        return chatBox.getId();
+    }
+
+
+
 
 }

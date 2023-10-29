@@ -24,6 +24,7 @@ import BoardViewerPage from "./components/board2/BoardViewerPage";
 import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
 import ChatTest from "./components/ChatTest";
+import ChatApp from "./ChatApp";
 
 function App() {
   const [page, setPage] = useState(1);
