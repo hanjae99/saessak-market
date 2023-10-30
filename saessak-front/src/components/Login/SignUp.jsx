@@ -51,8 +51,8 @@ const SignUp = () => {
       emailPassCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
-      !newUser.phone ||
-      isSmsChecked !== 1 ||
+      // !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
+      // isSmsChecked !== 1 ||
       !newUser.gender
     ) {
       setSignFailed(true);
