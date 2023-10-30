@@ -24,6 +24,7 @@ import BoardViewerPage from "./components/board2/BoardViewerPage";
 import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
 import ChatTest from "./components/ChatTest";
+import Chat from "./components/test/Chat";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -60,7 +61,7 @@ function App() {
         ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
-        <Route path="/chatTest" element={<ChatTest />} />
+        <Route path="/chatTest" element={<Chat />} />
       </Routes>
     </div>
   );
