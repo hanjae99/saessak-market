@@ -31,19 +31,19 @@ public class TokenProvider {
                 .compact();
     }
 
-//    public String createSmsToken(String verifyKey){
-//
-//        // 문자 인증 토큰 만료시간
-//        Date expireDate = Date.from(Instant.now().plus(5, ChronoUnit.MINUTES));
-//
-//        return Jwts.builder()
-//                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-//                .setSubject(verifyKey)
-//                .setIssuer("saessak-sms")
-//                .setIssuedAt(new Date())
-//                .setExpiration(expireDate)
-//                .compact();
-//    }
+    public String createSmsToken(String verifyKey){
+
+        // 문자 인증 토큰 만료시간
+        Date expireDate = Date.from(Instant.now().plus(5, ChronoUnit.MINUTES));
+
+        return Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .setSubject(verifyKey)
+                .setIssuer("saessak-sms")
+                .setIssuedAt(new Date())
+                .setExpiration(expireDate)
+                .compact();
+    }
 
     public String validateAndGetUserId(String token){
         Claims claims = Jwts.parser()
@@ -61,5 +61,20 @@ public class TokenProvider {
                 .getBody();
 
         return claims.getExpiration();
+    }
+
+    public boolean validateSmsToken(String token, String verifyCode){
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+
+        // 사용자가 입력한 인증코드값과
+        // 인증 문자로 발송된 인증코드값이 일치
+        if (claims.getSubject().equals(verifyCode)){
+            return true;
+        }
+
+        return false;
     }
 }

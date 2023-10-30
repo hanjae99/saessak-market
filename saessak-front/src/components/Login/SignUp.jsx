@@ -20,8 +20,15 @@ const SignUp = () => {
   const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
   const [customDomain, setCustomDomain] = useState(""); // 직접 도메인 입력
   //console.log(user);
-  const dispatch = useDispatch();
-  const navigator = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigator = useNavigate();
+  const [isSmsSend, setIsSmsSend] = useState(0); // 인증문자 발송 성공 여부
+  const [smsCheckInput, setSmsCheckInput] = useState(""); // 인증문자 코드 입력
+  const [isSmsChecked, setIsSmsChecked] = useState(0); // 인증 성공 여부
+
+  const { daum } = window;
+  const [address, setAddress] = useState();
+
   const [newUser, setNewUser] = useState({
     userId: "",
     nickName: "",
@@ -29,7 +36,7 @@ const SignUp = () => {
     name: "",
     email: "",
     phone: "",
-    address: "관악구",
+    address: "",
     gender: "",
     //userproduct: [],
   });
@@ -46,6 +53,7 @@ const SignUp = () => {
       !newUser.name ||
       !newUser.email ||
       !newUser.phone ||
+      isSmsChecked !== 1 ||
       !newUser.gender
     ) {
       setSignFailed(true);
@@ -204,6 +212,74 @@ const SignUp = () => {
     setEmailPassCheck(1);
   };
 
+  const sendSms = (e) => {
+    e.preventDefault();
+
+    if (newUser.phone.length !== 11) {
+      alert("전화번호를 다시 입력해주세요");
+      return;
+    }
+    const request = {
+      phoneNum: newUser.phone,
+    };
+    call("/signup/smsSend", "POST", request).then((response) => {
+      if (response && response.token) {
+        // if (response && response.message === "success") {
+        alert("인증번호가 전송되었습니다, 5분내 인증을 완료해주세요");
+        localStorage.setItem("SMSTOKEN", response.token);
+        localStorage.setItem("SMSTOKENEXPIRE", response.expireDate);
+        setIsSmsSend(1);
+      } else {
+        console.log(response);
+        setIsSmsSend(-1);
+      }
+    });
+  };
+
+  const onSmsCheckInput = (e) => {
+    setSmsCheckInput(e.target.value);
+  };
+
+  const sendSmsCheck = (e) => {
+    e.preventDefault();
+    // 문자 인증 토큰 만료시간 체크
+    const smsExpireDate = localStorage.getItem("SMSTOKENEXPIRE");
+    const now = new Date().getTime();
+    if (now >= Date.parse(smsExpireDate)) {
+      alert("인증시간이 만료되었습니다, 인증 문자를 다시 발송해주세요");
+      return;
+    }
+
+    const request = {
+      token: localStorage.getItem("SMSTOKEN"),
+      verifyCode: smsCheckInput,
+    };
+
+    call("/signup/smsCheck", "POST", request).then((response) => {
+      if (response && response.message === "success") {
+        localStorage.setItem("SMSTOKEN", "");
+        localStorage.setItem("SMSTOKENEXPIRE", "");
+        setIsSmsChecked(1);
+      } else if (response && response.error === "fail") {
+        setIsSmsChecked(-1);
+      }
+    });
+  };
+
+  const handleAddr = () => {
+    // 주소 검색
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 검색한 주소명
+        const addr = data.address;
+
+        // 주소 정보를 해당 input 태그에 입력
+        document.getElementById("memAddr").value = addr;
+        setNewUser({ ...newUser, address: addr });
+      },
+    }).open();
+  };
+
   useEffect(() => {
     setIdCheck(0);
   }, [newUser.userId]);
@@ -222,7 +298,7 @@ const SignUp = () => {
           </div>
           <form className="signup-form">
             <div className="signup-input-container">
-              <label className="signup-text-id">아이디</label>
+              <label className="signup-text-id">아이디 *</label>
               <input
                 className="signup-text-input"
                 type="text"
@@ -249,7 +325,7 @@ const SignUp = () => {
             )}
 
             <div className="signup-input-container">
-              <label className="signup-text-id">닉네임</label>
+              <label className="signup-text-id">닉네임 *</label>
               <input
                 className="signup-text-input"
                 type="text"
@@ -273,7 +349,7 @@ const SignUp = () => {
               ""
             )}
             <div className="signup-input-container">
-              <label className="signup-text-id">비밀번호</label>
+              <label className="signup-text-id">비밀번호 *</label>
               <input
                 className="signup-text-input"
                 type="password"
@@ -282,7 +358,7 @@ const SignUp = () => {
               />
             </div>
             <div className="signup-input-container">
-              <label className="signup-text-id">비밀번호확인</label>
+              <label className="signup-text-id">비밀번호확인 *</label>
               <input
                 className="signup-text-input"
                 type="password"
@@ -291,16 +367,16 @@ const SignUp = () => {
               />
             </div>
             <div className="signup-input-container">
-              <label className="signup-text-id">이름</label>
+              <label className="signup-text-id">이름 *</label>
               <input
                 className="signup-text-input"
                 type="text"
-                placeholder="이름을입력해주세요"
+                placeholder="이름을 입력해주세요"
                 onChange={onName}
               />
             </div>
             <div className="signup-input-container">
-              <label className="signup-text-id">이메일</label>
+              <label className="signup-text-id">이메일 *</label>
               <input
                 className="signup-text-input-email"
                 type="text"
@@ -360,31 +436,84 @@ const SignUp = () => {
             )}
             {emailPassCheck === -1 ? (
               <p className="signup-duplicated1-msg">
-                이메일 인증이 확인 되셨습니다.
+                이메일 인증이 확인 되었습니다.
               </p>
             ) : (
               ""
             )}
             <div className="signup-input-container">
-              <label className="signup-text-id">휴대폰</label>
-              <input
+              <label className="signup-text-id">휴대폰 *</label>
+              {/* <input
                 className="signup-text-input"
                 type="number"
                 placeholder="숫자만 입력해주세요"
                 onChange={onPhone}
               />
-              <button className="signup-bt3">인증</button>
+              <button className="signup-bt3" onClick={sendSms}>인증</button> */}
+              <input
+                className="signup-text-input"
+                type="tel"
+                name="phone"
+                placeholder="전화번호 숫자만 입력해주세요"
+                pattern="[0-9]{11}"
+                onChange={onPhone}
+                required
+              />
+              <button className="signup-bt3" onClick={sendSms}>
+                인증
+              </button>
             </div>
+            {isSmsSend === -1 ? (
+              <p className="signup-duplicated-msg">
+                전화번호가 올바르지 않습니다.
+              </p>
+            ) : (
+              ""
+            )}
+            {isSmsSend === 1 ? (
+              <div className="signup-input-container">
+                <label className="signup-text-id">인증 번호</label>
+                <input
+                  className="signup-text-input"
+                  type="text"
+                  placeholder="ex):복사한 인증키를 입력해주세요"
+                  onChange={onSmsCheckInput}
+                />
+                <button className="signup-bt2" onClick={sendSmsCheck}>
+                  인증
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+            {isSmsChecked === -1 ? (
+              <p className="signup-duplicated-msg">
+                인증 번호를 다시 확인 해주세요
+              </p>
+            ) : (
+              ""
+            )}
+            {isSmsChecked === 1 ? (
+              <p className="signup-duplicated1-msg">
+                전화번호 인증이 확인 되었습니다.
+              </p>
+            ) : (
+              ""
+            )}
             <div className="signup-input-container">
               <label className="signup-text-id">주소</label>
               <input
                 className="signup-text-input"
-                type="button"
-                value="주소api 가져오기"
+                id="memAddr"
+                type="text"
+                // value={address}
+                placeholder="주소를 등록하세요!"
+                onClick={handleAddr}
+                readOnly
               />
             </div>
             <div className="signup-input-container">
-              <label className="signup-text-id">성별</label>
+              <label className="signup-text-id">성별 *</label>
               <input
                 className="signup-text-radio"
                 type="radio"
@@ -406,7 +535,7 @@ const SignUp = () => {
             </div>
             {signFailed && (
               <p className="signup-failed-msg">
-                필수 정보를 모두 입력해주세요.(중복확인 필수!)
+                필수 정보를 모두 입력해주세요.(*표시, 중복확인 필수!)
               </p>
             )}
             <br />
