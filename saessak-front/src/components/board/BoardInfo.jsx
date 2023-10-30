@@ -5,7 +5,7 @@ import NoticeBoardList from './NoticeBoardList';
 import Header from '../main/Header';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import CommentViewer from '../admin/CommentViewer';
+import CommentViewer from '../board2/CommentViewer';
 import { RxEraser } from 'react-icons/rx';
 import { BsPencil } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';

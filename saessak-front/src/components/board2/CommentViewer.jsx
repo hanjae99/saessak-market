@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs'
 import { FaXmark } from 'react-icons/fa6'
 import { FaRegComment } from 'react-icons/fa'
 import { RxEraser } from 'react-icons/rx'
+import { call } from '../../ApiService'
 
 const ProfileImg = ({ imgsrc }) => {
   return (
@@ -23,8 +24,8 @@ const CmtBtnBox = ({ cs, children }) => {
 }
 
 const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) => {
-  const login = useSelector(state => state.login);
-  const users = useSelector(state => state.user);
+  const login = null; // useSelector(state => state.login);
+  const users = null; // useSelector(state => state.user);
   const dispatch = useDispatch();
   const btns = (<div onClick={e=>{
     e.currentTarget.parentElement.parentElement.parentElement.style.display = 'none'
@@ -60,9 +61,10 @@ const CmtInputBox = ({ parent, parentId, isAnonymous, parentCommentId = '' }) =>
 }
 
 const Comments = ({ parent, parentId, isAnonymous, parentCommentId = '' }) => {
+  console.log(parentId);
   parentId += '';
-  const comments = useSelector(state => state.comments);
-  const users = useSelector(state => state.user);
+  const comments = null; // useSelector(state => state.comments);
+  const users = null; // useSelector(state => state.user);
   const level = parentCommentId === '' ? 0 : ck(parentCommentId, 0);
   function ck(pci, lv) {
     let a = comments.find(p => p.commentId === pci);
@@ -124,17 +126,33 @@ const Comments = ({ parent, parentId, isAnonymous, parentCommentId = '' }) => {
 
 const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
   const comments = useSelector(state => state.comments);
+
+  const [commentData, setCommentData] = useState();
+
+  useEffect(() => {
+    const url = "/comments/" + parent + "/" + parentId;
+    // console.log("url :", url);
+    call(url, "GET").then(response => {
+      // console.log("response",response);
+      if (response&&response.status !== 404) {
+        setCommentData(response);
+      }
+    })
+  }, [])
+
+  console.log(commentData);
+
   return (
     <div className='commentBox'>
-      <CmtInputBox isAnonymous={isAnonymous} parent={parent} parentId={parentId} />
+      {commentData&&<CmtInputBox isAnonymous={isAnonymous} parent={parent} parentId={parentId} />}
       <div className='commentCount'>comments '
         <strong>
-          {comments
+          {commentData&&comments
             .filter(p => p.parent === parent && p.parentId === parentId).length > 0 ?
             comments.filter(p => p.parent === parent && p.parentId === parentId).length : 0}
         </strong>'
       </div>
-      <Comments isAnonymous={isAnonymous} parent={parent} parentId={parentId} />
+      {commentData&&<Comments isAnonymous={isAnonymous} parent={parent} parentId={parentId} />}
     </div>
   )
 }
