@@ -1,15 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import * as StompJs from "@stomp/stompjs";
 
 const ChatTest = () => {
   const [chatInput, setChatInput] = useState("");
-  const [chatContent, setChatcontent] = useState([]);
+  const [chatContent, setChatContent] = useState([]);
+  const [stompClient, setStompClient] = useState(null);
+
+  useEffect(() => {
+    const connectWebSocket = () => {
+      const client = new StompJs.Client({
+        brokerURL: "ws://localhost:8888/chatTest",
+        reconnectDelay: 5000,
+      });
+
+      client.onConnect = () => {
+        setStompClient(client);
+        console.log("WebSocket 연결 성공");
+
+        client.subscribe("/topic/chatMessages", (message) => {
+          setChatContent([...chatContent, message.body]);
+        });
+      };
+
+      client.onStompError = (frame) => {
+        console.error("WebSocket 오류: " + frame);
+      };
+
+      client.activate();
+    };
+
+    connectWebSocket();
+
+    return () => {
+      if (stompClient && stompClient.connected) {
+        stompClient.deactivate();
+      }
+    };
+  }, [chatContent]);
 
   const handleInput = (e) => {
     setChatInput(e.target.value);
   };
 
   const handleSubmit = () => {
-    setChatcontent([...chatContent, chatInput]);
+    if (stompClient) {
+      stompClient.publish({
+        destination: "/app/chat",
+        body: chatInput,
+      });
+    }
     setChatInput("");
   };
 

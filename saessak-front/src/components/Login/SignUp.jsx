@@ -27,7 +27,6 @@ const SignUp = () => {
   const [isSmsChecked, setIsSmsChecked] = useState(0); // 인증 성공 여부
 
   const { daum } = window;
-  const [address, setAddress] = useState();
 
   const [newUser, setNewUser] = useState({
     userId: "",

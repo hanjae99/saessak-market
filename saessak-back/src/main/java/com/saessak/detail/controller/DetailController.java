@@ -26,6 +26,7 @@ public class DetailController {
 
     private final MemberRepository memberRepository;
 
+
     @GetMapping("/{productId}")
     public ResponseEntity<?> getDetail(@PathVariable("productId") Long productId ,@AuthenticationPrincipal String memberId){
         DetailDTO dto =detailService.get(productId);
