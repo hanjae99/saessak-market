@@ -22,6 +22,10 @@ import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardEditorPage from "./components/board2/BoardEditorPage";
 import BoardViewerPage from "./components/board2/BoardViewerPage";
 import SmsTest from "./components/SmsTest";
+import KakaoLogin from "./components/Login/KakaoLogin";
+import ChatTest from "./components/ChatTest";
+import Chat from "./components/test/Chat";
+import ChatApp from "./ChatApp";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -48,11 +52,18 @@ function App() {
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
         <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
-        <Route path="/board/write/:boardName" element={<BoardEditorPage />}></Route>
-        <Route path="/board/write/:boardName/:boardId" element={<BoardEditorPage />}></Route>
-        <Route path="/board/detail/:boardName/:boardId" element={<BoardViewerPage />}></Route>
-        <Route path="/login/oauth2/kakao?" />
+        <Route
+          path="/board/write/:boardName" element={<BoardEditorPage />}></Route>
+        <Route path="/board/write/:boardName/:boardId"
+          element={<BoardEditorPage />}
+        ></Route>
+        <Route
+          path="/board/detail/:boardName/:boardId"
+          element={<BoardViewerPage />}
+        ></Route>
+        <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
+        <Route path="/chatTest" element={<Chat />} />
       </Routes>
     </div>
   );

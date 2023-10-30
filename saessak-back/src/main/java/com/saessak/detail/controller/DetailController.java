@@ -26,6 +26,7 @@ public class DetailController {
 
     private final MemberRepository memberRepository;
 
+
     @GetMapping("/{productId}")
     public ResponseEntity<?> getDetail(@PathVariable("productId") Long productId ,@AuthenticationPrincipal String memberId){
         DetailDTO dto =detailService.get(productId);
@@ -37,7 +38,7 @@ public class DetailController {
                 Long loginId = memberRepository.findById(Long.parseLong(memberId)).orElseThrow(EntityNotFoundException::new).getId();
 
                 if (Objects.equals(loginId, dto.getMemberDTO().getMemberId())) {
-                    dto.setIsWriter("ture");
+                    dto.setIsWriter("true");
                 }
             }
             return ResponseEntity.ok().body(dto);

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { createElement, useEffect, useState } from "react";
 import "./Detail.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
-import Kakao from "./Kakao";
 import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
+import KakaoMap from "./KakaoMap";
 
 const Detail = () => {
   const { id } = useParams();
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
+  const { kakao } = window;
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -37,13 +37,14 @@ const Detail = () => {
       if (response === 1) {
         navigate("/");
       }
+
       setDetaildatas(response);
     });
   }, [id]);
 
-  console.log(detaildatas);
-  console.log(detaildatas.productId);
-  console.log(detaildatas.memberDTO.productDTOList);
+  // console.log(detaildatas);
+  // console.log(detaildatas.productId);
+  // console.log(detaildatas.memberDTO.productDTOList);
 
   // const userproduct = useSelector((state) => state.user[1].userproduct);
   // const recommends = product.filter((i) => {
@@ -84,8 +85,10 @@ const Detail = () => {
               {/* <div className="detail-imgBox">
                 <img className="detail-imgBox" src={item.imgsrc1} alt="1" />
               </div> */}
-              {detaildatas.imagesUrl && (
+              {detaildatas && detaildatas.imagesUrl ? (
                 <DetailCarousel detaildatas={detaildatas.imagesUrl} />
+              ) : (
+                ""
               )}
             </div>
             <div className="detail-productsitem2">
@@ -119,7 +122,7 @@ const Detail = () => {
                 </button>
               </div>
               <div>
-                {detaildatas.isWriter && (
+                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
                   <button
                     onClick={() => {
                       navigate("/updateproduct/" + id);
@@ -128,6 +131,8 @@ const Detail = () => {
                   >
                     상품 수정
                   </button>
+                ) : (
+                  ""
                 )}
               </div>
             </div>
@@ -144,37 +149,47 @@ const Detail = () => {
             <div className="detail-productsitem4">
               <div>
                 <h2>새싹 정보</h2>
-                <div>닉네임: {detaildatas.memberDTO.nickName}</div>
+                <div>
+                  닉네임:{" "}
+                  {detaildatas &&
+                    detaildatas.memberDTO &&
+                    detaildatas.memberDTO.nickName}
+                </div>
               </div>
               <div>
                 <h2>
-                  {detaildatas.memberDTO.nickName} 님의 다른 판매상품 정보
+                  {detaildatas &&
+                    detaildatas.memberDTO &&
+                    detaildatas.memberDTO.nickName}{" "}
+                  님의 다른 판매상품 정보
                 </h2>
                 <div className="detail-imgbox-grid">
-                  {detaildatas.memberDTO.productDTOList
-                    .filter((dto) => dto.productId !== id)
-                    .slice(0, 3)
-                    .map((up) => (
-                      <div className="detail-itembox" key={up.productId}>
-                        <div
-                          className="detail-imgbox1"
-                          onClick={() => {
-                            navigate(`/detail/${up.productId}`);
-                          }}
-                        >
-                          <img
+                  {detaildatas &&
+                    detaildatas.memberDTO &&
+                    detaildatas.memberDTO.productDTOList
+                      .filter((dto) => dto.productId !== id)
+                      .slice(0, 3)
+                      .map((up) => (
+                        <div className="detail-itembox" key={up.productId}>
+                          <div
                             className="detail-imgbox1"
-                            src={`http://localhost:8888${up.imgUrl}`}
-                            alt=""
-                          />
+                            onClick={() => {
+                              navigate(`/detail/${up.productId}`);
+                            }}
+                          >
+                            <img
+                              className="detail-imgbox1"
+                              src={`http://localhost:8888${up.imgUrl}`}
+                              alt=""
+                            />
+                          </div>
+                          <div className="detail-textobx">
+                            <span>{up.title}</span>
+                          </div>
+                          <br />
+                          <span>{up.price}원</span>
                         </div>
-                        <div className="detail-textobx">
-                          <span>{up.title}</span>
-                        </div>
-                        <br />
-                        <span>{up.price}원</span>
-                      </div>
-                    ))}
+                      ))}
                 </div>
               </div>
             </div>
@@ -184,7 +199,11 @@ const Detail = () => {
             <div className="detail-products">
               <h1>거래 희망 장소</h1>
               <div className="detail-productsmap">
-                <Kakao />
+                {detaildatas.mapData !== "" ? (
+                  <KakaoMap mapData={detaildatas.mapData} />
+                ) : (
+                  <div>등록된 판매장소가 없어요 ㅠㅠ</div>
+                )}
               </div>
             </div>
           </div>

@@ -13,7 +13,11 @@ import java.util.Date;
 @ToString
 public class SmsDTO {
 
+    private String phoneNum;
+
     private String token;
+
+    private String verifyCode;
 
     private Date expireDate;
 }

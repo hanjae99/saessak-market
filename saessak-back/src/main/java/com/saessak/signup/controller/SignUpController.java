@@ -1,13 +1,14 @@
 package com.saessak.signup.controller;
 
 import com.saessak.constant.Role;
+import com.saessak.dto.ResponseDTO;
 import com.saessak.entity.Member;
-import com.saessak.game.dto.ResponseDTO;
 import com.saessak.security.TokenProvider;
 import com.saessak.signup.dto.SignUpDTO;
 import com.saessak.signup.dto.SmsDTO;
 import com.saessak.signup.service.EmailService;
 import com.saessak.signup.service.SignUpService;
+import com.saessak.signup.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.exception.NurigoException;
@@ -29,7 +30,7 @@ public class SignUpController {
 
     private final SignUpService signUpService;
     private final EmailService emailService;
-//    private final SmsService smsService;
+    private final SmsService smsService;
     private final TokenProvider tokenProvider;
 
 
@@ -114,31 +115,56 @@ public class SignUpController {
     }
 
 //    // sms 인증
-//    @PostMapping("/smsSend/{phoneNum}")
-//    public ResponseEntity<?> sendSmsToSignUp(@PathVariable("phoneNum") String phoneNum){
-//
-//        // 하이픈 검사
-//        phoneNum = phoneNum.replaceAll("-", "");
-//
-//        String verifyKey = smsService.createKey();
-//        final String verifyToken = tokenProvider.createSmsToken(verifyKey);
-//        Date expireDate = tokenProvider.getExpiration(verifyToken);
-//
-//        // 문자 발송
-//        try {
-////            SingleMessageSentResponse smsResponse = smsService.sendOne(phoneNum, verifyKey);
-//            smsService.sendOne(phoneNum, verifyKey);
-//
-//            SmsDTO smsDTO = SmsDTO.builder()
-//                    .token(verifyToken)
-//                    .expireDate(expireDate)
-//                    .build();
-//
-//            return ResponseEntity.ok(smsDTO);
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//
-//            return ResponseEntity.ok(e.getMessage());
-//        }
-//    }
+    @PostMapping("/smsSend")
+    public ResponseEntity<?> sendSmsToSignUp(@RequestBody SmsDTO smsDTO){
+
+        String phoneNum = smsDTO.getPhoneNum();
+        // 하이픈 검사
+        phoneNum = phoneNum.replaceAll("-", "");
+
+        String verifyKey = smsService.createKey();
+        final String verifyToken = tokenProvider.createSmsToken(verifyKey);
+        Date expireDate = tokenProvider.getExpiration(verifyToken);
+
+        // 문자 발송
+        try {
+            smsService.sendOne(phoneNum, verifyKey);
+
+            SmsDTO responseSmsDTO = SmsDTO.builder()
+                    .token(verifyToken)
+                    .expireDate(expireDate)
+                    .build();
+
+            return ResponseEntity.ok(responseSmsDTO);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+
+            return ResponseEntity.ok(e.getMessage());
+        }
+
+//        ResponseDTO response = ResponseDTO.builder().message("success").build();
+//        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/smsCheck")
+    public ResponseEntity<?> smsValidateCheck(@RequestBody SmsDTO smsDTO){
+
+        try {
+            boolean isVerified = tokenProvider.validateSmsToken(smsDTO.getToken(), smsDTO.getVerifyCode());
+
+            // 문자 인증 코드가 일치
+            if (isVerified){
+                ResponseDTO response = ResponseDTO.builder().message("success").build();
+                return ResponseEntity.ok().body(response);
+            }
+
+            ResponseDTO response = ResponseDTO.builder().error("fail").build();
+            return ResponseEntity.ok().body(response);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            ResponseDTO response = ResponseDTO.builder().error("fail").build();
+            return ResponseEntity.ok().body(response);
+        }
+    }
 }

@@ -27,6 +27,10 @@ public class ProductDTO {
 
     private String imgUrl;
 
+    private Integer clickedCount;
+
+    private Integer wishedCount;
+
     private LocalDateTime regTime;
 
     private LocalDateTime updateTime;
@@ -35,16 +39,21 @@ public class ProductDTO {
 
     private String searchQuery;
 
+    private String sortBy;
+
     @QueryProjection
-    public ProductDTO(Long id, String title, Integer price, SellStatus sellStatus, String imgUrl, LocalDateTime regTime, LocalDateTime updateTime, String searchBy, String searchQuery) {
+    public ProductDTO(Long id, String title, Integer price, SellStatus sellStatus, String imgUrl, Integer clickedCount, Integer wishedCount, LocalDateTime regTime, LocalDateTime updateTime, String searchBy, String searchQuery, String sortBy) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.sellStatus = sellStatus;
         this.imgUrl = imgUrl;
+        this.clickedCount = clickedCount;
+        this.wishedCount = wishedCount;
         this.regTime = regTime;
         this.updateTime = updateTime;
         this.searchBy = searchBy;
         this.searchQuery = searchQuery;
+        this.sortBy = sortBy;
     }
 }
