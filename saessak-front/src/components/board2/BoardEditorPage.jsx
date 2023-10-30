@@ -11,18 +11,24 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 
 import '@toast-ui/editor/dist/i18n/ko-kr';
+import { useDispatch, useSelector } from 'react-redux';
+import { API_BASE_URL } from '../../ApiConfig';
 
 let imageList = [];
 const BoardEditorPage = () => {
-  let titleData;
-  const [contents, setContents] = useState("");
+  const [contents, setContents] = useState();
   const navigate = useNavigate();
-  const {boardName} = useParams();
+  const {boardName, boardId} = useParams();
   const editorRef = useRef();
+  const boardData = useSelector(state => state.boardData.bData);
 
   useEffect(()=>{
     imageList = [];
-  },[])
+    if (boardId) {
+      console.log(boardName, boardId, boardData);
+      setContents(boardData.list[0].content&&boardData.list[0].content.split('"').join("'").split("$back$").join(API_BASE_URL));
+    }
+  },[]);
 
   const onChange = () => {
     setContents(editorRef.current.getInstance().getHTML());
@@ -43,31 +49,37 @@ const BoardEditorPage = () => {
     e.preventDefault();
     const title = e.target.elements.titleData.value;
     let imgs = imageList.filter(p=>contents.includes(p.name.split('?')[0]));
-    
+
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("content", contents);
-    imgs.forEach(p=>{
-      formData.append("imgs", p);
-    })
-    uploadProduct("/board/create/"+boardName, "POST", formData).then((response) => {
-      navigate('/board/list/'+boardName);
-      // console.log(response)
-      // if (result === "success") {
-      //   alert(result);
-      //   navigate("/search");
-      // } else {
-      //   alert(result);
-      // }
-    });
-
-
-
-
-
+    formData.append("content", contents.split(API_BASE_URL).join("$back$"));
+    if (imgs.length>0) {
+      imgs.forEach(p=>{
+        formData.append("imgs", p);
+      })
+    } 
+    
+    if (boardId) {
+      console.log(contents);
+      console.log(imgs);
+      uploadProduct("/board/update/"+boardName+"/"+boardId, "POST", formData).then((response) => {
+        console.log("res",response);
+        if (response&&response.msg === "ok") {
+          navigate('/board/detail/'+boardName+'/'+boardId);
+        }
+      });
+    } else {
+      uploadProduct("/board/create/"+boardName, "POST", formData).then((response) => {
+        navigate('/board/detail/'+boardName);
+      });
+    }
 
   }
+
+  if (boardId && contents===undefined) {
+    return null;
+  } 
 
   return (
     <>
@@ -93,7 +105,7 @@ const BoardEditorPage = () => {
                   placeholder="제목을 입력하세요"
                   className="notice-title"
                   name="titleData"
-                  defaultValue={titleData!==undefined?titleData:""}
+                  defaultValue={boardId?boardData.list[0].title:""}
                 />
               </div>
               <div className="cartegory-top-right">
