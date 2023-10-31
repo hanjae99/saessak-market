@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ObjecttionBoard from './ObjecttionBoard';
 import { useSelector } from 'react-redux';
-import CommentViewer from './CommentViewer';
+import CommentViewer from '../board2/CommentViewer';
 
 
 

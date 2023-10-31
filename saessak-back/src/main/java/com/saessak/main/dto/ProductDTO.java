@@ -39,8 +39,10 @@ public class ProductDTO {
 
     private String searchQuery;
 
+    private String sortBy;
+
     @QueryProjection
-    public ProductDTO(Long id, String title, Integer price, SellStatus sellStatus, String imgUrl, Integer clickedCount, Integer wishedCount, LocalDateTime regTime, LocalDateTime updateTime, String searchBy, String searchQuery) {
+    public ProductDTO(Long id, String title, Integer price, SellStatus sellStatus, String imgUrl, Integer clickedCount, Integer wishedCount, LocalDateTime regTime, LocalDateTime updateTime, String searchBy, String searchQuery, String sortBy) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -52,5 +54,6 @@ public class ProductDTO {
         this.updateTime = updateTime;
         this.searchBy = searchBy;
         this.searchQuery = searchQuery;
+        this.sortBy = sortBy;
     }
 }

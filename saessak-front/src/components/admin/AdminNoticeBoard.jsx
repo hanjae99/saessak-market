@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { FaSearch } from 'react-icons/fa';
 import ViewBoard from './ViewBoard';
-import CommentViewer from './CommentViewer';
+import CommentViewer from '../board2/CommentViewer';
 
 const ADBoardNtcBd = ({ page, setViewPage }) => {
   const dummy = useSelector((state) => state.ntcData);

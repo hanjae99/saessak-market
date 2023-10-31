@@ -1,5 +1,6 @@
 package com.saessak.board;
 
+import com.saessak.entity.Board;
 import com.saessak.entity.Image;
 import com.saessak.imgfile.FileService;
 import com.saessak.main.dto.ProductDTO;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -54,6 +56,19 @@ public class BoardService {
   }
 
 
+  public Board getBoard(String boardId) {
+    return boardRepository.findById(Long.parseLong(boardId)).orElseThrow(EntityNotFoundException::new);
+  }
 
+  public List<Image> getBoardImageList(String boardId) {
+    return imageRepository.findByBoardId(Long.parseLong(boardId));
+  }
 
+  public void deleteImage(Long id) {
+    imageRepository.deleteById(id);
+  }
+
+  public void saveBoard(Board board) {
+    boardRepository.save(board);
+  }
 }
