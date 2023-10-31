@@ -147,9 +147,9 @@ public class DetailService {
 
         Member sell_MemberId =Member.builder().id(detailDTO.getMemberDTO().getMemberId()).build();
 
-        Member order_MemberId = Member.builder().id(orderMemberId).build();
+        Member send_MemberId = Member.builder().id(orderMemberId).build();
 
-        ChatBox chatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(order_MemberId).build();
+        ChatBox chatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(send_MemberId).build();
 
         chatBoxRepository.save(chatBox);
 
