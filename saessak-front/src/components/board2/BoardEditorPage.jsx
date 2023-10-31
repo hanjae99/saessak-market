@@ -71,7 +71,7 @@ const BoardEditorPage = () => {
       });
     } else {
       uploadProduct("/board/create/"+boardName, "POST", formData).then((response) => {
-        navigate('/board/detail/'+boardName);
+        navigate('/board/list/'+boardName);
       });
     }
 

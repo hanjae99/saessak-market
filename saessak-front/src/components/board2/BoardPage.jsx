@@ -38,7 +38,9 @@ const BoardPage = () => {
     call(url, "GET").then((response) => {
       // console.log("response",response);
       if (response && response.list !== undefined) {
-        setVeiwData(response.list);
+        setVeiwData(response.list.map(p=>({...p, regTime:new Date().getDate() === new Date(p.regTime).getDate()
+          ? new Date(p.regTime).toLocaleTimeString()
+          : new Date(p.regTime).toLocaleDateString()})));
         setPageSize(response.pageSize);
         setTotalPageSize(response.totalPageSize);
         setUserRole(response.viewerRole);
