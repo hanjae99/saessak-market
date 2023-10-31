@@ -112,19 +112,21 @@ public class BoardController {
       list = pb.getContent().stream().peek(p -> {
         switch (p.getBoardName()) {
           case "main":
-            BoardMain boardMain = new BoardMain();
+            BoardMain boardMain;
             boardMain = boardMainRepository.findByBoardId(p.getId());
             p.setBoardNumber(boardMain.getId());
             break;
           case "ntc":
-            BoardNtc boardNtc = new BoardNtc();
+            BoardNtc boardNtc;
             boardNtc = boardNtcRepository.findByBoardId(p.getId());
             p.setBoardNumber(boardNtc.getId());
             break;
           case "voc":
-            BoardVoc boardVoc = new BoardVoc();
+            BoardVoc boardVoc;
             boardVoc = boardVocRepository.findByBoardId(p.getId());
             p.setBoardNumber(boardVoc.getId());
+            break;
+          default:
             break;
         }
       }).collect(Collectors.toList());
@@ -150,7 +152,7 @@ public class BoardController {
   @PostMapping("/create/{boardName}")
   public ResponseEntity<?> createBoard(@PathVariable("boardName") String boardName,
                                        @AuthenticationPrincipal String userId,
-                                       @RequestPart List<MultipartFile> imgs,
+                                       List<MultipartFile> imgs,
                                        BoardDTO boardDTO) {
 
 
@@ -170,6 +172,8 @@ public class BoardController {
     List<String> blobUrl = new ArrayList<>();
     List<String> realUrl = new ArrayList<>();
 
+
+
     if (imgs!=null) {
       imgs.forEach(p->{
         Image image = new Image();
@@ -182,12 +186,11 @@ public class BoardController {
         blobUrl.add(p.getOriginalFilename().split("\\?")[0]);
         realUrl.add("$back$"+image.getImgUrl());
       });
+      for (int i = 0; i < blobUrl.size(); i++) {
+        content = content.replace(blobUrl.get(i), realUrl.get(i));
+      }
     }
-//    log.info(content);
-    for (int i = 0; i < blobUrl.size(); i++) {
-      content = content.replace(blobUrl.get(i), realUrl.get(i));
-    }
-//    log.info("컨--------텐트---------------"+content);
+
     savedBoard.setContent(content);
     boardRepository.save(savedBoard);
 
@@ -212,6 +215,71 @@ public class BoardController {
 
     return ResponseEntity.ok().body("kk");
 
+  }
+
+
+  @DeleteMapping("/delete/{boardId}")
+  public ResponseEntity<?> deleteBoard(@PathVariable("boardId") String boardId) {
+
+    Board board = boardService.getBoard(boardId);
+    board.setShowStatus(ShowStatus.HIDDEN);
+    boardService.saveBoard(board);
+
+    BoardResponseDTO<?> boardResponseDTO = BoardResponseDTO.builder()
+        .msg("ok")
+        .build();
+
+    return ResponseEntity.ok().body(boardResponseDTO);
+  }
+
+
+  @PostMapping("/update/{boardName}/{boardId}")
+  public ResponseEntity<?> updateBoard(@PathVariable("boardName") String boardName,
+                                       @PathVariable("boardId") String boardId,
+                                       @AuthenticationPrincipal String userId,
+                                       List<MultipartFile> imgs,
+                                       BoardDTO boardDTO) {
+
+    Board board = boardService.getBoard(boardId);
+    board.setTitle(boardDTO.getTitle());
+
+    String content = boardDTO.getContent();
+
+    String finalContent = content;
+    boardService.getBoardImageList(boardId).forEach(p->{
+      if (!finalContent.contains(p.getImgUrl())) {
+        boardService.deleteImage(p.getId());
+      }
+    });
+
+    List<String> blobUrl = new ArrayList<>();
+    List<String> realUrl = new ArrayList<>();
+
+    if (imgs!=null) {
+      imgs.forEach(p->{
+        Image image = new Image();
+        image.setBoard(board);
+        try {
+          boardService.saveImg(image, p);
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+        blobUrl.add(p.getOriginalFilename().split("\\?")[0]);
+        realUrl.add("$back$"+image.getImgUrl());
+      });
+      for (int i = 0; i < blobUrl.size(); i++) {
+        content = content.replace(blobUrl.get(i), realUrl.get(i));
+      }
+    }
+    board.setContent(content);
+
+    boardRepository.save(board);
+
+    BoardResponseDTO<?> boardResponseDTO = BoardResponseDTO.builder()
+        .msg("ok")
+        .build();
+
+    return ResponseEntity.ok().body(boardResponseDTO);
   }
 
 }

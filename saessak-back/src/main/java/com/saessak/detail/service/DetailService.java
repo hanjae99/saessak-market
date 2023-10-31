@@ -141,13 +141,13 @@ public class DetailService {
         log.info(productDTOList.toString());
     }
 
-    public Long createChatBox(DetailDTO detailDTO , Long orderMemberId){
+    public Long createChatBox(DetailDTO detailDTO , Long sendMemberId){
 
-        Product product =Product.builder().id(detailDTO.getProductId()).build();
+        Product product =productRepository.findById(detailDTO.getProductId()).orElseThrow();
 
-        Member sell_MemberId =Member.builder().id(detailDTO.getMemberDTO().getMemberId()).build();
+        Member sell_MemberId = memberRepository.findById(detailDTO.getMemberDTO().getMemberId()).orElseThrow();
 
-        Member send_MemberId = Member.builder().id(orderMemberId).build();
+        Member send_MemberId = memberRepository.findById(sendMemberId).orElseThrow();
 
         ChatBox chatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(send_MemberId).build();
 

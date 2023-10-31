@@ -43,6 +43,8 @@
 .detail-productsitem1 {
   width: 50%;
   height: 400px;
+  display: flex;
+  align-items: center;
 }
 .detail-productsitem2 {
   width: 50%;

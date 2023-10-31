@@ -10,6 +10,7 @@ import ntcData from "./components/board/NtcSlice";
 import objecttion from "./components/admin/objecttionSlice";
 import login from "./loginSlice";
 import comments from "./commentSlice";
+import boardData from "./components/board2/boardData";
 
 function getRandomDate(start, end) {
   const startDate = start.getTime();
@@ -219,6 +220,7 @@ const store = configureStore({
     objecttion: objecttion.reducer,
     login: login.reducer,
     comments: comments.reducer,
+    boardData: boardData.reducer,
   },
 });
 

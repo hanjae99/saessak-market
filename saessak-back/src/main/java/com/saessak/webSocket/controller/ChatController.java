@@ -19,7 +19,7 @@ public class ChatController {
     public ResponseEntity<?> sendMessage(@RequestBody ChatDTO message) {
         Chat chat=Chat.builder().content(message.getContent()).build();
 
-        chatService.saveMessage(chat);
+//        chatService.saveMessage(chat);
         return ResponseEntity.ok("");
     }
 
