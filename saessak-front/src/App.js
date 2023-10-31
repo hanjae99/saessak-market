@@ -25,6 +25,7 @@ import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
 import ChatTest from "./components/ChatTest";
 import Chat from "./components/test/Chat";
+import Chat from "./components/test/Chat";
 import ChatApp from "./ChatApp";
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
         ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
+        <Route path="/chatTest" element={<Chat />} />
         <Route path="/chatTest" element={<Chat />} />
       </Routes>
     </div>

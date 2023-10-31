@@ -17,6 +17,7 @@ import { API_BASE_URL } from "../../ApiConfig";
 let imageList = [];
 const BoardEditorPage = () => {
   const [contents, setContents] = useState();
+  const [contents, setContents] = useState();
   const navigate = useNavigate();
   const { boardName, boardId } = useParams();
   const editorRef = useRef();

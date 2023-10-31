@@ -221,6 +221,7 @@ const store = configureStore({
     login: login.reducer,
     comments: comments.reducer,
     boardData: boardData.reducer,
+    boardData: boardData.reducer,
   },
 });
 
