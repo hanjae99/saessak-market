@@ -21,4 +21,7 @@ public class BoardResponseDTO<T> {
   private int totalPageSize;
   private int pageSize;
 
+  private String userProfileImgUrl;
+  private String userNickName;
+
 }

@@ -1,34 +1,34 @@
 package com.saessak.webSocket.controller;
 
-import com.saessak.entity.Chat;
 import com.saessak.webSocket.dto.ChatDTO;
 import com.saessak.webSocket.service.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/chat")
+//@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ChatController {
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final SimpMessageSendingOperations simpMessageSendingOperations;
+
     private final ChatService chatService;
 
-    @PostMapping("/send")
-    public ResponseEntity<?> sendMessage(@RequestBody ChatDTO message) {
-        Chat chat=Chat.builder().content(message.getContent()).build();
+    @MessageMapping("/chat/{chatBoxId}")
+    public void sendToMessage(@DestinationVariable("chatBoxId") String chatBoxId , ChatDTO chatDTO){
 
-//        chatService.saveMessage(chat);
-        return ResponseEntity.ok("");
+        Long memberId = chatDTO.getMemberId();
+        String content = chatDTO.getContent();
+        Long chatBox = Long.valueOf(chatBoxId);
+
+        chatService.saveMessage(chatBox ,memberId ,content);
+
+        simpMessageSendingOperations.convertAndSend("/topic/chatMessages/"+chatBoxId,chatDTO);
     }
 
-    @GetMapping("/history/{senderId}/{receiverId}")
-    public ResponseEntity<List<Chat>> loadChatHistory(
-            @PathVariable Long senderId,
-            @PathVariable Long receiverId
-    ) {
-        List<Chat> chatHistory = chatService.getChatHistory(senderId, receiverId);
-        return ResponseEntity.ok(chatHistory);
-    }
+
 }

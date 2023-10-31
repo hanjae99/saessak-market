@@ -57,12 +57,15 @@ function App() {
           element={<BoardEditorPage />}
         ></Route>
         <Route
+          path="/board/write/:boardName/:boardId"
+          element={<BoardEditorPage />}
+        ></Route>
+        <Route
           path="/board/detail/:boardName/:boardId"
           element={<BoardViewerPage />}
         ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
-
         <Route path="/chatTest" element={<Chat />} />
       </Routes>
     </div>

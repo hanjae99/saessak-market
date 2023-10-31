@@ -1,12 +1,8 @@
 package com.saessak.board;
 
-import com.saessak.entity.Board;
-import com.saessak.entity.Image;
+import com.saessak.entity.*;
 import com.saessak.imgfile.FileService;
-import com.saessak.main.dto.ProductDTO;
-import com.saessak.repository.BoardRepository;
-import com.saessak.repository.ImageRepository;
-import com.saessak.repository.MemberRepository;
+import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -29,6 +25,10 @@ public class BoardService {
   private final ImageRepository imageRepository;
   private final BoardRepository boardRepository;
   private final MemberRepository memberRepository;
+  private final BoardMainRepository boardMainRepository;
+  private final BoardNtcRepository boardNtcRepository;
+  private final BoardVocRepository boardVocRepository;
+  private final CommentRepository commentRepository;
 
   public Page<BoardDTO> read(BoardSearchDTO boardSearchDTO, Pageable pageable) {
     return boardRepository.getSearchBoardPage(boardSearchDTO, pageable);
@@ -68,7 +68,61 @@ public class BoardService {
     imageRepository.deleteById(id);
   }
 
-  public void saveBoard(Board board) {
-    boardRepository.save(board);
+  public Board saveBoard(Board board) {
+    return boardRepository.save(board);
   }
+
+  public Long getMainNumber(Long id) {
+    return boardMainRepository.findByBoardId(id).getId();
+  }
+
+  public Long getNtcNumber(Long id) {
+    return boardNtcRepository.findByBoardId(id).getId();
+  }
+
+  public Long getVocNumber(Long id) {
+    return boardVocRepository.findByBoardId(id).getId();
+  }
+
+  public void saveBoardMain(BoardMain boardMain) {
+    boardMainRepository.save(boardMain);
+  }
+
+  public void saveBoardNtc(BoardNtc boardNtc) {
+    boardNtcRepository.save(boardNtc);
+  }
+
+  public void saveBoardVoc(BoardVoc boardVoc) {
+    boardVocRepository.save(boardVoc);
+  }
+
+  public void saveComment(Comment comment) {
+    commentRepository.save(comment);
+  }
+
+  public Member getMember(String userId) {
+    return memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new);
+  }
+  public Member getMember(Long userId) {
+    return memberRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+  }
+
+  public List<Comment> getComments(String boardId) {
+    return commentRepository.findByBoardId(Long.parseLong(boardId));
+  }
+
+  public String getMemberProfileImgUrl(Long id) {
+    Image image = imageRepository.findByMemberId(id);
+    String result = "";
+    if (image != null) {
+      result = image.getImgUrl();
+    }
+    return result;
+  }
+
+  public Comment getComment(Long id) {
+    return commentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+  }
+
+
 }

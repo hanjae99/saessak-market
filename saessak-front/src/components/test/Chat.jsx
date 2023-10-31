@@ -1,105 +1,108 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { createGlobalStyle } from "styled-components";
 import "./Chat.scss";
+import * as StompJs from "@stomp/stompjs";
 
 const Chat = () => {
-  const [msg, setMsg] = useState("");
+  const [chatInput, setChatInput] = useState("");
+  const [chatContent, setChatContent] = useState([]);
+  const [stompClient, setStompClient] = useState(null);
   const [name, setName] = useState("");
-  const [chatt, setChatt] = useState([]);
   const [chkLog, setChkLog] = useState(false);
-  const [socketData, setSocketData] = useState();
 
-  const ws = useRef(null); //webSocket을 담는 변수,
-  //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
+  // if (chatContent) {
+  //   const msgBox = chatContent.map((item, idx) => (
+  //     <div key={idx} className={item.name === name ? "me" : "other"}>
+  //       <span>
+  //         <b>{item.name}</b>
+  //       </span>{" "}
+  //       [ {item.date} ]<br />
+  //       <span>{item.msg}</span>
+  //     </div>
+  //   ));
+  // }
 
-  const msgBox = chatt.map((item, idx) => (
+  const msgBox = chatContent.map((item, idx) => (
     <div key={idx} className={item.name === name ? "me" : "other"}>
       <span>
         <b>{item.name}</b>
       </span>{" "}
-      [ {item.date} ]<br />
+      [ {new Date(item.date).toLocaleString()} ]<br />
       <span>{item.msg}</span>
     </div>
   ));
 
   useEffect(() => {
-    if (socketData !== undefined) {
-      const tempData = chatt.concat(socketData);
-      console.log(tempData);
-      setChatt(tempData);
-    }
-  }, [socketData]);
+    const connectWebSocket = () => {
+      const client = new StompJs.Client({
+        brokerURL: "ws://localhost:8888/chatTest",
+        reconnectDelay: 5000,
+      });
 
-  // const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
-  //   `;
+      client.onConnect = () => {
+        setStompClient(client);
+        console.log("WebSocket 연결 성공");
 
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  const onText = (event) => {
-    console.log(event.target.value);
-    setMsg(event.target.value);
+        client.subscribe("/topic/chatMessages", (message) => {
+          console.log(message);
+          const msgData = JSON.parse(message.body);
+          console.log(msgData);
+          setChatContent([...chatContent, msgData.body]);
+        });
+      };
+
+      client.onStompError = (frame) => {
+        console.error("WebSocket 오류: " + frame);
+      };
+
+      client.activate();
+    };
+
+    connectWebSocket();
+
+    return () => {
+      if (stompClient && stompClient.connected) {
+        stompClient.deactivate();
+      }
+    };
+  }, [chatContent]);
+
+  const handleInput = (e) => {
+    setChatInput(e.target.value);
   };
 
-  const webSocketLogin = useCallback(() => {
-    ws.current = new WebSocket("ws://localhost:8888/socket/chatt");
-
-    ws.current.onmessage = (message) => {
-      const dataSet = JSON.parse(message.data);
-      setSocketData(dataSet);
-    };
-  });
-
-  const send = useCallback(() => {
+  const handleSubmit = () => {
     if (!chkLog) {
       if (name === "") {
         alert("이름을 입력하세요.");
         document.getElementById("name").focus();
         return;
       }
-      webSocketLogin();
+      // webSocketLogin();
       setChkLog(true);
     }
-
-    if (msg !== "") {
+    if (chatInput !== "") {
       const data = {
         name,
-        msg,
-        date: new Date().toLocaleString(),
-      }; //전송 데이터(JSON)
+        msg: chatInput,
+        date: new Date(),
+      };
 
       const temp = JSON.stringify(data);
 
-      if (ws.current.readyState === 0) {
-        //readyState는 웹 소켓 연결 상태를 나타냄
-        ws.current.onopen = () => {
-          //webSocket이 맺어지고 난 후, 실행
-          console.log(ws.current.readyState);
-          ws.current.send(temp);
-        };
-      } else {
-        ws.current.send(temp);
+      if (stompClient) {
+        stompClient.publish({
+          destination: "/app/chat",
+          // contentType: "application/json",
+          body: temp,
+        });
       }
-    } else {
-      alert("메세지를 입력하세요.");
-      document.getElementById("msg").focus();
-      return;
+
+      setChatInput("");
     }
-    setMsg("");
-  });
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
+  };
 
   return (
     <>
-      {/* <GlobalStyle /> */}
       <div className="chatContainer">
         <div id="chat-wrap">
           <div id="chatt">
@@ -120,15 +123,20 @@ const Chat = () => {
             <div id="sendZone">
               <textarea
                 id="msg"
-                value={msg}
-                onChange={onText}
+                value={chatInput}
+                onChange={handleInput}
                 onKeyDown={(ev) => {
                   if (ev.keyCode === 13) {
-                    send();
+                    handleSubmit();
                   }
                 }}
               ></textarea>
-              <input type="button" value="전송" id="btnSend" onClick={send} />
+              <input
+                type="button"
+                value="전송"
+                id="btnSend"
+                onClick={handleSubmit}
+              />
             </div>
           </div>
         </div>

@@ -1,7 +1,10 @@
 package com.saessak.webSocket.dto;
 
+import com.saessak.entity.Chat;
+import com.saessak.entity.Product;
 import lombok.Builder;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
@@ -9,11 +12,13 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatDTO {
 
-    private Long ChatId;
+    private Long chatBoxId;
 
-    private ChatBoxDTO chatBox;
+    private Long memberId;
 
     private String content;
 
-    private LocalDateTime regTime;
+
+
+
 }
