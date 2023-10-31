@@ -9,11 +9,12 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatDTO {
 
-    private Long ChatId;
+    private Long chatBoxId;
 
-    private ChatBoxDTO chatBox;
+    private Long memberId;
 
     private String content;
 
     private LocalDateTime regTime;
+
 }

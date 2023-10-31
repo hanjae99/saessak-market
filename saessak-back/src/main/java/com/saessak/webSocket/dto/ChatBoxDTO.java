@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,9 +16,11 @@ public class ChatBoxDTO {
 
     private Long productId;
 
-    private Long sellMemberId;
+//    private Long sellMemberId;
+//
+//    private Long orderMemberId;
 
-    private Long orderMemberId;
+    private List<ChatDTO> chatList;
 
     private int chatCount;
 

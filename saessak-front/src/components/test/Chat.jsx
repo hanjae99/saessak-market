@@ -26,7 +26,7 @@ const Chat = () => {
       <span>
         <b>{item.name}</b>
       </span>{" "}
-      [ {item.date} ]<br />
+      [ {new Date(item.date).toLocaleString()} ]<br />
       <span>{item.msg}</span>
     </div>
   ));
@@ -43,9 +43,9 @@ const Chat = () => {
         console.log("WebSocket 연결 성공");
 
         client.subscribe("/topic/chatMessages", (message) => {
-          // console.log(message.body);
+          console.log(message);
           const msgData = JSON.parse(message.body);
-          // console.log(msgData);
+          console.log(msgData);
           setChatContent([...chatContent, msgData.body]);
         });
       };
@@ -84,7 +84,7 @@ const Chat = () => {
       const data = {
         name,
         msg: chatInput,
-        date: new Date().toLocaleString,
+        date: new Date(),
       };
 
       const temp = JSON.stringify(data);
