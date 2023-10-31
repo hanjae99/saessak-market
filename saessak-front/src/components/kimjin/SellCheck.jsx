@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Manu.css";
 import { Button } from "react-bootstrap";
-import { useEffect } from "react";
 import { call } from "../../ApiService";
-import { useState } from "react";
 import { API_BASE_URL } from "../../ApiConfig";
 
-const Check = () => {
+const SellCheck = () => {
   const movePage = useNavigate();
 
-  const [buyProduct, setBuyProduct] = useState([]);
+  const [sellProduct, setSellProduct] = useState([]);
 
   useEffect(() => {
-    call("/user/check", "GET").then((response) => {
-      setBuyProduct(response.data);
+    call("/user/sellcheck", "GET").then((response) => {
+      setSellProduct(response.data);
       console.log(response);
     });
   }, []);
@@ -26,14 +24,14 @@ const Check = () => {
         <div className="manu-2-1">
           <div className="tbody-1">
             <div className="text-0">
-              {buyProduct &&
-                buyProduct.map((a, i) => (
+              {sellProduct &&
+                sellProduct.map((a, i) => (
                   <div key={i}>
                     <div className="table-main">
                       <div className="table-body">
                         <div className="table-day">
                           {" "}
-                          {new Date(buyProduct[i].updateTime)
+                          {new Date(sellProduct[i].updateTime)
                             .toLocaleDateString()
                             .substring(0, 12)}
                         </div>
@@ -43,7 +41,7 @@ const Check = () => {
                           <div className="td-1-1">
                             <div className="td-1-1-1">
                               <span className="td-1-1-1-1">
-                                {buyProduct[i].sellStatus}
+                                {sellProduct[i].sellStatus}
                               </span>
                             </div>
                           </div>
@@ -55,24 +53,24 @@ const Check = () => {
                                     className="text-2-1"
                                     onClick={() =>
                                       movePage(
-                                        "/detail/" + buyProduct[i].productId
+                                        "/detail/" + sellProduct[i].productId
                                       )
                                     }
                                   >
                                     <div className="text-2-img">
                                       <img
                                         className="img1"
-                                        src={`${API_BASE_URL}${buyProduct[i].imgUrl}`}
+                                        src={`${API_BASE_URL}${sellProduct[i].imgUrl}`}
                                         alt=""
                                       />
                                     </div>
                                     <div className="text-2-name">
                                       <div className="text-2-name-1">
                                         <div className="text-2-name-1-1">
-                                          {buyProduct[i].title}
+                                          {sellProduct[i].title}
                                         </div>
                                         <div className="text-2-name-1-2">
-                                          {buyProduct[i].price}
+                                          {sellProduct[i].price}원
                                         </div>
                                       </div>
                                     </div>
@@ -86,17 +84,18 @@ const Check = () => {
                           <div className="text-button">
                             <Button
                               onClick={() => {
-                                console.log(buyProduct[i].buyListId);
+                                const item = {};
+                                console.log(sellProduct[i].productId);
                                 call(
-                                  `/user/check/${buyProduct[i].buyListId}`,
-                                  "DELETE"
+                                  `/user/sellcheck/${sellProduct[i].productId}`,
+                                  "PUT"
                                 ).then((response) => {
                                   if (response.error === "success") {
-                                    const filteredWish = buyProduct.filter(
+                                    const filteredWish = sellProduct.filter(
                                       (w) =>
-                                        w.buyListId !== buyProduct[i].buyListId
+                                        w.productId !== sellProduct[i].productId
                                     );
-                                    setBuyProduct(filteredWish);
+                                    setSellProduct(filteredWish);
                                   }
                                 });
                               }}
@@ -118,4 +117,4 @@ const Check = () => {
   );
 };
 
-export default Check;
+export default SellCheck;

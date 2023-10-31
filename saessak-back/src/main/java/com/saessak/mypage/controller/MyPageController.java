@@ -1,33 +1,25 @@
 package com.saessak.mypage.controller;
 
-import com.saessak.constant.Role;
-import com.saessak.entity.Image;
 import com.saessak.entity.Member;
-import com.saessak.main.dto.ProductFormDTO;
 import com.saessak.mypage.dto.MemberImageDTO;
 import com.saessak.mypage.dto.MyPageMemberDTO;
 //import com.saessak.mypage.security.TokenProvidor;
 import com.saessak.mypage.dto.ResponseDTO;
 import com.saessak.mypage.service.MyPageMemberService;
-import com.saessak.mypage.service.MyPageUserService;
 import com.saessak.repository.ImageRepository;
 import com.saessak.repository.MemberRepository;
 import com.saessak.security.TokenProvider;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequestMapping("/user")
 @RestController
@@ -38,8 +30,6 @@ public class MyPageController {
     private final MemberRepository memberRepository;
 
     private final MyPageMemberService memberService;
-
-    private final MyPageUserService myPageUserService;
 
     private final TokenProvider tokenProvider;
 

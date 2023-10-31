@@ -1,11 +1,13 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Check from "./Check";
-import Changing from "./Changing";
-import ChangingPwd from "./ChangingPwd";
-import WishList from "./WishList";
+import Check from "../kimjin/Check";
+import Changing from "../memberchange/Changing";
+import ChangingPwd from "../memberchange/ChangingPwd";
+import WishList from "../kimjin/WishList";
 import MyPage from "./mypage";
 import Header from "../main/Header";
 import Footer from "../main/Footer";
+import SellCheck from "../kimjin/SellCheck";
+import ChangingPass from "../memberchange/ChangingPass";
 
 export const Layout = () => {
   const navigate = useNavigate();
@@ -34,7 +36,13 @@ export const Layout = () => {
               마이페이지
             </div>
             <div className="menuBtn" onClick={() => navigate("/user/check")}>
-              상품 조회
+              구매 이력
+            </div>
+            <div
+              className="menuBtn"
+              onClick={() => navigate("/user/SellCheck")}
+            >
+              판매 상품
             </div>
             <div className="menuBtn" onClick={() => navigate("/user/wishlist")}>
               찜 목록
@@ -44,9 +52,11 @@ export const Layout = () => {
             <Routes>
               <Route path="/mypage" element={<MyPage />}></Route>
               <Route path="/check" element={<Check />}></Route>
+              <Route path="/sellcheck" element={<SellCheck />}></Route>
               <Route path="/changing" element={<Changing />}></Route>
               <Route path="/changingpwd" element={<ChangingPwd />}></Route>
               <Route path="/wishlist" element={<WishList />}></Route>
+              <Route path="/changingpass" element={<ChangingPass />}></Route>
             </Routes>
           </div>
         </div>

@@ -15,7 +15,7 @@ import Detail from "./components/detail/Detail";
 import Game from "./components/game/Game";
 import GameResult from "./components/game/GameResult";
 import Chatting from "./components/kimjin/Chatting";
-import { Layout } from "./components/kimjin/layout";
+import { Layout } from "./components/mypage/layout";
 import Main from "./components/main/Main";
 import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
@@ -52,9 +52,18 @@ function App() {
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
         <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
-        <Route path="/board/write/:boardName" element={<BoardEditorPage />}></Route>
-        <Route path="/board/write/:boardName/:boardId" element={<BoardEditorPage />}></Route>
-        <Route path="/board/detail/:boardName/:boardId" element={<BoardViewerPage />}></Route>
+        <Route
+          path="/board/write/:boardName"
+          element={<BoardEditorPage />}
+        ></Route>
+        <Route
+          path="/board/write/:boardName/:boardId"
+          element={<BoardEditorPage />}
+        ></Route>
+        <Route
+          path="/board/detail/:boardName/:boardId"
+          element={<BoardViewerPage />}
+        ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
         <Route path="/chatTest" element={<Chat />} />

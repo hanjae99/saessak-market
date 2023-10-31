@@ -1,19 +1,33 @@
 import React from "react";
 import { useRef, useState } from "react";
 import { Avatar } from "antd";
+import { call, uploadProduct } from "../../ApiService";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const ImgUpdate = () => {
   // 이미지 URL을 관리하는 상태 변수
   const [Image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
+
   // 파일 업로드 인풋을 위한 ref
   const fileInput = useRef(null);
 
   // 파일 선택 시 호출되는 함수
   const onChange = (e) => {
+    const formData = new FormData();
+
+    console.log(e.target.files[0]);
+
     if (e.target.files[0]) {
-      setImage(e.target.files[0]); // 이미지 상태 업데이트
+      formData.append("memberImg", e.target.files[0]);
+      uploadProduct("/user/mypage/imgupdate", "PUT", formData).then(
+        (response) => {
+          console.log(response);
+          const userimg = API_BASE_URL + response.data[0].imgUrl;
+          setImage(userimg);
+        }
+      );
     } else {
       // 파일 선택이 취소되었거나 없을 때 기본 이미지로 복원
       setImage(
@@ -21,15 +35,15 @@ const ImgUpdate = () => {
       );
       return;
     }
-    const reader = new FileReader();
+    // const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImage(reader.result); // 선택한 이미지의 데이터 URL로 업데이트
-      }
-    };
+    // reader.onload = () => {
+    //   if (reader.readyState === 2) {
+    //     setImage(reader.result); // 선택한 이미지의 데이터 URL로 업데이트
+    //   }
+    // };
 
-    reader.readAsDataURL(e.target.files[0]); // 선택한 파일을 데이터 URL로 읽음
+    // reader.readAsDataURL(e.target.files[0]); // 선택한 파일을 데이터 URL로 읽음
   };
   return (
     <div>
