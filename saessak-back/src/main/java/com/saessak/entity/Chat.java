@@ -32,10 +32,10 @@ public class Chat extends BaseTimeEntity {
   @Column(length = 600)
   private String content;
 
-  private static ModelMapper modelMapper = new ModelMapper();
-
-  public ChatDTO createChatDTO(){
-    return modelMapper.map(this, ChatDTO.class);
-  }
+//  private static ModelMapper modelMapper = new ModelMapper();
+//
+//  public ChatDTO createChatDTO(){
+//    return modelMapper.map(this, ChatDTO.class);
+//  }
 
 }

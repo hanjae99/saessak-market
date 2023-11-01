@@ -20,20 +20,21 @@ public class ChatBoxController {
     private final DetailService detailService;
 
     @PostMapping("/getList")
-    public ResponseEntity<?> getList(@RequestParam("chatBoxId") String chatBoxId , @AuthenticationPrincipal String senderId){
+    public ResponseEntity<?> getList(@RequestBody ChatBoxDTO chatBoxDTO , @AuthenticationPrincipal String senderId){
 
 
-        ChatBoxDTO chatBoxDTO =chatService.getChatHistory(Long.valueOf(chatBoxId),senderId);
+        ChatBoxDTO newChatBoxDTO =chatService.getChatHistory(Long.valueOf(chatBoxDTO.getId()),senderId);
 
 
-        return ResponseEntity.ok().body(chatBoxDTO);
+        return ResponseEntity.ok().body(newChatBoxDTO);
     }
 
     @PostMapping("/getChatBox")
-    public ResponseEntity<?> createChatBox(@RequestParam("productId") Long productId,@RequestParam("sellMemberId") Long sellMemberId , @AuthenticationPrincipal String memberId){
+    public ResponseEntity<?> createChatBox(@RequestBody ChatBoxDTO chatBoxDTO, @AuthenticationPrincipal String memberId){
+        System.out.println("====createBox: " + chatBoxDTO.getProductId() + "," + chatBoxDTO.getWriter());
         Long sendMemberId =Long.parseLong(memberId);
 
-        Long chatBoxId  =detailService.createChatBox(productId, sellMemberId,sendMemberId);
+        Long chatBoxId  =detailService.createChatBox(chatBoxDTO.getProductId(), chatBoxDTO.getWriter(), sendMemberId);
 
         ResponseDTO.builder().message(String.valueOf(chatBoxId)).build();
         return ResponseEntity.ok().body(chatBoxId);
