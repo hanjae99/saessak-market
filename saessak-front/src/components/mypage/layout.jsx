@@ -8,6 +8,7 @@ import Header from "../main/Header";
 import Footer from "../main/Footer";
 import SellCheck from "../kimjin/SellCheck";
 import ChangingPass from "../memberchange/ChangingPass";
+import ChattingBox from "../kimjin/ChattingBox";
 
 export const Layout = () => {
   const navigate = useNavigate();
@@ -47,6 +48,12 @@ export const Layout = () => {
             <div className="menuBtn" onClick={() => navigate("/user/wishlist")}>
               찜 목록
             </div>
+            <div
+              className="menuBtn"
+              onClick={() => navigate("/user/chattingbox")}
+            >
+              채팅
+            </div>
           </div>
           <div className="newmain4">
             <Routes>
@@ -57,6 +64,7 @@ export const Layout = () => {
               <Route path="/changingpwd" element={<ChangingPwd />}></Route>
               <Route path="/wishlist" element={<WishList />}></Route>
               <Route path="/changingpass" element={<ChangingPass />}></Route>
+              <Route path="/chattingbox" element={<ChattingBox />}></Route>
             </Routes>
           </div>
         </div>

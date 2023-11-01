@@ -115,8 +115,8 @@ const Changing = () => {
         console.error("Error updating data:", error);
       });
 
-    // movePage("/user/mypage");
-    // window.location.reload();
+    movePage("/user/mypage");
+    //window.location.reload();
   };
 
   return (

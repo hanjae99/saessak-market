@@ -35,16 +35,8 @@ const ImgUpdate = () => {
       );
       return;
     }
-    // const reader = new FileReader();
-
-    // reader.onload = () => {
-    //   if (reader.readyState === 2) {
-    //     setImage(reader.result); // 선택한 이미지의 데이터 URL로 업데이트
-    //   }
-    // };
-
-    // reader.readAsDataURL(e.target.files[0]); // 선택한 파일을 데이터 URL로 읽음
   };
+
   return (
     <div>
       {/* 프로필 이미지를 나타내는 아바타 컴포넌트 */}

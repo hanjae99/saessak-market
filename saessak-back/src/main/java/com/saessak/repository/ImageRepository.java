@@ -18,4 +18,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     Image findByMemberId(Long memberId);
 
     List<Image> findByBoardId(Long boardId);
+
+
+
 }

@@ -72,7 +72,14 @@ const Detail = () => {
     //     categories: item.categories,
     //   },
     // });
-    navigate("/user/wishlist");
+
+    call(`/detail/addwish/${id}`, "POST", null).then((response) => {
+      console.log(response);
+      navigate("/user/wishlist");
+      if (response.error === "success") {
+        alert("찜 목록에 추가되었습니다.");
+      }
+    });
   };
 
   return (

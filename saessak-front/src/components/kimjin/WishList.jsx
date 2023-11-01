@@ -37,9 +37,18 @@ const WishList = () => {
                   <div className="table-main">
                     <div className="table-body">
                       <div className="table-day">
-                        {new Date(wish[i].updateTime)
-                          .toLocaleDateString()
-                          .substring(0, 12)}
+                        {(() => {
+                          const date = new Date(wish[i].updateTime);
+                          const year = date.getFullYear();
+                          const month = (1 + date.getMonth())
+                            .toString()
+                            .padStart(2, "0");
+                          const day = date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0");
+                          return `${year}-${month}-${day}`;
+                        })()}
                       </div>
                     </div>
                     <div className="td-main">
