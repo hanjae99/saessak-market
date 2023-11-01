@@ -13,7 +13,6 @@ const Detail = () => {
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
-  const { kakao } = window;
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
