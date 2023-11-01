@@ -25,7 +25,7 @@ const BoardViewerPage = () => {
     const url = "/board/" + bn + "/detail/" + boardId;
     // console.log("url :", url);
     call(url, "GET").then(response => {
-      console.log("response",response);
+      // console.log("response",response);
       if (response !== undefined) {
         setData(response);
         dispatch({type:'boardData/setData',payload:response});

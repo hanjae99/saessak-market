@@ -66,7 +66,7 @@ function App() {
         ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
-        <Route path="/chatTest" element={<Chat />} />
+        <Route path="/chat/:chatBoxId" element={<Chat />} />
       </Routes>
     </div>
   );
