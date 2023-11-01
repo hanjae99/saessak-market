@@ -3,6 +3,7 @@ import "./Chat.scss";
 import * as StompJs from "@stomp/stompjs";
 import { useParams } from "react-router-dom";
 import { chatCall } from "../../ChatService";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const Chat = () => {
   const { chatBoxId } = useParams();
@@ -57,6 +58,8 @@ const Chat = () => {
           console.log(msgData);
           setChatContent([...chatContent, msgData.body]);
         });
+
+        scrollToBottom();
       };
 
       client.onStompError = (frame) => {
@@ -78,6 +81,12 @@ const Chat = () => {
   const handleInput = (e) => {
     setChatInput(e.target.value);
   };
+
+  function scrollToBottom() {
+    const chatForm = document.getElementById("talk");
+    console.log(chatForm);
+    chatForm.scrollTop = chatForm.scrollHeight;
+  }
 
   const handleSubmit = () => {
     if (chatInput !== "") {
@@ -106,11 +115,27 @@ const Chat = () => {
       <div className="chatContainer">
         <div id="chat-wrap">
           <div id="chatt">
-            <h1 id="title">{productTitle} 채팅방</h1>
+            {/* <h1 id="title">{chatContent.find(item => item.memberId !== me).memberNick} 채팅방</h1> */}
+            <div id="title">
+              <img
+                src="/img/leaf1.png"
+                style={{ width: "30px", height: "30px" }}
+                alt="leaf1"
+              />{" "}
+              새싹 채팅방
+            </div>
+            <div className="chat-productInfo">
+              <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+              <div>
+                <p className="chat-product-title">
+                  상품명: {productTitle} dfsfsfsfsfsfsfsfsfsfsfsfsfssfsfs
+                </p>
+                <p className="chat-product-price">가격: {productPrice}원</p>
+              </div>
+            </div>
             <br />
             <div id="talk">
-              <div className="talk-shadow"></div>
-              {msgBox}
+              <div className="talk-shadow">{msgBox}</div>
             </div>
             {/* <input
               disabled={chkLog}
@@ -133,7 +158,7 @@ const Chat = () => {
               ></textarea>
               <input
                 type="button"
-                value="전송"
+                value="입력"
                 id="btnSend"
                 onClick={handleSubmit}
               />
