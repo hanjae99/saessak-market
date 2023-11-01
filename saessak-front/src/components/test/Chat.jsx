@@ -27,9 +27,10 @@ const Chat = () => {
   useEffect(() => {
     // 이전 채팅 데이터 불러오기
     const request = {
-      chatBoxId,
+      id: chatBoxId,
     };
     chatCall("/chatBox/getList", "POST", request).then((response) => {
+      console.log(response);
       if (response && response.chatList) {
         setChatContent(response.chatList);
         setMe(response.writer);
@@ -55,7 +56,7 @@ const Chat = () => {
           console.log(message);
           const msgData = JSON.parse(message.body);
           console.log(msgData);
-          setChatContent([...chatContent, msgData.body]);
+          setChatContent([...chatContent, msgData]);
         });
       };
 
@@ -85,6 +86,7 @@ const Chat = () => {
         chatBoxId,
         memberId: me,
         content: chatInput,
+        regTime: new Date(),
       };
 
       const temp = JSON.stringify(data);

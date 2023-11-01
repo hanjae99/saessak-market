@@ -78,14 +78,15 @@ const Detail = () => {
   const handleChat = () => {
     const request = {
       productId: id,
-      sellMemberId: detaildatas.memberDTO.memberId,
+      writer: detaildatas.memberDTO.memberId,
     };
 
     // 채팅 박스 만든 후
     // 해당 박스 아이디로 이동
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
-      if (response && response.message) {
-        navigate("/chat/" + response.message);
+      // console.log(response);
+      if (response) {
+        navigate("/chat/" + response);
       }
     });
   };

@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/chatBox")
@@ -23,20 +20,21 @@ public class ChatBoxController {
     private final DetailService detailService;
 
     @PostMapping("/getList")
-    public ResponseEntity<?> getList(String chatBoxId , @AuthenticationPrincipal String senderId){
+    public ResponseEntity<?> getList(@RequestBody ChatBoxDTO chatBoxDTO , @AuthenticationPrincipal String senderId){
 
 
-        ChatBoxDTO chatBoxDTO =chatService.getChatHistory(Long.valueOf(chatBoxId),senderId);
+        ChatBoxDTO newChatBoxDTO =chatService.getChatHistory(Long.valueOf(chatBoxDTO.getId()),senderId);
 
 
-        return ResponseEntity.ok().body(chatBoxDTO);
+        return ResponseEntity.ok().body(newChatBoxDTO);
     }
 
     @PostMapping("/getChatBox")
-    public ResponseEntity<?> createChatBox(Long productId, Long sellMemberId ,@AuthenticationPrincipal String memberId){
+    public ResponseEntity<?> createChatBox(@RequestBody ChatBoxDTO chatBoxDTO, @AuthenticationPrincipal String memberId){
+        System.out.println("====createBox: " + chatBoxDTO.getProductId() + "," + chatBoxDTO.getWriter());
         Long sendMemberId =Long.parseLong(memberId);
 
-        Long chatBoxId  =detailService.createChatBox(productId, sellMemberId,sendMemberId);
+        Long chatBoxId  =detailService.createChatBox(chatBoxDTO.getProductId(), chatBoxDTO.getWriter(), sendMemberId);
 
         ResponseDTO.builder().message(String.valueOf(chatBoxId)).build();
         return ResponseEntity.ok().body(chatBoxId);

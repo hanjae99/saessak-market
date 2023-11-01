@@ -46,7 +46,13 @@ public class ChatService {
        List<ChatDTO> chatDTOList = new ArrayList<ChatDTO>();
 
        for(Chat chat: chatList){
-           ChatDTO chatDTO=chat.createChatDTO();
+//           ChatDTO chatDTO=chat.createChatDTO();
+           ChatDTO chatDTO = ChatDTO.builder()
+                           .chatBoxId(chat.getChatBox().getId())
+                                   .memberId(chat.getMember().getId())
+                                           .content(chat.getContent())
+                                                   .regTime(chat.getRegTime())
+                                                           .build();
            chatDTOList.add(chatDTO);
        }
 
