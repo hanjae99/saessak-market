@@ -4,11 +4,12 @@ import { Avatar } from "antd";
 import { call, uploadProduct } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
 
-const ImgUpdate = () => {
+const ImgUpdate = ({ privacys }) => {
   // 이미지 URL을 관리하는 상태 변수
-  const [Image, setImage] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  );
+
+  console.log(privacys);
+
+  const [Image, setImage] = useState(API_BASE_URL + privacys.userImgUrl);
 
   // 파일 업로드 인풋을 위한 ref
   const fileInput = useRef(null);

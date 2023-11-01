@@ -55,6 +55,7 @@ public class MyPageController {
         saveDto.setName(user.getName());
         saveDto.setAddress(user.getAddress());
         saveDto.setRole(user.getRole());
+        saveDto.setUserImgUrl(memberService.getMemberImg(userId));
 
         List<MyPageMemberDTO> list = new ArrayList<>();
         list.add(saveDto);

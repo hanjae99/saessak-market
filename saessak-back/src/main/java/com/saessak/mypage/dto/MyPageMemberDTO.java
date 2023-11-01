@@ -41,6 +41,8 @@ public class MyPageMemberDTO {
 
     private String token;
 
+    private String userImgUrl;
+
 //    public MyPageMemberDTO(final Member entity){
 //        this.id = entity.getId();
 //        this.userId = entity.getUserId();

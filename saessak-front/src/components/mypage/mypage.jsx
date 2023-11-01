@@ -98,7 +98,7 @@ const MyPage = () => {
                 borderLeft: "2px solid #D3D3D3",
               }}
             >
-              <ImgUpdate></ImgUpdate>
+              <ImgUpdate privacys={privacys}></ImgUpdate>
             </div>
             <textarea placeholder="자기 소개" className="textarea1"></textarea>
           </div>

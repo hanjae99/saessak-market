@@ -162,4 +162,8 @@ public class MyPageMemberService {
     }
 
 
+    public String getMemberImg(String userId) {
+        return imageRepository.findByMemberId(Long.parseLong(userId)).getImgUrl();
+
+    }
 }
