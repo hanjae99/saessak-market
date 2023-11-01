@@ -15,12 +15,12 @@ const Chat = () => {
   const [productImg, setProductImg] = useState("");
 
   const msgBox = chatContent.map((item, idx) => (
-    <div key={idx} className={item.name === me ? "me" : "other"}>
+    <div key={idx} className={item.memberId === me ? "me" : "other"}>
       <span>
-        <b>{item.name}</b>
+        <b>{item.memberId}</b>
       </span>{" "}
-      [ {new Date(item.date).toLocaleString()} ]<br />
-      <span>{item.msg}</span>
+      [ {new Date(item.regTime).toLocaleString()} ]<br />
+      <span>{item.content}</span>
     </div>
   ));
 
