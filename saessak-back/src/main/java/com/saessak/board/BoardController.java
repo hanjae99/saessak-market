@@ -139,6 +139,7 @@ public class BoardController {
   public ResponseEntity<?> createBoard(@PathVariable("boardName") String boardName,
                                        @AuthenticationPrincipal String userId,
                                        List<MultipartFile> imgs,
+                                       List<MultipartFile> imgs,
                                        BoardDTO boardDTO) {
 
 
@@ -160,6 +161,8 @@ public class BoardController {
 
 
 
+
+
     if (imgs!=null) {
       imgs.forEach(p->{
         Image image = new Image();
@@ -172,6 +175,11 @@ public class BoardController {
         blobUrl.add(p.getOriginalFilename().split("\\?")[0]);
         realUrl.add("$back$"+image.getImgUrl());
       });
+      for (int i = 0; i < blobUrl.size(); i++) {
+        content = content.replace(blobUrl.get(i), realUrl.get(i));
+      }
+    }
+
       for (int i = 0; i < blobUrl.size(); i++) {
         content = content.replace(blobUrl.get(i), realUrl.get(i));
       }

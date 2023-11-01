@@ -1,7 +1,10 @@
 package com.saessak.webSocket.dto;
 
+import com.saessak.entity.Chat;
+import com.saessak.entity.Product;
 import lombok.Builder;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 

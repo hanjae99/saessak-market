@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @ToString
 public class ChatDataDTO {
 
-    private String name;
+    private Long memberId;
 
-    private String msg;
+    private String content;
 
     private LocalDateTime date;
 }
