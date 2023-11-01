@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs'
 import { FaXmark } from 'react-icons/fa6'
@@ -52,7 +52,9 @@ const CmtInputBox = ({ viewer, parent, parentId, isAnonymous, parentCommentId = 
           call(url, "POST", tmp).then(response => {
             // console.log("response", response);
             if (response && response.msg === "good") {
-              dispatch({ type: 'comments/setData', payload: response })
+              let lists = [...response.list].sort((a,b) => (new Date(b.upTime)).getTime()-(new Date(a.upTime)).getTime());
+              // console.log(lists[0].id);
+              dispatch({ type: 'comments/setData', payload: {...response, updateNow:lists[0].id } })
             }
           });
 
@@ -65,7 +67,7 @@ const CmtInputBox = ({ viewer, parent, parentId, isAnonymous, parentCommentId = 
   )
 }
 
-const Comments = ({ commentData, parent, parentId, isAnonymous, parentCommentId = 0 }) => {
+const Comments = ({ lastComment, commentData, parent, parentId, isAnonymous, parentCommentId = 0 }) => {
   if (!commentData) {
     return null;
   }
@@ -94,6 +96,8 @@ const Comments = ({ commentData, parent, parentId, isAnonymous, parentCommentId 
     </>
   );
 
+  
+
   return (
     <>
       {commentData.list.filter(p => p.pid + '' === parentCommentId + '').map(p =>
@@ -106,6 +110,7 @@ const Comments = ({ commentData, parent, parentId, isAnonymous, parentCommentId 
             e.stopPropagation();
             e.currentTarget.children[0].style.display = 'none';
           }}
+          id={commentData.updateNow+""===p.id+""?"updateNowComment":""}
         >
           <CmtBtnBox cs={{ right: '40px', display: 'none' }} >{btns}</CmtBtnBox>
           <div className='commentBox_cmtInfo' style={{ paddingLeft: level * 25 + 'px' }}>
@@ -136,21 +141,30 @@ const Comments = ({ commentData, parent, parentId, isAnonymous, parentCommentId 
 const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
   const commentData = useSelector(state => state.comments);
   const dispatch = useDispatch();
+  const lastComment = useRef();
 
   // const [commentData, setCommentData] = useState({viewerRole:'any', userProfileImgUrl:'', userNickName:''});
 
   useEffect(() => {
+    console.log("첫로딩");
     const url = "/board/comments/" + parentId;
     // console.log("url :", url);
     call(url, "GET").then(response => {
       // console.log("response", response);
       if (response && response.msg === "good") {
-        dispatch({ type: 'comments/setData', payload: response })
+        dispatch({ type: 'comments/setData', payload: {...response, updateNow:0 } })
+        
       }
     })
   }, [])
 
-  // console.log(commentData);
+  useEffect(()=>{
+    // console.log(document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").offsetTop,200);
+    if (document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").offsetTop>200) {
+      document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").scrollIntoView(false);
+    }
+  },[commentData])
+
 
   const viewer = { profileImg: commentData.userProfileImgUrl, nickname: commentData.userNickName };
 
@@ -162,7 +176,7 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
           {commentData && commentData.list.length > 0 ? commentData.list.length : 0}
         </strong>'
       </div>
-      {commentData && <Comments commentData={commentData} isAnonymous={isAnonymous} parent={parent} parentId={parentId} />}
+      {commentData && <Comments lastComment={lastComment} commentData={commentData} isAnonymous={isAnonymous} parent={parent} parentId={parentId} />}
     </div>
   )
 }
