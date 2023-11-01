@@ -146,7 +146,6 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
   // const [commentData, setCommentData] = useState({viewerRole:'any', userProfileImgUrl:'', userNickName:''});
 
   useEffect(() => {
-    console.log("첫로딩");
     const url = "/board/comments/" + parentId;
     // console.log("url :", url);
     call(url, "GET").then(response => {
@@ -159,11 +158,11 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
   }, [])
 
   useEffect(()=>{
-    // console.log(document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").offsetTop,200);
-    if (document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").offsetTop>200) {
-      document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").scrollIntoView(false);
+    if (commentData.updateNow>0) {
+      document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").scrollIntoView({ behavior: "smooth",block: "center"});
+      dispatch({ type: 'comments/setData', payload: {...commentData, updateNow:0 } })
     }
-  },[commentData])
+  },[commentData.updateNow])
 
 
   const viewer = { profileImg: commentData.userProfileImgUrl, nickname: commentData.userNickName };
@@ -182,18 +181,3 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
 }
 
 export default CommentViewer
-
-
-// const test = {
-
-//   commentId: '10000',
-//   parent: 'objection',
-//   parentId: '100000',
-//   parentCommentId:'1234',
-//   writer: 'psh',
-//   content : '풀어줘요!!',
-//   upTime: "2023.08.21 05:39",
-//   fixTime: "2023.08.21 05:59",
-
-
-//   };
