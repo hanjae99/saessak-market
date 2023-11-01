@@ -19,16 +19,15 @@ public class ChatController {
     private final ChatService chatService;
 
     @MessageMapping("/chat/{chatBoxId}")
-    public void sendToMessage(@DestinationVariable("chatBoxId") String chatBoxId , ChatDTO chatDTO){
+    public void sendToMessage(@DestinationVariable("chatBoxId") String chatBoxId, ChatDTO chatDTO) {
 
         Long memberId = chatDTO.getMemberId();
         String content = chatDTO.getContent();
         Long chatBox = Long.valueOf(chatBoxId);
 
-        chatService.saveMessage(chatBox ,memberId ,content);
+        chatService.saveMessage(chatBox, memberId, content);
 
-        simpMessageSendingOperations.convertAndSend("/topic/chatMessages/"+chatBoxId,chatDTO);
+        simpMessageSendingOperations.convertAndSend("/topic/chatMessages/" + chatBoxId, chatDTO);
+
     }
-
-
 }

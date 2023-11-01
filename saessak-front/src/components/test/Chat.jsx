@@ -1,28 +1,21 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import "./Chat.scss";
 import * as StompJs from "@stomp/stompjs";
+import { useParams } from "react-router-dom";
+import { chatCall } from "../../ChatService";
 
 const Chat = () => {
+  const { chatBoxId } = useParams();
   const [chatInput, setChatInput] = useState("");
   const [chatContent, setChatContent] = useState([]);
   const [stompClient, setStompClient] = useState(null);
-  const [name, setName] = useState("");
-  const [chkLog, setChkLog] = useState(false);
-
-  // if (chatContent) {
-  //   const msgBox = chatContent.map((item, idx) => (
-  //     <div key={idx} className={item.name === name ? "me" : "other"}>
-  //       <span>
-  //         <b>{item.name}</b>
-  //       </span>{" "}
-  //       [ {item.date} ]<br />
-  //       <span>{item.msg}</span>
-  //     </div>
-  //   ));
-  // }
+  const [me, setMe] = useState(""); // 현재 채팅방에 접속한 사람이 누구인지
+  const [productTitle, setProductTitle] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
+  const [productImg, setProductImg] = useState("");
 
   const msgBox = chatContent.map((item, idx) => (
-    <div key={idx} className={item.name === name ? "me" : "other"}>
+    <div key={idx} className={item.name === me ? "me" : "other"}>
       <span>
         <b>{item.name}</b>
       </span>{" "}
@@ -32,9 +25,25 @@ const Chat = () => {
   ));
 
   useEffect(() => {
+    // 이전 채팅 데이터 불러오기
+    const request = {
+      chatBoxId,
+    };
+    chatCall("/chatBox/getList", "POST", request).then((response) => {
+      if (response && response.chatList) {
+        setChatContent(response.chatList);
+        setMe(response.writer);
+        setProductTitle(response.productTitle);
+        setProductPrice(response.productPrice);
+        setProductImg(response.imgUrl);
+      }
+    });
+  }, [chatBoxId]);
+
+  useEffect(() => {
     const connectWebSocket = () => {
       const client = new StompJs.Client({
-        brokerURL: "ws://localhost:8888/chatTest",
+        brokerURL: "ws://localhost:8888/chatting",
         reconnectDelay: 5000,
       });
 
@@ -42,7 +51,7 @@ const Chat = () => {
         setStompClient(client);
         console.log("WebSocket 연결 성공");
 
-        client.subscribe("/topic/chatMessages", (message) => {
+        client.subscribe(`/topic/chatMessages/${chatBoxId}`, (message) => {
           console.log(message);
           const msgData = JSON.parse(message.body);
           console.log(msgData);
@@ -71,27 +80,18 @@ const Chat = () => {
   };
 
   const handleSubmit = () => {
-    if (!chkLog) {
-      if (name === "") {
-        alert("이름을 입력하세요.");
-        document.getElementById("name").focus();
-        return;
-      }
-      // webSocketLogin();
-      setChkLog(true);
-    }
     if (chatInput !== "") {
       const data = {
-        name,
-        msg: chatInput,
-        date: new Date(),
+        chatBoxId,
+        memberId: me,
+        content: chatInput,
       };
 
       const temp = JSON.stringify(data);
 
       if (stompClient) {
         stompClient.publish({
-          destination: "/app/chat",
+          destination: "/app/chat/" + chatBoxId,
           // contentType: "application/json",
           body: temp,
         });
@@ -106,20 +106,20 @@ const Chat = () => {
       <div className="chatContainer">
         <div id="chat-wrap">
           <div id="chatt">
-            <h1 id="title">WebSocket Chatting</h1>
+            <h1 id="title">{productTitle} 채팅방</h1>
             <br />
             <div id="talk">
               <div className="talk-shadow"></div>
               {msgBox}
             </div>
-            <input
+            {/* <input
               disabled={chkLog}
               placeholder="이름을 입력하세요."
               type="text"
               id="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
-            />
+            /> */}
             <div id="sendZone">
               <textarea
                 id="msg"

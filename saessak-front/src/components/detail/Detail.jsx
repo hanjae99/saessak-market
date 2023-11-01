@@ -6,6 +6,7 @@ import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
 import KakaoMap from "./KakaoMap";
+import { chatCall } from "../../ChatService";
 
 const Detail = () => {
   const { id } = useParams();
@@ -75,6 +76,21 @@ const Detail = () => {
     navigate("/user/wishlist");
   };
 
+  const handleChat = () => {
+    const request = {
+      productId: id,
+      sellMemberId: detaildatas.memberDTO.memberId,
+    };
+
+    // 채팅 박스 만든 후
+    // 해당 박스 아이디로 이동
+    chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
+      if (response && response.message) {
+        navigate("/chat/" + response.message);
+      }
+    });
+  };
+
   return (
     <>
       <div className="detail-container">
@@ -110,7 +126,7 @@ const Detail = () => {
               </div>
               <div>
                 <button
-                  onClick={() => navigate("/chatting")}
+                  onClick={handleChat}
                   className="detail-productsitem-btn1"
                 >
                   채팅 하기

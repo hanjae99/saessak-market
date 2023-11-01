@@ -114,8 +114,6 @@ public class BoardController {
             break;
           default:
             break;
-          default:
-            break;
         }
       }).collect(Collectors.toList());
       if (Objects.equals(boardName, "voc")) {

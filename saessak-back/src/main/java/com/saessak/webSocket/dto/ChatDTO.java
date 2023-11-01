@@ -18,7 +18,6 @@ public class ChatDTO {
 
     private String content;
 
-
-
+    private LocalDateTime regTime;
 
 }
