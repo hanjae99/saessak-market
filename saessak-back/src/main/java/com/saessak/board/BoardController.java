@@ -139,7 +139,6 @@ public class BoardController {
   public ResponseEntity<?> createBoard(@PathVariable("boardName") String boardName,
                                        @AuthenticationPrincipal String userId,
                                        List<MultipartFile> imgs,
-                                       List<MultipartFile> imgs,
                                        BoardDTO boardDTO) {
 
 
@@ -183,7 +182,7 @@ public class BoardController {
       for (int i = 0; i < blobUrl.size(); i++) {
         content = content.replace(blobUrl.get(i), realUrl.get(i));
       }
-    }
+
 
     savedBoard.setContent(content);
     boardService.saveBoard(savedBoard);
