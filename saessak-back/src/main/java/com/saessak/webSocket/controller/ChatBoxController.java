@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/chatBox")
@@ -23,7 +20,7 @@ public class ChatBoxController {
     private final DetailService detailService;
 
     @PostMapping("/getList")
-    public ResponseEntity<?> getList(String chatBoxId , @AuthenticationPrincipal String senderId){
+    public ResponseEntity<?> getList(@RequestParam("chatBoxId") String chatBoxId , @AuthenticationPrincipal String senderId){
 
 
         ChatBoxDTO chatBoxDTO =chatService.getChatHistory(Long.valueOf(chatBoxId),senderId);
@@ -33,7 +30,7 @@ public class ChatBoxController {
     }
 
     @PostMapping("/getChatBox")
-    public ResponseEntity<?> createChatBox(Long productId, Long sellMemberId ,@AuthenticationPrincipal String memberId){
+    public ResponseEntity<?> createChatBox(@RequestParam("productId") Long productId,@RequestParam("sellMemberId") Long sellMemberId , @AuthenticationPrincipal String memberId){
         Long sendMemberId =Long.parseLong(memberId);
 
         Long chatBoxId  =detailService.createChatBox(productId, sellMemberId,sendMemberId);
