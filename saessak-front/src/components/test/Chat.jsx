@@ -9,21 +9,13 @@ const Chat = () => {
   const { chatBoxId } = useParams();
   const [chatInput, setChatInput] = useState("");
   const [chatContent, setChatContent] = useState([]);
-  const [stompClient, setStompClient] = useState(null);
+  // const [stompClient, setStompClient] = useState(null);
+  const stompClient = useRef(null);
   const [me, setMe] = useState(""); // 현재 채팅방에 접속한 사람이 누구인지
+  const [memberNickname, setMemberNickname] = useState("");
   const [productTitle, setProductTitle] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productImg, setProductImg] = useState("");
-
-  const msgBox = chatContent.map((item, idx) => (
-    <div key={idx} className={item.memberId === me ? "me" : "other"}>
-      <span>
-        <b>{item.memberId}</b>
-      </span>{" "}
-      [ {new Date(item.regTime).toLocaleString()} ]<br />
-      <span>{item.content}</span>
-    </div>
-  ));
 
   useEffect(() => {
     // 이전 채팅 데이터 불러오기
@@ -43,38 +35,74 @@ const Chat = () => {
   }, [chatBoxId]);
 
   useEffect(() => {
+    // const connectWebSocket = () => {
+    //   const client = new StompJs.Client({
+    //     brokerURL: "ws://localhost:8888/chatting",
+    //     reconnectDelay: 5000,
+    //   });
+
+    //   client.onConnect = () => {
+    //     setStompClient(client);
+    //     console.log("WebSocket 연결 성공");
+
+    //     client.subscribe(`/topic/chatMessages/${chatBoxId}`, (message) => {
+    //       console.log(message);
+    //       const msgData = JSON.parse(message.body);
+    //       console.log(msgData);
+    //       setChatContent([...chatContent, msgData]);
+    //     });
+
+    //     scrollToBottom();
+    //   };
+
+    //   client.onStompError = (frame) => {
+    //     console.error("WebSocket 오류: " + frame);
+    //   };
+
+    //   client.activate();
+    // };
+
+    // connectWebSocket();
+
+    // return () => {
+    //   if (stompClient && stompClient.connected) {
+    //     stompClient.deactivate();
+    //   }
+    // };
     const connectWebSocket = () => {
-      const client = new StompJs.Client({
+      stompClient.current = new StompJs.Client({
         brokerURL: "ws://localhost:8888/chatting",
-        reconnectDelay: 5000,
+        reconnectDelay: 3000,
       });
 
-      client.onConnect = () => {
-        setStompClient(client);
+      stompClient.current.onConnect = () => {
         console.log("WebSocket 연결 성공");
 
-        client.subscribe(`/topic/chatMessages/${chatBoxId}`, (message) => {
-          console.log(message);
-          const msgData = JSON.parse(message.body);
-          console.log(msgData);
-          setChatContent([...chatContent, msgData]);
-        });
+        stompClient.current.subscribe(
+          `/topic/chatMessages/${chatBoxId}`,
+          (message) => {
+            console.log(message);
+            const msgData = JSON.parse(message.body);
+            console.log(msgData);
+            setChatContent([...chatContent, msgData]);
+          }
+        );
 
         scrollToBottom();
       };
 
-      client.onStompError = (frame) => {
+      stompClient.current.onStompError = (frame) => {
         console.error("WebSocket 오류: " + frame);
       };
 
-      client.activate();
+      stompClient.current.activate();
     };
 
     connectWebSocket();
 
     return () => {
-      if (stompClient && stompClient.connected) {
-        stompClient.deactivate();
+      if (stompClient.current && stompClient.current.connected) {
+        stompClient.current.deactivate();
       }
     };
   }, [chatContent]);
@@ -94,16 +122,17 @@ const Chat = () => {
       const data = {
         chatBoxId,
         memberId: me,
+        memberNickname: chatContent.find((item) => item.memberId === me)
+          .memberNickname,
         content: chatInput,
         regTime: new Date(),
       };
 
       const temp = JSON.stringify(data);
 
-      if (stompClient) {
-        stompClient.publish({
+      if (stompClient.current) {
+        stompClient.current.publish({
           destination: "/app/chat/" + chatBoxId,
-          // contentType: "application/json",
           body: temp,
         });
       }
@@ -111,6 +140,16 @@ const Chat = () => {
       setChatInput("");
     }
   };
+
+  const msgBox = chatContent.map((item, idx) => (
+    <div key={idx} className={item.memberId === me ? "me" : "other"}>
+      <span>
+        <b>{item.memberNickname}</b>
+      </span>{" "}
+      [ {new Date(item.regTime).toLocaleString()} ]<br />
+      <span>{item.content}</span>
+    </div>
+  ));
 
   return (
     <>
@@ -127,11 +166,13 @@ const Chat = () => {
               새싹 채팅방
             </div>
             <div className="chat-productInfo">
-              <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+              {productImg !== "" ? (
+                <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+              ) : (
+                ""
+              )}
               <div>
-                <p className="chat-product-title">
-                  상품명: {productTitle} dfsfsfsfsfsfsfsfsfsfsfsfsfssfsfs
-                </p>
+                <p className="chat-product-title">상품명: {productTitle}</p>
                 <p className="chat-product-price">가격: {productPrice}원</p>
               </div>
             </div>

@@ -16,6 +16,8 @@ public class ChatDTO {
 
     private Long memberId;
 
+    private String memberNickname;
+
     private String content;
 
     private LocalDateTime regTime;

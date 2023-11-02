@@ -50,7 +50,8 @@ public class ChatService {
            ChatDTO chatDTO = ChatDTO.builder()
                            .chatBoxId(chat.getChatBox().getId())
                                    .memberId(chat.getMember().getId())
-                                           .content(chat.getContent())
+                                        .memberNickname(chat.getMember().getNickName())
+                                            .content(chat.getContent())
                                                    .regTime(chat.getRegTime())
                                                            .build();
            chatDTOList.add(chatDTO);

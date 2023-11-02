@@ -86,7 +86,8 @@ const Detail = () => {
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
       // console.log(response);
       if (response) {
-        navigate("/chat/" + response);
+        // navigate("/chat/" + response);
+        window.open(`/chat/${response}`, "새싹 채팅", "width=600,height=800");
       }
     });
   };
@@ -125,12 +126,16 @@ const Detail = () => {
                 </p>
               </div>
               <div>
-                <button
-                  onClick={handleChat}
-                  className="detail-productsitem-btn1"
-                >
-                  채팅 하기
-                </button>
+                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={handleChat}
+                    className="detail-productsitem-btn1"
+                  >
+                    채팅 하기
+                  </button>
+                )}
               </div>
               <div>
                 <button onClick={onClick} className="detail-productsitem-btn2">
