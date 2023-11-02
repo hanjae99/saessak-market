@@ -8,7 +8,7 @@ import { login } from "../../ApiService";
 
 const Login = () => {
   const navigate = useNavigate();
-  const backUrl = useSelector(state => state.login.url);
+  const backUrl = useSelector((state) => state.login.url);
   // const [inputid, setInputid] = useState("");
   // const [inputpwd, setInputpwd] = useState("");
   //const user = useSelector((state) => state.user);
@@ -91,6 +91,14 @@ client_id=${"a72ff07499a78a559bb7e6bccb465597"}&redirect_uri=${"http://localhost
     window.open(KakaoLoginAPI, "_self");
   };
 
+  const onFindById = () => {
+    navigate("/login/findbyId");
+  };
+
+  const onFindByPwd = () => {
+    navigate("/login/findbyPwd");
+  };
+
   //  console.log("아이디: " + inputid);
   //console.log("비밀번호: " + inputpwd);
 
@@ -125,7 +133,8 @@ client_id=${"a72ff07499a78a559bb7e6bccb465597"}&redirect_uri=${"http://localhost
               </p>
             )}
             <div className="login-idpwd">
-              <span>아이디찾기</span>|<span> 비밀번호 찾기</span>
+              <span onClick={onFindById}>아이디찾기</span>|
+              <span onClick={onFindByPwd}> 비밀번호 찾기</span>
             </div>
             <div className="login-button-container">
               <div>

@@ -28,7 +28,7 @@ const Chat = () => {
   useEffect(() => {
     // 이전 채팅 데이터 불러오기
     const request = {
-      chatBoxId,
+      id: chatBoxId,
     };
     chatCall("/chatBox/getList", "POST", request).then((response) => {
       if (response && response.chatList) {
@@ -56,7 +56,7 @@ const Chat = () => {
           console.log(message);
           const msgData = JSON.parse(message.body);
           console.log(msgData);
-          setChatContent([...chatContent, msgData.body]);
+          setChatContent([...chatContent, msgData]);
         });
 
         scrollToBottom();
@@ -94,6 +94,7 @@ const Chat = () => {
         chatBoxId,
         memberId: me,
         content: chatInput,
+        regTime: new Date(),
       };
 
       const temp = JSON.stringify(data);
@@ -127,9 +128,7 @@ const Chat = () => {
             <div className="chat-productInfo">
               <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
               <div>
-                <p className="chat-product-title">
-                  상품명: {productTitle} dfsfsfsfsfsfsfsfsfsfsfsfsfssfsfs
-                </p>
+                <p className="chat-product-title">상품명: {productTitle}</p>
                 <p className="chat-product-price">가격: {productPrice}원</p>
               </div>
             </div>
