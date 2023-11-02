@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { call } from "../../ApiService";
 
 const ChangingPwd = () => {
   const movePage = useNavigate();
   const [password, setPassword] = useState("");
-  const users = useSelector((state) => state.user);
+  const [privacys, setPrivacys] = useState([]);
+
+  useEffect(() => {
+    call("/user/mypage", "GET", null).then((response) => {
+      console.log("==========useEffect 잘 가져왔나", response);
+      setPrivacys(response.data[0]);
+    });
+  }, []);
 
   const pwdChange = (e) => {
     setPassword(e.target.value);
@@ -14,11 +22,14 @@ const ChangingPwd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (users.find((p) => p.id === "jin").pwd === password) {
-      movePage("/user/changing");
-    } else {
-      alert("비밀번호가 올바르지 않습니다.");
-    }
+    call("/user/changingpwd", "POST", { password }).then((response) => {
+      console.log(response.error);
+      if (response.error === "true") {
+        movePage("/user/changingpass");
+      } else if (response.error === "false") {
+        alert("비밀번호가 맞지않습니다.");
+      }
+    });
   };
 
   return (
@@ -37,7 +48,7 @@ const ChangingPwd = () => {
                 <input
                   type="text"
                   style={{ border: "none" }}
-                  placeholder={users[2].id}
+                  placeholder={privacys.userId}
                   readOnly
                 />
               </div>
