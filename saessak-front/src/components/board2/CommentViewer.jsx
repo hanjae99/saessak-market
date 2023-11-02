@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsArrowReturnRight, BsPencil } from "react-icons/bs";
 import { FaXmark } from "react-icons/fa6";
@@ -88,7 +88,16 @@ const CmtInputBox = ({
               call(url, "POST", tmp).then((response) => {
                 // console.log("response", response);
                 if (response && response.msg === "good") {
-                  dispatch({ type: "comments/setData", payload: response });
+                  let lists = [...response.list].sort(
+                    (a, b) =>
+                      new Date(b.upTime).getTime() -
+                      new Date(a.upTime).getTime()
+                  );
+                  // console.log(lists[0].id);
+                  dispatch({
+                    type: "comments/setData",
+                    payload: { ...response, updateNow: lists[0].id },
+                  });
                 }
               });
 
@@ -109,6 +118,7 @@ const CmtInputBox = ({
 };
 
 const Comments = ({
+  lastComment,
   commentData,
   parent,
   parentId,
@@ -170,6 +180,9 @@ const Comments = ({
               e.stopPropagation();
               e.currentTarget.children[0].style.display = "none";
             }}
+            id={
+              commentData.updateNow + "" === p.id + "" ? "updateNowComment" : ""
+            }
           >
             <CmtBtnBox cs={{ right: "40px", display: "none" }}>
               {btns}
@@ -210,15 +223,15 @@ const Comments = ({
                   />
                 </div>
               </div>
+              <hr />
+              <Comments
+                commentData={commentData}
+                isAnonymous={isAnonymous}
+                parent={parent}
+                parentId={parentId}
+                parentCommentId={p.id}
+              />
             </div>
-            <hr />
-            <Comments
-              commentData={commentData}
-              isAnonymous={isAnonymous}
-              parent={parent}
-              parentId={parentId}
-              parentCommentId={p.id}
-            />
           </div>
         ))}
     </>
@@ -228,6 +241,7 @@ const Comments = ({
 const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
   const commentData = useSelector((state) => state.comments);
   const dispatch = useDispatch();
+  const lastComment = useRef();
 
   // const [commentData, setCommentData] = useState({viewerRole:'any', userProfileImgUrl:'', userNickName:''});
 
@@ -237,12 +251,26 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
     call(url, "GET").then((response) => {
       // console.log("response", response);
       if (response && response.msg === "good") {
-        dispatch({ type: "comments/setData", payload: response });
+        dispatch({
+          type: "comments/setData",
+          payload: { ...response, updateNow: 0 },
+        });
       }
     });
   }, []);
 
-  // console.log(commentData);
+  useEffect(() => {
+    if (commentData.updateNow > 0) {
+      document.getElementById("updateNowComment") &&
+        document
+          .getElementById("updateNowComment")
+          .scrollIntoView({ behavior: "smooth", block: "center" });
+      dispatch({
+        type: "comments/setData",
+        payload: { ...commentData, updateNow: 0 },
+      });
+    }
+  }, [commentData.updateNow]);
 
   const viewer = {
     profileImg: commentData.userProfileImgUrl,
@@ -270,6 +298,7 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
       </div>
       {commentData && (
         <Comments
+          lastComment={lastComment}
           commentData={commentData}
           isAnonymous={isAnonymous}
           parent={parent}
@@ -281,16 +310,3 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
 };
 
 export default CommentViewer;
-
-// const test = {
-
-//   commentId: '10000',
-//   parent: 'objection',
-//   parentId: '100000',
-//   parentCommentId:'1234',
-//   writer: 'psh',
-//   content : '풀어줘요!!',
-//   upTime: "2023.08.21 05:39",
-//   fixTime: "2023.08.21 05:59",
-
-//   };
