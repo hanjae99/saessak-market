@@ -7,7 +7,7 @@ const ChattingBox = () => {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
 
-  uploadProduct("/user/chattingbox", "GET").then((response) => {
+  uploadProduct("/chatBox/chatboxList", "GET").then((response) => {
     console.log(response);
     const userimg = API_BASE_URL + response.data[0].imgUrl;
     setImage(userimg);

@@ -16,8 +16,10 @@ const Check = () => {
 
   useEffect(() => {
     call("/user/check", "GET").then((response) => {
-      setBuyProduct(response.data);
-      console.log(response);
+      if (response && response.data) {
+        setBuyProduct(response.data);
+        console.log("gd", response.data);
+      }
     });
   }, []);
 
@@ -35,7 +37,7 @@ const Check = () => {
     // 총 페이지 수 계산
 
     const makePageBtn = () => {
-      const totalPage = Math.ceil(buyProduct.length / 2);
+      const totalPage = Math.ceil(buyProduct && buyProduct.length / 2);
 
       const newPageBtns = [];
       // 페이지 버튼 6개씩 보여주기
@@ -72,10 +74,17 @@ const Check = () => {
   }, [pageNumLength]);
 
   const itemsPerPage = 2; // 페이지당 상품 수
-  const displayedProducts = buyProduct.slice(
-    pageNumLength * itemsPerPage,
-    Math.min((pageNumLength + 1) * itemsPerPage, buyProduct.length)
-  );
+  const [displayedProducts, setDisplayedProduct] = useState([]);
+
+  useEffect(() => {
+    const displayedProduct =
+      buyProduct &&
+      buyProduct.slice(
+        pageNumLength * itemsPerPage,
+        Math.min((pageNumLength + 1) * itemsPerPage, buyProduct.length)
+      );
+    setDisplayedProduct(displayedProduct);
+  }, [buyProduct, pageNumLength, movePage]);
   console.log(displayedProducts);
 
   return (
@@ -84,63 +93,65 @@ const Check = () => {
         <div className="manu-2-1">
           <div className="tbody-1">
             <div className="text-0">
-              {displayedProducts.map((a, i) => (
-                <div key={i}>
-                  <div className="table-main">
-                    <div className="table-body">
-                      <div className="table-day">
-                        {(() => {
-                          const date = new Date(
-                            displayedProducts[i].updateTime
-                          );
-                          const year = date.getFullYear();
-                          const month = (1 + date.getMonth())
-                            .toString()
-                            .padStart(2, "0");
-                          const day = date
-                            .getDate()
-                            .toString()
-                            .padStart(2, "0");
-                          return `${year}-${month}-${day}`;
-                        })()}
-                      </div>
-                    </div>
-                    <div className="td-main">
-                      <div className="td-1">
-                        <div className="td-1-1">
-                          <div className="td-1-1-1">
-                            <span className="td-1-1-1-1">
-                              {displayedProducts[i].sellStatus}
-                            </span>
-                          </div>
+              {displayedProducts &&
+                displayedProducts.map((a, i) => (
+                  <div key={i}>
+                    <div className="table-main">
+                      <div className="table-body">
+                        <div className="table-day">
+                          {(() => {
+                            const date = new Date(
+                              displayedProducts[i].updateTime
+                            );
+                            const year = date.getFullYear();
+                            const month = (1 + date.getMonth())
+                              .toString()
+                              .padStart(2, "0");
+                            const day = date
+                              .getDate()
+                              .toString()
+                              .padStart(2, "0");
+                            return `${year}-${month}-${day}`;
+                          })()}
                         </div>
-                        <div>
-                          <div className="text-1">
-                            <div className="text-1-1">
-                              <div className="text-2">
-                                <div
-                                  className="text-2-1"
-                                  onClick={() =>
-                                    movePages(
-                                      "/detail/" +
-                                        displayedProducts[i].productId
-                                    )
-                                  }
-                                >
-                                  <div className="text-2-img">
-                                    <img
-                                      className="img1"
-                                      src={`${API_BASE_URL}${displayedProducts[i].imgUrl}`}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <div className="text-2-name">
-                                    <div className="text-2-name-1">
-                                      <div className="text-2-name-1-1">
-                                        {displayedProducts[i].title}
-                                      </div>
-                                      <div className="text-2-name-1-2">
-                                        {displayedProducts[i].price} 원
+                      </div>
+                      <div className="td-main">
+                        <div className="td-1">
+                          <div className="td-1-1">
+                            <div className="td-1-1-1">
+                              <span className="td-1-1-1-1">
+                                {displayedProducts[i].sellStatus}
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-1">
+                              <div className="text-1-1">
+                                <div className="text-2">
+                                  <div
+                                    className="text-2-1"
+                                    onClick={() =>
+                                      movePages(
+                                        "/detail/" +
+                                          displayedProducts[i].productId
+                                      )
+                                    }
+                                  >
+                                    <div className="text-2-img">
+                                      <img
+                                        className="img1"
+                                        src={`${API_BASE_URL}${displayedProducts[i].imgUrl}`}
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div className="text-2-name">
+                                      <div className="text-2-name-1">
+                                        <div className="text-2-name-1-1">
+                                          {displayedProducts[i].title}
+                                        </div>
+                                        <div className="text-2-name-1-2">
+                                          {displayedProducts[i].price} 원
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -149,51 +160,59 @@ const Check = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="td-2">
-                        <div className="text-button">
-                          <Button
-                            onClick={() => {
-                              console.log(displayedProducts[i].buyListId);
-                              call(
-                                `/user/check/${displayedProducts[i].buyListId}`,
-                                "DELETE"
-                              ).then((response) => {
-                                if (response.error === "success") {
-                                  const filteredWish = displayedProducts.filter(
-                                    (w) =>
-                                      w.buyListId !==
-                                      displayedProducts[i].buyListId
-                                  );
-                                  setBuyProduct(filteredWish);
-                                }
-                              });
-                            }}
-                            className="text-button-1"
-                          >
-                            상품삭제
-                          </Button>
+                        <div className="td-2">
+                          <div className="text-button">
+                            <Button
+                              onClick={() => {
+                                console.log(buyProduct[i].buyListId);
+                                call(
+                                  `/user/check/${buyProduct[i].buyListId}`,
+                                  "DELETE"
+                                ).then((response) => {
+                                  if (response.error === "success") {
+                                    const filteredWish = buyProduct.filter(
+                                      (w) =>
+                                        w.buyListId !== buyProduct[i].buyListId
+                                    );
+                                    setBuyProduct(filteredWish);
+                                  }
+                                });
+                              }}
+                              className="text-button-1"
+                            >
+                              상품삭제
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
-        <div className="pagination">
-          <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
-            이전
-          </button>
-          {pageBtns}
-          <button
-            onClick={nextPageNumLength}
-            disabled={pageNumLength === Math.ceil(buyProduct.length / 2) - 1}
-          >
-            다음
-          </button>
-        </div>
+        {buyProduct && buyProduct.length !== 0 ? (
+          <div className="pagination1">
+            <button
+              onClick={prevPageNumLength}
+              disabled={pageNumLength && pageNumLength === 0}
+            >
+              이전
+            </button>
+            {pageBtns}
+            <button
+              onClick={nextPageNumLength}
+              disabled={
+                pageNumLength &&
+                pageNumLength === Math.ceil(buyProduct.length / 2) - 1
+              }
+            >
+              다음
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

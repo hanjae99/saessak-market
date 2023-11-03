@@ -27,7 +27,7 @@ const SellCheck = () => {
     // 총 페이지 수 계산
 
     const makePageBtn = () => {
-      const totalPage = Math.ceil(sellProduct.length / 2);
+      const totalPage = Math.ceil(sellProduct && sellProduct.length / 2);
 
       const newPageBtns = [];
       // 페이지 버튼 6개씩 보여주기
@@ -64,11 +64,24 @@ const SellCheck = () => {
   }, [pageNumLength]);
 
   const itemsPerPage = 2; // 페이지당 상품 수
-  const displayedProducts = sellProduct.slice(
-    pageNumLength * itemsPerPage,
-    Math.min((pageNumLength + 1) * itemsPerPage, sellProduct.length)
-  );
-  console.log(displayedProducts);
+
+  const [displayedProducts, setDisplayedProduct] = useState([]);
+
+  useEffect(() => {
+    const displayedProduct =
+      sellProduct &&
+      sellProduct.slice(
+        pageNumLength * itemsPerPage,
+        Math.min((pageNumLength + 1) * itemsPerPage, sellProduct.length)
+      );
+    setDisplayedProduct(displayedProduct);
+  }, [sellProduct, pageNumLength, movePage]);
+
+  // const itemsPerPage = 3; // 페이지당 상품 수
+  // const displayedProducts = sellProduct.slice(
+  //   pageNumLength * itemsPerPage,
+  //   pageNumLength * itemsPerPage + itemsPerPage
+  // );
 
   useEffect(() => {
     call("/user/sellcheck", "GET").then((response) => {
@@ -76,12 +89,6 @@ const SellCheck = () => {
       console.log(response);
     });
   }, [movePage]);
-
-  // const itemsPerPage = 3; // 페이지당 상품 수
-  // const displayedProducts = sellProduct.slice(
-  //   pageNumLength * itemsPerPage,
-  //   pageNumLength * itemsPerPage + itemsPerPage
-  // );
 
   return (
     <div className="section">
@@ -160,16 +167,15 @@ const SellCheck = () => {
                           <Button
                             onClick={() => {
                               const item = {};
-                              console.log(displayedProducts[i].productId);
+                              console.log(sellProduct[i].productId);
                               call(
-                                `/user/sellcheck/${displayedProducts[i].productId}`,
+                                `/user/sellcheck/${sellProduct[i].productId}`,
                                 "PUT"
                               ).then((response) => {
                                 if (response.error === "success") {
-                                  const filteredWish = displayedProducts.filter(
+                                  const filteredWish = sellProduct.filter(
                                     (w) =>
-                                      w.productId !==
-                                      displayedProducts[i].productId
+                                      w.productId !== sellProduct[i].productId
                                   );
                                   setSellProduct(filteredWish);
                                 }
@@ -188,14 +194,18 @@ const SellCheck = () => {
             </div>
           </div>
         </div>
-        <div className="pagination">
+        <div className="pagination1">
           <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
             이전
           </button>
           {pageBtns}
           <button
             onClick={nextPageNumLength}
-            disabled={pageNumLength === Math.ceil(sellProduct.length / 2) - 1}
+            disabled={
+              pageNumLength >=
+                Math.ceil(sellProduct.length / itemsPerPage) - 1 ||
+              displayedProducts.length < itemsPerPage
+            }
           >
             다음
           </button>

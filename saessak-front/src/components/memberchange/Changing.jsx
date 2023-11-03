@@ -107,16 +107,21 @@ const Changing = () => {
       address: newAddress,
     };
 
-    call("/user/changing", "PUT", item)
-      .then((response) => {
-        console.log("Data updated successfully", response);
-      })
-      .catch((error) => {
-        console.error("Error updating data:", error);
-      });
+    if (nicknameCheck === -1) {
+      call("/user/changing", "PUT", item)
+        .then((response) => {
+          console.log("Data updated successfully", response);
+        })
+        .catch((error) => {
+          console.error("Error updating data:", error);
+        });
 
-    movePage("/user/mypage");
-    //window.location.reload();
+      movePage("/user/mypage");
+      //window.location.reload();
+    } else if (nicknameCheck === 1) {
+      setNicknameCheck(2);
+      return;
+    }
   };
 
   return (
@@ -228,6 +233,13 @@ const Changing = () => {
                 </button>
               </div>
             </div>
+            {nicknameCheck === 2 ? (
+              <p className="changing-duplicated-msg3">
+                필수 입력값을 입력해주세요.
+              </p>
+            ) : (
+              ""
+            )}
             <div
               style={{
                 marginTop: "130px",

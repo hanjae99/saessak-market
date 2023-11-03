@@ -77,10 +77,17 @@ const WishList = () => {
   }, [pageNumLength]);
 
   const itemsPerPage = 2; // 페이지당 상품 수
-  const displayedProducts = wish.slice(
-    pageNumLength * itemsPerPage,
-    Math.min((pageNumLength + 1) * itemsPerPage, wish.length)
-  );
+  const [displayedProducts, setDisplayedProduct] = useState([]);
+
+  useEffect(() => {
+    const displayedProduct =
+      wish &&
+      wish.slice(
+        pageNumLength * itemsPerPage,
+        Math.min((pageNumLength + 1) * itemsPerPage, wish.length)
+      );
+    setDisplayedProduct(displayedProduct);
+  }, [wish, pageNumLength, movePage]);
   console.log(displayedProducts);
 
   return (
@@ -88,57 +95,65 @@ const WishList = () => {
       <div className="manu-2">
         <div className="manu-2-1">
           <div className="tbody-1">
-            {displayedProducts.map((a, i) => (
-              <div key={i}>
-                <div className="table-main">
-                  <div className="table-body">
-                    <div className="table-day">
-                      {(() => {
-                        const date = new Date(displayedProducts[i].updateTime);
-                        const year = date.getFullYear();
-                        const month = (1 + date.getMonth())
-                          .toString()
-                          .padStart(2, "0");
-                        const day = date.getDate().toString().padStart(2, "0");
-                        return `${year}-${month}-${day}`;
-                      })()}
-                    </div>
-                  </div>
-                  <div className="td-main">
-                    <div className="td-1">
-                      <div className="td-1-1">
-                        <div className="td-1-1-1">
-                          <span className="td-1-1-1-1">
-                            {displayedProducts[i].sellStatus}
-                          </span>
-                        </div>
+            {displayedProducts &&
+              displayedProducts.map((a, i) => (
+                <div key={i}>
+                  <div className="table-main">
+                    <div className="table-body">
+                      <div className="table-day">
+                        {(() => {
+                          const date = new Date(
+                            displayedProducts[i].updateTime
+                          );
+                          const year = date.getFullYear();
+                          const month = (1 + date.getMonth())
+                            .toString()
+                            .padStart(2, "0");
+                          const day = date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0");
+                          return `${year}-${month}-${day}`;
+                        })()}
                       </div>
-                      <div>
-                        <div className="text-1">
-                          <div className="text-1-1">
-                            <div className="text-2">
-                              <div
-                                className="text-2-1"
-                                onClick={() =>
-                                  movePages(
-                                    "/detail/" + displayedProducts[i].productId
-                                  )
-                                }
-                              >
-                                <div className="text-2-img">
-                                  <img
-                                    className="img1"
-                                    src={`${API_BASE_URL}${displayedProducts[i].imgUrl}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="text-2-name">
-                                  <div className="text-2-name-1">
-                                    <div className="text-2-name-1-1">
-                                      {displayedProducts[i].title}
-                                    </div>
-                                    <div className="text-2-name-1-2">
-                                      {displayedProducts[i].price} 원
+                    </div>
+                    <div className="td-main">
+                      <div className="td-1">
+                        <div className="td-1-1">
+                          <div className="td-1-1-1">
+                            <span className="td-1-1-1-1">
+                              {displayedProducts[i].sellStatus}
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-1">
+                            <div className="text-1-1">
+                              <div className="text-2">
+                                <div
+                                  className="text-2-1"
+                                  onClick={() =>
+                                    movePages(
+                                      "/detail/" +
+                                        displayedProducts[i].productId
+                                    )
+                                  }
+                                >
+                                  <div className="text-2-img">
+                                    <img
+                                      className="img1"
+                                      src={`${API_BASE_URL}${displayedProducts[i].imgUrl}`}
+                                      alt=""
+                                    />
+                                  </div>
+                                  <div className="text-2-name">
+                                    <div className="text-2-name-1">
+                                      <div className="text-2-name-1-1">
+                                        {displayedProducts[i].title}
+                                      </div>
+                                      <div className="text-2-name-1-2">
+                                        {displayedProducts[i].price} 원
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -147,39 +162,36 @@ const WishList = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="td-2">
-                      <div className="text-button">
-                        <Button
-                          onClick={() => {
-                            console.log(displayedProducts[i].wishListId);
-                            call(
-                              `/user/wishlist/${displayedProducts[i].wishListId}`,
-                              "DELETE"
-                            ).then((response) => {
-                              if (response.error === "success") {
-                                const filteredWish = displayedProducts.filter(
-                                  (w) =>
-                                    w.wishListId !==
-                                    displayedProducts[i].wishListId
-                                );
-                                setWish(filteredWish);
-                              }
-                            });
-                          }}
-                          className="text-button-1"
-                        >
-                          상품삭제
-                        </Button>
+                      <div className="td-2">
+                        <div className="text-button">
+                          <Button
+                            onClick={() => {
+                              console.log(wish[i].wishListId);
+                              call(
+                                `/user/wishlist/${wish[i].wishListId}`,
+                                "DELETE"
+                              ).then((response) => {
+                                if (response.error === "success") {
+                                  const filteredWish = wish.filter(
+                                    (w) => w.wishListId !== wish[i].wishListId
+                                  );
+                                  setWish(filteredWish);
+                                }
+                              });
+                            }}
+                            className="text-button-1"
+                          >
+                            상품삭제
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
-        <div className="pagination">
+        <div className="pagination1">
           <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
             이전
           </button>
