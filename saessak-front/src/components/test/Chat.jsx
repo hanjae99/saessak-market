@@ -1,134 +1,166 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { createGlobalStyle } from "styled-components";
 import "./Chat.scss";
+import * as StompJs from "@stomp/stompjs";
+import { useParams } from "react-router-dom";
+import { chatCall } from "../../ChatService";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const Chat = () => {
-  const [msg, setMsg] = useState("");
-  const [name, setName] = useState("");
-  const [chatt, setChatt] = useState([]);
-  const [chkLog, setChkLog] = useState(false);
-  const [socketData, setSocketData] = useState();
+  const { chatBoxId } = useParams();
+  const [chatInput, setChatInput] = useState("");
+  const [chatContent, setChatContent] = useState([]);
+  const [stompClient, setStompClient] = useState(null);
+  const [me, setMe] = useState(""); // 현재 채팅방에 접속한 사람이 누구인지
+  const [productTitle, setProductTitle] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
+  const [productImg, setProductImg] = useState("");
 
-  const ws = useRef(null); //webSocket을 담는 변수,
-  //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
-
-  const msgBox = chatt.map((item, idx) => (
-    <div key={idx} className={item.name === name ? "me" : "other"}>
+  const msgBox = chatContent.map((item, idx) => (
+    <div key={idx} className={item.memberId === me ? "me" : "other"}>
       <span>
-        <b>{item.name}</b>
+        <b>{item.memberId}</b>
       </span>{" "}
-      [ {item.date} ]<br />
-      <span>{item.msg}</span>
+      [ {new Date(item.regTime).toLocaleString()} ]<br />
+      <span>{item.content}</span>
     </div>
   ));
 
   useEffect(() => {
-    if (socketData !== undefined) {
-      const tempData = chatt.concat(socketData);
-      console.log(tempData);
-      setChatt(tempData);
-    }
-  }, [socketData]);
+    // 이전 채팅 데이터 불러오기
+    const request = {
+      id: chatBoxId,
+    };
+    chatCall("/chatBox/getList", "POST", request).then((response) => {
+      if (response && response.chatList) {
+        setChatContent(response.chatList);
+        setMe(response.writer);
+        setProductTitle(response.productTitle);
+        setProductPrice(response.productPrice);
+        setProductImg(response.imgUrl);
+      }
+    });
+  }, [chatBoxId]);
 
-  // const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
-  //   `;
+  useEffect(() => {
+    const connectWebSocket = () => {
+      const client = new StompJs.Client({
+        brokerURL: "ws://localhost:8888/chatting",
+        reconnectDelay: 5000,
+      });
 
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  const onText = (event) => {
-    console.log(event.target.value);
-    setMsg(event.target.value);
+      client.onConnect = () => {
+        setStompClient(client);
+        console.log("WebSocket 연결 성공");
+
+        client.subscribe(`/topic/chatMessages/${chatBoxId}`, (message) => {
+          console.log(message);
+          const msgData = JSON.parse(message.body);
+          console.log(msgData);
+          setChatContent([...chatContent, msgData]);
+        });
+
+        scrollToBottom();
+      };
+
+      client.onStompError = (frame) => {
+        console.error("WebSocket 오류: " + frame);
+      };
+
+      client.activate();
+    };
+
+    connectWebSocket();
+
+    return () => {
+      if (stompClient && stompClient.connected) {
+        stompClient.deactivate();
+      }
+    };
+  }, [chatContent]);
+
+  const handleInput = (e) => {
+    setChatInput(e.target.value);
   };
 
-  const webSocketLogin = useCallback(() => {
-    ws.current = new WebSocket("ws://localhost:8888/socket/chatt");
+  function scrollToBottom() {
+    const chatForm = document.getElementById("talk");
+    console.log(chatForm);
+    chatForm.scrollTop = chatForm.scrollHeight;
+  }
 
-    ws.current.onmessage = (message) => {
-      const dataSet = JSON.parse(message.data);
-      setSocketData(dataSet);
-    };
-  });
-
-  const send = useCallback(() => {
-    if (!chkLog) {
-      if (name === "") {
-        alert("이름을 입력하세요.");
-        document.getElementById("name").focus();
-        return;
-      }
-      webSocketLogin();
-      setChkLog(true);
-    }
-
-    if (msg !== "") {
+  const handleSubmit = () => {
+    if (chatInput !== "") {
       const data = {
-        name,
-        msg,
-        date: new Date().toLocaleString(),
-      }; //전송 데이터(JSON)
+        chatBoxId,
+        memberId: me,
+        content: chatInput,
+        regTime: new Date(),
+      };
 
       const temp = JSON.stringify(data);
 
-      if (ws.current.readyState === 0) {
-        //readyState는 웹 소켓 연결 상태를 나타냄
-        ws.current.onopen = () => {
-          //webSocket이 맺어지고 난 후, 실행
-          console.log(ws.current.readyState);
-          ws.current.send(temp);
-        };
-      } else {
-        ws.current.send(temp);
+      if (stompClient) {
+        stompClient.publish({
+          destination: "/app/chat/" + chatBoxId,
+          // contentType: "application/json",
+          body: temp,
+        });
       }
-    } else {
-      alert("메세지를 입력하세요.");
-      document.getElementById("msg").focus();
-      return;
+
+      setChatInput("");
     }
-    setMsg("");
-  });
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
-  //webSocket
+  };
 
   return (
     <>
-      {/* <GlobalStyle /> */}
       <div className="chatContainer">
         <div id="chat-wrap">
           <div id="chatt">
-            <h1 id="title">WebSocket Chatting</h1>
+            {/* <h1 id="title">{chatContent.find(item => item.memberId !== me).memberNick} 채팅방</h1> */}
+            <div id="title">
+              <img
+                src="/img/leaf1.png"
+                style={{ width: "30px", height: "30px" }}
+                alt="leaf1"
+              />{" "}
+              새싹 채팅방
+            </div>
+            <div className="chat-productInfo">
+              <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+              <div>
+                <p className="chat-product-title">상품명: {productTitle}</p>
+                <p className="chat-product-price">가격: {productPrice}원</p>
+              </div>
+            </div>
             <br />
             <div id="talk">
-              <div className="talk-shadow"></div>
-              {msgBox}
+              <div className="talk-shadow">{msgBox}</div>
             </div>
-            <input
+            {/* <input
               disabled={chkLog}
               placeholder="이름을 입력하세요."
               type="text"
               id="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
-            />
+            /> */}
             <div id="sendZone">
               <textarea
                 id="msg"
-                value={msg}
-                onChange={onText}
+                value={chatInput}
+                onChange={handleInput}
                 onKeyDown={(ev) => {
                   if (ev.keyCode === 13) {
-                    send();
+                    handleSubmit();
                   }
                 }}
               ></textarea>
-              <input type="button" value="전송" id="btnSend" onClick={send} />
+              <input
+                type="button"
+                value="입력"
+                id="btnSend"
+                onClick={handleSubmit}
+              />
             </div>
           </div>
         </div>

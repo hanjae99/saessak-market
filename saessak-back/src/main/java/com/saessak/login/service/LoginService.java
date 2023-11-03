@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saessak.constant.Gender;
 import com.saessak.constant.Role;
 import com.saessak.entity.Member;
+import com.saessak.login.dto.FindByIdDTO;
 import com.saessak.login.dto.KakaoDTO;
 import com.saessak.login.dto.LoginDTO;
 import com.saessak.repository.MemberRepository;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +30,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class LoginService {
 
     private final MemberRepository memberRepository;
@@ -144,4 +147,44 @@ public class LoginService {
         return objectMapper.readTree(responseBody);
     }
 
+    public FindByIdDTO findByIdPass(String name, String email){
+        Member member =memberRepository.findByNameAndEmail(name,email);
+
+        if(member ==null){
+            return null;
+        }
+        FindByIdDTO login=FindByIdDTO.builder()
+                .userId(member.getUserId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .build();
+
+        return login;
+    }
+
+    public FindByIdDTO findByPwd(String userId, String email){
+        Member member = memberRepository.findByUserIdAndEmail(userId,email);
+
+        if(member ==null){
+            return null;
+        }
+        FindByIdDTO login=FindByIdDTO.builder()
+                .userId(member.getUserId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .build();
+        return login;
+    }
+
+    public  Member changePwd(String userId ,String password){
+        Member member = memberRepository.findByUserId(userId);
+
+        if (password.isEmpty()){
+            return null;
+        }
+        member.setPassword(passwordEncoder.encode(password));
+
+
+       return member;
+    }
 }

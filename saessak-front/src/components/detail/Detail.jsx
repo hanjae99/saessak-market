@@ -6,13 +6,13 @@ import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
 import KakaoMap from "./KakaoMap";
+import { chatCall } from "../../ChatService";
 
 const Detail = () => {
   const { id } = useParams();
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
-  const { kakao } = window;
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -75,6 +75,22 @@ const Detail = () => {
     navigate("/user/wishlist");
   };
 
+  const handleChat = () => {
+    const request = {
+      productId: id,
+      writer: detaildatas.memberDTO.memberId,
+    };
+
+    // 채팅 박스 만든 후
+    // 해당 박스 아이디로 이동
+    chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
+      // console.log(response);
+      if (response) {
+        navigate("/chat/" + response);
+      }
+    });
+  };
+
   return (
     <>
       <div className="detail-container">
@@ -109,12 +125,16 @@ const Detail = () => {
                 </p>
               </div>
               <div>
-                <button
-                  onClick={() => navigate("/chatting")}
-                  className="detail-productsitem-btn1"
-                >
-                  채팅 하기
-                </button>
+                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={handleChat}
+                    className="detail-productsitem-btn1"
+                  >
+                    채팅 하기
+                  </button>
+                )}
               </div>
               <div>
                 <button onClick={onClick} className="detail-productsitem-btn2">

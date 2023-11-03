@@ -37,7 +37,7 @@ const Header = () => {
     if (accessToken !== "") {
       // 토큰 유효시간 검사
       const expiration = localStorage.getItem("EXPIREDATE");
-      if (expiration && expiration != "") {
+      if (expiration && expiration !== "") {
         const now = new Date().getTime();
         // 토큰 만료
         if (now >= Date.parse(expiration)) {

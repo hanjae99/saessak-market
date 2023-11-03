@@ -141,17 +141,24 @@ public class DetailService {
         log.info(productDTOList.toString());
     }
 
-    public Long createChatBox(DetailDTO detailDTO , Long orderMemberId){
+    public Long createChatBox(Long productId, Long sellMemberId , Long sendMemberId){
 
-        Product product =Product.builder().id(detailDTO.getProductId()).build();
+        ChatBox chatBox=chatBoxRepository.findBySellMemberIdAndOrderMemberId(sellMemberId,sendMemberId);
 
-        Member sell_MemberId =Member.builder().id(detailDTO.getMemberDTO().getMemberId()).build();
+        if(chatBox == null){
 
-        Member order_MemberId = Member.builder().id(orderMemberId).build();
+            Product product =productRepository.findById(productId).orElseThrow();
 
-        ChatBox chatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(order_MemberId).build();
+            Member sell_MemberId = memberRepository.findById(sellMemberId).orElseThrow();
 
-        chatBoxRepository.save(chatBox);
+            Member send_MemberId = memberRepository.findById(sendMemberId).orElseThrow();
+
+            ChatBox createChatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(send_MemberId).build();
+
+            chatBoxRepository.save(createChatBox);
+
+            return createChatBox.getId();
+        }
 
         return chatBox.getId();
     }

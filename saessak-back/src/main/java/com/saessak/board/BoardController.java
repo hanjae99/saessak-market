@@ -160,6 +160,8 @@ public class BoardController {
 
 
 
+
+
     if (imgs!=null) {
       imgs.forEach(p->{
         Image image = new Image();
@@ -176,6 +178,11 @@ public class BoardController {
         content = content.replace(blobUrl.get(i), realUrl.get(i));
       }
     }
+
+      for (int i = 0; i < blobUrl.size(); i++) {
+        content = content.replace(blobUrl.get(i), realUrl.get(i));
+      }
+
 
     savedBoard.setContent(content);
     boardService.saveBoard(savedBoard);
