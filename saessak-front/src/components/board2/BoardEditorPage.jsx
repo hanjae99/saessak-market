@@ -70,14 +70,14 @@ const BoardEditorPage = () => {
     }
 
     if (boardId) {
-      console.log(contents);
-      console.log(imgs);
+      // console.log(contents);
+      // console.log(imgs);
       uploadProduct(
         "/board/update/" + boardName + "/" + boardId,
         "POST",
         formData
       ).then((response) => {
-        console.log("res", response);
+        // console.log("res", response);
         if (response && response.msg === "ok") {
           navigate("/board/detail/" + boardName + "/" + boardId);
         }

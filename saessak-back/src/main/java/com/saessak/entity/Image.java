@@ -24,6 +24,10 @@ public class Image extends BaseTimeEntity {
   private String imgUrl;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "checked_admin_id")
+  private Member adminMember;
+
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "board_id")
   private Board board;
 
@@ -31,7 +35,7 @@ public class Image extends BaseTimeEntity {
   @JoinColumn(name = "product_id")
   private Product product;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
 }
