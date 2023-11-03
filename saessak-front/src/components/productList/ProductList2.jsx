@@ -30,6 +30,7 @@ import Header from "../main/Header";
 import "./ProductList.scss";
 import { API_BASE_URL } from "../../ApiConfig";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ScrollToTop from "../main/ScrollToTop";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();
@@ -57,7 +58,8 @@ const ProductList2 = () => {
     page = 1;
   }
   console.log(searchItem);
-  console.log(category, page);
+  console.log("카테고리: ", category);
+  console.log("페이지: ", page);
 
   useEffect(() => {
     // 카테고리 정보 가져오기
@@ -100,6 +102,8 @@ const ProductList2 = () => {
       setSearchDTO(response);
       // setSelectedIndex(0);
     });
+
+    window.scrollTo(0, 0);
   }, [searchItem, category, page, sellChecked, soldOutChecked, sortBy]);
 
   const removeSearch = useCallback(() => {
@@ -412,7 +416,7 @@ const ProductList2 = () => {
                   renderItem={(item) => (
                     <PaginationItem
                       component={Link}
-                      to={`/search?category=${category}?page=${item.page}`}
+                      to={`/search?category=${category}&page=${item.page}`}
                       {...item}
                     />
                   )}
