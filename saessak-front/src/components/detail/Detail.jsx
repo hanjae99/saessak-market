@@ -72,7 +72,14 @@ const Detail = () => {
     //     categories: item.categories,
     //   },
     // });
-    navigate("/user/wishlist");
+
+    call(`/detail/addwish/${id}`, "POST", null).then((response) => {
+      console.log(response);
+      navigate("/user/wishlist");
+      if (response.error === "success") {
+        alert("찜 목록에 추가되었습니다.");
+      }
+    });
   };
 
   const handleChat = () => {
@@ -86,7 +93,8 @@ const Detail = () => {
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
       // console.log(response);
       if (response) {
-        navigate("/chat/" + response);
+        // navigate("/chat/" + response);
+        window.open(`/chat/${response}`, "새싹 채팅", "width=600,height=800");
       }
     });
   };
