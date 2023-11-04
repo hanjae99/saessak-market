@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
   const game = useSelector((state) => state.game.data);
@@ -25,7 +26,7 @@ const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
     <div className="modal-container">
       <div>
         <img
-          src={game && game[index].imgUrl}
+          src={game && API_BASE_URL + game[index].imgUrl}
           alt="이미지"
           className="modal-imgBox"
         />

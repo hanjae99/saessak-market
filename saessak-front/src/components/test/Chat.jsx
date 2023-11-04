@@ -23,7 +23,6 @@ const Chat = () => {
       id: chatBoxId,
     };
     chatCall("/chatBox/getList", "POST", request).then((response) => {
-      console.log(response);
       if (response && response.chatList) {
         setChatContent(response.chatList);
         setMe(response.writer);

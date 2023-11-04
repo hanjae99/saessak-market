@@ -6,9 +6,13 @@ import com.saessak.webSocket.dto.ChatBoxDTO;
 import com.saessak.webSocket.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/chatBox")
@@ -38,5 +42,13 @@ public class ChatBoxController {
 
         ResponseDTO.builder().message(String.valueOf(chatBoxId)).build();
         return ResponseEntity.ok().body(chatBoxId);
+    }
+
+    @PostMapping({"/chatBox ", "/chatBox/{page}"})
+    public ResponseEntity<?> chatBoxlist(@AuthenticationPrincipal String memberId, @PathVariable("page") Optional<Integer> page){
+        Pageable pageable = PageRequest.of(page.isEmpty() || page.get() <= 0  ? 0 : page.get() -1, 10);
+
+
+        return null;
     }
 }

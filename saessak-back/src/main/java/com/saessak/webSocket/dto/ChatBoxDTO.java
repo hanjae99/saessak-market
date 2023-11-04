@@ -1,5 +1,6 @@
 package com.saessak.webSocket.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.saessak.entity.Member;
 import com.saessak.entity.Product;
 import com.saessak.main.dto.ProductDTO;
@@ -25,8 +26,9 @@ public class ChatBoxDTO {
 
     private List<ChatDTO> chatList;
 
-    private int chatCount;
-
     private Long writer;
+
+
+
 
 }

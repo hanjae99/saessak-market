@@ -26,6 +26,8 @@ import KakaoLogin from "./components/Login/KakaoLogin";
 import ChatTest from "./components/ChatTest";
 import Chat from "./components/test/Chat";
 import ChatApp from "./ChatApp";
+import FindById from "./components/Login/FindById";
+import FindByPwd from "./components/Login/FindByPwd";
 
 function App() {
   const [page, setPage] = useState(1);
@@ -67,6 +69,8 @@ function App() {
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
         <Route path="/smstest" element={<SmsTest />} />
         <Route path="/chat/:chatBoxId" element={<Chat />} />
+        <Route path="/login/findbyId" element={<FindById />} />
+        <Route path="/login/findbyPwd" element={<FindByPwd />} />
       </Routes>
     </div>
   );
