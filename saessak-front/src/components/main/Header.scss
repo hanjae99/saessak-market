@@ -97,6 +97,7 @@ header {
   // border: 1px solid rgba(199, 138, 67, 0.1);
   border-radius: 5px;
   // padding: 5px 10px;
+  min-width: 100px;
   cursor: pointer;
   &:hover {
     background-color: rgba(109, 200, 42, 0.3);
@@ -110,6 +111,7 @@ header {
   border-radius: 5px;
   // padding: 5px 10px;
   cursor: pointer;
+  min-width: 110px;
   &:hover {
     background-color: rgba(199, 138, 67, 0.3);
   }
@@ -228,6 +230,10 @@ header {
 .menuItem a:active {
   color: rgb(145, 63, 63);
 }
+
+// .login-info {
+//   display: flex;
+// }
 
 /* 태블릿 미디어쿼리 */
 @media screen and (max-width: 900px) and (min-width: 640px) {

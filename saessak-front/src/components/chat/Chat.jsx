@@ -4,6 +4,8 @@ import * as StompJs from "@stomp/stompjs";
 import { useParams } from "react-router-dom";
 import { chatCall } from "../../ChatService";
 import { API_BASE_URL } from "../../ApiConfig";
+import { Button } from "@mui/material";
+import priceComma from "../../pricecomma";
 
 const Chat = () => {
   const { chatBoxId } = useParams();
@@ -11,9 +13,12 @@ const Chat = () => {
   const [chatContent, setChatContent] = useState([]);
   const stompClient = useRef(null);
   const [me, setMe] = useState(""); // 현재 채팅방에 접속한 사람이 누구인지
+  const [productId, setProductId] = useState(0);
   const [productTitle, setProductTitle] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productImg, setProductImg] = useState("");
+  const [isSeller, setIsSeller] = useState(false); // 현재 채팅방에 접속한 사람이 판매자인지
+  const [sellStatus, setSellStatus] = useState("");
 
   useEffect(() => {
     // 이전 채팅 데이터 불러오기
@@ -21,12 +26,16 @@ const Chat = () => {
       id: chatBoxId,
     };
     chatCall("/chatBox/getList", "POST", request).then((response) => {
-      if (response && response.chatList) {
+      console.log(response);
+      if (response) {
         setChatContent(response.chatList);
         setMe(response.writer);
+        setProductId(response.productId);
         setProductTitle(response.productTitle);
         setProductPrice(response.productPrice);
         setProductImg(response.imgUrl);
+        setIsSeller(response.seller);
+        setSellStatus(response.sellStatus);
       }
     });
   }, [chatBoxId]);
@@ -137,6 +146,17 @@ const Chat = () => {
     }
   };
 
+  const handleSell = (e) => {
+    e.preventDefault();
+
+    chatCall("/chatBox/sell", "POST", { productId }).then((response) => {
+      console.log(response);
+      if (response && response.message === "success") {
+        setSellStatus("SOLD_OUT");
+      }
+    });
+  };
+
   const msgBox =
     chatContent &&
     chatContent.length !== 0 &&
@@ -155,7 +175,6 @@ const Chat = () => {
       <div className="chatContainer">
         <div id="chat-wrap">
           <div id="chatt">
-            {/* <h1 id="title">{chatContent.find(item => item.memberId !== me).memberNick} 채팅방</h1> */}
             <div id="title">
               <img
                 src="/img/leaf1.png"
@@ -164,16 +183,35 @@ const Chat = () => {
               />{" "}
               새싹 채팅방
             </div>
-            <div className="chat-productInfo">
-              {productImg !== "" ? (
-                <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+            <div className="chat-product">
+              {productImg && (
+                <div className="chat-product-img">
+                  <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+                </div>
+              )}
+              <div className="chat-productInfo">
+                {sellStatus === "SELL" ? (
+                  <h3 style={{ color: "#4F9051" }}>판매중</h3>
+                ) : sellStatus === "SOLD_OUT" ? (
+                  <h3 style={{ color: "#AC2F00" }}>판매완료</h3>
+                ) : (
+                  <h3 style={{ color: "#c8c8c8" }}>상품없음</h3>
+                )}
+
+                <p className="chat-product-title">상품명: {productTitle}</p>
+                <p className="chat-product-price">
+                  가격: {priceComma(productPrice)}원
+                </p>
+              </div>
+              {isSeller && sellStatus === "SELL" ? (
+                <div className="chat-productBtn">
+                  <Button variant="contained" onClick={handleSell}>
+                    판매완료
+                  </Button>
+                </div>
               ) : (
                 ""
               )}
-              <div>
-                <p className="chat-product-title">상품명: {productTitle}</p>
-                <p className="chat-product-price">가격: {productPrice}원</p>
-              </div>
             </div>
             <br />
             <div id="talk">

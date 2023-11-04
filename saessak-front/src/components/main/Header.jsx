@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +16,10 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const [categoryDTO, setCategoryDTO] = useState([]);
+  const [loginMinute, setLoginMinute] = useState("");
+  const [loginSecond, setLoginSecond] = useState("");
+  const expireDate = localStorage.getItem("EXPIREDATE");
+  const intervalId = useRef(0);
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -50,7 +54,22 @@ const Header = () => {
         setCategoryDTO(response.data);
       }
     });
+
+    intervalId.current = setInterval(() => {
+      const now = new Date();
+      setLoginMinute(
+        new Date(Date.parse(expireDate) - now).getMinutes().toString()
+      );
+      setLoginSecond(
+        new Date(Date.parse(expireDate) - now).getSeconds().toString()
+      );
+    }, 1000);
   }, []);
+
+  // 타이머 정지
+  if (loginMinute === "0" && loginSecond === "0") {
+    clearInterval(intervalId.current);
+  }
 
   // const login = useSelector((state) => state.login);
   // const dispatch = useDispatch();
@@ -198,8 +217,13 @@ const Header = () => {
           </nav>
         </div>
         {isLogin ? (
-          <div className="loginedUserId">
-            환영해요, {localStorage.getItem("NICKNAME")} 님
+          <div className="login-info">
+            <div className="loginedUserNick">
+              환영해요, {localStorage.getItem("NICKNAME")} 님
+            </div>
+            <div className="loginTimer">
+              {loginMinute.padStart(2, 0)} : {loginSecond.padStart(2, 0)}
+            </div>
           </div>
         ) : (
           ""

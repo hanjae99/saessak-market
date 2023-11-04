@@ -33,13 +33,7 @@ public class ChatBoxController {
 
         ChatBoxDTO newChatBoxDTO =chatService.getChatHistory(Long.valueOf(chatBoxDTO.getId()),senderId);
 
-        if(newChatBoxDTO != null) {
-            return ResponseEntity.ok().body(newChatBoxDTO);
-        }
-
-        ResponseDTO response = ResponseDTO.builder().message("noData").build();
-
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(newChatBoxDTO);
     }
 
     @PostMapping("/getChatBox")
@@ -67,5 +61,22 @@ public class ChatBoxController {
                         .build();
                 return ResponseEntity.ok().body(response);
             }
+    }
+
+    @PostMapping("/sell")
+    public ResponseEntity<?> productSoldOut(@RequestBody ChatBoxDTO chatBoxDTO){
+        boolean result = chatService.productSoldOut(chatBoxDTO.getProductId());
+
+        if (result){
+            ResponseDTO<String> response = ResponseDTO.<String>builder()
+                    .message("success")
+                    .build();
+            return ResponseEntity.ok().body(response);
+        }else {
+            ResponseDTO<String> response = ResponseDTO.<String>builder()
+                    .message("fail")
+                    .build();
+            return ResponseEntity.ok().body(response);
+        }
     }
 }

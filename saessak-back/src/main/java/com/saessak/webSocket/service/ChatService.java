@@ -1,5 +1,6 @@
 package com.saessak.webSocket.service;
 
+import com.saessak.constant.SellStatus;
 import com.saessak.entity.*;
 import com.saessak.repository.*;
 import com.saessak.webSocket.dto.ChatBoxDTO;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ChatService {
 
     private final ChatRepository chatRepository;
@@ -47,9 +50,9 @@ public class ChatService {
 
        List<Chat> chatList=chatRepository.findByChatBoxIdOrderByRegTimeAsc(chatBoxId);
 
-       if(chatList != null) {
+        List<ChatDTO> chatDTOList = new ArrayList<ChatDTO>();
 
-           List<ChatDTO> chatDTOList = new ArrayList<ChatDTO>();
+       if(chatList != null) {
 
            for (Chat chat : chatList) {
 //           ChatDTO chatDTO=chat.createChatDTO();
@@ -62,28 +65,42 @@ public class ChatService {
                        .build();
                chatDTOList.add(chatDTO);
            }
-
-
-           ChatBoxDTO chatBoxDTO = ChatBoxDTO.builder()
-                   .id(chatBox.getId())
-                   .productId(product.getId())
-                   .productTitle(product.getTitle())
-                   .productPrice(product.getPrice())
-                   .imgUrl(images.get(0).getImgUrl())
-                   .chatList(chatDTOList)
-                   .writer(Long.valueOf(senderId))
-                   .build();
-
-           return chatBoxDTO;
-
        }
-       return null;
+
+       // 현재 채팅방에 입장한 사람이 판매자일 경우
+        boolean isSeller = false;
+       if (chatBox.getSellMember().getId() == Long.parseLong(senderId)){
+           isSeller = true;
+       }
+
+        ChatBoxDTO chatBoxDTO = ChatBoxDTO.builder()
+                .id(chatBox.getId())
+                .productId(product.getId())
+                .productTitle(product.getTitle())
+                .productPrice(product.getPrice())
+                .imgUrl(images.get(0).getImgUrl())
+                .chatList(chatDTOList)
+                .writer(Long.valueOf(senderId))
+                .seller(isSeller)
+                .sellStatus(product.getSellStatus())
+                .build();
+
+        return chatBoxDTO;
     }
 
     public Page<ChatBoxListDTO> chatBoxList(String userId, Pageable pageable){
         return chatBoxRepository.getChatList(userId, pageable);
     }
 
+    public boolean productSoldOut(Long productId){
+        Product savedProduct = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
 
+        if (savedProduct.getSellStatus() == SellStatus.SELL){
+            savedProduct.setSellStatus(SellStatus.SOLD_OUT);
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 }
