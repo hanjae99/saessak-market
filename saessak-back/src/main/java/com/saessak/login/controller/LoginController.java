@@ -48,6 +48,7 @@ public class LoginController {
                     .role(user.getRole())
                     .token(token)
                     .expiration(tokenProvider.getExpiration(token))
+                    .nickName(user.getNickName())
                     .build();
             return ResponseEntity.ok().body(responseUserDTO);
         }else {

@@ -5,6 +5,8 @@ import { call } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
 import { MdVisibility } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+import priceComma from "../../pricecomma";
+import { changeDateFormat } from "../../dateFormat";
 
 const NewProduct = () => {
   // const state = useSelector((state) => state.product);
@@ -54,46 +56,9 @@ const NewProduct = () => {
           <div className="newItemTitle">
             <span>{dto.title}</span>
           </div>
-          <p>{dto.price}원</p>
+          <p>{priceComma(dto.price)}원</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {Math.floor(
-              (new Date().getTime() - Date.parse(dto.updateTime)) / 1000 / 60
-            ) < 60 ? (
-              <div>
-                {Math.floor(
-                  (new Date().getTime() - Date.parse(dto.updateTime)) /
-                    1000 /
-                    60
-                )}
-                분전
-              </div>
-            ) : Math.floor(
-                (new Date().getTime() - Date.parse(dto.updateTime)) /
-                  1000 /
-                  60 /
-                  60
-              ) < 24 ? (
-              <div>
-                {Math.floor(
-                  (new Date().getTime() - Date.parse(dto.updateTime)) /
-                    1000 /
-                    60 /
-                    60
-                )}
-                시간전
-              </div>
-            ) : (
-              <div>
-                {Math.floor(
-                  (new Date().getTime() - Date.parse(dto.updateTime)) /
-                    1000 /
-                    60 /
-                    60 /
-                    24
-                )}
-                일전
-              </div>
-            )}
+            <div>{changeDateFormat(dto.updateTime)}전</div>
             <div>
               <MdVisibility style={{ fontSize: "14px" }} /> {dto.clickedCount}{" "}
               <MdFavoriteBorder style={{ fontSize: "14px" }} />{" "}

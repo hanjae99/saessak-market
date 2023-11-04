@@ -83,6 +83,28 @@ const Detail = () => {
   };
 
   const handleChat = () => {
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    if (accessToken !== "") {
+      // 토큰 유효시간 검사
+      const expiration = localStorage.getItem("EXPIREDATE");
+      if (expiration && expiration !== "") {
+        const now = new Date().getTime();
+        // 토큰 만료
+        if (now >= Date.parse(expiration)) {
+          localStorage.setItem("ACCESS_TOKEN", "");
+          localStorage.setItem("EXPIREDATE", "");
+          localStorage.setItem("USERID", "");
+          alert("로그인 시간이 만료되었습니다");
+          navigate("/login");
+          return;
+        }
+      }
+    } else {
+      alert("로그인 후 이용해주세요!");
+      navigate("/login");
+      return;
+    }
+
     const request = {
       productId: id,
       writer: detaildatas.memberDTO.memberId,

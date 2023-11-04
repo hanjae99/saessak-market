@@ -30,7 +30,8 @@ import Header from "../main/Header";
 import "./ProductList.scss";
 import { API_BASE_URL } from "../../ApiConfig";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ScrollToTop from "../main/ScrollToTop";
+import priceComma from "../../pricecomma";
+import { changeDateFormat } from "../../dateFormat";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();
@@ -350,51 +351,12 @@ const ProductList2 = () => {
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
-                  <p>{dto.price}원</p>
+                  <p>{priceComma(dto.price)}원</p>
                   <div
                     className="item-info"
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {Math.floor(
-                      (new Date().getTime() - Date.parse(dto.updateTime)) /
-                        1000 /
-                        60
-                    ) < 60 ? (
-                      <div>
-                        {Math.floor(
-                          (new Date().getTime() - Date.parse(dto.updateTime)) /
-                            1000 /
-                            60
-                        )}
-                        분전
-                      </div>
-                    ) : Math.floor(
-                        (new Date().getTime() - Date.parse(dto.updateTime)) /
-                          1000 /
-                          60 /
-                          60
-                      ) < 24 ? (
-                      <div>
-                        {Math.floor(
-                          (new Date().getTime() - Date.parse(dto.updateTime)) /
-                            1000 /
-                            60 /
-                            60
-                        )}
-                        시간전
-                      </div>
-                    ) : (
-                      <div>
-                        {Math.floor(
-                          (new Date().getTime() - Date.parse(dto.updateTime)) /
-                            1000 /
-                            60 /
-                            60 /
-                            24
-                        )}
-                        일전
-                      </div>
-                    )}
+                    <div>{changeDateFormat(dto.updateTime)}전</div>
                     <div>
                       <MdVisibility style={{ fontSize: "14px" }} />{" "}
                       {dto.clickedCount}{" "}

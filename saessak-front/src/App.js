@@ -24,7 +24,7 @@ import BoardViewerPage from "./components/board2/BoardViewerPage";
 import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
 import ChatTest from "./components/ChatTest";
-import Chat from "./components/test/Chat";
+import Chat from "./components/chat/Chat";
 import ChatApp from "./ChatApp";
 import FindById from "./components/Login/FindById";
 import FindByPwd from "./components/Login/FindByPwd";

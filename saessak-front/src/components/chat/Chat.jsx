@@ -9,10 +9,8 @@ const Chat = () => {
   const { chatBoxId } = useParams();
   const [chatInput, setChatInput] = useState("");
   const [chatContent, setChatContent] = useState([]);
-  // const [stompClient, setStompClient] = useState(null);
   const stompClient = useRef(null);
   const [me, setMe] = useState(""); // 현재 채팅방에 접속한 사람이 누구인지
-  const [memberNickname, setMemberNickname] = useState("");
   const [productTitle, setProductTitle] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productImg, setProductImg] = useState("");
@@ -121,8 +119,7 @@ const Chat = () => {
       const data = {
         chatBoxId,
         memberId: me,
-        memberNickname: chatContent.find((item) => item.memberId === me)
-          .memberNickname,
+        memberNickname: localStorage.getItem("NICKNAME"),
         content: chatInput,
         regTime: new Date(),
       };
@@ -140,15 +137,18 @@ const Chat = () => {
     }
   };
 
-  const msgBox = chatContent.map((item, idx) => (
-    <div key={idx} className={item.memberId === me ? "me" : "other"}>
-      <span>
-        <b>{item.memberNickname}</b>
-      </span>{" "}
-      [ {new Date(item.regTime).toLocaleString()} ]<br />
-      <span>{item.content}</span>
-    </div>
-  ));
+  const msgBox =
+    chatContent &&
+    chatContent.length !== 0 &&
+    chatContent.map((item, idx) => (
+      <div key={idx} className={item.memberId === me ? "me" : "other"}>
+        <span>
+          <b>{item.memberNickname}</b>
+        </span>{" "}
+        [ {new Date(item.regTime).toLocaleString()} ]<br />
+        <span>{item.content}</span>
+      </div>
+    ));
 
   return (
     <>
