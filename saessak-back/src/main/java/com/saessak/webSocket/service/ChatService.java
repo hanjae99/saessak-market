@@ -69,8 +69,14 @@ public class ChatService {
                 .writer(Long.valueOf(senderId))
                 .build();
 
-
         return chatBoxDTO;
+    }
+
+    public ChatBoxDTO chatBoxList(String userId){
+
+
+
+        return null;
     }
 
 
