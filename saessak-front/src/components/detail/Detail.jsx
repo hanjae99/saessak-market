@@ -7,6 +7,7 @@ import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
 import KakaoMap from "./KakaoMap";
 import { chatCall } from "../../ChatService";
+import priceComma from "./../../pricecomma";
 
 const Detail = () => {
   const { id } = useParams();
@@ -129,7 +130,8 @@ const Detail = () => {
               </div>
               <div className="detail-productsitem-divprice">
                 <p className="detail-productsitem-div-price">
-                  {detaildatas.price}
+                  {priceComma(detaildatas.price)}
+                  <span>원</span>
                 </p>
               </div>
               <div>
@@ -215,7 +217,7 @@ const Detail = () => {
                             <span>{up.title}</span>
                           </div>
                           <br />
-                          <span>{up.price}원</span>
+                          <span>{priceComma(up.price)}원</span>
                         </div>
                       ))}
                 </div>
@@ -261,7 +263,7 @@ const Detail = () => {
                         <span>{cp.title}</span>
                       </div>
                       <div>
-                        <span>{cp.price}원</span>
+                        <span>{priceComma(cp.price)}원</span>
                       </div>
                     </div>
                   ))

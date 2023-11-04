@@ -3,10 +3,13 @@ package com.saessak.webSocket.service;
 import com.saessak.entity.*;
 import com.saessak.repository.*;
 import com.saessak.webSocket.dto.ChatBoxDTO;
+import com.saessak.webSocket.dto.ChatBoxListDTO;
 import com.saessak.webSocket.dto.ChatDTO;
 import com.saessak.webSocket.dto.ChatListDTO;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -35,6 +38,7 @@ public class ChatService {
     }
 
     public ChatBoxDTO getChatHistory(Long chatBoxId ,String senderId) {
+
        ChatBox chatBox =chatBoxRepository.findById(chatBoxId).orElseThrow(EntityNotFoundException::new);
 
         Product product = productRepository.findById(chatBox.getProduct().getId()).orElseThrow(EntityNotFoundException::new);
@@ -43,40 +47,41 @@ public class ChatService {
 
        List<Chat> chatList=chatRepository.findByChatBoxIdOrderByRegTimeAsc(chatBoxId);
 
-       List<ChatDTO> chatDTOList = new ArrayList<ChatDTO>();
+       if(chatList != null) {
 
-       for(Chat chat: chatList){
+           List<ChatDTO> chatDTOList = new ArrayList<ChatDTO>();
+
+           for (Chat chat : chatList) {
 //           ChatDTO chatDTO=chat.createChatDTO();
-           ChatDTO chatDTO = ChatDTO.builder()
-                           .chatBoxId(chat.getChatBox().getId())
-                                   .memberId(chat.getMember().getId())
-                                            .memberNickname(chat.getMember().getNickName())
-                                                    .content(chat.getContent())
-                                                            .regTime(chat.getRegTime())
-                                                                    .build();
-           chatDTOList.add(chatDTO);
+               ChatDTO chatDTO = ChatDTO.builder()
+                       .chatBoxId(chat.getChatBox().getId())
+                       .memberId(chat.getMember().getId())
+                       .memberNickname(chat.getMember().getNickName())
+                       .content(chat.getContent())
+                       .regTime(chat.getRegTime())
+                       .build();
+               chatDTOList.add(chatDTO);
+           }
+
+
+           ChatBoxDTO chatBoxDTO = ChatBoxDTO.builder()
+                   .id(chatBox.getId())
+                   .productId(product.getId())
+                   .productTitle(product.getTitle())
+                   .productPrice(product.getPrice())
+                   .imgUrl(images.get(0).getImgUrl())
+                   .chatList(chatDTOList)
+                   .writer(Long.valueOf(senderId))
+                   .build();
+
+           return chatBoxDTO;
+
        }
-
-
-
-        ChatBoxDTO chatBoxDTO = ChatBoxDTO.builder()
-                .id(chatBox.getId())
-                .productId(product.getId())
-                .productTitle(product.getTitle())
-                .productPrice(product.getPrice())
-                .imgUrl(images.get(0).getImgUrl())
-                .chatList(chatDTOList)
-                .writer(Long.valueOf(senderId))
-                .build();
-
-        return chatBoxDTO;
+       return null;
     }
 
-    public ChatBoxDTO chatBoxList(String userId){
-
-
-
-        return null;
+    public Page<ChatBoxListDTO> chatBoxList(String userId, Pageable pageable){
+        return chatBoxRepository.getChatList(userId, pageable);
     }
 
 
