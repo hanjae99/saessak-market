@@ -62,12 +62,14 @@ input[type="number"]::-webkit-outer-spin-button {
       align-self: center;
 
       .chat-product-title {
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .chat-product-price {
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

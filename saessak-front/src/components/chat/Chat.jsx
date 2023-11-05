@@ -1,11 +1,12 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import "./Chat.scss";
 import * as StompJs from "@stomp/stompjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { chatCall } from "../../ChatService";
 import { API_BASE_URL } from "../../ApiConfig";
 import { Button } from "@mui/material";
 import priceComma from "../../pricecomma";
+import { loginCheck } from "../../loginCheck";
 
 const Chat = () => {
   const { chatBoxId } = useParams();
@@ -19,25 +20,53 @@ const Chat = () => {
   const [productImg, setProductImg] = useState("");
   const [isSeller, setIsSeller] = useState(false); // 현재 채팅방에 접속한 사람이 판매자인지
   const [sellStatus, setSellStatus] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 이전 채팅 데이터 불러오기
-    const request = {
-      id: chatBoxId,
-    };
-    chatCall("/chatBox/getList", "POST", request).then((response) => {
-      console.log(response);
-      if (response) {
-        setChatContent(response.chatList);
-        setMe(response.writer);
-        setProductId(response.productId);
-        setProductTitle(response.productTitle);
-        setProductPrice(response.productPrice);
-        setProductImg(response.imgUrl);
-        setIsSeller(response.seller);
-        setSellStatus(response.sellStatus);
-      }
-    });
+    const result = loginCheck();
+    if (result === "not login") {
+      alert("로그인 후 이용해주세요!");
+      navigate("/login");
+      return;
+    } else if (result === "token expired") {
+      alert("로그인 시간이 만료되었습니다, 다시 로그인해주세요!");
+      navigate("/login");
+      return;
+    } else if (result === "login ok") {
+      chatCall("/chatBox/validateUser", "POST", { id: chatBoxId }).then(
+        (response) => {
+          if (response && response.message) {
+            if (response.message === "no chatBox") {
+              alert("유효하지 않은 주소입니다.");
+              navigate("/");
+              return;
+            } else if (response.message === "user not ok") {
+              alert("등록된 유저가 아닙니다.");
+              navigate("/");
+              return;
+            } else if (response.message === "user ok") {
+              // 이전 채팅 데이터 불러오기
+              const request = {
+                id: chatBoxId,
+              };
+              chatCall("/chatBox/getList", "POST", request).then((response) => {
+                console.log(response);
+                if (response) {
+                  setChatContent(response.chatList);
+                  setMe(response.writer);
+                  setProductId(response.productId);
+                  setProductTitle(response.productTitle);
+                  setProductPrice(response.productPrice);
+                  setProductImg(response.imgUrl);
+                  setIsSeller(response.seller);
+                  setSellStatus(response.sellStatus);
+                }
+              });
+            }
+          }
+        }
+      );
+    }
   }, [chatBoxId]);
 
   useEffect(() => {
@@ -149,7 +178,7 @@ const Chat = () => {
   const handleSell = (e) => {
     e.preventDefault();
 
-    chatCall("/chatBox/sell", "POST", { productId }).then((response) => {
+    chatCall("/chatBox/sell", "POST", { id: chatBoxId }).then((response) => {
       console.log(response);
       if (response && response.message === "success") {
         setSellStatus("SOLD_OUT");

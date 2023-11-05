@@ -162,10 +162,14 @@ const Header = () => {
       <div id="navContainer">
         <div className="navContent">
           <div className="category">
-            <span>
+            {/* <span>
               <MdReorder />
             </span>
-            <span>카테고리</span>
+            <span>카테고리</span> */}
+            <div className="category_selectBtn">
+              <MdReorder />
+              <span>카테고리</span>
+            </div>
             <div id="categoryBox">
               <div
                 style={{ width: "80%", height: "20px", zIndex: "-999" }}
@@ -200,12 +204,7 @@ const Header = () => {
             </div>
           </div>
           <nav className="menu">
-            <div
-              className="menuItem"
-              onClick={() => {
-                navigate("/board/list");
-              }}
-            >
+            <div className="menuItem">
               <Link to="/board/list">새싹 게시판</Link>
             </div>
             <div className="menuItem">
@@ -222,7 +221,9 @@ const Header = () => {
               환영해요, {localStorage.getItem("NICKNAME")} 님
             </div>
             <div className="loginTimer">
-              {loginMinute.padStart(2, 0)} : {loginSecond.padStart(2, 0)}
+              <span>
+                {loginMinute.padStart(2, 0)} : {loginSecond.padStart(2, 0)}
+              </span>
             </div>
           </div>
         ) : (

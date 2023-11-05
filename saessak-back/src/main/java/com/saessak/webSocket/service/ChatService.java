@@ -92,15 +92,36 @@ public class ChatService {
         return chatBoxRepository.getChatList(userId, pageable);
     }
 
-    public boolean productSoldOut(Long productId){
-        Product savedProduct = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+    public boolean productSoldOut(Long chatBoxId){
+        ChatBox chatBox = chatBoxRepository.findById(chatBoxId).orElseThrow(EntityNotFoundException::new);
+        Product savedProduct = productRepository.findById(chatBox.getProduct().getId()).orElseThrow(EntityNotFoundException::new);
 
         if (savedProduct.getSellStatus() == SellStatus.SELL){
             savedProduct.setSellStatus(SellStatus.SOLD_OUT);
+            savedProduct.setOrderMember(chatBox.getOrderMember());
             return true;
         }else {
             return false;
         }
     }
 
+    public int validateUser(Long chatBoxId, Long memberId){
+        try {
+            ChatBox chatBox = chatBoxRepository.findById(chatBoxId).orElseThrow(EntityNotFoundException::new);
+
+            List<Long> memberIdList = new ArrayList<>();
+
+            memberIdList.add(chatBox.getOrderMember().getId());
+            memberIdList.add(chatBox.getSellMember().getId());
+
+            // 현재 채팅방에 접속한 유저가 판매자 or 구매자 둘 중 하나인지
+            if (memberIdList.contains(memberId)){
+                return 1;
+            }else {
+                return -1;
+            }
+        }catch (EntityNotFoundException e){
+            return 0;
+        }
+    }
 }

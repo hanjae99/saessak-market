@@ -21,9 +21,7 @@ import ProductList2 from "./components/productList/ProductList2";
 import UpdateProduct2 from "./components/updateProduct/UpdateProduct2";
 import BoardEditorPage from "./components/board2/BoardEditorPage";
 import BoardViewerPage from "./components/board2/BoardViewerPage";
-import SmsTest from "./components/SmsTest";
 import KakaoLogin from "./components/Login/KakaoLogin";
-import ChatTest from "./components/ChatTest";
 import Chat from "./components/chat/Chat";
 import ChatApp from "./ChatApp";
 import FindById from "./components/Login/FindById";
@@ -67,7 +65,6 @@ function App() {
           element={<BoardViewerPage />}
         ></Route>
         <Route path="/login/auth/kakao?" element={<KakaoLogin />} />
-        <Route path="/smstest" element={<SmsTest />} />
         <Route path="/chat/:chatBoxId" element={<Chat />} />
         <Route path="/login/findbyId" element={<FindById />} />
         <Route path="/login/findbyPwd" element={<FindByPwd />} />

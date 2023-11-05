@@ -65,7 +65,7 @@ public class ChatBoxController {
 
     @PostMapping("/sell")
     public ResponseEntity<?> productSoldOut(@RequestBody ChatBoxDTO chatBoxDTO){
-        boolean result = chatService.productSoldOut(chatBoxDTO.getProductId());
+        boolean result = chatService.productSoldOut(chatBoxDTO.getId());
 
         if (result){
             ResponseDTO<String> response = ResponseDTO.<String>builder()
@@ -78,5 +78,29 @@ public class ChatBoxController {
                     .build();
             return ResponseEntity.ok().body(response);
         }
+    }
+
+    @PostMapping("/validateUser")
+    public ResponseEntity<?> validateUser(@RequestBody ChatBoxDTO chatBoxDTO, @AuthenticationPrincipal String memberId){
+
+        int result = chatService.validateUser(chatBoxDTO.getId(), Long.parseLong(memberId));
+
+        String message = "";
+
+        // 등록된 유저
+        if (result == 1){
+            message = "user ok";
+        }else if (result == -1){
+            // 채팅방에 등록되지 않은 유저
+            message = "user not ok";
+        }else if (result == 0){
+            // 존재하지 않는 채팅방 번호
+            message = "no chatBox";
+        }
+
+        ResponseDTO<String> response = ResponseDTO.<String>builder()
+                .message(message)
+                .build();
+        return ResponseEntity.ok().body(response);
     }
 }
