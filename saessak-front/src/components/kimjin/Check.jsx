@@ -7,18 +7,85 @@ import { useEffect } from "react";
 import { call } from "../../ApiService";
 import { useState } from "react";
 import { API_BASE_URL } from "../../ApiConfig";
+import { useCallback } from "react";
 
 const Check = () => {
-  const movePage = useNavigate();
+  const movePages = useNavigate();
 
   const [buyProduct, setBuyProduct] = useState([]);
 
   useEffect(() => {
     call("/user/check", "GET").then((response) => {
-      setBuyProduct(response.data);
-      console.log(response);
+      if (response && response.data) {
+        setBuyProduct(response.data);
+        console.log("gd", response.data);
+      }
     });
   }, []);
+
+  // 페이징 처리(한 페이지당 30개의 상품 노출)
+  const [pageBtns, setPageBtns] = useState([]); // 페이지 버튼들을 저장하는 상태 변수
+  const [pageNumLength, setpageNumLength] = useState(0);
+
+  // 페이지 이동 처리 함수
+  const movePage = useCallback((i) => {
+    setpageNumLength(i - 1); // 선택된 페이지로 pageNumLength 설정
+    window.scrollTo(0, 0); // 페이지 이동 후 맨 위로 스크롤
+  }, []);
+
+  useEffect(() => {
+    // 총 페이지 수 계산
+
+    const makePageBtn = () => {
+      const totalPage = Math.ceil(buyProduct && buyProduct.length / 2);
+
+      const newPageBtns = [];
+      // 페이지 버튼 6개씩 보여주기
+      for (
+        let i = 1 + 5 * pageNumLength;
+        i <= 1 + 5 * (pageNumLength + 1);
+        i++
+      ) {
+        if (i > totalPage) {
+          break;
+        }
+        const pageBtn = (
+          <button onClick={() => movePage(i)} key={i}>
+            {i}
+          </button>
+        );
+        newPageBtns.push(pageBtn);
+      }
+      setPageBtns(newPageBtns); // 페이지 버튼 상태 업데이트
+    };
+    makePageBtn(); // 페이지 버튼 생성 함수 호출
+  }, [buyProduct, movePage]);
+
+  console.log(pageNumLength);
+  console.log("안녕", pageBtns);
+
+  // page 버튼 6개씩 보여주기
+  const prevPageNumLength = useCallback(() => {
+    setpageNumLength(pageNumLength - 1); // 이전 페이지 세트로 이동
+  }, [pageNumLength]);
+
+  const nextPageNumLength = useCallback(() => {
+    setpageNumLength(pageNumLength + 1); // 다음 페이지 세트로 이동
+  }, [pageNumLength]);
+
+  const itemsPerPage = 2; // 페이지당 상품 수
+  const [displayedProducts, setDisplayedProduct] = useState([]);
+
+  useEffect(() => {
+    const displayedProduct =
+      buyProduct &&
+      buyProduct.slice(
+        pageNumLength * itemsPerPage,
+        Math.min((pageNumLength + 1) * itemsPerPage, buyProduct.length)
+      );
+    setDisplayedProduct(displayedProduct);
+  }, [buyProduct, pageNumLength, movePage]);
+  console.log(displayedProducts);
 
   return (
     <div className="section">
@@ -26,14 +93,16 @@ const Check = () => {
         <div className="manu-2-1">
           <div className="tbody-1">
             <div className="text-0">
-              {buyProduct &&
-                buyProduct.map((a, i) => (
+              {displayedProducts &&
+                displayedProducts.map((a, i) => (
                   <div key={i}>
                     <div className="table-main">
                       <div className="table-body">
                         <div className="table-day">
                           {(() => {
-                            const date = new Date(buyProduct[i].updateTime);
+                            const date = new Date(
+                              displayedProducts[i].updateTime
+                            );
                             const year = date.getFullYear();
                             const month = (1 + date.getMonth())
                               .toString()
@@ -51,7 +120,7 @@ const Check = () => {
                           <div className="td-1-1">
                             <div className="td-1-1-1">
                               <span className="td-1-1-1-1">
-                                {buyProduct[i].sellStatus}
+                                {displayedProducts[i].sellStatus}
                               </span>
                             </div>
                           </div>
@@ -62,25 +131,26 @@ const Check = () => {
                                   <div
                                     className="text-2-1"
                                     onClick={() =>
-                                      movePage(
-                                        "/detail/" + buyProduct[i].productId
+                                      movePages(
+                                        "/detail/" +
+                                          displayedProducts[i].productId
                                       )
                                     }
                                   >
                                     <div className="text-2-img">
                                       <img
                                         className="img1"
-                                        src={`${API_BASE_URL}${buyProduct[i].imgUrl}`}
+                                        src={`${API_BASE_URL}${displayedProducts[i].imgUrl}`}
                                         alt=""
                                       />
                                     </div>
                                     <div className="text-2-name">
                                       <div className="text-2-name-1">
                                         <div className="text-2-name-1-1">
-                                          {buyProduct[i].title}
+                                          {displayedProducts[i].title}
                                         </div>
                                         <div className="text-2-name-1-2">
-                                          {buyProduct[i].price}
+                                          {displayedProducts[i].price} 원
                                         </div>
                                       </div>
                                     </div>
@@ -121,6 +191,28 @@ const Check = () => {
             </div>
           </div>
         </div>
+        {buyProduct && buyProduct.length !== 0 ? (
+          <div className="pagination1">
+            <button
+              onClick={prevPageNumLength}
+              disabled={pageNumLength && pageNumLength === 0}
+            >
+              이전
+            </button>
+            {pageBtns}
+            <button
+              onClick={nextPageNumLength}
+              disabled={
+                pageNumLength &&
+                pageNumLength === Math.ceil(buyProduct.length / 2) - 1
+              }
+            >
+              다음
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

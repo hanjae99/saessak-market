@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatBoxRepository extends JpaRepository<ChatBox,Long> ,ChatBoxRepositoryCustom {
-    ChatBox findBySellMemberIdAndOrderMemberId(Long sellMemberId, Long orderMemberId);
+    ChatBox findByProductIdAndOrderMemberId(Long productId, Long orderMemberId);
 
 }

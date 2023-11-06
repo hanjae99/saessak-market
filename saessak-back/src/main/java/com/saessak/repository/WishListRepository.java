@@ -36,7 +36,6 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
             "P.product_id AS productId, P.title, P.price, P.update_time AS updateTime, P.sell_status AS sellStatus " +
             "FROM PRODUCT P, IMAGE I " +
             "WHERE P.product_id = I.product_id " +
-            "AND BL.product_id = P.product_id " +
             "AND P.order_member_id = :memberId " +
             "AND P.sell_status = 'SOLD_OUT' " +
             "GROUP BY P.product_id", nativeQuery = true)

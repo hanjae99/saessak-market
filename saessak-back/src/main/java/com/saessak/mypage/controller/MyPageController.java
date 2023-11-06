@@ -43,7 +43,7 @@ public class MyPageController {
         log.info(userId);
 
         Member user = memberService.read(userId);
-
+        String img = memberService.getMemberImg(userId);
 
         MyPageMemberDTO saveDto = new MyPageMemberDTO();
         saveDto.setId(user.getId());
@@ -55,10 +55,17 @@ public class MyPageController {
         saveDto.setName(user.getName());
         saveDto.setAddress(user.getAddress());
         saveDto.setRole(user.getRole());
-        saveDto.setUserImgUrl(memberService.getMemberImg(userId));
+
+        if (img != null){
+            saveDto.setUserImgUrl(img);
+        }
+
+
 
         List<MyPageMemberDTO> list = new ArrayList<>();
         list.add(saveDto);
+
+
 
         ResponseDTO<MyPageMemberDTO> response = ResponseDTO.<MyPageMemberDTO>builder()
                 .data(list)
