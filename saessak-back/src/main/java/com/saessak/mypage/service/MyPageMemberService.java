@@ -1,12 +1,16 @@
 package com.saessak.mypage.service;
 
+import com.saessak.constant.Role;
+import com.saessak.constant.SellStatus;
 import com.saessak.entity.Image;
 import com.saessak.entity.Member;
+import com.saessak.entity.Product;
 import com.saessak.main.dto.ProductFormDTO;
 import com.saessak.mypage.dto.MemberImageDTO;
 import com.saessak.mypage.dto.MyPageMemberDTO;
 import com.saessak.repository.ImageRepository;
 import com.saessak.repository.MemberRepository;
+import com.saessak.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +38,8 @@ public class MyPageMemberService {
 
     private final MemberImgService memberImgService;
 
+    private final ProductRepository productRepository;
+
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // 테스트를 위한 메서드
@@ -53,6 +59,18 @@ public class MyPageMemberService {
         // 저장된 To-Do 항목을 검색하고 그 제목을 반환합니다.
         Member savedEntity = memberRepository.findById(todo.getId()).get();
         return savedEntity.getName();
+    }
+    public void deleteUpdateMember(Long memberId){
+        Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
+
+        member.setRole(Role.DELETED);
+
+        List<Product> product = productRepository.findBySellMemberId(memberId);
+
+        for(Product product1 : product){
+            product1.setSellStatus(SellStatus.DELETED);
+        }
+
     }
 
     // To-Do 항목을 유효성 검사하는 메서드

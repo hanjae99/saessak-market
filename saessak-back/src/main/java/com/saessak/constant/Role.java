@@ -1,5 +1,5 @@
 package com.saessak.constant;
 
 public enum Role {
-  USER, ADMIN, BLACKED
+  USER, ADMIN, BLACKED, DELETED
 }
