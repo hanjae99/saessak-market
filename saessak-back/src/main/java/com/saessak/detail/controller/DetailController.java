@@ -2,6 +2,7 @@ package com.saessak.detail.controller;
 
 import com.saessak.detail.dto.DetailDTO;
 import com.saessak.detail.service.DetailService;
+import com.saessak.entity.WishList;
 import com.saessak.dto.ResponseDTO;
 import com.saessak.entity.ChatBox;
 import com.saessak.repository.MemberRepository;
@@ -45,5 +46,17 @@ public class DetailController {
         }
     }
 
+    @PostMapping("/addwish/{productId}")
+    public ResponseEntity<?> addWishList(@PathVariable("productId") Long productId, @AuthenticationPrincipal String memberId){
+
+        detailService.addWishList(productId, Long.parseLong(memberId));
+
+        ResponseDTO<String> response = ResponseDTO.<String>builder()
+                .error("success")
+                .build();
+        return ResponseEntity.ok().body(response);
+
+
+    }
 
 }

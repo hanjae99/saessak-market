@@ -24,9 +24,11 @@ public class ChatBoxListDTO {
 
     private String counterNickName;
 
+    private String lastChatContent;
+
 
     @QueryProjection
-    public ChatBoxListDTO(Long chatBoxId, Long productId, String productTitle, int productPrice, String imgUrl, LocalDateTime lastChatTime, String counterNickName) {
+    public ChatBoxListDTO(Long chatBoxId, Long productId, String productTitle, int productPrice, String imgUrl, LocalDateTime lastChatTime, String counterNickName, String lastChatContent) {
         this.chatBoxId = chatBoxId;
         this.productId = productId;
         this.productTitle = productTitle;
@@ -34,5 +36,6 @@ public class ChatBoxListDTO {
         this.imgUrl = imgUrl;
         this.lastChatTime = lastChatTime;
         this.counterNickName = counterNickName;
+        this.lastChatContent = lastChatContent;
     }
 }

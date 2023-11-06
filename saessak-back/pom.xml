@@ -131,6 +131,14 @@
             <version>4.2.7</version>
         </dependency>
 
+<!--        크롤링-->
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.16.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

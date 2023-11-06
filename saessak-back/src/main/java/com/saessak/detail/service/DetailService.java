@@ -6,9 +6,11 @@ import com.saessak.main.dto.ProductDTO;
 import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,7 @@ public class DetailService {
     private final ProductCategoryRepository productCategoryRepository;
     private final ImageRepository imageRepository;
     private final ChatBoxRepository chatBoxRepository;
+    private final WishListRepository wishListRepository;
 
     public DetailDTO get(Long productId){
 
@@ -161,6 +164,25 @@ public class DetailService {
         }
 
         return chatBox.getId();
+    }
+
+    public void addWishList(Long productId, Long memberId) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
+
+        Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+
+        LocalDateTime updateTime = product.getUpdateTime();
+
+        LocalDateTime regTime = product.getRegTime();
+
+        if (wishListRepository.existsByMemberIdAndProductId(memberId, productId)) {
+            // 이미 찜한 상품이라면 추가 작업을 수행하지 않음
+            return;
+        }
+
+
+        wishListRepository.insertById(member.getId(), productId, updateTime, regTime);
     }
 
 

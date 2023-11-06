@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
 import Footer from "../main/Footer";
 import { API_BASE_URL } from "../../ApiConfig";
+import priceComma from "./../../pricecomma";
 
 const GameResult = () => {
   const { finalresult } = useParams();
@@ -62,7 +63,10 @@ const GameResult = () => {
                         <div className="gr-textTitle">
                           <span>{p.title}</span>
                         </div>
-                        <p>{p.price}</p>
+                        <p>
+                          {priceComma(p.price)}
+                          <span>원</span>
+                        </p>
                       </div>
                     </div>
                   </div>

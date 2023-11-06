@@ -16,12 +16,16 @@ const comments = createSlice({
         viewerRole:'any',
         userProfileImgUrl:'', 
         userNickName:'',
+
+        updateNow:0,
         
         list:[{id: "",
         pid: "",
         writerNickName: "",
         writerProfileImgUrl: "",
-        content: ""}]
+        content: "",
+        upTime:""
+      }]
     },
     reducers: {
       setData: (state, action) => {
@@ -29,6 +33,7 @@ const comments = createSlice({
         state.userProfileImgUrl = action.payload.userProfileImgUrl;
         state.userNickName = action.payload.userNickName;
         state.list = action.payload.list;
+        state.updateNow = action.payload.updateNow;
       }
     },
 });
