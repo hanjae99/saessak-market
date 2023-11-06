@@ -6,9 +6,11 @@ import com.saessak.main.dto.ProductDTO;
 import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,7 @@ public class DetailService {
     private final ProductCategoryRepository productCategoryRepository;
     private final ImageRepository imageRepository;
     private final ChatBoxRepository chatBoxRepository;
+    private final WishListRepository wishListRepository;
 
     public DetailDTO get(Long productId){
 
@@ -141,19 +144,45 @@ public class DetailService {
         log.info(productDTOList.toString());
     }
 
-    public Long createChatBox(DetailDTO detailDTO , Long orderMemberId){
+    public Long createChatBox(Long productId, Long sellMemberId , Long sendMemberId){
 
-        Product product =Product.builder().id(detailDTO.getProductId()).build();
+        ChatBox chatBox =chatBoxRepository.findByProductIdAndOrderMemberId(productId,sendMemberId);
 
-        Member sell_MemberId =Member.builder().id(detailDTO.getMemberDTO().getMemberId()).build();
+        if(chatBox == null){
 
-        Member order_MemberId = Member.builder().id(orderMemberId).build();
+            Product product =productRepository.findById(productId).orElseThrow();
 
-        ChatBox chatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(order_MemberId).build();
+            Member sell_MemberId = memberRepository.findById(sellMemberId).orElseThrow();
 
-        chatBoxRepository.save(chatBox);
+            Member send_MemberId = memberRepository.findById(sendMemberId).orElseThrow();
+
+            ChatBox createChatBox = ChatBox.builder().product(product).sellMember(sell_MemberId).orderMember(send_MemberId).build();
+
+            chatBoxRepository.save(createChatBox);
+
+            return createChatBox.getId();
+        }
 
         return chatBox.getId();
+    }
+
+    public void addWishList(Long productId, Long memberId) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
+
+        Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+
+        LocalDateTime updateTime = product.getUpdateTime();
+
+        LocalDateTime regTime = product.getRegTime();
+
+        if (wishListRepository.existsByMemberIdAndProductId(memberId, productId)) {
+            // 이미 찜한 상품이라면 추가 작업을 수행하지 않음
+            return;
+        }
+
+
+        wishListRepository.insertById(member.getId(), productId, updateTime, regTime);
     }
 
 

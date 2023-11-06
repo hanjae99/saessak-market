@@ -1,6 +1,8 @@
 package com.saessak.entity;
 
+import com.saessak.webSocket.dto.ChatDTO;
 import lombok.*;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 
@@ -29,5 +31,11 @@ public class Chat extends BaseTimeEntity {
 
   @Column(length = 600)
   private String content;
+
+//  private static ModelMapper modelMapper = new ModelMapper();
+//
+//  public ChatDTO createChatDTO(){
+//    return modelMapper.map(this, ChatDTO.class);
+//  }
 
 }

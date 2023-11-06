@@ -69,6 +69,20 @@
   }
 }
 
+.pagination1 {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+}
+
+.pagination > button {
+  height: 30px;
+  background-color: white;
+  border: 1px solid black;
+}
+
 .manu-1 .li-1 {
   background-color: rgb(249, 249, 249);
   border-width: 0px 1px 1px;
@@ -206,9 +220,13 @@
 }
 
 .manu-2-1-1 {
-  height: 50%;
+  height: 500px;
   flex: 1.5;
   width: 700px;
+  border-bottom: 2px solid #d3d3d3;
+  border-left: 2px solid #d3d3d3;
+  border-right: 2px solid #d3d3d3;
+  padding: 5px;
 }
 
 .manu-2-1-1 > div {
@@ -585,10 +603,12 @@
 }
 
 .chatting-all {
+  z-index: 500;
   margin: 0 10%;
-  margin-top: 30px;
-  /* width: 1250px; */
-  /* height: 50vh; */
+  margin-top: 150px;
+  width: 500px;
+  height: 500px;
+  position: absolute;
 }
 
 .chatting-main {
@@ -604,7 +624,7 @@
   width: 100%;
   height: 80px;
   border-bottom: 0;
-  background-color: rgba(109, 200, 42, 0.3);
+  background-color: rgba(109, 200, 42);
 }
 
 .chatting-logo {
@@ -620,8 +640,8 @@
 
 .chatting-section {
   width: 100%;
-  height: 1100px;
-  background-color: rgba(109, 200, 42, 0.3);
+  height: 600px;
+  background-color: rgb(138, 203, 92);
   border-top: 0;
 }
 
@@ -672,6 +692,17 @@
   font-size: 30px;
   text-align: center;
   line-height: 80px;
+}
+
+.chatting-text .chatting-icon2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatting-text::before {
+  content: "";
+  display: block;
+  flex: 1;
 }
 
 .chatting-text2 {
@@ -781,6 +812,23 @@
   line-height: 60px;
 }
 
+.changing-duplicated-msg3 {
+  margin-top: 0;
+  color: red;
+  font-size: small;
+  font-weight: bold;
+}
+.changing-duplicated1-msg3 {
+  margin-top: 0;
+  color: blue;
+  font-size: small;
+  font-weight: bold;
+}
+
+.changing-duplicated1-msg4 {
+  font-size: small;
+}
+
 @media screen and (min-width: 795px) and (max-width: 1023px) {
   .menuBtn {
     width: 130px;
@@ -846,7 +894,7 @@
 
   .layout-main {
     padding: 0 0 0 5%;
-    width: 1000px;
+    width: 100%;
   }
 
   .table-main {
@@ -858,7 +906,8 @@
   }
 
   .newmain4 {
-    padding: 0 1rem 0 2rem;
+    padding: 0 1rem 0 1rem;
+    width: 100%;
   }
 }
 
@@ -981,6 +1030,10 @@
   .Changing-1 {
     width: 600px;
   }
+
+  .newmain4 {
+    width: 700px;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -1032,11 +1085,12 @@
     position: absolute;
     width: 95px;
     height: 135px;
+    display: none;
   }
 
   .newmain4 {
     padding: 0 0 0 4%;
-    width: 800px;
+    width: 650px;
   }
 
   .mypage-1 > div > label {

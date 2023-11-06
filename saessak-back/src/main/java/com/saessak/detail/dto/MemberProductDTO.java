@@ -15,9 +15,9 @@ public class MemberProductDTO {
     private String imgUrl;
 
 
-//    private static ModelMapper modelMapper = new ModelMapper();
-//
-//    public Product createProduct(){
-//        return modelMapper.map(this, Product.class);
-//    }
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public Product createProduct(){
+        return modelMapper.map(this, Product.class);
+    }
 }

@@ -26,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests().antMatchers("/",
+                        "/favicon.ico",
                         "/game",
                         "/gameResul/**",
                         "/search",
@@ -47,9 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/product/searchcate",
                         "/product/search",
                         "/product/search/**",
-                        "/chatTest",
-                        "/chatTest/**",
-                        "/socket/chatt",
+                        "/chatting",
                         "/swagger-resources/**", "/swagger-ui/**",
                         "/swagger/**","/v3/api-docs").permitAll()
                 .anyRequest().authenticated();

@@ -50,6 +50,8 @@ const BoardViewerPage = () => {
 
   const contents = data.list&&data.list[0].content?data.list[0].content.split('"').join("'").split("$back$").join(API_BASE_URL):"";
 
+  // console.log(contents);
+
   return (
     <>
       <Header />
@@ -76,7 +78,7 @@ const BoardViewerPage = () => {
           </div>
           <hr />
           <div className="info_board">
-            {data.list!==undefined?<BoardViewer contents={contents} />:""}
+            {data.list!==undefined?<BoardViewer contents={contents+"<br><br><br>"} />:""}
           </div>
           <CommentViewer isAnonymous={false} parent={bn} parentId={boardId} />
         </div>

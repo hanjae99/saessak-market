@@ -6,13 +6,14 @@ import Footer from "../main/Footer";
 import DetailCarousel from "./DetailCarousel";
 import { call } from "../../ApiService";
 import KakaoMap from "./KakaoMap";
+import { chatCall } from "../../ChatService";
+import priceComma from "./../../pricecomma";
 
 const Detail = () => {
   const { id } = useParams();
   // const product = useSelector((state) => state.product);
   // const user = useSelector((state) => state.user);
   // const item = product.find((p) => p.id === id);
-  const { kakao } = window;
   const [detaildatas, setDetaildatas] = useState({
     productId: 0,
     memberDTO: {
@@ -33,7 +34,7 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response === 1) {
         navigate("/");
       }
@@ -72,7 +73,52 @@ const Detail = () => {
     //     categories: item.categories,
     //   },
     // });
-    navigate("/user/wishlist");
+
+    call(`/detail/addwish/${id}`, "POST", null).then((response) => {
+      console.log(response);
+      navigate("/user/wishlist");
+      if (response.error === "success") {
+        alert("찜 목록에 추가되었습니다.");
+      }
+    });
+  };
+
+  const handleChat = () => {
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    if (accessToken !== "") {
+      // 토큰 유효시간 검사
+      const expiration = localStorage.getItem("EXPIREDATE");
+      if (expiration && expiration !== "") {
+        const now = new Date().getTime();
+        // 토큰 만료
+        if (now >= Date.parse(expiration)) {
+          localStorage.setItem("ACCESS_TOKEN", "");
+          localStorage.setItem("EXPIREDATE", "");
+          localStorage.setItem("USERID", "");
+          alert("로그인 시간이 만료되었습니다");
+          navigate("/login");
+          return;
+        }
+      }
+    } else {
+      alert("로그인 후 이용해주세요!");
+      navigate("/login");
+      return;
+    }
+
+    const request = {
+      productId: id,
+      writer: detaildatas.memberDTO.memberId,
+    };
+
+    chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
+      console.log(response);
+      if (response) {
+        navigate("/chat/" + response);
+      } else {
+        navigate("/login");
+      }
+    });
   };
 
   return (
@@ -105,16 +151,21 @@ const Detail = () => {
               </div>
               <div className="detail-productsitem-divprice">
                 <p className="detail-productsitem-div-price">
-                  {detaildatas.price}
+                  {priceComma(detaildatas.price)}
+                  <span>원</span>
                 </p>
               </div>
               <div>
-                <button
-                  onClick={() => navigate("/chatting")}
-                  className="detail-productsitem-btn1"
-                >
-                  채팅 하기
-                </button>
+                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={handleChat}
+                    className="detail-productsitem-btn1"
+                  >
+                    채팅 하기
+                  </button>
+                )}
               </div>
               <div>
                 <button onClick={onClick} className="detail-productsitem-btn2">
@@ -187,7 +238,7 @@ const Detail = () => {
                             <span>{up.title}</span>
                           </div>
                           <br />
-                          <span>{up.price}원</span>
+                          <span>{priceComma(up.price)}원</span>
                         </div>
                       ))}
                 </div>
@@ -233,7 +284,7 @@ const Detail = () => {
                         <span>{cp.title}</span>
                       </div>
                       <div>
-                        <span>{cp.price}원</span>
+                        <span>{priceComma(cp.price)}원</span>
                       </div>
                     </div>
                   ))

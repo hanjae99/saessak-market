@@ -30,6 +30,8 @@ import Header from "../main/Header";
 import "./ProductList.scss";
 import { API_BASE_URL } from "../../ApiConfig";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import priceComma from "../../pricecomma";
+import { changeDateFormat } from "../../dateFormat";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();
@@ -57,7 +59,8 @@ const ProductList2 = () => {
     page = 1;
   }
   console.log(searchItem);
-  console.log(category, page);
+  console.log("카테고리: ", category);
+  console.log("페이지: ", page);
 
   useEffect(() => {
     // 카테고리 정보 가져오기
@@ -100,6 +103,8 @@ const ProductList2 = () => {
       setSearchDTO(response);
       // setSelectedIndex(0);
     });
+
+    window.scrollTo(0, 0);
   }, [searchItem, category, page, sellChecked, soldOutChecked, sortBy]);
 
   const removeSearch = useCallback(() => {
@@ -346,51 +351,12 @@ const ProductList2 = () => {
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
-                  <p>{dto.price}원</p>
+                  <p>{priceComma(dto.price)}원</p>
                   <div
                     className="item-info"
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {Math.floor(
-                      (new Date().getTime() - Date.parse(dto.updateTime)) /
-                        1000 /
-                        60
-                    ) < 60 ? (
-                      <div>
-                        {Math.floor(
-                          (new Date().getTime() - Date.parse(dto.updateTime)) /
-                            1000 /
-                            60
-                        )}
-                        분전
-                      </div>
-                    ) : Math.floor(
-                        (new Date().getTime() - Date.parse(dto.updateTime)) /
-                          1000 /
-                          60 /
-                          60
-                      ) < 24 ? (
-                      <div>
-                        {Math.floor(
-                          (new Date().getTime() - Date.parse(dto.updateTime)) /
-                            1000 /
-                            60 /
-                            60
-                        )}
-                        시간전
-                      </div>
-                    ) : (
-                      <div>
-                        {Math.floor(
-                          (new Date().getTime() - Date.parse(dto.updateTime)) /
-                            1000 /
-                            60 /
-                            60 /
-                            24
-                        )}
-                        일전
-                      </div>
-                    )}
+                    <div>{changeDateFormat(dto.updateTime)}전</div>
                     <div>
                       <MdVisibility style={{ fontSize: "14px" }} />{" "}
                       {dto.clickedCount}{" "}
@@ -412,7 +378,7 @@ const ProductList2 = () => {
                   renderItem={(item) => (
                     <PaginationItem
                       component={Link}
-                      to={`/search?category=${category}?page=${item.page}`}
+                      to={`/search?category=${category}&page=${item.page}`}
                       {...item}
                     />
                   )}

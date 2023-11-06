@@ -1,0 +1,183 @@
+.chatContainer {
+  width: 500px;
+  // background-color: #ededed;
+  background-color: rgba(109, 200, 42, 0.5);
+  margin: 50px auto;
+  padding: 20px 10px;
+  border-radius: 20px;
+  // box-shadow: 41px 41px 82px #c9c9c9, -41px -41px 82px #ffffff;
+  box-shadow: 41px 41px 82px #adadad, -41px -41px 82px #ffffff;
+}
+/* input 기본 스타일 초기화 */
+// input {
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+// }
+
+/* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */
+input::-ms-clear {
+  display: none;
+}
+
+/* input type number 에서 화살표 제거 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+#chatt {
+  width: 100%;
+  margin: 0 auto;
+  #title {
+    font-size: 20pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .chat-product {
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+
+    // border: 1px solid rgb(255, 255, 255);
+    background-color: white;
+    border-radius: 10px;
+
+    .chat-product-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > img {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+      }
+    }
+
+    .chat-productInfo {
+      justify-self: center;
+      align-self: center;
+
+      .chat-product-title {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .chat-product-price {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // color: blueviolet;
+      }
+    }
+
+    .chat-productBtn {
+      display: flex;
+      justify-content: end;
+      align-items: end;
+      padding-right: 10px;
+      padding-bottom: 10px;
+
+      > button {
+        background-color: rgba(199, 138, 67, 0.7);
+      }
+    }
+  }
+  #talk::-webkit-scrollbar {
+    width: 10px;
+  }
+  #talk::-webkit-scrollbar-thumb {
+    background: #c3c3c3;
+    border: 2px solid #9f9f9f;
+    border-radius: 12px 12px 12px 12px;
+
+    &:hover {
+      background-color: #9a9a9a;
+    }
+  }
+
+  #talk {
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+    // border-radius: 18px;
+    position: relative;
+    scroll-behavior: smooth;
+
+    .talk-shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    div {
+      width: 60%;
+      display: block;
+      padding: 10px;
+      border-radius: 10px;
+      box-sizing: border-box;
+
+      &.me {
+        background-color: #ffc;
+        margin: 0px 0px 20px 40%;
+      }
+
+      &.other {
+        background-color: #f6f6f6;
+        margin: 20px 0px 20px 0;
+      }
+    }
+  }
+
+  // #name {
+  //   display: block;
+  //   border: 1px solid #dcdcdc;
+  //   background-color: #ededed;
+  //   padding: 5px 2px;
+  //   margin-top: 20px;
+  // }
+
+  #sendZone {
+    > * {
+      vertical-align: top;
+    }
+    margin-top: 10px;
+    $sendZone-H: 70px;
+    display: flex;
+
+    #msg {
+      width: 90%;
+      height: $sendZone-H;
+      display: block;
+      resize: none;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      background-color: #fff;
+      // background-color: rgba(199, 138, 67, 0.3);
+      box-sizing: border-box;
+    }
+    #btnSend {
+      width: 20%;
+      margin-left: 5px;
+      height: $sendZone-H;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(244, 253, 111);
+        border: 1px solid rgb(175, 238, 141);
+        transition: all ease-in-out 0.2s;
+      }
+      // background-color: rgb(199, 138, 67);
+    }
+  }
+}

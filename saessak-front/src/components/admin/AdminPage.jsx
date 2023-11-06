@@ -3,9 +3,10 @@ import AdminNav from './AdminNav'
 import AdminCategory from './AdminCategory'
 import AdminModal from './AdminModal'
 import './AdminPage.css';
-import AdminContentBox from './AdminContentBox'
+import AdminContentBox2 from './AdminContentBox2'
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import AdminContentBox from './AdminContentBox';
 
 const AdminPage = () => {
   let {page} = useParams();
@@ -27,8 +28,13 @@ const AdminPage = () => {
   return (
     <div className='adminPage'>
       <AdminNav page={page} setModalData={setModalData} />
-      <AdminCategory page={page} setSelectedCg={setSelectedCg} />
-      <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
+      {/* <AdminCategory page={page} setSelectedCg={setSelectedCg} /> */}
+      {/* <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} /> */}
+      <AdminContentBox2 page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
+
+
+
+
       <AdminModal modalData={modalData} />
     </div>
   )

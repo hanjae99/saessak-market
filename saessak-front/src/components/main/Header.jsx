@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,12 +9,17 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import PersonIcon from "@mui/icons-material/Person";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { loginCheck } from "../../loginCheck";
 
 const Header = () => {
   const [value, setValue] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const [categoryDTO, setCategoryDTO] = useState([]);
+  const [loginMinute, setLoginMinute] = useState("");
+  const [loginSecond, setLoginSecond] = useState("");
+  const expireDate = localStorage.getItem("EXPIREDATE");
+  const intervalId = useRef(0);
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -33,24 +38,13 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if (accessToken !== "") {
-      // 토큰 유효시간 검사
-      const expiration = localStorage.getItem("EXPIREDATE");
-      if (expiration && expiration != "") {
-        const now = new Date().getTime();
-        // 토큰 만료
-        if (now >= Date.parse(expiration)) {
-          localStorage.setItem("ACCESS_TOKEN", "");
-          localStorage.setItem("EXPIREDATE", "");
-          setIsLogin(false);
-          alert("로그인 시간이 만료되었습니다");
-          navigate("/login");
-        } else {
-          // 토큰 유지, 로그인 유지
-          setIsLogin(true);
-        }
-      }
+    const result = loginCheck();
+    if (result === "token expired") {
+      setIsLogin(false);
+      alert("로그인 시간이 만료되었습니다, 다시 로그인해주세요!");
+      navigate("/login");
+    } else if (result === "login ok") {
+      setIsLogin(true);
     }
 
     // 카테고리 정보 가져오기
@@ -60,7 +54,22 @@ const Header = () => {
         setCategoryDTO(response.data);
       }
     });
+
+    intervalId.current = setInterval(() => {
+      const now = new Date();
+      setLoginMinute(
+        new Date(Date.parse(expireDate) - now).getMinutes().toString()
+      );
+      setLoginSecond(
+        new Date(Date.parse(expireDate) - now).getSeconds().toString()
+      );
+    }, 1000);
   }, []);
+
+  // 타이머 정지
+  if (loginMinute === "0" && loginSecond === "0") {
+    clearInterval(intervalId.current);
+  }
 
   // const login = useSelector((state) => state.login);
   // const dispatch = useDispatch();
@@ -69,6 +78,7 @@ const Header = () => {
     if (isLogin) {
       localStorage.setItem("ACCESS_TOKEN", "");
       localStorage.setItem("EXPIREDATE", "");
+      localStorage.setItem("NICKNAME", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
       navigate("/");
@@ -152,10 +162,14 @@ const Header = () => {
       <div id="navContainer">
         <div className="navContent">
           <div className="category">
-            <span>
+            {/* <span>
               <MdReorder />
             </span>
-            <span>카테고리</span>
+            <span>카테고리</span> */}
+            <div className="category_selectBtn">
+              <MdReorder />
+              <span>카테고리</span>
+            </div>
             <div id="categoryBox">
               <div
                 style={{ width: "80%", height: "20px", zIndex: "-999" }}
@@ -190,12 +204,7 @@ const Header = () => {
             </div>
           </div>
           <nav className="menu">
-            <div
-              className="menuItem"
-              onClick={() => {
-                navigate("/board/list");
-              }}
-            >
+            <div className="menuItem">
               <Link to="/board/list">새싹 게시판</Link>
             </div>
             <div className="menuItem">
@@ -207,8 +216,15 @@ const Header = () => {
           </nav>
         </div>
         {isLogin ? (
-          <div className="loginedUserId">
-            환영해요, {localStorage.getItem("USERID")} 님
+          <div className="login-info">
+            <div className="loginedUserNick">
+              환영해요, {localStorage.getItem("NICKNAME")} 님
+            </div>
+            <div className="loginTimer">
+              <span>
+                {loginMinute.padStart(2, 0)} : {loginSecond.padStart(2, 0)}
+              </span>
+            </div>
           </div>
         ) : (
           ""

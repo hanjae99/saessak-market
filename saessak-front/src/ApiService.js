@@ -85,18 +85,3 @@ export function signout() {
 export function signup(signUpDTO) {
   return call("/signup", "POST", signUpDTO);
 }
-
-export function validateExpired() {
-  return call("/login/validateExpiration", "POST").then((response) => {
-    console.log(response);
-    if (response && response.data[0] === "token alive") {
-      // 로그인한 상태
-      return true;
-    } else if (response && response.data[0] === "token expired") {
-      // 토큰 만료된 상태
-      localStorage.setItem("ACCESS_TOKEN", "");
-      alert("로그인 시간이 만료되었습니다");
-      return false;
-    }
-  });
-}

@@ -27,23 +27,15 @@ public class BoardController {
 
   @Autowired
   private BoardService boardService;
-  @Autowired
-  private BoardRepository boardRepository;
-  @Autowired
-  private MemberRepository memberRepository;
-  @Autowired
-  private BoardMainRepository boardMainRepository;
-  @Autowired
-  private BoardNtcRepository boardNtcRepository;
-  @Autowired
-  private BoardVocRepository boardVocRepository;
+
+
 
   @GetMapping("/{boardName}/detail/{boardId}")
   public ResponseEntity<?> readBoardDetail(@PathVariable("boardName") String boardName,
                                            @PathVariable("boardId") String boardId,
                                            @AuthenticationPrincipal String userId) {
     List<BoardDTO> list = new ArrayList<>();
-    Board board = boardRepository.findById(Long.parseLong(boardId)).orElseThrow(EntityNotFoundException::new);
+    Board board = boardService.getBoard(boardId);
     BoardDTO boardDTO = BoardDTO.builder()
         .title(board.getTitle())
         .content(board.getContent())
@@ -58,7 +50,7 @@ public class BoardController {
     String isMaster = "no";
     if (!userId.equals("anonymousUser")) {
       role = boardService.getUserRole(userId);
-      Member member = memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new);
+      Member member = boardService.getMember(userId);
       if (boardDTO.getWriter().equals(member.getNickName())) {
         isMaster = "master";
       }
@@ -112,26 +104,20 @@ public class BoardController {
       list = pb.getContent().stream().peek(p -> {
         switch (p.getBoardName()) {
           case "main":
-            BoardMain boardMain;
-            boardMain = boardMainRepository.findByBoardId(p.getId());
-            p.setBoardNumber(boardMain.getId());
+            p.setBoardNumber(boardService.getMainNumber(p.getId()));
             break;
           case "ntc":
-            BoardNtc boardNtc;
-            boardNtc = boardNtcRepository.findByBoardId(p.getId());
-            p.setBoardNumber(boardNtc.getId());
+            p.setBoardNumber(boardService.getNtcNumber(p.getId()));
             break;
           case "voc":
-            BoardVoc boardVoc;
-            boardVoc = boardVocRepository.findByBoardId(p.getId());
-            p.setBoardNumber(boardVoc.getId());
+            p.setBoardNumber(boardService.getVocNumber(p.getId()));
             break;
           default:
             break;
         }
       }).collect(Collectors.toList());
       if (Objects.equals(boardName, "voc")) {
-        list = list.stream().filter(p->p.getWriter().equals(memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new).getNickName())).collect(Collectors.toList());
+        list = list.stream().filter(p->p.getWriter().equals(boardService.getMember(userId).getNickName())).collect(Collectors.toList());
       }
     }
     int totalPageSize = pb.getTotalPages();
@@ -156,7 +142,7 @@ public class BoardController {
                                        BoardDTO boardDTO) {
 
 
-    Member writer = memberRepository.findById(Long.parseLong(userId)).orElseThrow(EntityNotFoundException::new);
+    Member writer = boardService.getMember(userId);
     if (boardName.equals("ntc") && !writer.getRole().equals(Role.ADMIN)) {
       return ResponseEntity.badRequest().body("403");
     }
@@ -166,11 +152,13 @@ public class BoardController {
     board.setBoardName(boardDTO.getBoardName());
     board.setShowStatus(ShowStatus.SHOW);
     board.setTitle(boardDTO.getTitle());
-    Board savedBoard = boardRepository.save(board);
+    Board savedBoard = boardService.saveBoard(board);
 
     String content = boardDTO.getContent();
     List<String> blobUrl = new ArrayList<>();
     List<String> realUrl = new ArrayList<>();
+
+
 
 
 
@@ -191,24 +179,29 @@ public class BoardController {
       }
     }
 
+      for (int i = 0; i < blobUrl.size(); i++) {
+        content = content.replace(blobUrl.get(i), realUrl.get(i));
+      }
+
+
     savedBoard.setContent(content);
-    boardRepository.save(savedBoard);
+    boardService.saveBoard(savedBoard);
 
     switch (boardDTO.getBoardName()) {
       case "main":
         BoardMain boardMain = new BoardMain();
         boardMain.setBoard(savedBoard);
-        boardMainRepository.save(boardMain);
+        boardService.saveBoardMain(boardMain);
         break;
       case "ntc":
         BoardNtc boardNtc = new BoardNtc();
         boardNtc.setBoard(savedBoard);
-        boardNtcRepository.save(boardNtc);
+        boardService.saveBoardNtc(boardNtc);
         break;
       case "voc":
         BoardVoc boardVoc = new BoardVoc();
         boardVoc.setBoard(savedBoard);
-        boardVocRepository.save(boardVoc);
+        boardService.saveBoardVoc(boardVoc);
         break;
     }
 
@@ -273,7 +266,7 @@ public class BoardController {
     }
     board.setContent(content);
 
-    boardRepository.save(board);
+    boardService.saveBoard(board);
 
     BoardResponseDTO<?> boardResponseDTO = BoardResponseDTO.builder()
         .msg("ok")
@@ -281,5 +274,130 @@ public class BoardController {
 
     return ResponseEntity.ok().body(boardResponseDTO);
   }
+
+
+  @GetMapping("/comments/{boardId}")
+  public ResponseEntity<?> getComments(@PathVariable("boardId") String boardId,
+                                       @AuthenticationPrincipal String userId
+                                       ) {
+
+    String role = "any";
+    String userProfileImgUrl = "";
+    String userNickName = "";
+    if (!userId.equals("anonymousUser")) {
+      role = boardService.getUserRole(userId);
+      userProfileImgUrl = boardService.getMemberProfileImgUrl(Long.parseLong(userId));
+      userNickName = boardService.getMember(userId).getNickName();
+    }
+
+    List<Comment> comments = boardService.getComments(boardId);
+    List<BoardCommentDTO> list = comments.stream().map(p->{
+      String writerNickName = boardService.getMember(p.getMember().getId()).getNickName();
+      String writerProfileImgUrl = boardService.getMemberProfileImgUrl(p.getMember().getId());
+      if (writerProfileImgUrl==null) {
+        writerProfileImgUrl = "";
+      }
+      BoardCommentDTO boardCommentDTO = BoardCommentDTO.builder()
+          .id(p.getId())
+          .upTime(p.getRegTime())
+          .writerNickName(writerNickName)
+          .writerProfileImgUrl(writerProfileImgUrl)
+          .build();
+      if (p.getContent()!=null) {
+        boardCommentDTO.setContent(p.getContent());
+      } else {
+        boardCommentDTO.setContent("");
+      }
+      if (p.getComment()!=null) {
+        boardCommentDTO.setPid(p.getComment().getId());
+      } else {
+        boardCommentDTO.setPid(0L);
+      }
+      return boardCommentDTO;
+    }).collect(Collectors.toList());
+
+    BoardResponseDTO<BoardCommentDTO> responseDTO = BoardResponseDTO.<BoardCommentDTO>builder()
+        .msg("good")
+        .list(list)
+        .userProfileImgUrl(userProfileImgUrl)
+        .userNickName(userNickName)
+        .viewerRole(role)
+        .build();
+
+    return ResponseEntity.ok().body(responseDTO);
+  }
+
+
+  @PostMapping("/comment/create/{boardId}")
+  public ResponseEntity<?> createComment(@PathVariable("boardId") String boardId,
+                                         @AuthenticationPrincipal String userId,
+                                         @RequestBody BoardCommentDTO boardCommentDTO1
+                                          ) {
+
+    String content = boardCommentDTO1.getContent();
+    Long pid = boardCommentDTO1.getPid();
+
+    Comment comment = Comment.builder()
+        .board(boardService.getBoard(boardId))
+        .member(boardService.getMember(userId))
+        .content(content)
+        .build();
+
+    log.info("------------------------------"+content+"----------------------------------- : " + pid);
+
+    if (pid!=null) {
+      comment.setComment(boardService.getComment(pid));
+    }
+
+    boardService.saveComment(comment);
+
+    String role = "any";
+    String userProfileImgUrl = "";
+    String userNickName = "";
+    if (!userId.equals("anonymousUser")) {
+      role = boardService.getUserRole(userId);
+      userProfileImgUrl = boardService.getMemberProfileImgUrl(Long.parseLong(userId));
+      userNickName = boardService.getMember(userId).getNickName();
+    }
+
+    List<Comment> comments = boardService.getComments(boardId);
+    List<BoardCommentDTO> list = comments.stream().map(p->{
+      String writerNickName = boardService.getMember(p.getMember().getId()).getNickName();
+      String writerProfileImgUrl = boardService.getMemberProfileImgUrl(p.getMember().getId());
+      if (writerProfileImgUrl==null) {
+        writerProfileImgUrl = "";
+      }
+      BoardCommentDTO boardCommentDTO = BoardCommentDTO.builder()
+          .id(p.getId())
+          .upTime(p.getRegTime())
+          .writerNickName(writerNickName)
+          .writerProfileImgUrl(writerProfileImgUrl)
+          .build();
+      if (p.getContent()!=null) {
+        boardCommentDTO.setContent(p.getContent());
+      } else {
+        boardCommentDTO.setContent("");
+      }
+      if (p.getComment()!=null) {
+        boardCommentDTO.setPid(p.getComment().getId());
+      } else {
+        boardCommentDTO.setPid(0L);
+      }
+      return boardCommentDTO;
+    }).collect(Collectors.toList());
+
+    BoardResponseDTO<BoardCommentDTO> responseDTO = BoardResponseDTO.<BoardCommentDTO>builder()
+        .msg("good")
+        .list(list)
+        .userProfileImgUrl(userProfileImgUrl)
+        .userNickName(userNickName)
+        .viewerRole(role)
+        .build();
+
+    return ResponseEntity.ok().body(responseDTO);
+  }
+
+
+
 
 }
