@@ -140,11 +140,11 @@ public class MyPageMemberService {
         Image savedImg = imageRepository.findByMemberId(userId);
 
         if (savedImg == null){
-            Image img = new Image();
+            savedImg = new Image();
 
-            img.setMember(member);
+            savedImg.setMember(member);
 
-            memberImgService.saveMemberImg(img, memberImg);
+            memberImgService.saveMemberImg(savedImg, memberImg);
         }else {
             memberImgService.deleteMemberImg(savedImg.getId(), savedImg.getImgName());
 
