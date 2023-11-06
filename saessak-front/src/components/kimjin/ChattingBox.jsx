@@ -38,13 +38,24 @@ const ChattingBox = () => {
   const goToPreviousPage = () => {
     const prevPage = Math.max(1, currentPage - 1);
     setCurrentPage(prevPage);
+
+    uploadProduct(`/chatBox/chatBox/${prevPage}`, "GET").then((response) => {
+      if (response && response !== null) {
+        setChat(response.content);
+      }
+    });
   };
 
   const goToNextPage = () => {
-    // Assuming totalPage is known and accessible
-    const totalPage = 10; // Replace with the actual total number of pages
+    const totalPage = 10;
     const nextPage = Math.min(totalPage, currentPage + 1);
     setCurrentPage(nextPage);
+
+    uploadProduct(`/chatBox/chatBox/${nextPage}`, "GET").then((response) => {
+      if (response && response !== null) {
+        setChat(response.content);
+      }
+    });
   };
 
   return (

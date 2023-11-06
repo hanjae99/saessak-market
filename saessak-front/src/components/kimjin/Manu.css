@@ -220,9 +220,13 @@
 }
 
 .manu-2-1-1 {
-  height: 50%;
+  height: 500px;
   flex: 1.5;
   width: 700px;
+  border-bottom: 2px solid #d3d3d3;
+  border-left: 2px solid #d3d3d3;
+  border-right: 2px solid #d3d3d3;
+  padding: 5px;
 }
 
 .manu-2-1-1 > div {

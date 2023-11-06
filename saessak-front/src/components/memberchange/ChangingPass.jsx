@@ -77,22 +77,12 @@ const ChangingPass = () => {
           <div className="changing1">
             <div className="mypage-2" style={{ display: "flex" }}>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <label>현재 비밀번호</label>
                 <label>새 비밀번호</label>
                 <label>새 비밀번호 확인</label>
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <input type="hidden" value={privacys.id ?? ""} />
-                <input
-                  type="password"
-                  value={now_pwd}
-                  onChange={onNow_PswChange}
-                  placeholder={"************"}
-                  style={{
-                    borderRadius: "4px",
-                    outlineColor: "rgba(109, 200, 42, 1)",
-                  }}
-                />
+
                 <input
                   type="password"
                   value={new_pwd}

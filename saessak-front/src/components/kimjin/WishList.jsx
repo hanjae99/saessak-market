@@ -191,18 +191,22 @@ const WishList = () => {
               ))}
           </div>
         </div>
-        <div className="pagination1">
-          <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
-            이전
-          </button>
-          {pageBtns}
-          <button
-            onClick={nextPageNumLength}
-            disabled={pageNumLength === Math.ceil(wish.length / 2) - 1}
-          >
-            다음
-          </button>
-        </div>
+        {wish && wish.length !== 0 ? (
+          <div className="pagination1">
+            <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
+              이전
+            </button>
+            {pageBtns}
+            <button
+              onClick={nextPageNumLength}
+              disabled={pageNumLength === Math.ceil(wish.length / 2) - 1}
+            >
+              다음
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

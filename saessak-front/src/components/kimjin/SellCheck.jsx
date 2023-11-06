@@ -194,22 +194,26 @@ const SellCheck = () => {
             </div>
           </div>
         </div>
-        <div className="pagination1">
-          <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
-            이전
-          </button>
-          {pageBtns}
-          <button
-            onClick={nextPageNumLength}
-            disabled={
-              pageNumLength >=
-                Math.ceil(sellProduct.length / itemsPerPage) - 1 ||
-              displayedProducts.length < itemsPerPage
-            }
-          >
-            다음
-          </button>
-        </div>
+        {sellProduct && sellProduct.length !== 0 ? (
+          <div className="pagination1">
+            <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
+              이전
+            </button>
+            {pageBtns}
+            <button
+              onClick={nextPageNumLength}
+              disabled={
+                pageNumLength >=
+                  Math.ceil(sellProduct.length / itemsPerPage) - 1 ||
+                displayedProducts.length < itemsPerPage
+              }
+            >
+              다음
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
