@@ -35,7 +35,7 @@ const Login = () => {
         } else {
           localStorage.setItem("ACCESS_TOKEN", response.token);
           localStorage.setItem("EXPIREDATE", response.expiration);
-          localStorage.setItem("USERID", response.userId);
+          localStorage.setItem("NICKNAME", response.nickName);
           console.log("response : ", response);
           if (response.role === "ADMIN") {
             return (window.location.href = "/admin");

@@ -37,36 +37,55 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: center;
     margin-bottom: 10px;
   }
-  .chat-productInfo {
+  .chat-product {
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 20% 50% 30%;
+
     // border: 1px solid rgb(255, 255, 255);
     background-color: white;
     border-radius: 10px;
 
-    > img {
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
-      justify-self: center;
-      align-self: center;
+    .chat-product-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > img {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+      }
     }
 
-    > div {
-      // justify-self: center;
+    .chat-productInfo {
+      justify-self: center;
       align-self: center;
 
       .chat-product-title {
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .chat-product-price {
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: blueviolet;
+        // color: blueviolet;
+      }
+    }
+
+    .chat-productBtn {
+      display: flex;
+      justify-content: end;
+      align-items: end;
+      padding-right: 10px;
+      padding-bottom: 10px;
+
+      > button {
+        background-color: rgba(199, 138, 67, 0.7);
       }
     }
   }

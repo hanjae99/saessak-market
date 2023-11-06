@@ -29,6 +29,8 @@ public class LoginDTO {
 
     private String name;
 
+    private String nickName;
+
     private Role role;
 
     private Date expiration;
