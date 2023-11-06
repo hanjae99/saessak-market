@@ -1,5 +1,6 @@
 package com.saessak.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class ChatBox extends BaseTimeEntity {
   private Member orderMember;
 
   private int chatCount;
+
 
 
 
