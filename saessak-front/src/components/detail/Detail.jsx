@@ -34,7 +34,7 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      // console.log(response);
+      console.log(response);
       if (response === 1) {
         navigate("/");
       }
@@ -156,15 +156,15 @@ const Detail = () => {
                 </p>
               </div>
               <div>
-                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
-                  ""
-                ) : (
+                {detaildatas.isWriter && detaildatas.isWriter === "false" ? (
                   <button
                     onClick={handleChat}
                     className="detail-productsitem-btn1"
                   >
                     채팅 하기
                   </button>
+                ) : (
+                  ""
                 )}
               </div>
               <div>

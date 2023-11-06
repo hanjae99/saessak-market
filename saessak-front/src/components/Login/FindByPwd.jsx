@@ -89,10 +89,11 @@ const FindByPwd = () => {
     if (findByIdDTO.password === pwdCheck) {
       call("/login/findByPwd", "PUT", findByIdDTO).then((response) => {
         setPwdPass(0);
-        return navigate("/login");
+        navigate("/login");
       });
+    } else {
+      setPwdPass(-1);
     }
-    setPwdPass(-1);
   };
 
   return (

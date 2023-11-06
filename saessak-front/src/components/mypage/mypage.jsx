@@ -34,56 +34,6 @@ const MyPage = () => {
     <div className="section">
       <div className="manu-2">
         <div className="manu-2-1">
-          <div className="manu-2-1-1">
-            <div className="manu-2-1-1-1">
-              <span className="section-title">회원정보</span>
-            </div>
-            <div className="mypage-1" style={{ display: "flex" }}>
-              <div
-                className="mypage-1-1"
-                style={{ display: "flex", flexDirection: "column" }}
-              >
-                <label>이름 </label>
-                <label>닉네임 </label>
-                <label>비밀번호 </label>
-                <label>이메일 </label>
-                <label>연락처 </label>
-                <label>주소 </label>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <input type="text" placeholder={privacys.name} readOnly></input>
-                <input
-                  type="text"
-                  placeholder={privacys.nickName}
-                  readOnly
-                ></input>
-                <input
-                  type="password"
-                  placeholder={"***********"}
-                  readOnly
-                ></input>
-                <input
-                  type="email"
-                  placeholder={privacys.email}
-                  readOnly
-                ></input>
-                <input type="tel" placeholder={privacys.phone} readOnly></input>
-                <input
-                  type="text"
-                  placeholder={privacys.address}
-                  readOnly
-                ></input>
-              </div>
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <button
-                onClick={() => movePage("/user/changing")}
-                className="mypage-button"
-              >
-                회원정보수정
-              </button>
-            </div>
-          </div>
           <div className="manu-3">
             <div
               style={{
@@ -100,7 +50,58 @@ const MyPage = () => {
             >
               <ImgUpdate privacys={privacys}></ImgUpdate>
             </div>
-            <textarea placeholder="자기 소개" className="textarea1"></textarea>
+            <div className="manu-2-1-1">
+              <div className="manu-2-1-1-1">
+                <span className="section-title">회원정보</span>
+              </div>
+              <div className="mypage-1" style={{ display: "flex" }}>
+                <div
+                  className="mypage-1-1"
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  <label>이름 </label>
+                  <label>닉네임 </label>
+                  <label>이메일 </label>
+                  <label>연락처 </label>
+                  <label>주소 </label>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <input
+                    type="text"
+                    placeholder={privacys.name}
+                    readOnly
+                  ></input>
+                  <input
+                    type="text"
+                    placeholder={privacys.nickName}
+                    readOnly
+                  ></input>
+                  <input
+                    type="email"
+                    placeholder={privacys.email}
+                    readOnly
+                  ></input>
+                  <input
+                    type="tel"
+                    placeholder={privacys.phone}
+                    readOnly
+                  ></input>
+                  <input
+                    type="text"
+                    placeholder={privacys.address}
+                    readOnly
+                  ></input>
+                </div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <button
+                  onClick={() => movePage("/user/changing")}
+                  className="mypage-button"
+                >
+                  회원정보수정
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
