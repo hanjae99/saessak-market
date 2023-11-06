@@ -29,8 +29,8 @@ const AdminPage = () => {
     <div className='adminPage'>
       <AdminNav page={page} setModalData={setModalData} />
       {/* <AdminCategory page={page} setSelectedCg={setSelectedCg} /> */}
-      <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
-      {/* <AdminContentBox2 page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} /> */}
+      {/* <AdminContentBox page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} /> */}
+      <AdminContentBox2 page={page} selectedCg={selectedCg} setModalData={setModalData} rsl={rsl} setRsl={setRsl} />
 
 
 

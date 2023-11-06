@@ -5,7 +5,7 @@ import AdminImage from './AdminImage'
 
 const AdminContentBox2 = React.memo(({ selectedCg, setModalData, page, rsl, setRsl }) => {
   return (
-    <div className='admincontentBox'>
+    <div className='admincontentBox2'>
       {(() => {
         if (page === 'image' || page === '') {
           return (
