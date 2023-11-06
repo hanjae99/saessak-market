@@ -94,7 +94,6 @@ const ChattingBox = () => {
                         height: "100%",
                         borderRadius: "20px",
                       }}
-                      onClick={() => movePages("/detail/" + chat[i].productId)}
                     />
                   </div>
                   <div
@@ -174,7 +173,7 @@ const ChattingBox = () => {
               </div>
               <div
                 style={{
-                  height: "15px",
+                  height: "10px",
                   backgroundColor: "rgb(240, 240, 240)",
                   borderRadius: "10px",
                 }}
