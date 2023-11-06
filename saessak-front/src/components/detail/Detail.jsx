@@ -34,7 +34,7 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response === 1) {
         navigate("/");
       }
@@ -111,13 +111,12 @@ const Detail = () => {
       writer: detaildatas.memberDTO.memberId,
     };
 
-    // 채팅 박스 만든 후
-    // 해당 박스 아이디로 이동
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
-      // console.log(response);
+      console.log(response);
       if (response) {
-        // navigate("/chat/" + response);
-        window.open(`/chat/${response}`, "새싹 채팅", "width=600,height=800");
+        navigate("/chat/" + response);
+      } else {
+        navigate("/login");
       }
     });
   };
