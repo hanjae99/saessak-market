@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./SignUp.css";
 import Header from "../main/Header";
@@ -10,6 +10,8 @@ const SignUp = () => {
   //const user = useSelector((state) => state.user);
   const [signFailed, setSignFailed] = useState(false);
   const [idCheck, setIdCheck] = useState(0);
+  const [pwdPass, setPwdPass] = useState("");
+  const [pwdCheck, setPwdCheck] = useState(0);
   const [nicknameCheck, setNicknameCheck] = useState(0);
   const [emailCheck, setEmailCheck] = useState(0);
   const [emailCheckData, setEmailCheckData] = useState("");
@@ -47,6 +49,7 @@ const SignUp = () => {
       !newUser.nickName ||
       !newUser.password ||
       idCheck !== -1 ||
+      pwdCheck !== -1 ||
       nicknameCheck !== -1 ||
       emailPassCheck !== -1 ||
       !newUser.name ||
@@ -89,14 +92,20 @@ const SignUp = () => {
   };
 
   const onPwdCheck = (e) => {
-    const { value } = e.target;
-    if (newUser.password === value) {
-      setNewUser((prevUser) => ({
-        ...prevUser,
-        password: e.target.value,
-      }));
-    }
+    const value = e.target.value;
+    setPwdPass(value);
   };
+
+  useEffect(() => {
+    if (newUser.password && pwdPass && newUser.password === pwdPass) {
+      setPwdCheck(-1);
+    } else if (newUser.password || pwdPass) {
+      setPwdCheck(1);
+    } else {
+      setPwdCheck(0);
+    }
+  }, [newUser.password, pwdPass]);
+
   const onName = (e) => {
     setNewUser((prevUser) => ({
       ...prevUser,
@@ -365,6 +374,20 @@ const SignUp = () => {
                 onChange={onPwdCheck}
               />
             </div>
+            {pwdCheck === 1 ? (
+              <p className="signup-duplicated-msg">
+                비밀번호를 다시확인해주세요
+              </p>
+            ) : (
+              ""
+            )}
+            {pwdCheck === -1 ? (
+              <p className="signup-duplicated1-msg">
+                비밀번호를 사용할수있습니다
+              </p>
+            ) : (
+              ""
+            )}
             <div className="signup-input-container">
               <label className="signup-text-id">이름 *</label>
               <input

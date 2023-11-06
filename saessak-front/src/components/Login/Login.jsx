@@ -32,6 +32,8 @@ const Login = () => {
         console.log("response : ", response);
         if (!response) {
           return setLoginFailed(true);
+        } else if (response.role === "DELETED") {
+          return setLoginFailed(true);
         } else {
           localStorage.setItem("ACCESS_TOKEN", response.token);
           localStorage.setItem("EXPIREDATE", response.expiration);
