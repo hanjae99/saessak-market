@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
 import Footer from "../main/Footer";
+import { API_BASE_URL } from "../../ApiConfig";
+import priceComma from "./../../pricecomma";
 
 const GameResult = () => {
   const { finalresult } = useParams();
@@ -52,12 +54,19 @@ const GameResult = () => {
                         navigate("/detail/" + p.productId);
                       }}
                     >
-                      <img className="gr-img1" src={p.imgUrl} alt="이미지1" />
+                      <img
+                        className="gr-img1"
+                        src={API_BASE_URL + p.imgUrl}
+                        alt="이미지1"
+                      />
                       <div className="gr-text1">
                         <div className="gr-textTitle">
                           <span>{p.title}</span>
                         </div>
-                        <p>{p.price}</p>
+                        <p>
+                          {priceComma(p.price)}
+                          <span>원</span>
+                        </p>
                       </div>
                     </div>
                   </div>

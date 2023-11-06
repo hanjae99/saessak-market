@@ -7,6 +7,7 @@ import Header from "../main/Header";
 import Footer from "../main/Footer";
 import { call } from "../../ApiService";
 import { setGameData } from "../../gameSlice";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const Game = () => {
   const dispatch = useDispatch();
@@ -109,7 +110,7 @@ const Game = () => {
             <div className="game-contentsBox2">
               <div className="game-products1">
                 <img
-                  src={game[index] && game[index].imgUrl}
+                  src={game[index] && API_BASE_URL + game[index].imgUrl}
                   alt="이미지"
                   className="game-imgBox"
                 />

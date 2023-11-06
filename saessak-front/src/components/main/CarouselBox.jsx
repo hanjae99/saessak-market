@@ -7,6 +7,8 @@ import { call } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
 import { MdVisibility } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+import priceComma from "../../pricecomma";
+import { changeDateFormat } from "../../dateFormat";
 
 const CarouselBox = () => {
   // const state = useSelector((state) => state.product);
@@ -54,47 +56,12 @@ const CarouselBox = () => {
         <div className="slide-title">
           <p className="slide-text">{dto.title}</p>
         </div>
-        <p className="slide-text">{dto.price}원</p>
+        <p className="slide-text">{priceComma(dto.price)}원</p>
         <div
           className="slide-text"
           // style={{ display: "flex", justifyContent: "space-between" }}
         >
-          {Math.floor(
-            (new Date().getTime() - Date.parse(dto.updateTime)) / 1000 / 60
-          ) < 60 ? (
-            <div>
-              {Math.floor(
-                (new Date().getTime() - Date.parse(dto.updateTime)) / 1000 / 60
-              )}
-              분전
-            </div>
-          ) : Math.floor(
-              (new Date().getTime() - Date.parse(dto.updateTime)) /
-                1000 /
-                60 /
-                60
-            ) < 24 ? (
-            <div>
-              {Math.floor(
-                (new Date().getTime() - Date.parse(dto.updateTime)) /
-                  1000 /
-                  60 /
-                  60
-              )}
-              시간전
-            </div>
-          ) : (
-            <div>
-              {Math.floor(
-                (new Date().getTime() - Date.parse(dto.updateTime)) /
-                  1000 /
-                  60 /
-                  60 /
-                  24
-              )}
-              일전
-            </div>
-          )}
+          <div>{changeDateFormat(dto.updateTime)}전</div>
         </div>
         <p className="slide-text">
           <MdVisibility style={{ fontSize: "14px" }} /> {dto.clickedCount}{" "}

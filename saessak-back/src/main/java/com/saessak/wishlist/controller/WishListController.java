@@ -53,6 +53,12 @@ public class WishListController {
 
         List<WishListDTO> readWish = wishListService.buyread(Long.parseLong(userId));
 
+        if (readWish.isEmpty()){
+            ResponseDTO<String> response = ResponseDTO.<String>builder()
+                    .error("null")
+                    .build();
+            return ResponseEntity.ok().body(response);
+        }
         ResponseDTO<WishListDTO> response = ResponseDTO.<WishListDTO>builder()
                 .data(readWish)
                 .build();

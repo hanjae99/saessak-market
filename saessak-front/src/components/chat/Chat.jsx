@@ -1,36 +1,72 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import "./Chat.scss";
 import * as StompJs from "@stomp/stompjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { chatCall } from "../../ChatService";
 import { API_BASE_URL } from "../../ApiConfig";
+import { Button } from "@mui/material";
+import priceComma from "../../pricecomma";
+import { loginCheck } from "../../loginCheck";
 
 const Chat = () => {
   const { chatBoxId } = useParams();
   const [chatInput, setChatInput] = useState("");
   const [chatContent, setChatContent] = useState([]);
-  // const [stompClient, setStompClient] = useState(null);
   const stompClient = useRef(null);
   const [me, setMe] = useState(""); // 현재 채팅방에 접속한 사람이 누구인지
-  const [memberNickname, setMemberNickname] = useState("");
+  const [productId, setProductId] = useState(0);
   const [productTitle, setProductTitle] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productImg, setProductImg] = useState("");
+  const [isSeller, setIsSeller] = useState(false); // 현재 채팅방에 접속한 사람이 판매자인지
+  const [sellStatus, setSellStatus] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 이전 채팅 데이터 불러오기
-    const request = {
-      id: chatBoxId,
-    };
-    chatCall("/chatBox/getList", "POST", request).then((response) => {
-      if (response && response.chatList) {
-        setChatContent(response.chatList);
-        setMe(response.writer);
-        setProductTitle(response.productTitle);
-        setProductPrice(response.productPrice);
-        setProductImg(response.imgUrl);
-      }
-    });
+    const result = loginCheck();
+    if (result === "not login") {
+      alert("로그인 후 이용해주세요!");
+      navigate("/login");
+      return;
+    } else if (result === "token expired") {
+      alert("로그인 시간이 만료되었습니다, 다시 로그인해주세요!");
+      navigate("/login");
+      return;
+    } else if (result === "login ok") {
+      chatCall("/chatBox/validateUser", "POST", { id: chatBoxId }).then(
+        (response) => {
+          if (response && response.message) {
+            if (response.message === "no chatBox") {
+              alert("유효하지 않은 주소입니다.");
+              navigate("/");
+              return;
+            } else if (response.message === "user not ok") {
+              alert("등록된 유저가 아닙니다.");
+              navigate("/");
+              return;
+            } else if (response.message === "user ok") {
+              // 이전 채팅 데이터 불러오기
+              const request = {
+                id: chatBoxId,
+              };
+              chatCall("/chatBox/getList", "POST", request).then((response) => {
+                console.log(response);
+                if (response) {
+                  setChatContent(response.chatList);
+                  setMe(response.writer);
+                  setProductId(response.productId);
+                  setProductTitle(response.productTitle);
+                  setProductPrice(response.productPrice);
+                  setProductImg(response.imgUrl);
+                  setIsSeller(response.seller);
+                  setSellStatus(response.sellStatus);
+                }
+              });
+            }
+          }
+        }
+      );
+    }
   }, [chatBoxId]);
 
   useEffect(() => {
@@ -121,8 +157,7 @@ const Chat = () => {
       const data = {
         chatBoxId,
         memberId: me,
-        memberNickname: chatContent.find((item) => item.memberId === me)
-          .memberNickname,
+        memberNickname: localStorage.getItem("NICKNAME"),
         content: chatInput,
         regTime: new Date(),
       };
@@ -140,22 +175,35 @@ const Chat = () => {
     }
   };
 
-  const msgBox = chatContent.map((item, idx) => (
-    <div key={idx} className={item.memberId === me ? "me" : "other"}>
-      <span>
-        <b>{item.memberNickname}</b>
-      </span>{" "}
-      [ {new Date(item.regTime).toLocaleString()} ]<br />
-      <span>{item.content}</span>
-    </div>
-  ));
+  const handleSell = (e) => {
+    e.preventDefault();
+
+    chatCall("/chatBox/sell", "POST", { id: chatBoxId }).then((response) => {
+      console.log(response);
+      if (response && response.message === "success") {
+        setSellStatus("SOLD_OUT");
+      }
+    });
+  };
+
+  const msgBox =
+    chatContent &&
+    chatContent.length !== 0 &&
+    chatContent.map((item, idx) => (
+      <div key={idx} className={item.memberId === me ? "me" : "other"}>
+        <span>
+          <b>{item.memberNickname}</b>
+        </span>{" "}
+        [ {new Date(item.regTime).toLocaleString()} ]<br />
+        <span>{item.content}</span>
+      </div>
+    ));
 
   return (
     <>
       <div className="chatContainer">
         <div id="chat-wrap">
           <div id="chatt">
-            {/* <h1 id="title">{chatContent.find(item => item.memberId !== me).memberNick} 채팅방</h1> */}
             <div id="title">
               <img
                 src="/img/leaf1.png"
@@ -164,16 +212,35 @@ const Chat = () => {
               />{" "}
               새싹 채팅방
             </div>
-            <div className="chat-productInfo">
-              {productImg !== "" ? (
-                <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+            <div className="chat-product">
+              {productImg && (
+                <div className="chat-product-img">
+                  <img src={API_BASE_URL + productImg} alt="판매상품이미지" />
+                </div>
+              )}
+              <div className="chat-productInfo">
+                {sellStatus === "SELL" ? (
+                  <h3 style={{ color: "#4F9051" }}>판매중</h3>
+                ) : sellStatus === "SOLD_OUT" ? (
+                  <h3 style={{ color: "#AC2F00" }}>판매완료</h3>
+                ) : (
+                  <h3 style={{ color: "#c8c8c8" }}>상품없음</h3>
+                )}
+
+                <p className="chat-product-title">상품명: {productTitle}</p>
+                <p className="chat-product-price">
+                  가격: {priceComma(productPrice)}원
+                </p>
+              </div>
+              {isSeller && sellStatus === "SELL" ? (
+                <div className="chat-productBtn">
+                  <Button variant="contained" onClick={handleSell}>
+                    판매완료
+                  </Button>
+                </div>
               ) : (
                 ""
               )}
-              <div>
-                <p className="chat-product-title">상품명: {productTitle}</p>
-                <p className="chat-product-price">가격: {productPrice}원</p>
-              </div>
             </div>
             <br />
             <div id="talk">

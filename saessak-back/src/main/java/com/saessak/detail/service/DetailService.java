@@ -146,7 +146,7 @@ public class DetailService {
 
     public Long createChatBox(Long productId, Long sellMemberId , Long sendMemberId){
 
-        ChatBox chatBox=chatBoxRepository.findBySellMemberIdAndOrderMemberId(sellMemberId,sendMemberId);
+        ChatBox chatBox =chatBoxRepository.findByProductIdAndOrderMemberId(productId,sendMemberId);
 
         if(chatBox == null){
 
