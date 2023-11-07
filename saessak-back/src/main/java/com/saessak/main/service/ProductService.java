@@ -151,8 +151,6 @@ public class ProductService {
 
     // 상품 + 이미지 업데이트
     public Long updateProduct(ProductFormDTO productFormDTO) throws Exception {
-//        Member member = memberRepository.findById(Long.parseLong(memberId))
-//                .orElseThrow(EntityNotFoundException::new);
         // 상품 정보만 업데이트
         Long productId = updateProductOnly(productFormDTO);
 
@@ -166,8 +164,6 @@ public class ProductService {
         // 기존 상품 등록정보가 있을 경우 (변경점 찾아서 업데이트)
         if (!imgDTOList.isEmpty()) {
             for (ProductImageDTO imgDTO : imgDTOList) {
-                System.out.println("images/product 로 시작함!");
-
                 // 원활한 비교를 위해 mulfipart 타입으로 변경
                 MultipartFile imgMultiFile = fileService.fileToMultipart(
                         "/Users/hanjae/saessak-image/images/product/" + imgDTO.getImgName());

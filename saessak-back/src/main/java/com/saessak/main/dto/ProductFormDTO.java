@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
-import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +38,6 @@ public class ProductFormDTO {
     private Long categoryId;
 
     private String categoryName;
-
-//    private List<Long> productImgIds = new ArrayList<>();
 
     private static ModelMapper modelMapper = new ModelMapper();
 

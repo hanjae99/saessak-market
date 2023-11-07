@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { MdFavoriteBorder, MdVisibility } from "react-icons/md";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
-import { call } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
-import { MdVisibility } from "react-icons/md";
-import { MdFavoriteBorder } from "react-icons/md";
-import priceComma from "../../pricecomma";
+import { call } from "../../ApiService";
 import { changeDateFormat } from "../../dateFormat";
+import priceComma from "../../pricecomma";
 
 const CarouselBox = () => {
-  // const state = useSelector((state) => state.product);
   const [currentIndex, setCurrentIndex] = useState();
   const navigate = useNavigate();
   const [randomDTO, setRandomDTO] = useState([]);
@@ -27,26 +24,6 @@ const CarouselBox = () => {
     });
   }, []);
 
-  // const sliceState = state.slice(10, 20);
-  // const imageBox = sliceState.map((s) => (
-  // <div key={s.id} className="slide-item">
-  //   <div>
-  //     <img src={s.imgsrc1} alt={s.name} />
-  //   </div>
-  //   <div className="slide-textBox">
-  //     <div className="slide-title">
-  //       <p className="slide-text">{s.name}</p>
-  //     </div>
-  //     <p className="slide-text">{s.price}</p>
-  //     <p className="slide-text">
-  //       {Math.floor(
-  //         (new Date().getTime() - Date.parse(s.uptime)) / 1000 / 60
-  //       )}
-  //       분전
-  //     </p>
-  //   </div>
-  // </div>
-  // ));
   const imageBox = randomDTO.map((dto) => (
     <div key={dto.id} className="slide-item">
       <div>

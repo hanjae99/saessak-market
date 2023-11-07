@@ -1,13 +1,9 @@
 package com.saessak.repository;
 
-import com.querydsl.core.types.ConstantImpl;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.querydsl.sql.SQLExpressions;
 import com.saessak.constant.SellStatus;
 import com.saessak.detail.dto.DetailDTO;
 import com.saessak.entity.*;
@@ -69,31 +65,6 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
             orderSpecifier = product.updateTime.desc();
         }
 
-//        List<ProductDTO> content = queryFactory
-//                .select(new QProductDTO(
-//                        product.id,
-//                        product.title,
-//                        product.price,
-//                        product.sellStatus,
-//                        image.imgUrl,
-//                        product.clickCount,
-//                        Expressions.asNumber(0),
-//                        product.regTime,
-//                        product.updateTime,
-//                        Expressions.asString(productDTO.getSearchBy()),
-//                        Expressions.asString(productDTO.getSearchQuery()),
-//                        Expressions.asString(productDTO.getSortBy())
-//                ))
-//                .from(product, image, productCategory)
-//                .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
-//                .where(searchSellStatusEq(productDTO.getSellStatus()),
-//                        productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
-//                .groupBy(product.id)
-//                .orderBy(product.updateTime.desc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
-
         List<ProductDTO> content = queryFactory
                 .select(new QProductDTO(
                         product.id,
@@ -119,29 +90,16 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
                         productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .groupBy(product.id)
-//                .orderBy(product.updateTime.desc())
                 .orderBy(orderSpecifier)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
-//        // 찜 수 조회
-//        for (ProductDTO dto : content){
-//            Long wishedCount = queryFactory
-//                    .select(wishList.id.count())
-//                    .from(wishList)
-//                    .where(wishList.product.id.eq(dto.getId()))
-//                    .fetchOne();
-//            dto.setWishedCount(wishedCount.intValue());
-//        }
 
         long total = queryFactory.select(product.id.countDistinct()).from(product, image, productCategory)
                 .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
                         productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .fetchOne();
-
-//        System.out.println("============" + total);
 
         return new PageImpl<>(content, pageable, total);
 

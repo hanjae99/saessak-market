@@ -1,15 +1,13 @@
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Button } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
-import "./Header.scss";
-import { Button } from "@mui/material";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import PersonIcon from "@mui/icons-material/Person";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { loginCheck } from "../../loginCheck";
+import "./Header.scss";
 
 const Header = () => {
   const [value, setValue] = useState("");
@@ -49,7 +47,6 @@ const Header = () => {
 
     // 카테고리 정보 가져오기
     call("/product/searchcate", "GET").then((response) => {
-      // console.log(response.data);
       if (response && response.data && response.data != null) {
         setCategoryDTO(response.data);
       }
@@ -70,9 +67,6 @@ const Header = () => {
   if (loginMinute === "0" && loginSecond === "0") {
     clearInterval(intervalId.current);
   }
-
-  // const login = useSelector((state) => state.login);
-  // const dispatch = useDispatch();
 
   const handleLogInAndOut = (e) => {
     if (isLogin) {
@@ -146,26 +140,12 @@ const Header = () => {
             >
               마이페이지
             </Button>
-            {/* <button onClick={handleLogInAndOut}>
-              {isLogin ? "로그아웃" : "로그인"}
-            </button>
-            <button
-              onClick={() => {
-                navigate("/user/mypage");
-              }}
-            >
-              마이페이지
-            </button> */}
           </div>
         </div>
       </div>
       <div id="navContainer">
         <div className="navContent">
           <div className="category">
-            {/* <span>
-              <MdReorder />
-            </span>
-            <span>카테고리</span> */}
             <div className="category_selectBtn">
               <MdReorder />
               <span>카테고리</span>
@@ -175,26 +155,6 @@ const Header = () => {
                 style={{ width: "80%", height: "20px", zIndex: "-999" }}
               ></div>
               <ul>
-                {/* {category
-                  .filter((c) => c.categoryno <= 20)
-                  .sort((a, b) =>
-                    a.categoryno.length === b.categoryno.length
-                      ? a.categoryno > b.categoryno
-                        ? 1
-                        : -1
-                      : a.categoryno.length > b.categoryno.length
-                      ? 1
-                      : -1
-                  )
-                  .map((c) => {
-                    return (
-                      <li className="categoryItem" key={c.categoryno}>
-                        <Link to={"/search?category=" + c.categoryno}>
-                          {c.categoryname}
-                        </Link>
-                      </li>
-                    );
-                  })} */}
                 {categoryDTO.map((c) => (
                   <li className="categoryItem" key={c.id}>
                     <Link to={"/search?category=" + c.id}>{c.name}</Link>
