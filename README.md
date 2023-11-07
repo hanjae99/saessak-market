@@ -1,3 +1,4 @@
+<div align=center>
 
 # 1. SEASSAK-MARKET 팀 소개:raised_hands:     
 
@@ -57,3 +58,5 @@ wbs 이미지
 ## 4.2 ER다이어그램
 
 erd 이미지
+
+</div>
