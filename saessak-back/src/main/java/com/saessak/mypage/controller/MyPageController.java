@@ -77,6 +77,17 @@ public class MyPageController {
 
     }
 
+    @PutMapping("/delete")
+    public ResponseEntity<?> deleteMember(@AuthenticationPrincipal String memberId){
+        memberService.deleteUpdateMember(Long.parseLong(memberId));
+
+        ResponseDTO<String> response = ResponseDTO.<String>builder()
+                .error("삭제완료")
+                .build();
+
+        return ResponseEntity.ok().body(response);
+    }
+
     // 기존 Todo를 업데이트하는 API 엔드포인트
     @PutMapping("/changing")
     public ResponseEntity<?> updateMember(@RequestBody MyPageMemberDTO dto, @AuthenticationPrincipal String userId) {
