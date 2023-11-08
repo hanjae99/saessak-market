@@ -15,13 +15,9 @@ const ChangingPass = () => {
   }, []);
 
   const movePage = useNavigate();
-  const [now_pwd, setNow_pwd] = useState("");
   const [new_pwd, setNew_pwd] = useState("");
   const [new_pwd_check, setNew_pwd_check] = useState("");
 
-  const onNow_PswChange = (e) => {
-    setNow_pwd(e.target.value);
-  };
   const onPassWordChange = (e) => {
     setNew_pwd(e.target.value);
   };
@@ -34,7 +30,6 @@ const ChangingPass = () => {
 
     console.log("new_pwd ====> ", new_pwd);
     console.log("new_pwd_check ====> ", new_pwd_check);
-    console.log("now_pwd ====> ", now_pwd);
     console.log("privecy ====> ", privacys.password);
 
     //비밀번호가 틀렸을 때

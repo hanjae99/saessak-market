@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Manu.css";
 import { Button } from "react-bootstrap";
 import { call } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
-import { Start } from "@mui/icons-material";
 import priceComma from "../../pricecomma";
 
 const WishList = () => {
@@ -18,12 +16,6 @@ const WishList = () => {
       console.log(response);
     });
   }, []);
-
-  // const onProductDelete = (e) => {
-  //   // const item = {wishListId == wish.wishListId}
-  //   console.log(wish);
-  //   call(`/user/wishlist/${wish.}`, "DELETE").then((response) => {});
-  // };
 
   console.log(wish);
 

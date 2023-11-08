@@ -1,6 +1,5 @@
 package com.saessak.wishlist.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.saessak.constant.SellStatus;
 
 import java.time.LocalDateTime;
