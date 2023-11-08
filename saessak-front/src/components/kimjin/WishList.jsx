@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { call } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
 import { Start } from "@mui/icons-material";
+import priceComma from "../../pricecomma";
 
 const WishList = () => {
   const movePages = useNavigate();
@@ -152,7 +153,8 @@ const WishList = () => {
                                         {displayedProducts[i].title}
                                       </div>
                                       <div className="text-2-name-1-2">
-                                        {displayedProducts[i].price} 원
+                                        {priceComma(displayedProducts[i].price)}{" "}
+                                        원
                                       </div>
                                     </div>
                                   </div>

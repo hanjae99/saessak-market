@@ -8,6 +8,7 @@ import { call } from "../../ApiService";
 import { useState } from "react";
 import { API_BASE_URL } from "../../ApiConfig";
 import { useCallback } from "react";
+import priceComma from "../../pricecomma";
 
 const Check = () => {
   const movePages = useNavigate();
@@ -150,7 +151,10 @@ const Check = () => {
                                           {displayedProducts[i].title}
                                         </div>
                                         <div className="text-2-name-1-2">
-                                          {displayedProducts[i].price} 원
+                                          {priceComma(
+                                            displayedProducts[i].price
+                                          )}{" "}
+                                          원
                                         </div>
                                       </div>
                                     </div>
