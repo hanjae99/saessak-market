@@ -3,20 +3,18 @@ import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../ApiConfig";
 import { call, uploadProduct } from "../../ApiService";
+import { loginCheck } from "../../loginCheck";
 import "../addProduct/AddProduct.scss";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
-import { API_BASE_URL } from "../../ApiConfig";
-import { loginCheck } from "../../loginCheck";
 
 const UpdateProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);
   const [imgCount, setImgCount] = useState(0);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const [productTitle, setProductTitle] = useState("");
@@ -31,7 +29,6 @@ const UpdateProduct2 = () => {
   const { kakao, daum } = window;
   const [map, setMap] = useState();
   const [marker, setMarker] = useState();
-  const placeTag = useRef();
 
   useEffect(() => {
     const result = loginCheck();
@@ -44,7 +41,6 @@ const UpdateProduct2 = () => {
 
       // 카테고리 정보 가져오기
       call("/product/searchcate", "GET").then((response) => {
-        // console.log(response.data);
         if (response.data && response.data != null) {
           setCategoryDTO(response.data);
         }
@@ -94,7 +90,6 @@ const UpdateProduct2 = () => {
 
   const getImgSrc = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     const newImgFile = [...imgFile, file];
     const newImgDTO = [
       ...imageDTOList,
@@ -153,9 +148,6 @@ const UpdateProduct2 = () => {
       categoryId: selectedCate,
     };
 
-    // dispatch({ type: "product/add", payload: newProduct });
-    // navigate("/search");
-
     // 상품 및 기존 이미지 정보만 먼저 업데이트
     call("/product/update", "POST", request).then((response) => {
       const result = response.data[0];
@@ -205,7 +197,6 @@ const UpdateProduct2 = () => {
 
   const handleSelect = (e) => {
     setSelectedCate(e.target.value);
-    console.log(e.target.value);
   };
 
   const onClickAddr = () => {

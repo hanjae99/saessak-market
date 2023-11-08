@@ -16,9 +16,9 @@ const Changing = () => {
   const onPassWordChange = (e) => {
     setNew_pwd(e.target.value);
   };
-  const onAddressChange = (e) => {
-    setNewAddress(e.target.value);
-  };
+  // const onAddressChange = (e) => {
+  //   setNewAddress(e.target.value);
+  // };
   const onNow_PswChange = (e) => {
     setNow_pwd(e.target.value);
   };
@@ -57,6 +57,8 @@ const Changing = () => {
   const [newPhone, setNewPhone] = useState("");
   const [newAddress, setNewAddress] = useState("");
   const [nicknameCheck, setNicknameCheck] = useState(0);
+
+  const { daum } = window;
 
   console.log(
     "value값",
@@ -122,6 +124,20 @@ const Changing = () => {
       setNicknameCheck(2);
       return;
     }
+  };
+
+  const handleAddr = () => {
+    // 주소 검색
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 검색한 주소명
+        const addr = data.address;
+
+        // 주소 정보를 해당 input 태그에 입력
+        // document.getElementById("memAddr").value = addr;
+        setNewAddress(addr);
+      },
+    }).open();
   };
 
   return (
@@ -216,7 +232,9 @@ const Changing = () => {
                   type="address"
                   value={newAddress}
                   placeholder={privacys.address}
-                  onChange={onAddressChange}
+                  // onChange={onAddressChange}
+                  onClick={handleAddr}
+                  readOnly
                   style={{
                     borderRadius: "4px",
                     outlineColor: "rgba(109, 200, 42, 1)",

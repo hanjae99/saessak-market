@@ -1,12 +1,12 @@
-import React, { useCallback, useRef, useState, useEffect } from "react";
-import "./Chat.scss";
-import * as StompJs from "@stomp/stompjs";
-import { useNavigate, useParams } from "react-router-dom";
-import { chatCall } from "../../ChatService";
-import { API_BASE_URL } from "../../ApiConfig";
 import { Button } from "@mui/material";
-import priceComma from "../../pricecomma";
+import * as StompJs from "@stomp/stompjs";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../ApiConfig";
+import { chatCall } from "../../ChatService";
 import { loginCheck } from "../../loginCheck";
+import priceComma from "../../pricecomma";
+import "./Chat.scss";
 
 const Chat = () => {
   const { chatBoxId } = useParams();
@@ -50,7 +50,6 @@ const Chat = () => {
                 id: chatBoxId,
               };
               chatCall("/chatBox/getList", "POST", request).then((response) => {
-                console.log(response);
                 if (response) {
                   setChatContent(response.chatList);
                   setMe(response.writer);
@@ -70,40 +69,6 @@ const Chat = () => {
   }, [chatBoxId]);
 
   useEffect(() => {
-    // const connectWebSocket = () => {
-    //   const client = new StompJs.Client({
-    //     brokerURL: "ws://localhost:8888/chatting",
-    //     reconnectDelay: 5000,
-    //   });
-
-    //   client.onConnect = () => {
-    //     setStompClient(client);
-    //     console.log("WebSocket 연결 성공");
-
-    //     client.subscribe(`/topic/chatMessages/${chatBoxId}`, (message) => {
-    //       console.log(message);
-    //       const msgData = JSON.parse(message.body);
-    //       console.log(msgData);
-    //       setChatContent([...chatContent, msgData]);
-    //     });
-
-    //     scrollToBottom();
-    //   };
-
-    //   client.onStompError = (frame) => {
-    //     console.error("WebSocket 오류: " + frame);
-    //   };
-
-    //   client.activate();
-    // };
-
-    // connectWebSocket();
-
-    // return () => {
-    //   if (stompClient && stompClient.connected) {
-    //     stompClient.deactivate();
-    //   }
-    // };
     const connectWebSocket = () => {
       stompClient.current = new StompJs.Client({
         brokerURL: "ws://localhost:8888/chatting",
@@ -111,14 +76,10 @@ const Chat = () => {
       });
 
       stompClient.current.onConnect = () => {
-        console.log("WebSocket 연결 성공");
-
         stompClient.current.subscribe(
           `/topic/chatMessages/${chatBoxId}`,
           (message) => {
-            console.log(message);
             const msgData = JSON.parse(message.body);
-            console.log(msgData);
             setChatContent([...chatContent, msgData]);
           }
         );
@@ -148,7 +109,6 @@ const Chat = () => {
 
   function scrollToBottom() {
     const chatForm = document.getElementById("talk");
-    console.log(chatForm);
     chatForm.scrollTop = chatForm.scrollHeight;
   }
 
@@ -179,7 +139,6 @@ const Chat = () => {
     e.preventDefault();
 
     chatCall("/chatBox/sell", "POST", { id: chatBoxId }).then((response) => {
-      console.log(response);
       if (response && response.message === "success") {
         setSellStatus("SOLD_OUT");
       }
@@ -246,14 +205,6 @@ const Chat = () => {
             <div id="talk">
               <div className="talk-shadow">{msgBox}</div>
             </div>
-            {/* <input
-              disabled={chkLog}
-              placeholder="이름을 입력하세요."
-              type="text"
-              id="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            /> */}
             <div id="sendZone">
               <textarea
                 id="msg"

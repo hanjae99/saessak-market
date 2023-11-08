@@ -1,6 +1,6 @@
 package com.saessak.repository;
+
 import com.saessak.detail.dto.DetailDTO;
-import com.saessak.entity.Product;
 import com.saessak.main.dto.MainProductFormDTO;
 import com.saessak.main.dto.ProductDTO;
 import com.saessak.main.dto.ProductFormDTO;

@@ -6,7 +6,6 @@ import com.saessak.repository.*;
 import com.saessak.webSocket.dto.ChatBoxDTO;
 import com.saessak.webSocket.dto.ChatBoxListDTO;
 import com.saessak.webSocket.dto.ChatDTO;
-import com.saessak.webSocket.dto.ChatListDTO;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
