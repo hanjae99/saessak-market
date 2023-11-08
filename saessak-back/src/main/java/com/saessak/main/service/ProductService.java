@@ -212,4 +212,9 @@ public class ProductService {
     public List<MainProductFormDTO> searchNewestProduct(){
         return productRepository.getNewestProduct();
     }
+
+    public void clickCountPlus(Long productId){
+        Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+        product.setClickCount(product.getClickCount()+1);
+    }
 }

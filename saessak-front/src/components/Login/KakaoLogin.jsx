@@ -19,6 +19,8 @@ const KakaoLogin = () => {
         //로그인이 성공하면 이동할 페이지
         localStorage.setItem("EXPIREDATE", response.expiration);
         localStorage.setItem("USERID", response.userId);
+        localStorage.setItem("EXPIREDATE", response.expiration);
+        localStorage.setItem("NICKNAME", response.nickName);
         navigate(backUrl);
       });
     };

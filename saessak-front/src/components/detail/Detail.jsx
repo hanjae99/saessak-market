@@ -34,7 +34,7 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response === 1) {
         navigate("/");
       }
@@ -61,21 +61,16 @@ const Detail = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    // dispatch({
-    //   type: "user/addProduct",
-    //   payload: {
-    //     id: item.id,
-    //     name: item.name,
-    //     price: item.price,
-    //     text: item.text,
-    //     imgsrc1: item.imgsrc1,
-    //     imgsrc2: item.imgsrc2,
-    //     categories: item.categories,
-    //   },
-    // });
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+
+    if (accessToken === "") {
+      alert("로그인 후 이용해주세요");
+      navigate("/login");
+      return;
+    }
 
     call(`/detail/addwish/${id}`, "POST", null).then((response) => {
-      console.log(response);
+      // console.log(response);
       navigate("/user/wishlist");
       if (response.error === "success") {
         alert("찜 목록에 추가되었습니다.");
@@ -112,7 +107,7 @@ const Detail = () => {
     };
 
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response) {
         navigate("/chat/" + response);
       } else {
@@ -225,7 +220,13 @@ const Detail = () => {
                           <div
                             className="detail-imgbox1"
                             onClick={() => {
-                              navigate(`/detail/${up.productId}`);
+                              call(
+                                `/product/clickPlus/${up.productId}`,
+                                "PUT"
+                              ).then((response) => {
+                                // console.log(response);
+                                navigate(`/detail/${up.productId}`);
+                              });
                             }}
                           >
                             <img
@@ -270,7 +271,11 @@ const Detail = () => {
                       className="detail-recommend"
                       key={cp.productId}
                       onClick={() => {
-                        navigate(`/detail/${cp.productId}`);
+                        call(`/product/clickPlus/${cp.productId}`, "PUT").then(
+                          (response) => {
+                            navigate(`/detail/${cp.productId}`);
+                          }
+                        );
                       }}
                     >
                       <div className="detail-recommend-img">

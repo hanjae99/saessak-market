@@ -177,4 +177,11 @@ public class ProductController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    @PutMapping("/clickPlus/{productId}")
+    public ResponseEntity<?> clickPlus(@PathVariable("productId") Long productId){
+        productService.clickCountPlus(productId);
+        ResponseDTO responseDTO = ResponseDTO.builder().message("success").build();
+        return ResponseEntity.ok().body(responseDTO);
+    }
 }

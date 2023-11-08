@@ -29,7 +29,7 @@ const Login = () => {
       //const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
       // console.log("login" + login);
       login(loginDTO).then((response) => {
-        console.log("response : ", response);
+        // console.log("response : ", response);
         if (!response) {
           return setLoginFailed(true);
         } else if (response.role === "DELETED") {
@@ -38,7 +38,7 @@ const Login = () => {
           localStorage.setItem("ACCESS_TOKEN", response.token);
           localStorage.setItem("EXPIREDATE", response.expiration);
           localStorage.setItem("NICKNAME", response.nickName);
-          console.log("response : ", response);
+          // console.log("response : ", response);
           if (response.role === "ADMIN") {
             return (window.location.href = "/admin");
           }

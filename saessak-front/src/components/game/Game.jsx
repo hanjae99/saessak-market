@@ -14,7 +14,7 @@ const Game = () => {
 
   useEffect(() => {
     call("/game", "GET").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(setGameData(response.data));
     });
   }, []);
@@ -22,7 +22,7 @@ const Game = () => {
   const game = useSelector((state) => state.game.data);
   const score = useSelector((state) => state.score.no);
 
-  console.log("나게임1 : ", game);
+  // console.log("나게임1 : ", game);
 
   const [index, setIndex] = useState(0);
   const [inputprice, setInputprice] = useState("");

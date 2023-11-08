@@ -61,6 +61,8 @@ public class LoginService {
                 .name(kakaoUser.getName())
                 .role(kakaoUser.getRole())
                 .token(token)
+                .expiration(tokenProvider.getExpiration(token))
+                .nickName(kakaoUser.getNickName())
                 .build();
     }
 

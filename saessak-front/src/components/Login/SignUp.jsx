@@ -61,10 +61,10 @@ const SignUp = () => {
       setSignFailed(true);
       return;
     } else {
-      console.log(newUser);
+      // console.log(newUser);
       setSignFailed(false);
       signup(newUser).then((response) => {
-        console.log(response);
+        // console.log(response);
         alert("계정이 성공적으로 생성되었습니다.");
         window.location.href = "/login";
       });
@@ -128,7 +128,7 @@ const SignUp = () => {
   };
 
   const onCustomDomain = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     const value = e.target.value;
     setCustomDomain(value);
   };
@@ -238,7 +238,7 @@ const SignUp = () => {
         localStorage.setItem("SMSTOKENEXPIRE", response.expireDate);
         setIsSmsSend(1);
       } else {
-        console.log(response);
+        // console.log(response);
         setIsSmsSend(-1);
       }
     });
