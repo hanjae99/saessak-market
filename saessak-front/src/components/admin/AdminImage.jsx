@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 const testUrl = `/images/product/d9e72581-03b2-4ee3-b044-861716b7325e.jpg
@@ -901,36 +901,56 @@ const testUrl = `/images/product/d9e72581-03b2-4ee3-b044-861716b7325e.jpg
 /images/product/37e89702-6a2d-4c76-ab05-4eaa2dc24fd8.jpg
 /images/product/19511706-30e9-4c0f-8d10-d35c16431694.jpg
 /images/product/0d5de833-2fe4-47d5-8ae0-75d03218ea9c.jpg
-/images/product/d7d738e4-a293-4d4d-850c-2d4e98426e37.jpg`;
+/images/product/d7d738e4-a293-4d4d-850c-2d4e98426e37.jpg`.split('\n').map((p, i) => ({ url: p.trimStart(), id: i }));
 
-const ImageViewer = () => {
+const ImageViewer = ({bottom}) => {
   
   const viewerTop = 30;
-  const imageBaseSize = 80;
+  const imageBaseSize = 130;
 
-  const abcd = useRef();
+  const adminImageViewer = useRef();
+  
   const data = useSelector(state => state.adminImageSL);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({ type: 'adminImageSL/setImageScale', payload: 1 });
-    dispatch({ type: 'adminImageSL/setData', payload: testUrl.split('\n').map((p, i) => ({ url: p.trimStart(), id: i })) })
+    dispatch({ type: 'adminImageSL/setPage', payload: 1 });
+    dispatch({ type: 'adminImageSL/setData', payload: testUrl });
+    if (adminImageViewer.current) {
+      observer.observe(bottom.current);
+    }
   }, [])
   window.onresize = () => {
     dispatch({ type: 'adminImageSL/setImageScale', payload: 0 });
   }
 
+  const options = {
+    threshold: 1.0
+  };
 
-
+  
+  const callback = (p) => {
+    if (p[0].intersectionRatio===1) {
+      console.log('1234');
+      bottom.current.style.top = parseInt(bottom.current.style.top) + 1000 + 'px'
+      dispatch({ type: 'adminImageSL/setPagePlus'});
+    }
+  }
+  const observer = new IntersectionObserver(callback, options);
 
 
   let viewerWidth = 0;
   let imagesMargin = 0;
   let imagesLineCount = 1;
-  if (abcd.current) {
-    viewerWidth = abcd.current.clientWidth;
+  let bottomtop = 51222;
+  if (adminImageViewer.current) {
+
+    viewerWidth = adminImageViewer.current.clientWidth;
     imagesMargin = 20 + 2 * data.imageScale;
-    imagesLineCount = Math.floor((viewerWidth - 100) / (82 * data.imageScale + imagesMargin));
+    imagesLineCount = Math.floor((viewerWidth - 100) / ((imageBaseSize+2) * data.imageScale + imagesMargin));
+
+    bottomtop = viewerTop + Math.ceil(data.data.slice(0, data.page * 42).length / imagesLineCount) * (imageBaseSize+2) * data.imageScale + (Math.floor(data.data.slice(0, data.page * 42).length / imagesLineCount) + 1) * imagesMargin + 'px';
   }
   const imgStyle = {
     width: imageBaseSize * data.imageScale + 'px',
@@ -943,13 +963,14 @@ const ImageViewer = () => {
     border: '1px solid gray'
   }
 
+
   return (
     <>
-      <div className='adminImageViewer' ref={abcd}>
-        {data.data.map((p, i) => {
+      <div className='adminImageViewer' ref={adminImageViewer}>
+        {data.data.slice(0, data.page * 42).map((p, i) => {
           const position = {
-            left: i % imagesLineCount * 82 * data.imageScale + (i % imagesLineCount + 1) * imagesMargin - 14 + 'px',
-            top: viewerTop + Math.floor(i / imagesLineCount) * 82 * data.imageScale + (Math.floor(i / imagesLineCount) + 1) * imagesMargin + 'px',
+            left: i % imagesLineCount * (imageBaseSize+2) * data.imageScale + (i % imagesLineCount + 1) * imagesMargin - 14 + 'px',
+            top: viewerTop + Math.floor(i / imagesLineCount) * (imageBaseSize+2) * data.imageScale + (Math.floor(i / imagesLineCount) + 1) * imagesMargin + 'px',
           }
           return (
             <div key={p.id} style={{...divStyle, ...position}}>
@@ -958,14 +979,29 @@ const ImageViewer = () => {
             </div>
           )
         })}
+        {data.data&&<div ref={bottom} style={{position:'absolute', 
+        top: bottomtop }}>여기요{data.page}</div>}
       </div>
     </>
   )
 }
-const ImageController = () => {
+const ImageController = ({bottom}) => {
+  const style = {
+    position:'fixed',
+    top: '200px',
+    right: '50px',
+  }
+
+  const [ref, setRef] = useState(0);
+  useEffect(()=>{setRef(ref+1)},[bottom]);
+
+  
+
+  
+
   return (
-    <div className='adminImageController'>
-      컨트롤러
+    <div className='adminImageController' style={style}>
+      {ref}
     </div>
   )
 }
@@ -978,6 +1014,7 @@ export const adminImageSL = createSlice({
     data: [],
     moreScroll: true,
     imageScale: 1,
+    page: 1,
   },
   reducers: {
     setData: (state, action) => {
@@ -995,6 +1032,9 @@ export const adminImageSL = createSlice({
         state.imageScale = 0;
         state.imageScale = action.payload;
       }
+    },
+    setPagePlus: (state, action) => {
+      state.page = state.page+1;
     }
   },
 });
@@ -1008,10 +1048,11 @@ export const adminImageSL = createSlice({
 
 
 const AdminImage = ({ setModalData, page }) => {
+  const bottom = useRef();
   return (
     <>
-      <ImageViewer />
-      <ImageController />
+      <ImageViewer bottom={bottom} />
+      <ImageController bottom={bottom} />
     </>
   )
 }
