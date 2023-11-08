@@ -13,9 +13,9 @@ const Changing = () => {
     setNewPhone(e.target.value);
   };
 
-  const onAddressChange = (e) => {
-    setNewAddress(e.target.value);
-  };
+  // const onAddressChange = (e) => {
+  //   setNewAddress(e.target.value);
+  // };
 
   const [privacys, setPrivacys] = useState([]);
 
@@ -36,14 +36,7 @@ const Changing = () => {
 
   const { daum } = window;
 
-  console.log(
-    "value값",
-
-    newNickName,
-    newEmail,
-    newPhone,
-    newAddress
-  );
+  console.log("value값", newNickName, newEmail, newPhone, newAddress);
 
   const onCheckNickName = (e) => {
     e.preventDefault();
@@ -67,11 +60,14 @@ const Changing = () => {
   const pwdSubmit = (e) => {
     e.preventDefault();
 
-    console.log("privacys.email ====> ", privacys.email);
     console.log("privacys.nickname ====> ", privacys.nickName);
     console.log("privacys.address ====> ", privacys.address);
 
-    console.log("privecy ====> ", privacys.password);
+    if (newNickName === "") {
+      setNewNickName(privacys.nickName);
+      setNicknameCheck(-1);
+    }
+    console.log("nickname ====> ", newNickName);
 
     const item = {
       id: privacys.id,
@@ -80,7 +76,7 @@ const Changing = () => {
       address: newAddress,
     };
 
-    if (nicknameCheck === -1) {
+    if (privacys.nickName === newNickName) {
       call("/user/changing", "PUT", item)
         .then((response) => {
           console.log("Data updated successfully", response);
@@ -88,11 +84,21 @@ const Changing = () => {
         .catch((error) => {
           console.error("Error updating data:", error);
         });
-
       movePage("/user/mypage");
-    } else if (nicknameCheck === 1) {
-      setNicknameCheck(2);
-      return;
+    } else {
+      if (nicknameCheck === -1) {
+        call("/user/changing", "PUT", item)
+          .then((response) => {
+            console.log("Data updated successfully", response);
+          })
+          .catch((error) => {
+            console.error("Error updating data:", error);
+          });
+        movePage("/user/mypage");
+      } else if (nicknameCheck === 1) {
+        setNicknameCheck(1);
+        return;
+      }
     }
   };
 

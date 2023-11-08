@@ -75,7 +75,14 @@ const ChattingBox = () => {
                   alignItems: "center" /* 수직 가운데 정렬 */,
                   borderBottom: "rgb(200, 200, 200)",
                 }}
-                onClick={() => movePages("/chat/" + chat[i].chatBoxId)}
+                // onClick={() => movePages("/chat/" + chat[i].chatBoxId)}
+                onClick={() =>
+                  window.open(
+                    `/chat/${chat[i].chatBoxId}`,
+                    "새싹마켓",
+                    "width=600,height=840"
+                  )
+                }
               >
                 <div
                   style={{
@@ -122,7 +129,6 @@ const ChattingBox = () => {
                           textOverflow:
                             "ellipsis" /* 넘친 텍스트를 생략 부호(...)로 표시합니다. */,
                         }}
-                        onClick={() => movePages("/chat/" + chat[i].chatBoxId)}
                       >
                         {chat[i].productTitle}
                       </div>

@@ -319,7 +319,7 @@ const ProductList2 = () => {
                     className="item-info"
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <div>{changeDateFormat(dto.updateTime)}전</div>
+                    <div>{changeDateFormat(dto.regTime)}전</div>
                     <div>
                       <MdVisibility style={{ fontSize: "14px" }} />{" "}
                       {dto.clickedCount}{" "}
