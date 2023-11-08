@@ -41,6 +41,11 @@ const Detail = () => {
 
       setDetaildatas(response);
     });
+
+    // 조회수 증가
+    call(`/product/clickPlus/${id}`, "PUT").then((response) => {
+      // console.log(response);
+    });
   }, [id]);
 
   // console.log(detaildatas);
@@ -107,11 +112,8 @@ const Detail = () => {
     };
 
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
-      // console.log(response);
       if (response) {
-        navigate("/chat/" + response);
-      } else {
-        navigate("/login");
+        window.open(`/chat/${response}`, "새싹마켓", "width=600,height=840");
       }
     });
   };
@@ -220,13 +222,7 @@ const Detail = () => {
                           <div
                             className="detail-imgbox1"
                             onClick={() => {
-                              call(
-                                `/product/clickPlus/${up.productId}`,
-                                "PUT"
-                              ).then((response) => {
-                                // console.log(response);
-                                navigate(`/detail/${up.productId}`);
-                              });
+                              navigate(`/detail/${up.productId}`);
                             }}
                           >
                             <img
@@ -271,11 +267,7 @@ const Detail = () => {
                       className="detail-recommend"
                       key={cp.productId}
                       onClick={() => {
-                        call(`/product/clickPlus/${cp.productId}`, "PUT").then(
-                          (response) => {
-                            navigate(`/detail/${cp.productId}`);
-                          }
-                        );
+                        navigate(`/detail/${cp.productId}`);
                       }}
                     >
                       <div className="detail-recommend-img">
