@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
 
@@ -13,30 +12,10 @@ const Changing = () => {
   const onPhoneChange = (e) => {
     setNewPhone(e.target.value);
   };
-  const onPassWordChange = (e) => {
-    setNew_pwd(e.target.value);
-  };
-  // const onAddressChange = (e) => {
-  //   setNewAddress(e.target.value);
-  // };
-  const onNow_PswChange = (e) => {
-    setNow_pwd(e.target.value);
-  };
-  const onNew_PswChange = (e) => {
-    setNew_pwd_check(e.target.value);
-  };
 
-  // const onButtonClick = () => {
-  //   const item = {
-  //     id: "1",
-  //     nickName: newNickName,
-  //     email: newEmail,
-  //     password: new_pwd,
-  //     address: newAddress,
-  //   };
-  //   editItem(item);
-  //   // movePage("/user/mypage");
-  // };
+  const onAddressChange = (e) => {
+    setNewAddress(e.target.value);
+  };
 
   const [privacys, setPrivacys] = useState([]);
 
@@ -48,10 +27,7 @@ const Changing = () => {
   }, []);
 
   const movePage = useNavigate();
-  const [now_pwd, setNow_pwd] = useState("");
-  const [new_pwd, setNew_pwd] = useState("");
-  const [new_pwd_check, setNew_pwd_check] = useState("");
-  const [newName, setNewName] = useState("");
+
   const [newNickName, setNewNickName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPhone, setNewPhone] = useState("");
@@ -62,10 +38,7 @@ const Changing = () => {
 
   console.log(
     "value값",
-    now_pwd,
-    new_pwd,
-    new_pwd_check,
-    newName,
+
     newNickName,
     newEmail,
     newPhone,
@@ -97,9 +70,7 @@ const Changing = () => {
     console.log("privacys.email ====> ", privacys.email);
     console.log("privacys.nickname ====> ", privacys.nickName);
     console.log("privacys.address ====> ", privacys.address);
-    console.log("new_pwd ====> ", new_pwd);
-    console.log("new_pwd_check ====> ", new_pwd_check);
-    console.log("now_pwd ====> ", now_pwd);
+
     console.log("privecy ====> ", privacys.password);
 
     const item = {
@@ -119,7 +90,6 @@ const Changing = () => {
         });
 
       movePage("/user/mypage");
-      //window.location.reload();
     } else if (nicknameCheck === 1) {
       setNicknameCheck(2);
       return;
@@ -170,7 +140,6 @@ const Changing = () => {
                 <input type="hidden" value={privacys.id ?? ""} />
                 <input
                   type="text"
-                  value={newName}
                   placeholder={privacys.name}
                   style={{
                     borderRadius: "4px",

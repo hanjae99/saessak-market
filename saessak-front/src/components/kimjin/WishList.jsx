@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Manu.css";
 import { Button } from "react-bootstrap";
 import { call } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
-import { Start } from "@mui/icons-material";
+import priceComma from "../../pricecomma";
 
 const WishList = () => {
   const movePages = useNavigate();
   const [wish, setWish] = useState([]);
+
+  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
     call("/user/wishlist", "GET").then((response) => {
@@ -17,12 +18,6 @@ const WishList = () => {
       console.log(response);
     });
   }, []);
-
-  // const onProductDelete = (e) => {
-  //   // const item = {wishListId == wish.wishListId}
-  //   console.log(wish);
-  //   call(`/user/wishlist/${wish.}`, "DELETE").then((response) => {});
-  // };
 
   console.log(wish);
 
@@ -38,10 +33,9 @@ const WishList = () => {
 
   useEffect(() => {
     // 총 페이지 수 계산
+    setTotalPage(Math.ceil(wish && wish.length / 10));
 
     const makePageBtn = () => {
-      const totalPage = Math.ceil(wish.length / 2);
-
       const newPageBtns = [];
       // 페이지 버튼 6개씩 보여주기
       for (
@@ -62,7 +56,7 @@ const WishList = () => {
       setPageBtns(newPageBtns); // 페이지 버튼 상태 업데이트
     };
     makePageBtn(); // 페이지 버튼 생성 함수 호출
-  }, [wish, movePage]);
+  }, [wish, pageNumLength]);
 
   console.log(pageNumLength);
   console.log("안녕", pageBtns);
@@ -76,7 +70,7 @@ const WishList = () => {
     setpageNumLength(pageNumLength + 1); // 다음 페이지 세트로 이동
   }, [pageNumLength]);
 
-  const itemsPerPage = 2; // 페이지당 상품 수
+  const itemsPerPage = 10; // 페이지당 상품 수
   const [displayedProducts, setDisplayedProduct] = useState([]);
 
   useEffect(() => {
@@ -152,7 +146,8 @@ const WishList = () => {
                                         {displayedProducts[i].title}
                                       </div>
                                       <div className="text-2-name-1-2">
-                                        {displayedProducts[i].price} 원
+                                        {priceComma(displayedProducts[i].price)}{" "}
+                                        원
                                       </div>
                                     </div>
                                   </div>
@@ -196,10 +191,9 @@ const WishList = () => {
             <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
               이전
             </button>
-            {pageBtns}
             <button
               onClick={nextPageNumLength}
-              disabled={pageNumLength === Math.ceil(wish.length / 2) - 1}
+              disabled={pageNumLength + 1 >= totalPage}
             >
               다음
             </button>

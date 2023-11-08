@@ -1,6 +1,5 @@
 package com.saessak.mypage.dto;
 
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 @Builder

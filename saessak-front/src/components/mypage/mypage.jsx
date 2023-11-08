@@ -1,16 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import ImgUpdate from "../kimjin/ImgUpdate";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { call } from "../../ApiService";
+import { call, memberdelete, signout } from "../../ApiService";
 
 const MyPage = () => {
-  const movePage = useNavigate();
-
-  const [privacys, setPrivacys] = useState([]);
-  const [isLogin, setIsLogin] = useState(false);
-  const navigate = useNavigate();
-
   useEffect(() => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken !== "") {
@@ -26,9 +19,19 @@ const MyPage = () => {
     }
   }, []);
 
-  // // useEffect 훅 사용: 컴포넌트가 렌더링될 때 실행되며 초기 데이터를 불러옴
-  // useEffect(() => {
-  // }, []);
+  const [privacys, setPrivacys] = useState([]);
+  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    const isConfirmed = window.confirm("정말 계정을 삭제하시겠습니까?");
+    if (isConfirmed) {
+      call("/user/delete", "PUT").then(() => {});
+      alert("그동안 이용해주셔서 감사합니다.");
+      navigate("/");
+      memberdelete();
+    }
+  };
 
   return (
     <div className="section">
@@ -95,10 +98,31 @@ const MyPage = () => {
               </div>
               <div style={{ textAlign: "right" }}>
                 <button
-                  onClick={() => movePage("/user/changing")}
+                  onClick={() => navigate("/user/changing")}
                   className="mypage-button"
                 >
                   회원정보수정
+                </button>
+              </div>
+              <div
+                style={{
+                  width: "80px",
+                  height: "50px",
+                  display: "flex",
+                  flexDirection: "column-reverse",
+                  alignItems: "center",
+                }}
+              >
+                <button
+                  onClick={handleDelete}
+                  style={{
+                    backgroundColor: "white",
+                    border: 0,
+                    color: "#C0C0C0",
+                    cursor: "pointer",
+                  }}
+                >
+                  회원 탈퇴
                 </button>
               </div>
             </div>
