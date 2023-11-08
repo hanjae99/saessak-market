@@ -1,8 +1,6 @@
 package com.saessak.wishlist.controller;
 
 import com.saessak.mypage.dto.ResponseDTO;
-import com.saessak.entity.WishList;
-import com.saessak.repository.WishListRepository;
 import com.saessak.wishlist.dto.WishListDTO;
 import com.saessak.wishlist.service.WishListService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/user")

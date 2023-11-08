@@ -82,6 +82,11 @@ export function signout() {
   window.location.href = "/login";
 }
 
+export function memberdelete() {
+  localStorage.setItem("ACCESS_TOKEN", "");
+  window.location.href = "/";
+}
+
 export function signup(signUpDTO) {
   return call("/signup", "POST", signUpDTO);
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import { Avatar } from "antd";
-import { call, uploadProduct } from "../../ApiService";
+import { uploadProduct } from "../../ApiService";
 import { API_BASE_URL } from "../../ApiConfig";
 
 const ImgUpdate = ({ privacys }) => {
