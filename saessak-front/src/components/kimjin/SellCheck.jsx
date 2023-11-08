@@ -59,6 +59,7 @@ const SellCheck = ({ total, limit, page, setPage }) => {
     makePageBtn(); // 페이지 버튼 생성 함수 호출
   }, [sellProduct, pageNumLength]);
 
+  console.log("sellProduct", sellProduct);
   console.log("totalPage", totalPage);
   console.log("pageNumLength", pageNumLength);
   console.log("pageBtns", pageBtns);
@@ -197,14 +198,13 @@ const SellCheck = ({ total, limit, page, setPage }) => {
         {sellProduct && sellProduct.length !== 0 ? (
           <div className="pagination1">
             <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
-              prev
+              이전
             </button>
-            {pageBtns.map((btn) => btn)}
             <button
               onClick={nextPageNumLength}
-              disabled={Math.ceil(totalPage / 5) === pageNumLength + 1}
+              disabled={pageNumLength + 1 >= totalPage}
             >
-              next
+              다음
             </button>
           </div>
         ) : (
