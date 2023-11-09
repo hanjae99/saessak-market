@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Detail.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
@@ -34,7 +34,7 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response === 1) {
         navigate("/");
       }
