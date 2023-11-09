@@ -46,7 +46,7 @@ const FindByPwd = () => {
     e.preventDefault();
 
     call("/login/auth/emailPwdPass", "POST", findByIdDTO).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response === -1) {
         return setEmailPassFailed(-1);
       }
