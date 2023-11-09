@@ -83,6 +83,7 @@ const Header = () => {
       localStorage.setItem("ISADMIN", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
+      setIsAdmin(false);
       navigate("/");
     } else {
       navigate("/login");
@@ -105,9 +106,11 @@ const Header = () => {
       <div id="headContainer">
         <div className="headContent">
           <div className="logo">
-            <Link to="/">
-              <img src="/img/saessak.png" alt="logo" />
-            </Link>
+            <div className="logo-image">
+              <Link to="/">
+                <img src="/img/mainLogo_sang.png" alt="logo" />
+              </Link>
+            </div>
             <div className="logo-text">
               <Link to="/">
                 <img src="/img/logo.png" alt="새싹마켓 logo" />
