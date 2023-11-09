@@ -246,6 +246,7 @@ header {
 .login-info {
   display: flex;
   justify-content: end;
+  align-items: center;
 }
 
 .loginedUserNick {
@@ -371,10 +372,10 @@ header {
     }
   }
   .menuItem {
-    font-size: small;
+    font-size: 0.6rem;
+    margin-left: 0;
+    text-align: center;
     min-width: 70px;
-    padding: 10px 0;
-    margin: 0 3px;
   }
   .login-info {
     .loginedUserNick {
@@ -382,6 +383,13 @@ header {
     }
     .loginTimer {
       display: none;
+    }
+    > button {
+      width: 40px;
+      min-width: 40px;
+      font-size: 0.5rem;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
@@ -406,6 +414,7 @@ header {
   .menuItem {
     margin-left: 0;
     text-align: center;
+    min-width: 49px;
   }
   .menuItem:first-of-type {
     margin-left: 5px;
@@ -433,9 +442,6 @@ header {
   }
   #categoryBox ul {
     width: 100px;
-  }
-  .menuItem {
-    min-width: 49px;
   }
   .logo img {
     width: 48px;
@@ -476,6 +482,13 @@ header {
     }
     .loginTimer {
       display: none;
+    }
+    > button {
+      width: 40px;
+      min-width: 40px;
+      font-size: 0.5rem;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }

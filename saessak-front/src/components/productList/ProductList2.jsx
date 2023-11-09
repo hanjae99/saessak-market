@@ -310,7 +310,15 @@ const ProductList2 = () => {
                     navigate("/detail/" + dto.id);
                   }}
                 >
-                  <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
+                  <div
+                    className={
+                      dto.sellStatus === "SELL"
+                        ? "item-sellImageBox"
+                        : "item-soldOutImageBox"
+                    }
+                  >
+                    <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
+                  </div>
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
