@@ -55,14 +55,14 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         QWishList wishList = QWishList.wishList;
 
         // 동적으로 정렬 조건 변경
-        OrderSpecifier<?> orderSpecifier = product.updateTime.desc();
+        OrderSpecifier<?> orderSpecifier = product.regTime.desc();
 
         if (productDTO.getSortBy().equals("Wish")){
             orderSpecifier = wishList.id.count().desc();
         }else if (productDTO.getSortBy().equals("Click")){
             orderSpecifier = product.clickCount.desc();
         }else if (productDTO.getSortBy().equals("Date")){
-            orderSpecifier = product.updateTime.desc();
+            orderSpecifier = product.regTime.desc();
         }
 
         List<ProductDTO> content = queryFactory
@@ -167,6 +167,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         image.imgUrl,
                         product.clickCount,
                         Expressions.asNumber(0),
+                        product.regTime,
                         product.updateTime
                 ))
                 .from(image)
@@ -204,13 +205,14 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         image.imgUrl,
                         product.clickCount,
                         Expressions.asNumber(0),
+                        product.regTime,
                         product.updateTime
                 ))
                 .from(image)
                 .join(image.product, product)
                 .where(searchSellStatusEq(SellStatus.SELL))
                 .groupBy(product.id)
-                .orderBy(product.updateTime.desc())
+                .orderBy(product.regTime.desc())
                 .limit(4)
                 .fetch();
 

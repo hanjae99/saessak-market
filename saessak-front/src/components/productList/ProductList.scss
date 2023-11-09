@@ -1,7 +1,7 @@
 #mainList {
   width: 80%;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 40px;
   display: grid;
   grid-template-columns: 25% 75%;
   box-sizing: border-box;
@@ -65,25 +65,61 @@
   }
 }
 
-.item-product > img {
-  width: 100%;
+.item-sellImageBox,
+.item-soldOutImageBox {
+  position: relative;
   height: 15vw;
+
+  > img {
+    width: 100%;
+    height: 15vw;
+    border-radius: 8px;
+  }
+}
+
+// 판매완료 상품 반투명 상태 추가
+.item-soldOutImageBox::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "판매완료";
+  color: white;
+  text-align: center;
+  line-height: 15vw;
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
 }
 
-.item-product > p:nth-of-type(1) {
+// .item-product > p:nth-of-type(1) {
+//   font-weight: bold;
+//   font-size: 1.2rem;
+// }
+.item-price {
   font-weight: bold;
   font-size: 1.2rem;
+  text-align: center;
 }
+
 .item-title {
-  height: 70px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  height: 4rem;
+  overflow-y: hidden;
+  // text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
-.item-info {
-  div {
-    min-width: 55px;
-  }
+.item-info-time {
+  text-align: center;
+}
+.item-info-count {
+  // div {
+  //   min-width: 55px;
+  // }
+  margin-top: 1rem;
+  text-align: center;
 }
 
 /* 왼쪽 필터 부분 */
@@ -177,6 +213,11 @@
   * {
     transition: all ease-out 0.3s;
   }
+  #mainList {
+    > * {
+      font-size: 0.8rem;
+    }
+  }
   .filterContainer {
     min-width: 120px;
     font-size: 0.8rem;
@@ -187,16 +228,53 @@
   }
   .contents {
     grid-template-columns: repeat(2, 50%);
-    img {
+    .item-sellImageBox,
+    .item-soldOutImageBox {
+      position: relative;
       height: 22vw;
+
+      > img {
+        width: 100%;
+        height: 22vw;
+        border-radius: 8px;
+      }
+    }
+    .item-soldOutImageBox::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: "판매완료";
+      color: white;
+      text-align: center;
+      line-height: 22vw;
+      font-size: 1.3rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+    }
+    .item-title {
+      font-size: 0.8rem;
+      height: 3rem;
+    }
+    .item-price {
+      font-size: 0.8rem;
+    }
+    .item-info {
+      font-size: 0.8rem;
     }
   }
 }
 
 // 모바일 미디어쿼리
-@media screen and (max-width: 424px) {
+@media screen and (max-width: 425px) {
   * {
     transition: all ease-out 0.3s;
+  }
+  #mainList {
+    > * {
+      font-size: 0.7rem;
+    }
   }
   .result {
     display: block;
@@ -211,8 +289,33 @@
   }
   .contents {
     display: block;
-    img {
-      height: 50vw;
+    .item-sellImageBox,
+    .item-soldOutImageBox {
+      position: relative;
+      height: 40vw;
+
+      > img {
+        width: 100%;
+        height: 40vw;
+        border-radius: 8px;
+      }
+    }
+    .item-soldOutImageBox::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: "판매완료";
+      color: white;
+      text-align: center;
+      line-height: 40vw;
+      font-size: 1.3rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+    }
+    .item-title {
+      height: 3rem;
     }
   }
 }

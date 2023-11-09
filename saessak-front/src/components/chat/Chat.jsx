@@ -80,6 +80,7 @@ const Chat = () => {
           `/topic/chatMessages/${chatBoxId}`,
           (message) => {
             const msgData = JSON.parse(message.body);
+            // console.log(msgData);
             setChatContent([...chatContent, msgData]);
           }
         );
@@ -119,7 +120,7 @@ const Chat = () => {
         memberId: me,
         memberNickname: localStorage.getItem("NICKNAME"),
         content: chatInput,
-        regTime: new Date(),
+        // regTime: new Date()
       };
 
       const temp = JSON.stringify(data);

@@ -38,7 +38,7 @@ const CarouselBox = () => {
           className="slide-text"
           // style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <div>{changeDateFormat(dto.updateTime)}전</div>
+          <div>{changeDateFormat(dto.regTime)}전</div>
         </div>
         <p className="slide-text">
           <MdVisibility style={{ fontSize: "14px" }} /> {dto.clickedCount}{" "}

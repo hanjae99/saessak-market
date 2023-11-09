@@ -36,7 +36,7 @@ const NewProduct = () => {
           </div>
           <p>{priceComma(dto.price)}원</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>{changeDateFormat(dto.updateTime)}전</div>
+            <div>{changeDateFormat(dto.regTime)}전</div>
             <div>
               <MdVisibility style={{ fontSize: "14px" }} /> {dto.clickedCount}{" "}
               <MdFavoriteBorder style={{ fontSize: "14px" }} />{" "}

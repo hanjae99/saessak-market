@@ -156,7 +156,7 @@ const ProductList2 = () => {
         <div className="filterContainer">
           <div>
             <div className="filterBox">
-              <h2>필터</h2>
+              <h3>필터</h3>
               {searchItem ? (
                 <button className="filter" onClick={removeSearch}>
                   {searchItem} <MdClose />
@@ -233,6 +233,7 @@ const ProductList2 = () => {
                     />
                   }
                   label="판매완료"
+                  style={{ marginRight: "0px" }}
                 />
               </FormGroup>
             </div>
@@ -310,17 +311,29 @@ const ProductList2 = () => {
                     navigate("/detail/" + dto.id);
                   }}
                 >
-                  <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
+                  <div
+                    className={
+                      dto.sellStatus === "SELL"
+                        ? "item-sellImageBox"
+                        : "item-soldOutImageBox"
+                    }
+                  >
+                    <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
+                  </div>
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
-                  <p>{priceComma(dto.price)}원</p>
+                  <div className="item-price">
+                    <p>{priceComma(dto.price)}원</p>
+                  </div>
                   <div
                     className="item-info"
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    // style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <div>{changeDateFormat(dto.updateTime)}전</div>
-                    <div>
+                    <div className="item-info-time">
+                      {changeDateFormat(dto.regTime)}전
+                    </div>
+                    <div className="item-info-count">
                       <MdVisibility style={{ fontSize: "14px" }} />{" "}
                       {dto.clickedCount}{" "}
                       <MdFavorite style={{ fontSize: "14px" }} />{" "}

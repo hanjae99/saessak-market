@@ -41,11 +41,6 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
             "GROUP BY P.product_id", nativeQuery = true)
     List<WishListInter> buyMemberProductSelect(@Param("memberId") Long userId);
 
-    @Query(value = "INSERT WISH_LIST (wish_list_id, member_id, product_id, reg_time, update_time) " +
-            "VALUES (0, :memberId, :productId, :regTime, :updateTime)", nativeQuery = true)
-    void insertById(@Param("memberId") Long memberId, @Param("productId") Long productId
-            , @Param("regTime") LocalDateTime regTime, @Param("updateTime") LocalDateTime updateTime);
-
     @Query(value = "DELETE " +
             "FROM WISH_LIST " +
             "WHERE wish_list_id = :wishListId", nativeQuery = true)

@@ -39,8 +39,12 @@ const Login = () => {
           localStorage.setItem("EXPIREDATE", response.expiration);
           localStorage.setItem("NICKNAME", response.nickName);
           // console.log("response : ", response);
+          // 관리자일 경우
           if (response.role === "ADMIN") {
-            return (window.location.href = "/admin");
+            const adminExpireDate = new Date(9999, 1, 1);
+            localStorage.setItem("EXPIREDATE", adminExpireDate);
+            localStorage.setItem("ISADMIN", "true");
+            // return (window.location.href = "/admin");
           }
           return (window.location.href = backUrl);
         }
