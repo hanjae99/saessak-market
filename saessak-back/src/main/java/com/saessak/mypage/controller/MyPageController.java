@@ -130,7 +130,6 @@ public class MyPageController {
         // 결과에 따라 응답합니다.
         Integer response = check ? 1 : -1;
 
-        log.info("이건 숫자몇이야 =======> ", response);
 
         return ResponseEntity.ok().body(response);
     }

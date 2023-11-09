@@ -13,16 +13,11 @@ const Changing = () => {
     setNewPhone(e.target.value);
   };
 
-  // const onAddressChange = (e) => {
-  //   setNewAddress(e.target.value);
-  // };
-
   const [privacys, setPrivacys] = useState([]);
 
   useEffect(() => {
     call("/user/mypage", "GET", null).then((response) => {
       setPrivacys(response.data[0]);
-      console.log("==========useEffect 잘 가져왔나", response);
     });
   }, []);
 
@@ -35,8 +30,6 @@ const Changing = () => {
   const [nicknameCheck, setNicknameCheck] = useState(0);
 
   const { daum } = window;
-
-  console.log("value값", newNickName, newEmail, newPhone, newAddress);
 
   const onCheckNickName = (e) => {
     e.preventDefault();
@@ -60,14 +53,10 @@ const Changing = () => {
   const pwdSubmit = (e) => {
     e.preventDefault();
 
-    console.log("privacys.nickname ====> ", privacys.nickName);
-    console.log("privacys.address ====> ", privacys.address);
-
     if (newNickName === "") {
       setNewNickName(privacys.nickName);
       setNicknameCheck(-1);
     }
-    console.log("nickname ====> ", newNickName);
 
     const item = {
       id: privacys.id,

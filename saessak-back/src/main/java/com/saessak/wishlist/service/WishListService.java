@@ -102,7 +102,7 @@ public class WishListService {
 
     public Product buyDelete (Long productId){
         Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
-        product.setSellStatus(SellStatus.DELETED);
+        product.setOrderMember(null);
         return product;
     }
 

@@ -58,11 +58,6 @@ const SellCheck = ({ total, limit, page, setPage }) => {
     makePageBtn(); // 페이지 버튼 생성 함수 호출
   }, [sellProduct, pageNumLength]);
 
-  console.log("sellProduct", sellProduct);
-  console.log("totalPage", totalPage);
-  console.log("pageNumLength", pageNumLength);
-  console.log("pageBtns", pageBtns);
-
   // page 버튼 6개씩 보여주기
   const prevPageNumLength = useCallback(() => {
     setpageNumLength(pageNumLength - 1); // 이전 페이지 세트로 이동
@@ -84,7 +79,6 @@ const SellCheck = ({ total, limit, page, setPage }) => {
       );
     setDisplayedProduct(displayedProduct);
   }, [sellProduct, pageNumLength, movePage]);
-  console.log(displayedProducts);
 
   return (
     <div className="section">
@@ -166,7 +160,6 @@ const SellCheck = ({ total, limit, page, setPage }) => {
                           <div className="text-button">
                             <Button
                               onClick={() => {
-                                const item = {};
                                 console.log(sellProduct[i].productId);
                                 call(
                                   `/user/sellcheck/${sellProduct[i].productId}`,

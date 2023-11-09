@@ -108,7 +108,6 @@ public class MyPageMemberService {
     // 주어진 사용자 정보와 비밀번호를 사용하여 사용자를 가져오는 메서드입니다.
     public Member getByCredentials(final String userId, final String password, final PasswordEncoder encoder) {
 
-        log.info(userId);
 
         final Member oriUser = memberRepository.findById(Long.parseLong(userId)).orElseThrow(ExceptionInInitializerError::new);
 
