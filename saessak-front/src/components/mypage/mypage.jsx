@@ -10,7 +10,6 @@ const MyPage = () => {
       // 로그인한 상태
       setIsLogin(true);
       call("/user/mypage", "GET", null).then((response) => {
-        console.log("==========useEffect 잘 가져왔나", response);
         setPrivacys(response.data[0]);
       });
     } else {

@@ -30,7 +30,7 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
             "AND P.sell_member_id = :memberId " +
             "AND (P.sell_status = 'SOLD_OUT' or P.sell_status = 'SELL' or P.sell_status = 'SELL_AND_SOLD_OUT') " +
             "GROUP BY P.product_id", nativeQuery = true)
-    List<WishListInter> sellMemberProductSelect(@Param("memberId") Long userId);
+    List<WishListInter>  sellMemberProductSelect(@Param("memberId") Long userId);
 
     @Query( value = "SELECT P.order_member_id AS orderMemberId, I.img_url AS imgUrl, " +
             "P.product_id AS productId, P.title, P.price, P.update_time AS updateTime, P.sell_status AS sellStatus " +
@@ -47,10 +47,7 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
     void deleteById(@Param("wishListId") Long wishListId);
 
 
-    @Query(value = "DELETE " +
-            "FROM buy_List " +
-            "WHERE buy_list_id = :buyListId", nativeQuery = true)
-    void deleteByMemberIdAndProductId(@Param("buyListId") Long buyListId);
+
 
     boolean existsByMemberIdAndProductId(Long memberId, Long productId);
 }

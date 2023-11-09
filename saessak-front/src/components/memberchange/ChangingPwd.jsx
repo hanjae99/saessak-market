@@ -9,7 +9,6 @@ const ChangingPwd = () => {
 
   useEffect(() => {
     call("/user/mypage", "GET", null).then((response) => {
-      console.log("==========useEffect 잘 가져왔나", response);
       setPrivacys(response.data[0]);
     });
   }, []);
@@ -22,7 +21,6 @@ const ChangingPwd = () => {
     e.preventDefault();
 
     call("/user/changingpwd", "POST", { password }).then((response) => {
-      console.log(response.error);
       if (response.error === "true") {
         movePage("/user/changingpass");
       } else if (response.error === "false") {

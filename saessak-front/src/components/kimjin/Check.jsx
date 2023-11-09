@@ -20,7 +20,6 @@ const Check = () => {
     call("/user/check", "GET").then((response) => {
       if (response && response.data) {
         setBuyProduct(response.data);
-        console.log("gd", response.data);
       }
     });
   }, []);
@@ -62,9 +61,6 @@ const Check = () => {
     makePageBtn(); // 페이지 버튼 생성 함수 호출
   }, [buyProduct, pageNumLength]);
 
-  console.log(pageNumLength);
-  console.log("안녕", pageBtns);
-
   // page 버튼 6개씩 보여주기
   const prevPageNumLength = useCallback(() => {
     setpageNumLength(pageNumLength - 1); // 이전 페이지 세트로 이동
@@ -86,7 +82,6 @@ const Check = () => {
       );
     setDisplayedProduct(displayedProduct);
   }, [buyProduct, pageNumLength, movePage]);
-  console.log(displayedProducts);
 
   return (
     <div className="section">
@@ -170,13 +165,13 @@ const Check = () => {
                               onClick={() => {
                                 console.log(buyProduct[i].buyListId);
                                 call(
-                                  `/user/check/${buyProduct[i].buyListId}`,
+                                  `/user/check/${buyProduct[i].productId}`,
                                   "DELETE"
                                 ).then((response) => {
                                   if (response.error === "success") {
                                     const filteredWish = buyProduct.filter(
                                       (w) =>
-                                        w.buyListId !== buyProduct[i].buyListId
+                                        w.productId !== buyProduct[i].productId
                                     );
                                     setBuyProduct(filteredWish);
                                   }

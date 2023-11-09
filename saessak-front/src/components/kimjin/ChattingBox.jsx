@@ -7,8 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const ChattingBox = () => {
   const [chat, setChat] = useState([]);
 
-  const movePages = useNavigate();
-
   const location = useLocation();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +26,6 @@ const ChattingBox = () => {
 
   useEffect(() => {
     uploadProduct(`/chatBox/chatBox/${page}`, "GET").then((response) => {
-      console.log(response.content);
       if (response && response !== null) {
         setChat(response.content);
       }
@@ -187,12 +184,16 @@ const ChattingBox = () => {
             </div>
           ))}
       </div>
-      <div className="pagination1" style={{ marginTop: "20px" }}>
-        {/* 이전 페이지로 이동하는 버튼 */}
-        <button onClick={goToPreviousPage}>이전</button>
-        {/* 다음 페이지로 이동하는 버튼 */}
-        <button onClick={goToNextPage}>다음</button>
-      </div>
+      {chat && chat.length !== 0 ? (
+        <div className="pagination1" style={{ marginTop: "20px" }}>
+          {/* 이전 페이지로 이동하는 버튼 */}
+          <button onClick={goToPreviousPage}>이전</button>
+          {/* 다음 페이지로 이동하는 버튼 */}
+          <button onClick={goToNextPage}>다음</button>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

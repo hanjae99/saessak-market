@@ -7,8 +7,6 @@ import { API_BASE_URL } from "../../ApiConfig";
 const ImgUpdate = ({ privacys }) => {
   // 이미지 URL을 관리하는 상태 변수
 
-  console.log("gd", privacys.userImgUrl);
-
   const [Image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
@@ -25,8 +23,6 @@ const ImgUpdate = ({ privacys }) => {
   // 파일 선택 시 호출되는 함수
   const onChange = (e) => {
     const formData = new FormData();
-
-    console.log(e.target.files[0]);
 
     if (e.target.files[0]) {
       formData.append("memberImg", e.target.files[0]);

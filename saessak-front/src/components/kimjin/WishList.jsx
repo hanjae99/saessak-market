@@ -19,8 +19,6 @@ const WishList = () => {
     });
   }, []);
 
-  console.log(wish);
-
   // 페이징 처리(한 페이지당 30개의 상품 노출)
   const [pageBtns, setPageBtns] = useState([]); // 페이지 버튼들을 저장하는 상태 변수
   const [pageNumLength, setpageNumLength] = useState(0);
@@ -58,9 +56,6 @@ const WishList = () => {
     makePageBtn(); // 페이지 버튼 생성 함수 호출
   }, [wish, pageNumLength]);
 
-  console.log(pageNumLength);
-  console.log("안녕", pageBtns);
-
   // page 버튼 6개씩 보여주기
   const prevPageNumLength = useCallback(() => {
     setpageNumLength(pageNumLength - 1); // 이전 페이지 세트로 이동
@@ -82,7 +77,6 @@ const WishList = () => {
       );
     setDisplayedProduct(displayedProduct);
   }, [wish, pageNumLength, movePage]);
-  console.log(displayedProducts);
 
   return (
     <div className="section">

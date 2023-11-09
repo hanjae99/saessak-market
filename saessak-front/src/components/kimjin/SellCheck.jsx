@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Manu.css";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { call } from "../../ApiService";
+import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../ApiConfig";
-import { useCallback } from "react";
+import { call } from "../../ApiService";
 import priceComma from "../../pricecomma";
+import "./Manu.css";
 
 const SellCheck = ({ total, limit, page, setPage }) => {
   const movePages = useNavigate(); // 내비게이션 기능 사용하기 위해 useNavigate 훅 사용
@@ -59,11 +58,6 @@ const SellCheck = ({ total, limit, page, setPage }) => {
     makePageBtn(); // 페이지 버튼 생성 함수 호출
   }, [sellProduct, pageNumLength]);
 
-  console.log("sellProduct", sellProduct);
-  console.log("totalPage", totalPage);
-  console.log("pageNumLength", pageNumLength);
-  console.log("pageBtns", pageBtns);
-
   // page 버튼 6개씩 보여주기
   const prevPageNumLength = useCallback(() => {
     setpageNumLength(pageNumLength - 1); // 이전 페이지 세트로 이동
@@ -85,7 +79,6 @@ const SellCheck = ({ total, limit, page, setPage }) => {
       );
     setDisplayedProduct(displayedProduct);
   }, [sellProduct, pageNumLength, movePage]);
-  console.log(displayedProducts);
 
   return (
     <div className="section">
@@ -167,7 +160,6 @@ const SellCheck = ({ total, limit, page, setPage }) => {
                           <div className="text-button">
                             <Button
                               onClick={() => {
-                                const item = {};
                                 console.log(sellProduct[i].productId);
                                 call(
                                   `/user/sellcheck/${sellProduct[i].productId}`,
