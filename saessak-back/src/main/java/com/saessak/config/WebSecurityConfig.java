@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/chatting",
                         "/swagger-resources/**", "/swagger-ui/**",
                         "/swagger/**","/v3/api-docs").permitAll()
+//                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterAfter(
