@@ -242,6 +242,12 @@ const Changing = () => {
             >
               <button
                 className="changing-com-button"
+                onClick={(e) => movePage("/user/mypage")}
+              >
+                취소
+              </button>
+              <button
+                className="changing-com-button"
                 onClick={(e) => movePage("/user/changingpwd")}
               >
                 비밀번호 변경

@@ -76,10 +76,10 @@ public class WishListController {
 
     }
 
-    @DeleteMapping("/check/{buyListId}")
-    public ResponseEntity<?> deleteBuyCheck(@PathVariable("buyListId") Long buyListId){
+    @DeleteMapping("/check/{productId}")
+    public ResponseEntity<?> deleteBuyCheck(@PathVariable("productId") Long productId){
         try {
-            wishListService.buyDelete(buyListId);
+            wishListService.buyDelete( productId);
             ResponseDTO<String> response = ResponseDTO.<String>builder().error("success").build();
             return ResponseEntity.ok().body(response);
         }catch (Exception e){

@@ -170,13 +170,13 @@ const Check = () => {
                               onClick={() => {
                                 console.log(buyProduct[i].buyListId);
                                 call(
-                                  `/user/check/${buyProduct[i].buyListId}`,
+                                  `/user/check/${buyProduct[i].productId}`,
                                   "DELETE"
                                 ).then((response) => {
                                   if (response.error === "success") {
                                     const filteredWish = buyProduct.filter(
                                       (w) =>
-                                        w.buyListId !== buyProduct[i].buyListId
+                                        w.productId !== buyProduct[i].productId
                                     );
                                     setBuyProduct(filteredWish);
                                   }
