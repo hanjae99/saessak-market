@@ -54,8 +54,8 @@ const SignUp = () => {
       emailPassCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
-      // !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
-      // isSmsChecked !== 1 ||
+      !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
+      isSmsChecked !== 1 ||
       !newUser.gender
     ) {
       setSignFailed(true);
@@ -264,6 +264,7 @@ const SignUp = () => {
     };
 
     call("/signup/smsCheck", "POST", request).then((response) => {
+      console.log(response);
       if (response && response.message === "success") {
         localStorage.setItem("SMSTOKEN", "");
         localStorage.setItem("SMSTOKENEXPIRE", "");
@@ -500,8 +501,13 @@ const SignUp = () => {
                   type="text"
                   placeholder="ex):복사한 인증키를 입력해주세요"
                   onChange={onSmsCheckInput}
+                  readOnly={isSmsChecked === 1 ? true : false}
                 />
-                <button className="signup-bt2" onClick={sendSmsCheck}>
+                <button
+                  className="signup-bt2"
+                  onClick={sendSmsCheck}
+                  disabled={isSmsChecked === 1 ? true : false}
+                >
                   인증
                 </button>
               </div>

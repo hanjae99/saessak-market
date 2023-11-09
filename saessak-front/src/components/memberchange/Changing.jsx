@@ -180,6 +180,7 @@ const Changing = () => {
                     borderRadius: "4px",
                     outlineColor: "rgba(109, 200, 42, 1)",
                   }}
+                  readOnly
                 />
                 <input
                   type="text"

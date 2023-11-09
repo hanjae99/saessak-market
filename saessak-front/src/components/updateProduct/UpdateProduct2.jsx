@@ -150,11 +150,12 @@ const UpdateProduct2 = () => {
 
     // 상품 및 기존 이미지 정보만 먼저 업데이트
     call("/product/update", "POST", request).then((response) => {
-      // const result = response.data[0];
+      const result = response.data[0];
       // alert(result);
-      // if (result === "success") {
-      //   navigate("/search");
-      // }
+      if (result === "success") {
+        alert("상품이 수정 되었습니다!");
+        navigate("/search");
+      }
     });
 
     // 새로 추가한 이미지 업로드
@@ -166,12 +167,12 @@ const UpdateProduct2 = () => {
       }
 
       uploadProduct("/product/upload", "POST", uploadImg).then((response) => {
-        const result2 = response.data[0];
+        // const result2 = response.data[0];
         // alert(result2);
-        if (result2 === "imgUpload success") {
-          alert("상품이 수정 되었습니다!");
-          navigate("/search");
-        }
+        // if (result2 === "imgUpload success") {
+        // alert("상품이 수정 되었습니다!");
+        // navigate("/search");
+        // }
       });
     }
   };
