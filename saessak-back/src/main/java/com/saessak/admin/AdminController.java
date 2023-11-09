@@ -58,7 +58,17 @@ public class AdminController {
       return ResponseEntity.ok().body(responseDTO);
     }
 
-    List<AdminImageDTO> list = pi.getContent();
+    List<AdminImageDTO> list = pi.getContent().stream().peek(p->{
+      if (p.getProduct_id()!=null) {
+        p.setNickName(adminService.getNickNameFromProduct(p.getProduct_id()));
+      }
+      if (p.getBoard_id()!=null) {
+        p.setNickName(adminService.getNickNameFromBoard(p.getBoard_id()));
+      }
+      if (p.getMember_id()!=null) {
+        p.setNickName(adminService.getMember(p.getMember_id()).getNickName());
+      }
+    }).collect(Collectors.toList());
 
     int totalPageSize = pi.getTotalPages();
 

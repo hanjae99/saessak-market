@@ -17,6 +17,7 @@ public class AdminImageDTO {
   private Long board_id;
   private Long product_id;
   private Long id;
+  private String nickName;
 
   @QueryProjection
   public AdminImageDTO(

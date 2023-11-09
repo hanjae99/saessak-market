@@ -57,4 +57,12 @@ public class AdminService {
   public void saveImage(Image image) {
     imageRepository.save(image);
   }
+
+  public String getNickNameFromProduct(Long productId) {
+    return getProduct(productId).getSellMember().getNickName();
+  }
+
+  public String getNickNameFromBoard(Long boardId) {
+    return getBoard(boardId).getMember().getNickName();
+  }
 }

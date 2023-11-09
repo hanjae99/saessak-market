@@ -15,6 +15,9 @@ const ImageViewer = () => {
   const adminImageViewer = useRef();
   const [pageSize, setPageSize] = useState(0);
 
+  const imageModal = useRef();
+  const [modalData, setModalData] = useState();
+
   const data = useSelector(state => state.adminImageSL);
   const dispatch = useDispatch();
   const observerRef = useRef(null);
@@ -96,26 +99,89 @@ const ImageViewer = () => {
             left: i % imagesLineCount * (imageBaseSize + 2) * data.imageScale + (i % imagesLineCount + 1) * imagesMargin - 14 + 'px',
             top: viewerTop + Math.floor(i / imagesLineCount) * (imageBaseSize + 2) * data.imageScale + (Math.floor(i / imagesLineCount) + 1) * imagesMargin + 'px',
           }
+          const onClick = () => {
+            imageModal.current.style.display = 'flex';
+            setModalData(p);
+          };
           return (
             <div key={i} style={{ ...divStyle, ...position }}>
-              <img src={API_BASE_URL + p.imgUrl} alt='images' style={imgStyle}></img>
-              {/* {p.url} */}
+              <img src={API_BASE_URL + p.imgUrl} alt='images' style={imgStyle} onClick={onClick}></img>
             </div>
           )
         })}
-        {data.moreScroll&&<div ref={refHook} style={{
-              width: '100px', height: '100px', position: 'absolute',
-              top: bottomtop + 'px'
-            }}></div>}
-        {(()=>{
+        {data.moreScroll && <div ref={refHook} style={{
+          width: '100px', height: '100px', position: 'absolute',
+          top: bottomtop + 'px'
+        }}></div>}
+        {(() => {
           if (!data.moreScroll) {
             return (<div style={{
-              left:'30%', fontSize:'2em',
+              left: '30%', fontSize: '2em',
               height: '100px', position: 'absolute',
-              top: 60+bottomtop + 'px', className: 'abcd'
+              top: 60 + bottomtop + 'px', className: 'abcd'
             }}>end data</div>)
-          } 
+          }
         })()}
+      </div>
+      <div ref={imageModal} style={{
+        position: 'fixed',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        display: 'none',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'rgba(0, 0, 0, 0.5)',
+      }} onClick={(e) => {
+        if (e.target === imageModal.current) {
+          imageModal.current.style.display = 'none';
+        }
+      }}>
+        <div style={{
+          backgroundColor: `#ffffff`,
+          width: `50%`,
+          height: `80%`,
+          padding: `15px`,
+          position: 'relative',
+          border: '1px solid black',
+        }} onClick={() => { }} >
+          <img src={modalData && modalData.imgUrl} alt='img' style={{ width: '60%', height: 'calc(100% - 5px)' }}></img>
+          {
+            (() => {
+              let style = {
+                position: 'absolute',
+                left: '65%',
+                fontSize: '1.3rem',
+                padding: '10px'
+              }
+              return (
+                <>
+                  <div style={{...style, top:'17%'}}>
+                    글쓴이 : {modalData && modalData.nickName}
+                  </div>
+                  <button style={{...style, top:'57%'}} onClick={()=>{
+                    const url = "/admin/black/image/" + (modalData && modalData.id);
+                    call(url, "GET").then((response) => {
+                      console.log(response)
+                      alert(response.msg);
+                      imageModal.current.style.display = 'none';
+                    })
+                  }}>글 삭제</button>
+                  <button style={{...style, top:'67%'}} onClick={()=>{
+                    const url = "/admin/black/user/" + (modalData && modalData.id);
+                    call(url, "GET").then((response) => {
+                      console.log(response)
+                      alert(response.msg);
+                      imageModal.current.style.display = 'none';
+                    })
+                  }}>유저 블랙</button>
+                </>
+              )
+            })()
+          }
+        </div>
+
       </div>
     </>
   )
@@ -139,10 +205,10 @@ const ImageController = () => {
     <div className='adminImageController' style={style} >
       <div title='무한스크롤 멈추기/계속하기' onClick={(e) => {
         dispatch({ type: 'adminImageSL/switchMoreScroll' });
-      }} style={{cursor: 'pointer'}}>
+      }} style={{ cursor: 'pointer' }}>
         <HiMiniPlayPause />{ms ? <FaRegHandPointDown /> : <FaRegHand />}
       </div>
-      <div style={{cursor: 'pointer'}} onClick={() => {
+      <div style={{ cursor: 'pointer' }} onClick={() => {
         console.log(data);
         const url = "/admin/save/images";
         call(url, "POST", data).then((response) => {
@@ -208,7 +274,7 @@ const AdminImage = ({ setModalData, page }) => {
   return (
     <>
       <ImageViewer />
-      <ImageController />
+      <ImageController setModalData={setModalData} />
     </>
   )
 }
