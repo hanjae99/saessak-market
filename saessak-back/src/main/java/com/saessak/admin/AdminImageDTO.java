@@ -25,13 +25,15 @@ public class AdminImageDTO {
       Long member_id,
       Long board_id,
       Long product_id,
-      Long id
+      Long id,
+      String nickName
   ) {
     this.imgUrl = imgUrl;
     this.member_id = member_id;
     this.board_id = board_id;
     this.product_id = product_id;
     this.id = id;
+    this.nickName = nickName;
   }
 
 }
