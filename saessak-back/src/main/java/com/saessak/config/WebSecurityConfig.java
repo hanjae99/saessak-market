@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/detail/**",
                         "/board/main/**",
                         "/board/ntc/**",
+                        "/board/dummyset",
                         "/boardmain/**",
                         "/boardmain",
                         "/images/**",

@@ -3,16 +3,16 @@ package com.saessak.admin;
 
 import com.saessak.board.BoardDTO;
 import com.saessak.board.BoardResponseDTO;
+import com.saessak.entity.Image;
+import com.saessak.entity.Member;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +27,36 @@ public class AdminController {
   @Autowired
   private AdminService adminService;
 
+
+  @PostMapping("/save/images")
+  public ResponseEntity<?> saveImageList(@RequestBody List<AdminImageDTO> data, @AuthenticationPrincipal String userId) {
+    Member admin = adminService.getMember(userId);
+    log.info("-----------------------"+admin.getNickName());
+    data.forEach(p -> {
+      Image image = adminService.getImage(p.getId());
+      image.setAdminMember(admin);
+      adminService.saveImage(image);
+    });
+    AdminResponseDTO<AdminImageDTO> responseDTO = AdminResponseDTO.<AdminImageDTO>builder()
+        .msg("save ok")
+        .build();
+    return ResponseEntity.ok().body(responseDTO);
+  }
+
   @GetMapping("/images/{page}")
   public ResponseEntity<?> getImageList(@PathVariable("page") int page) {
 
     int pageSize = 50;
 
-    Pageable pageable = PageRequest.of(page-1,pageSize);
+    Pageable pageable = PageRequest.of(page - 1, pageSize);
     Page<AdminImageDTO> pi = adminService.getImageList(pageable);
 
+    if (pi.isEmpty()) {
+      AdminResponseDTO<AdminImageDTO> responseDTO = AdminResponseDTO.<AdminImageDTO>builder()
+          .msg("empty")
+          .build();
+      return ResponseEntity.ok().body(responseDTO);
+    }
 
     List<AdminImageDTO> list = pi.getContent();
 

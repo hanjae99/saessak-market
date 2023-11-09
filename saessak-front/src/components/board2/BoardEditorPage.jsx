@@ -51,8 +51,6 @@ const BoardEditorPage = () => {
     return false;
   };
 
-  // console.log("contests : ",contents);
-  // console.log("imageList : ",imageList);
 
   const onSubmit = (e) => {
     e.preventDefault();

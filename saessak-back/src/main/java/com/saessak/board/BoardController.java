@@ -28,6 +28,33 @@ public class BoardController {
   @Autowired
   private BoardService boardService;
 
+  @GetMapping("/dummyset")
+  public ResponseEntity<?> setDummy() {
+
+    for (int i=0; i<200; i++) {
+
+      Board board = Board.builder()
+          .title("더미"+i)
+          .member(boardService.getMember(1L))
+          .content("더미더미")
+          .showStatus(ShowStatus.SHOW)
+          .boardName("main")
+          .build();
+      Board savedBoard = boardService.saveBoard(board);
+
+      BoardMain boardMain = new BoardMain();
+      boardMain.setBoard(savedBoard);
+      boardService.saveBoardMain(boardMain);
+    }
+
+
+    BoardResponseDTO<?> responseDTO = BoardResponseDTO.builder()
+        .msg("good")
+        .build();
+
+    return ResponseEntity.ok().body(responseDTO);
+  }
+
 
 
   @GetMapping("/{boardName}/detail/{boardId}")
@@ -56,13 +83,6 @@ public class BoardController {
       }
     }
 
-
-
-
-
-
-
-
     BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
         .list(list)
         .viewerRole(role)
@@ -87,7 +107,7 @@ public class BoardController {
 
 
 
-    int pageSize = 15;
+    int pageSize = 10;
     String role = "any";
 
     if (!userId.equals("anonymousUser")) {
@@ -205,8 +225,10 @@ public class BoardController {
         break;
     }
 
+    BoardResponseDTO<?> responseDTO = BoardResponseDTO.builder()
+        .msg("ok").build();
 
-    return ResponseEntity.ok().body("kk");
+    return ResponseEntity.ok().body(responseDTO);
 
   }
 

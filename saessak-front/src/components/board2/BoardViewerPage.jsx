@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './BoardMain.css';
 import './BoardInfo.css';
+import './NoticeBoard.css';
 import NoticeBoardList from './NoticeBoardList';
 import Header from '../main/Header';
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
 import CommentViewer from './CommentViewer';
 import { RxEraser } from 'react-icons/rx';
 import { BsPencil } from 'react-icons/bs';
@@ -60,7 +60,6 @@ const BoardViewerPage = () => {
           <NoticeBoardList />
         </div>
         <div className="board-center">
-          <h3>카테고리</h3>
           <h1>{data.list&&data.list[0].title}</h1>
           <div className="board-info-head">
             <span className="board-info-head-left">{data.list&&data.list[0].writer}</span>
