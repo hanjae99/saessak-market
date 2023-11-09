@@ -133,8 +133,18 @@ const Detail = () => {
               )}
             </div>
             <div className="detail-productsitem2">
-              <div>
+              <div className="detail-productsTitleAndSellStatus">
                 <h1>제품명</h1>
+                {detaildatas.sellStatus === "SELL" ? (
+                  <p className="selling-status selling">판매중</p>
+                ) : (
+                  ""
+                )}
+                {detaildatas.sellStatus === "SOLD_OUT" ? (
+                  <p className="selling-status sold-out">판매완료</p>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="detail-productsitem-divname">
                 <p className="detail-productsitem-div-name">
