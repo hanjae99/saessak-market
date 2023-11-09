@@ -31,7 +31,7 @@ public class BoardController {
   @GetMapping("/dummyset")
   public ResponseEntity<?> setDummy() {
 
-    for (int i=0; i<200; i++) {
+    for (int i=0; i<220; i++) {
 
       Board board = Board.builder()
           .title("더미"+i)
