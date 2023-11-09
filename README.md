@@ -42,6 +42,8 @@ MariaDB
 
 ### etc
 
+### etc
+
 node.js, yarn
 
 ## 3.2 진행 일정 (WBS)

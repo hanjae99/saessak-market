@@ -12,6 +12,7 @@ import "./Header.scss";
 const Header = () => {
   const [value, setValue] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
   const [categoryDTO, setCategoryDTO] = useState([]);
   const [loginMinute, setLoginMinute] = useState("");
@@ -52,6 +53,12 @@ const Header = () => {
       }
     });
 
+    // 관리자일 경우 관리자 페이지로 이동하는 버튼 노출
+    if (localStorage.getItem("ISADMIN") === "true") {
+      setIsAdmin(true);
+      return;
+    }
+
     intervalId.current = setInterval(() => {
       const now = new Date();
       setLoginMinute(
@@ -73,8 +80,10 @@ const Header = () => {
       localStorage.setItem("ACCESS_TOKEN", "");
       localStorage.setItem("EXPIREDATE", "");
       localStorage.setItem("NICKNAME", "");
+      localStorage.setItem("ISADMIN", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
+      setIsAdmin(false);
       navigate("/");
     } else {
       navigate("/login");
@@ -97,9 +106,11 @@ const Header = () => {
       <div id="headContainer">
         <div className="headContent">
           <div className="logo">
-            <Link to="/">
-              <img src="/img/saessak.png" alt="logo" />
-            </Link>
+            <div className="logo-image">
+              <Link to="/">
+                <img src="/img/mainLogo_sang.png" alt="logo" />
+              </Link>
+            </div>
             <div className="logo-text">
               <Link to="/">
                 <img src="/img/logo.png" alt="새싹마켓 logo" />
@@ -175,7 +186,16 @@ const Header = () => {
             </div>
           </nav>
         </div>
-        {isLogin ? (
+        {isAdmin ? (
+          <div className="login-info">
+            <div className="loginedUserNick">
+              환영해요, {localStorage.getItem("NICKNAME")} 님
+            </div>
+            <Button variant="contained" onClick={() => navigate("/admin")}>
+              관리자
+            </Button>
+          </div>
+        ) : isLogin ? (
           <div className="login-info">
             <div className="loginedUserNick">
               환영해요, {localStorage.getItem("NICKNAME")} 님
