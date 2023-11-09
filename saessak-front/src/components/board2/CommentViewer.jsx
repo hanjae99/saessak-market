@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs'
 import { FaXmark } from 'react-icons/fa6'
@@ -155,6 +155,7 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
         
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(()=>{
@@ -162,6 +163,7 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
       document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").scrollIntoView({ behavior: "smooth",block: "center"});
       dispatch({ type: 'comments/setData', payload: {...commentData, updateNow:0 } })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[commentData.updateNow])
 
 

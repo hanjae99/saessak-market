@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { call } from "../../ApiService";
 import { API_BASE_URL } from '../../ApiConfig';
@@ -57,6 +57,7 @@ const ImageViewer = () => {
     return () => {
       if (observerRef.current) observerRef.current.disconnect();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   window.onresize = () => {
     dispatch({ type: 'adminImageSL/setImageScale', payload: 0 });

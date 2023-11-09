@@ -17,7 +17,7 @@ const BoardPageView = () => {
     title: "제목",
     writer: "작성자",
     regTime: "작성시간",
-    recommend: "조회수",
+    clickCount: "조회수",
   });
   const [pageSize, setPageSize] = useState(10);
   const [totalPageSize, setTotalPageSize] = useState(1);
@@ -41,6 +41,7 @@ const BoardPageView = () => {
         setUserRole(response.viewerRole);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardName, page]);
 
   const onViewListClick = (e, p) => {
@@ -88,17 +89,16 @@ const BoardPageView = () => {
                     cursor: 'pointer',
                     // color: 'blue',
                   };
-                  console.log(startPage,endPage,endPage - startPage + 1);
+                  // console.log(startPage,endPage,endPage - startPage + 1);
                   for (let i = 0; i < 10; i++) {
                     if (i+startPage>endPage) {
                       break;
                     }
-                    result.push(<li className="page-item" key={i} style={style} onClick={() => {
+                    result.push(<li className="page-item" key={i} style={i+startPage+""===thisPage+""?{...style, fontWeight:'bold'}:style} onClick={() => {
                       navigate("/board/list/" + bn + "/" + (i+startPage));
                     }}>{i+startPage}</li>)
-                    console.log(i);
                   }
-                  console.log(result);
+                  // console.log(result);
                   return result;
                 })()
               }

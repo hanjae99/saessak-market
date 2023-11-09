@@ -63,6 +63,8 @@ public class BoardController {
                                            @AuthenticationPrincipal String userId) {
     List<BoardDTO> list = new ArrayList<>();
     Board board = boardService.getBoard(boardId);
+    board.setClickCount(board.getClickCount()+1);
+    boardService.saveBoard(board);
     BoardDTO boardDTO = BoardDTO.builder()
         .title(board.getTitle())
         .content(board.getContent())
@@ -70,6 +72,7 @@ public class BoardController {
         .regTime(board.getRegTime())
         .updateTime(board.getUpdateTime())
         .writer(board.getMember().getNickName())
+        .clickCount(board.getClickCount())
         .build();
     list.add(boardDTO);
 

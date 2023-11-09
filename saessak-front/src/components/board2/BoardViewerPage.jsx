@@ -31,6 +31,7 @@ const BoardViewerPage = () => {
         dispatch({type:'boardData/setData',payload:response});
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardName,boardId])
 
   const navigate = useNavigate();
@@ -62,9 +63,9 @@ const BoardViewerPage = () => {
         <div className="board-center">
           <h1>{data.list&&data.list[0].title}</h1>
           <div className="board-info-head">
-            <span className="board-info-head-left">{data.list&&data.list[0].writer}</span>
-            <span className="board-info-head-center">{data.list&&data.list[0].clickCount},{data.list&&data.list[0].recommend}</span>
-            <span className="board-info-head-right">{new Date(data.list&&data.list[0].regTime).toLocaleString()}</span>
+            글쓴이 :　<span className="board-info-head-left"> {data.list&&data.list[0].writer}</span>
+            조회수 :　<span className="board-info-head-center"> {data.list&&data.list[0].clickCount}</span>
+            작성일 :　<span className="board-info-head-right"> {new Date(data.list&&data.list[0].regTime).toLocaleString()}</span>
             
             {data.isMaster!=="no"&&(<><div onClick={handleFix} className="board-info-btn">
               <BsPencil />
