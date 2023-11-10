@@ -34,8 +34,8 @@ const game = createSlice({
   initialState,
   reducers: {
     setGameData: (state, action) => {
-      console.log("나 액션이야", action.payload);
-      console.log("나는 스테이트야", state.data);
+      // console.log("나 액션이야", action.payload);
+      // console.log("나는 스테이트야", state.data);
       // state.data = action.payload;
       return { ...state, data: action.payload };
     },

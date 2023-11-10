@@ -14,7 +14,7 @@ const Game = () => {
 
   useEffect(() => {
     call("/game", "GET").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(setGameData(response.data));
     });
   }, []);
@@ -22,7 +22,7 @@ const Game = () => {
   const game = useSelector((state) => state.game.data);
   const score = useSelector((state) => state.score.no);
 
-  console.log("나게임1 : ", game);
+  // console.log("나게임1 : ", game);
 
   const [index, setIndex] = useState(0);
   const [inputprice, setInputprice] = useState("");
@@ -32,6 +32,9 @@ const Game = () => {
   const [result, setResult] = useState(0);
 
   const onIncrease = () => {
+    if (index === 0) {
+      dispatch({ type: "score/resultReset" });
+    }
     if (index < 10) {
       setIndex(index + 1);
       dispatch({ type: "score/resultadd", payload: result });
@@ -161,6 +164,7 @@ const Game = () => {
               <GameModal
                 setModalOpen={setModalOpen}
                 inputprice={inputprice}
+                setInputprice={setInputprice}
                 result={result}
                 onIncrease={onIncrease}
                 index={index}

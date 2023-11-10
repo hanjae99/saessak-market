@@ -7,6 +7,7 @@ import com.saessak.imgfile.ProductImgService;
 import com.saessak.main.dto.*;
 import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
     private final ProductCategoryRepository productCategoryRepository;
+
+    @Value("${imgLocation}")
+    private String imgLocation;
 
     // 메인, 상품 검색 시 상품 목록 페이징 결과 읽어오기
     public Page<ProductDTO> read(ProductDTO productDTO, Pageable pageable){
@@ -151,8 +155,6 @@ public class ProductService {
 
     // 상품 + 이미지 업데이트
     public Long updateProduct(ProductFormDTO productFormDTO) throws Exception {
-//        Member member = memberRepository.findById(Long.parseLong(memberId))
-//                .orElseThrow(EntityNotFoundException::new);
         // 상품 정보만 업데이트
         Long productId = updateProductOnly(productFormDTO);
 
@@ -166,11 +168,9 @@ public class ProductService {
         // 기존 상품 등록정보가 있을 경우 (변경점 찾아서 업데이트)
         if (!imgDTOList.isEmpty()) {
             for (ProductImageDTO imgDTO : imgDTOList) {
-                System.out.println("images/product 로 시작함!");
-
                 // 원활한 비교를 위해 mulfipart 타입으로 변경
                 MultipartFile imgMultiFile = fileService.fileToMultipart(
-                        "/Users/hanjae/saessak-image/images/product/" + imgDTO.getImgName());
+                        imgLocation + "/images/product/" + imgDTO.getImgName());
                 savedFileList.add(imgMultiFile);
                 savedFileOriNameList.add(imgDTO.getOriName());
             }
@@ -211,5 +211,10 @@ public class ProductService {
     // 신규 상품 부분
     public List<MainProductFormDTO> searchNewestProduct(){
         return productRepository.getNewestProduct();
+    }
+
+    public void clickCountPlus(Long productId){
+        Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+        product.setClickCount(product.getClickCount()+1);
     }
 }

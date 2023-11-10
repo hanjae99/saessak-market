@@ -29,16 +29,22 @@ const Login = () => {
       //const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
       // console.log("login" + login);
       login(loginDTO).then((response) => {
-        console.log("response : ", response);
+        // console.log("response : ", response);
         if (!response) {
+          return setLoginFailed(true);
+        } else if (response.role === "DELETED") {
           return setLoginFailed(true);
         } else {
           localStorage.setItem("ACCESS_TOKEN", response.token);
           localStorage.setItem("EXPIREDATE", response.expiration);
           localStorage.setItem("NICKNAME", response.nickName);
-          console.log("response : ", response);
+          // console.log("response : ", response);
+          // 관리자일 경우
           if (response.role === "ADMIN") {
-            return (window.location.href = "/admin");
+            const adminExpireDate = new Date(9999, 1, 1);
+            localStorage.setItem("EXPIREDATE", adminExpireDate);
+            localStorage.setItem("ISADMIN", "true");
+            // return (window.location.href = "/admin");
           }
           return (window.location.href = backUrl);
         }

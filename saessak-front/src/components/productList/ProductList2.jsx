@@ -1,3 +1,4 @@
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   Button,
   ButtonGroup,
@@ -17,21 +18,15 @@ import {
 } from "@mui/material";
 import qs from "qs";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  MdClose,
-  MdFavorite,
-  MdFavoriteBorder,
-  MdVisibility,
-} from "react-icons/md";
+import { MdClose, MdFavorite, MdVisibility } from "react-icons/md";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../ApiConfig";
 import { call } from "../../ApiService";
+import { changeDateFormat } from "../../dateFormat";
+import priceComma from "../../pricecomma";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "./ProductList.scss";
-import { API_BASE_URL } from "../../ApiConfig";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import priceComma from "../../pricecomma";
-import { changeDateFormat } from "../../dateFormat";
 
 const ProductList2 = () => {
   const { searchItem } = useParams();
@@ -58,14 +53,10 @@ const ProductList2 = () => {
   if (!page) {
     page = 1;
   }
-  console.log(searchItem);
-  console.log("카테고리: ", category);
-  console.log("페이지: ", page);
 
   useEffect(() => {
     // 카테고리 정보 가져오기
     call("/product/searchcate", "GET").then((response) => {
-      console.log(response.data);
       if (response.data && response.data != null) {
         setCategoryDTO(response.data);
       }
@@ -97,9 +88,7 @@ const ProductList2 = () => {
       request.searchBy = "category_num";
       request.searchQuery = category;
     }
-    console.log(request);
     call(`/product/search/${page}`, "POST", request).then((response) => {
-      console.log(response);
       setSearchDTO(response);
       // setSelectedIndex(0);
     });
@@ -125,43 +114,17 @@ const ProductList2 = () => {
     setSoldOutChecked(!soldOutChecked);
   };
 
-  // const sortByDate = () => {
-  //   const newSearchDTO = searchDTO;
-  //   searchDTO.content.sort((a, b) => (a.updateTime < b.updateTime ? 1 : -1));
-
-  //   setSearchDTO(newSearchDTO);
-  // };
-
-  // const sortByWish = () => {
-  //   const newSearchDTO = searchDTO;
-  //   searchDTO.content.sort((a, b) => (a.wishedCount < b.wishedCount ? 1 : -1));
-
-  //   setSearchDTO(newSearchDTO);
-  // };
-
-  // const sortByClick = () => {
-  //   const newSearchDTO = searchDTO;
-  //   searchDTO.content.sort((a, b) =>
-  //     a.clickedCount < b.clickedCount ? 1 : -1
-  //   );
-
-  //   setSearchDTO(newSearchDTO);
-  // };
-
   const handleMenuItemClick = (e, index) => {
     setOpen(false);
     setSelectedIndex(index);
     if (index === 0) {
-      console.log("최신순");
-      // sortByDate();
+      // console.log("최신순");
       setSortBy("Date");
     } else if (index === 1) {
-      console.log("찜순");
-      // sortByWish();
+      // console.log("찜순");
       setSortBy("Wish");
     } else if (index === 2) {
-      console.log("조회순");
-      // sortByClick();
+      // console.log("조회순");
       setSortBy("Click");
     }
   };
@@ -193,7 +156,7 @@ const ProductList2 = () => {
         <div className="filterContainer">
           <div>
             <div className="filterBox">
-              <h2>필터</h2>
+              <h3>필터</h3>
               {searchItem ? (
                 <button className="filter" onClick={removeSearch}>
                   {searchItem} <MdClose />
@@ -270,6 +233,7 @@ const ProductList2 = () => {
                     />
                   }
                   label="판매완료"
+                  style={{ marginRight: "0px" }}
                 />
               </FormGroup>
             </div>
@@ -347,17 +311,29 @@ const ProductList2 = () => {
                     navigate("/detail/" + dto.id);
                   }}
                 >
-                  <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
+                  <div
+                    className={
+                      dto.sellStatus === "SELL"
+                        ? "item-sellImageBox"
+                        : "item-soldOutImageBox"
+                    }
+                  >
+                    <img src={API_BASE_URL + dto.imgUrl} alt={dto.title} />
+                  </div>
                   <div className="item-title">
                     <p>{dto.title}</p>
                   </div>
-                  <p>{priceComma(dto.price)}원</p>
+                  <div className="item-price">
+                    <p>{priceComma(dto.price)}원</p>
+                  </div>
                   <div
                     className="item-info"
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    // style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <div>{changeDateFormat(dto.updateTime)}전</div>
-                    <div>
+                    <div className="item-info-time">
+                      {changeDateFormat(dto.regTime)}전
+                    </div>
+                    <div className="item-info-count">
                       <MdVisibility style={{ fontSize: "14px" }} />{" "}
                       {dto.clickedCount}{" "}
                       <MdFavorite style={{ fontSize: "14px" }} />{" "}

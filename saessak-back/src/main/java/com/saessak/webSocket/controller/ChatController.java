@@ -1,5 +1,6 @@
 package com.saessak.webSocket.controller;
 
+import com.saessak.entity.Chat;
 import com.saessak.webSocket.dto.ChatDTO;
 import com.saessak.webSocket.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +22,13 @@ public class ChatController {
     @MessageMapping("/chat/{chatBoxId}")
     public void sendToMessage(@DestinationVariable("chatBoxId") String chatBoxId, ChatDTO chatDTO) {
 
+        System.out.println("시간: " + chatDTO.getRegTime());
         Long memberId = chatDTO.getMemberId();
         String content = chatDTO.getContent();
         Long chatBox = Long.valueOf(chatBoxId);
 
-        chatService.saveMessage(chatBox, memberId, content);
+        Chat savedChat = chatService.saveMessage(chatBox, memberId, content);
+        chatDTO.setRegTime(savedChat.getRegTime());
 
         simpMessageSendingOperations.convertAndSend("/topic/chatMessages/" + chatBoxId, chatDTO);
 

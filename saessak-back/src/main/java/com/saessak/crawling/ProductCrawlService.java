@@ -16,6 +16,8 @@ import javax.persistence.EntityNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.time.Instant;
@@ -23,11 +25,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-//@Transactional
+@Transactional
 public class ProductCrawlService {
 
     private final ProductRepository productRepository;
@@ -41,21 +44,34 @@ public class ProductCrawlService {
 
     // 중고나라 크롤링 메소드
     // 대분류(1~20번 사이 상품)만 긁어옴
-    public void insert(){
-        for (int i=13; i<=20; i++){
+    public void insert() {
+        for (int i=1; i<=20; i++){
             if (i == 18){
                 // 중고나라 카테고리는 18번이 누락되어있음
                 continue;
             }
+//            try {
+            Document doc = null;
             try {
-                Document doc = Jsoup.connect("https://web.joongna.com/search?category=" + i + "&page=1").get();
+                doc = Jsoup.connect("https://web.joongna.com/search?category=" + i + "&page=1").get();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("카테고리 가져오는곳에서 오류발생!");
+                break;
+            }
 
-                Elements link = doc.select("main div.w-full ul.grid a.group");
+            Elements link = doc.select("main div.w-full ul.grid a.group");
                 // 광고 거르고 가져오기
                 for(int j=0; j<link.size(); j++){
                     if (link.get(j).attr("href").contains("product")) {
 //                        System.out.println(link.get(j).attr("href"));
-                        Document doc_s = Jsoup.connect("https://web.joongna.com" + link.get(j).attr("href")).get();
+                        Document doc_s = null;
+                        try {
+                            doc_s = Jsoup.connect("https://web.joongna.com" + link.get(j).attr("href")).get();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            continue;
+                        }
                         System.out.printf("------------상품 번호: %d-------------\n", j+1);
                         // 큰 카테고리 번호 가져오기
                         Element category = doc_s.select("main div.pt-4 div.pb-4 li.text-sm a.capitalize").get(0);
@@ -140,25 +156,30 @@ public class ProductCrawlService {
                                 fileSrcText = fileSrcText.substring(0, fileSrcText.indexOf("&"));
                             }
                             System.out.println("인코딩할 부분: " + fileSrcText);
-                            String encText = URLEncoder.encode(fileSrcText, "UTF-8");
-                            img_src = img_src.replace(fileSrcText, encText);
 
-                            URL imgUrl = new URL(img_src);
-                            System.out.println("URL객체: " + imgUrl);
-                            InputStream is = imgUrl.openStream();
-                            FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
-                            int b;
-                            while ((b = is.read()) != -1) {
-                                fos.write(b);
+                            try {
+                                String encText = URLEncoder.encode(fileSrcText, "UTF-8");
+                                img_src = img_src.replace(fileSrcText, encText);
+                                URL imgUrl = new URL(img_src);
+                                System.out.println("URL객체: " + imgUrl);
+                                InputStream is = imgUrl.openStream();
+                                FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
+                                int b;
+                                while ((b = is.read()) != -1) {
+                                    fos.write(b);
+                                }
+                                fos.close();
+                            }catch (IOException e){
+                                e.printStackTrace();
+                                break;
                             }
-                            fos.close();
 
                             System.out.println(savedFileName + " :: 작업 완료");
 
                             Image newImg = new Image();
                             newImg.setProduct(newProduct);
                             newImg.setImgName(savedFileName);
-                            newImg.setOriName(img_name);
+                            newImg.setOriName(img_name + extension);
                             newImg.setImgUrl("/images/product/" + savedFileName);
                             newImg.setRegTime(randDate);
                             newImg.setUpdateTime(randDate);
@@ -168,10 +189,20 @@ public class ProductCrawlService {
 
                     }
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
 
+        }
+    }
+
+    public void changeOriName(){
+        List<Image> imageList = imageRepository.findAll();
+
+        for (Image image : imageList){
+            String oriName = image.getOriName();
+            String extension = image.getImgName().substring(image.getImgName().lastIndexOf("."));
+            image.setOriName(oriName + extension);
         }
     }
 }

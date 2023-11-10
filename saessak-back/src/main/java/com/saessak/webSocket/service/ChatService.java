@@ -6,7 +6,6 @@ import com.saessak.repository.*;
 import com.saessak.webSocket.dto.ChatBoxDTO;
 import com.saessak.webSocket.dto.ChatBoxListDTO;
 import com.saessak.webSocket.dto.ChatDTO;
-import com.saessak.webSocket.dto.ChatListDTO;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,14 +29,16 @@ public class ChatService {
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
 
-    public void saveMessage(Long chatBoxId,Long memberId, String message) {
+    public Chat saveMessage(Long chatBoxId,Long memberId, String message) {
 
         ChatBox chatBox= chatBoxRepository.findById(chatBoxId).orElseThrow();
         Member member = memberRepository.findById(memberId).orElseThrow();
 
         Chat chat = Chat.builder().chatBox(chatBox).member(member).content(message).build();
 
-        chatRepository.save(chat);
+        Chat savedChat = chatRepository.save(chat);
+
+        return savedChat;
     }
 
     public ChatBoxDTO getChatHistory(Long chatBoxId ,String senderId) {

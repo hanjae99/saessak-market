@@ -10,18 +10,13 @@ const ChangingPass = () => {
   useEffect(() => {
     call("/user/mypage", "GET", null).then((response) => {
       setPrivacys(response.data[0]);
-      console.log("==========useEffect 잘 가져왔나", response);
     });
   }, []);
 
   const movePage = useNavigate();
-  const [now_pwd, setNow_pwd] = useState("");
   const [new_pwd, setNew_pwd] = useState("");
   const [new_pwd_check, setNew_pwd_check] = useState("");
 
-  const onNow_PswChange = (e) => {
-    setNow_pwd(e.target.value);
-  };
   const onPassWordChange = (e) => {
     setNew_pwd(e.target.value);
   };
@@ -34,7 +29,6 @@ const ChangingPass = () => {
 
     console.log("new_pwd ====> ", new_pwd);
     console.log("new_pwd_check ====> ", new_pwd_check);
-    console.log("now_pwd ====> ", now_pwd);
     console.log("privecy ====> ", privacys.password);
 
     //비밀번호가 틀렸을 때
@@ -56,7 +50,6 @@ const ChangingPass = () => {
     };
 
     call("/user/changingpass", "PUT", item).then((response) => {
-      console.log("받아온 에러값", response.error);
       if (response.error === "null") {
         alert("새 비밀번호를 입력해주세요.");
       }

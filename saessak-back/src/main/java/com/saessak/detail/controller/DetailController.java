@@ -38,6 +38,8 @@ public class DetailController {
 
                 if (Objects.equals(loginId, dto.getMemberDTO().getMemberId())) {
                     dto.setIsWriter("true");
+                }else{
+                    dto.setIsWriter("false");
                 }
             }
             return ResponseEntity.ok().body(dto);

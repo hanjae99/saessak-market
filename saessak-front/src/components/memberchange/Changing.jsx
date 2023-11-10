@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
 
@@ -13,62 +12,24 @@ const Changing = () => {
   const onPhoneChange = (e) => {
     setNewPhone(e.target.value);
   };
-  const onPassWordChange = (e) => {
-    setNew_pwd(e.target.value);
-  };
-  const onAddressChange = (e) => {
-    setNewAddress(e.target.value);
-  };
-  const onNow_PswChange = (e) => {
-    setNow_pwd(e.target.value);
-  };
-  const onNew_PswChange = (e) => {
-    setNew_pwd_check(e.target.value);
-  };
-
-  // const onButtonClick = () => {
-  //   const item = {
-  //     id: "1",
-  //     nickName: newNickName,
-  //     email: newEmail,
-  //     password: new_pwd,
-  //     address: newAddress,
-  //   };
-  //   editItem(item);
-  //   // movePage("/user/mypage");
-  // };
 
   const [privacys, setPrivacys] = useState([]);
 
   useEffect(() => {
     call("/user/mypage", "GET", null).then((response) => {
       setPrivacys(response.data[0]);
-      console.log("==========useEffect 잘 가져왔나", response);
     });
   }, []);
 
   const movePage = useNavigate();
-  const [now_pwd, setNow_pwd] = useState("");
-  const [new_pwd, setNew_pwd] = useState("");
-  const [new_pwd_check, setNew_pwd_check] = useState("");
-  const [newName, setNewName] = useState("");
+
   const [newNickName, setNewNickName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [newAddress, setNewAddress] = useState("");
   const [nicknameCheck, setNicknameCheck] = useState(0);
 
-  console.log(
-    "value값",
-    now_pwd,
-    new_pwd,
-    new_pwd_check,
-    newName,
-    newNickName,
-    newEmail,
-    newPhone,
-    newAddress
-  );
+  const { daum } = window;
 
   const onCheckNickName = (e) => {
     e.preventDefault();
@@ -92,13 +53,10 @@ const Changing = () => {
   const pwdSubmit = (e) => {
     e.preventDefault();
 
-    console.log("privacys.email ====> ", privacys.email);
-    console.log("privacys.nickname ====> ", privacys.nickName);
-    console.log("privacys.address ====> ", privacys.address);
-    console.log("new_pwd ====> ", new_pwd);
-    console.log("new_pwd_check ====> ", new_pwd_check);
-    console.log("now_pwd ====> ", now_pwd);
-    console.log("privecy ====> ", privacys.password);
+    if (newNickName === "") {
+      setNewNickName(privacys.nickName);
+      setNicknameCheck(-1);
+    }
 
     const item = {
       id: privacys.id,
@@ -107,7 +65,7 @@ const Changing = () => {
       address: newAddress,
     };
 
-    if (nicknameCheck === -1) {
+    if (privacys.nickName === newNickName) {
       call("/user/changing", "PUT", item)
         .then((response) => {
           console.log("Data updated successfully", response);
@@ -115,13 +73,36 @@ const Changing = () => {
         .catch((error) => {
           console.error("Error updating data:", error);
         });
-
       movePage("/user/mypage");
-      //window.location.reload();
-    } else if (nicknameCheck === 1) {
-      setNicknameCheck(2);
-      return;
+    } else {
+      if (nicknameCheck === -1) {
+        call("/user/changing", "PUT", item)
+          .then((response) => {
+            console.log("Data updated successfully", response);
+          })
+          .catch((error) => {
+            console.error("Error updating data:", error);
+          });
+        movePage("/user/mypage");
+      } else if (nicknameCheck === 1) {
+        setNicknameCheck(1);
+        return;
+      }
     }
+  };
+
+  const handleAddr = () => {
+    // 주소 검색
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 검색한 주소명
+        const addr = data.address;
+
+        // 주소 정보를 해당 input 태그에 입력
+        // document.getElementById("memAddr").value = addr;
+        setNewAddress(addr);
+      },
+    }).open();
   };
 
   return (
@@ -154,7 +135,6 @@ const Changing = () => {
                 <input type="hidden" value={privacys.id ?? ""} />
                 <input
                   type="text"
-                  value={newName}
                   placeholder={privacys.name}
                   style={{
                     borderRadius: "4px",
@@ -200,6 +180,7 @@ const Changing = () => {
                     borderRadius: "4px",
                     outlineColor: "rgba(109, 200, 42, 1)",
                   }}
+                  readOnly
                 />
                 <input
                   type="text"
@@ -216,7 +197,9 @@ const Changing = () => {
                   type="address"
                   value={newAddress}
                   placeholder={privacys.address}
-                  onChange={onAddressChange}
+                  // onChange={onAddressChange}
+                  onClick={handleAddr}
+                  readOnly
                   style={{
                     borderRadius: "4px",
                     outlineColor: "rgba(109, 200, 42, 1)",
@@ -247,6 +230,12 @@ const Changing = () => {
                 marginRight: "10px",
               }}
             >
+              <button
+                className="changing-com-button"
+                onClick={(e) => movePage("/user/mypage")}
+              >
+                취소
+              </button>
               <button
                 className="changing-com-button"
                 onClick={(e) => movePage("/user/changingpwd")}

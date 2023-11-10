@@ -19,8 +19,8 @@ public class TokenProvider {
     private static final String SECRET_KEY = "FlRpX30pMqDbiAkmlfArbrmVkDD4RqISskGZmBFax5oGVxzXXWUzTR5JyskiHMIV9M1Oicegkpi46AdvrcX1E6CmTUBc6IFbTPiD";
 
     public String create(Member member){
-        Date expireDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
-//        Date expireDate = Date.from(Instant.now().plus(5, ChronoUnit.MINUTES));
+//        Date expireDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
+        Date expireDate = Date.from(Instant.now().plus(30, ChronoUnit.MINUTES));
 
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)

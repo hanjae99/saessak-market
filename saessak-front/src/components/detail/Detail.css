@@ -12,8 +12,30 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+.detail-productsTitleAndSellStatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.selling-status {
+  font-weight: bold;
+  padding: 4px;
+  background-color: rgba(109, 200, 42, 0.7);
+  border-radius: 10px;
+}
+
+.selling {
+  color: white;
+}
+
+.sold-out {
+  color: black;
+  border-color: #cc0000;
+  background-color: #ffcccc;
+}
 .detail-contentsBox {
   display: flex;
+
   flex-direction: column;
 }
 .detail-contentsBox1 {

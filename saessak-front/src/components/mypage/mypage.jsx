@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import ImgUpdate from "../kimjin/ImgUpdate";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { call, memberdelete, signout } from "../../ApiService";
 
@@ -11,7 +10,6 @@ const MyPage = () => {
       // 로그인한 상태
       setIsLogin(true);
       call("/user/mypage", "GET", null).then((response) => {
-        console.log("==========useEffect 잘 가져왔나", response);
         setPrivacys(response.data[0]);
       });
     } else {
@@ -33,10 +31,6 @@ const MyPage = () => {
       memberdelete();
     }
   };
-
-  // // useEffect 훅 사용: 컴포넌트가 렌더링될 때 실행되며 초기 데이터를 불러옴
-  // useEffect(() => {
-  // }, []);
 
   return (
     <div className="section">

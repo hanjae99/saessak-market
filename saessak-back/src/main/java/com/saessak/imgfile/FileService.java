@@ -4,17 +4,12 @@ import lombok.extern.java.Log;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -76,9 +71,6 @@ public class FileService {
 
         try {
             File file = new File(filePath);
-//            System.out.println(productImgLocation);
-//            System.out.println(productImgLocation + imgName);
-//            System.out.println(productImgLocation + imgName);
             FileItem fileItem = new DiskFileItem("changeMultipart", Files.probeContentType(file.toPath()),
                     false, file.getName(), (int) file.length(), file.getParentFile());
             InputStream input = new FileInputStream(file);
