@@ -140,7 +140,7 @@ public class BoardController {
         }
       }).collect(Collectors.toList());
       if (Objects.equals(boardName, "voc")) {
-        list = list.stream().filter(p->p.getWriter().equals(boardService.getMember(userId).getNickName())).collect(Collectors.toList());
+        list = list.stream().filter(p-> boardService.getMember(userId).getRole().equals(Role.ADMIN) || p.getWriter().equals(boardService.getMember(userId).getNickName())).collect(Collectors.toList());
       }
     }
     int totalPageSize = pb.getTotalPages();

@@ -5,11 +5,12 @@ import { FaXmark } from 'react-icons/fa6'
 import { FaRegComment } from 'react-icons/fa'
 import { RxEraser } from 'react-icons/rx'
 import { call } from '../../ApiService'
+import { API_BASE_URL } from '../../ApiConfig'
 
 const ProfileImg = ({ imgsrc }) => {
   return (
     <span className='cmt_ProfileImg'>
-      {imgsrc === undefined || imgsrc === '' ? '?' : <img src={imgsrc} alt=''></img>}
+      {imgsrc === undefined || imgsrc === '' ? '?' : <img src={API_BASE_URL + imgsrc} alt=''></img>}
     </span>
   )
 }
