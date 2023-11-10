@@ -55,7 +55,6 @@ const ChangingPass = () => {
       }
       if (response.error === "true") {
         movePage("/user/mypage");
-        window.location.reload();
       }
     });
   };
