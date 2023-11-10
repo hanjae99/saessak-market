@@ -10,6 +10,9 @@ const score = createSlice({
       // console.log("scoreslice ====" + state.no);
       state.no += action.payload;
     },
+    resultReset: (state) => {
+      state.no = 0;
+    },
   },
 });
 

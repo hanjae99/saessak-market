@@ -12,7 +12,7 @@ const BoardListViewer = ({ dataAry, viewList, onClick, onContextMenu=e=>{} }) =>
       {dataAry.map(p => {
         return p.id!=="nodata"?
         (
-          <div className='tr' key={'viewBoard' + viewKey++} onClick={(e) => onClick(e, p)} onContextMenu={e=> onContextMenu(e,p)}>
+          <div className='tr' key={'viewBoard' + viewKey++} onClick={(e) => onClick(e, p)} style={{cursor:'pointer'}} onContextMenu={e=> onContextMenu(e,p)}>
             {Object.keys(viewList).map(q => <div key={q} className='td'>{p[q]}</div>)}
           </div>
         )

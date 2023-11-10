@@ -7,6 +7,7 @@ import com.saessak.imgfile.ProductImgService;
 import com.saessak.main.dto.*;
 import com.saessak.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
     private final ProductCategoryRepository productCategoryRepository;
+
+    @Value("${imgLocation}")
+    private String imgLocation;
 
     // 메인, 상품 검색 시 상품 목록 페이징 결과 읽어오기
     public Page<ProductDTO> read(ProductDTO productDTO, Pageable pageable){
@@ -166,7 +170,7 @@ public class ProductService {
             for (ProductImageDTO imgDTO : imgDTOList) {
                 // 원활한 비교를 위해 mulfipart 타입으로 변경
                 MultipartFile imgMultiFile = fileService.fileToMultipart(
-                        "/Users/hanjae/saessak-image/images/product/" + imgDTO.getImgName());
+                        imgLocation + "/images/product/" + imgDTO.getImgName());
                 savedFileList.add(imgMultiFile);
                 savedFileOriNameList.add(imgDTO.getOriName());
             }

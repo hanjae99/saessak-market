@@ -2,12 +2,20 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_BASE_URL } from "../../ApiConfig";
 
-const GameModal = ({ setModalOpen, result, inputprice, onIncrease, index }) => {
+const GameModal = ({
+  setModalOpen,
+  result,
+  inputprice,
+  setInputprice,
+  onIncrease,
+  index,
+}) => {
   const game = useSelector((state) => state.game.data);
 
   const onClick = () => {
     setModalOpen(false);
     onIncrease();
+    setInputprice("");
   };
 
   function comma(no) {

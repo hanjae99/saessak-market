@@ -26,7 +26,7 @@ import FindById from "./components/Login/FindById";
 import FindByPwd from "./components/Login/FindByPwd";
 
 function App() {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   return (
     <div>
       <Routes>
@@ -41,14 +41,15 @@ function App() {
         <Route path="/detail" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/singup" element={<SignUp />} />
-        <Route path="/boardmain" element={<BoardMain page={page} />} />
+        {/* <Route path="/boardmain" element={<BoardMain page={page} />} /> */}
         <Route path="/boardwrite" element={<CreateNotice />} />
-        <Route path="/boardmain/1" element={<CreateVoice page={page} />} />
+        {/* <Route path="/boardmain/1" element={<CreateVoice page={page} />} /> */}
         <Route path="/user/*" element={<Layout />}></Route>
         <Route path="/boardmain/ntc" element={<BoardNtc />}></Route>
         <Route path="/boardmain/ntc/:id?" element={<BoardNtcInfo />}></Route>
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
         <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/board/list/:boardName/:page" element={<BoardPage />}></Route>
         <Route
           path="/board/write/:boardName"
           element={<BoardEditorPage />}

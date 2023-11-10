@@ -95,7 +95,8 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
     Long total = queryFactory.select(Wildcard.count).from(board)
         .where(checkStatus(boardSearchDTO.getSearchBoardStatus()),
-            searchCheck(boardSearchDTO.getSearchQuery(), boardSearchDTO.getSearchBy()))
+            searchCheck(boardSearchDTO.getSearchQuery(), boardSearchDTO.getSearchBy()),
+            checkBoardName(boardSearchDTO.getBoardName()))
         .fetchOne();
 
 

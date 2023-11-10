@@ -32,6 +32,9 @@ const Game = () => {
   const [result, setResult] = useState(0);
 
   const onIncrease = () => {
+    if (index === 0) {
+      dispatch({ type: "score/resultReset" });
+    }
     if (index < 10) {
       setIndex(index + 1);
       dispatch({ type: "score/resultadd", payload: result });
@@ -161,6 +164,7 @@ const Game = () => {
               <GameModal
                 setModalOpen={setModalOpen}
                 inputprice={inputprice}
+                setInputprice={setInputprice}
                 result={result}
                 onIncrease={onIncrease}
                 index={index}

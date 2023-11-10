@@ -11,12 +11,12 @@
 }
 .board-center {
   height: 800px;
-  flex-basis: 70%;
+  flex-basis: 85%;
   box-sizing: border-box;
 }
 .board-rigth {
   height: 700px;
-  flex-basis: 15%;
+  flex-basis: 5%;
   float: right;
   box-sizing: border-box;
 }

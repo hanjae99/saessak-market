@@ -73,7 +73,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         product.sellStatus,
                         image.imgUrl,
                         product.clickCount,
-                        wishList.id.count().intValue(),
+                        wishList.id.countDistinct().intValue(),
                         product.regTime,
                         product.updateTime,
                         Expressions.asString(productDTO.getSearchBy()),
@@ -81,9 +81,9 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         Expressions.asString(productDTO.getSortBy())
                 ))
                 .from(product)
-                .leftJoin(image)
+                .innerJoin(image)
                 .on(product.id.eq(image.product.id))
-                .leftJoin(productCategory)
+                .innerJoin(productCategory)
                 .on(product.id.eq(productCategory.product.id))
                 .leftJoin(wishList)
                 .on(product.id.eq(wishList.product.id))

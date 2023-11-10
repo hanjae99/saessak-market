@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
 import NoticeBoardList from "./NoticeBoardList";
-import { call, uploadProduct } from "../../ApiService";
+import { uploadProduct } from "../../ApiService";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
@@ -11,7 +11,7 @@ import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 
 import "@toast-ui/editor/dist/i18n/ko-kr";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../../ApiConfig";
 
 let imageList = [];
@@ -35,6 +35,7 @@ const BoardEditorPage = () => {
             .join(API_BASE_URL)
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChange = () => {
@@ -51,8 +52,6 @@ const BoardEditorPage = () => {
     return false;
   };
 
-  // console.log("contests : ",contents);
-  // console.log("imageList : ",imageList);
 
   const onSubmit = (e) => {
     e.preventDefault();

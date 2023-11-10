@@ -1,6 +1,5 @@
 import React from 'react'
 import AdminUserPage from './AdminUserPage'
-import AdminBoardPage from './AdminBoardPage'
 import AdminImage from './AdminImage'
 
 const AdminContentBox2 = React.memo(({ selectedCg, setModalData, page, rsl, setRsl }) => {

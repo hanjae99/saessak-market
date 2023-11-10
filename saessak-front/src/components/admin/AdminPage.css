@@ -134,8 +134,8 @@
 
 
 .admincontentBox2 {
-  width: 75%;
-  margin: 0 auto;
+  width: 65%;
+  margin: 50px auto;
 }
 
 .adminImageViewer {
@@ -310,8 +310,8 @@
 
 
 .adminUserPage {
-  width: 90%;
-  max-width: 1000px;
+  /* width: 90%; */
+  /* max-width: 1000px; */
   left: 5%;
   top: 5%;
 }
@@ -322,14 +322,30 @@
   margin-bottom: 10px;
   border-radius: 10px;
   overflow: hidden;
+
 }
 
 .adminUserBox img,
 .adminUserBox>div:first-child {
   width: 150px;
   height: 150px;
+  line-height: 150px;
+  font-size: 2rem;
+  color: #aaa;
+  text-align: center;
+  border: 1px solid #eee;
   border-radius: 10px;
   overflow: hidden;
+}
+
+.adminUserBox>div:nth-child(3) {
+  width: 150px;
+  text-align: center;
+  height: 150px;
+  line-height: 150px;
+}
+.adminUserBox>div:nth-child(2) {
+  width: calc(100% - 300px);
 }
 
 .adminUserBox>div>span {

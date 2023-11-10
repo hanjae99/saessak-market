@@ -98,7 +98,8 @@ const AddProduct2 = () => {
     uploadProduct("/product/new", "POST", formData).then((response) => {
       const result = response.data[0];
       if (result === "success") {
-        alert(result);
+        // alert(result);
+        alert("상품이 등록되었습니다!");
         navigate("/search");
       } else {
         alert(result);

@@ -29,10 +29,10 @@ const Login = () => {
       //const login = user.find((l) => l.id === inputid && l.pwd === inputpwd);
       // console.log("login" + login);
       login(loginDTO).then((response) => {
-        // console.log("response : ", response);
+        console.log("response : ", response);
         if (!response) {
           return setLoginFailed(true);
-        } else if (response.role === "DELETED") {
+        } else if (response.role === "DELETED" || response.role === "BLACKED") {
           return setLoginFailed(true);
         } else {
           localStorage.setItem("ACCESS_TOKEN", response.token);

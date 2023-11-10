@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { call } from "../../ApiService";
 import { API_BASE_URL } from '../../ApiConfig';
+import { HiMiniPlayPause } from 'react-icons/hi2';
+import { FaRegHand, FaRegHandPointDown } from 'react-icons/fa6';
+import { RiSave3Fill } from 'react-icons/ri';
 
 const ImageViewer = () => {
 
@@ -12,26 +15,33 @@ const ImageViewer = () => {
   const adminImageViewer = useRef();
   const [pageSize, setPageSize] = useState(0);
 
+  const imageModal = useRef();
+  const [modalData, setModalData] = useState();
+
   const data = useSelector(state => state.adminImageSL);
   const dispatch = useDispatch();
   const observerRef = useRef(null);
   const bottom = useRef(null);
   const LOADED = 'targetLoad';
-  let page=1;
-
+  let page = 0;
+  // console.log('moreScroll : ', data.moreScroll);
   const callback = async (entries) => {
-    
-    if (entries[0].isIntersecting && !entries[0].target.classList.contains(LOADED) && parseInt(entries[0].target.style.top)>1000) {
+    if (entries[0].isIntersecting && !entries[0].target.classList.contains(LOADED)) {
       // console.log('entrys : ', page);
       entries[0].target.className = LOADED;
       entries[0].target.style.top = parseInt(entries[0].target.style.top) + 1000 + 'px';
       page++;
       const url = "/admin/images/" + page;
       await call(url, "GET").then((response) => {
-        // console.log("response", response);
-        dispatch({ type: 'adminImageSL/getMoreData', payload: response.list });
+        // console.log(response);
+        if (response.msg) {
+          console.log('ajdla')
+          dispatch({ type: 'adminImageSL/switchMoreScroll' });
+        } else {
+          dispatch({ type: 'adminImageSL/getMoreData', payload: response.list });
+          setPageSize(response.pageSize);
+        }
       });
-      // await new Promise((resolve) => setTimeout(resolve, 100));
       entries[0].target.className = "";
     }
   }
@@ -40,21 +50,17 @@ const ImageViewer = () => {
     if (refElement && observerRef.current) {
       observerRef.current.observe(refElement);
       bottom.current = refElement;
+      bottom.current.style.top = parseInt(bottom.current.style.top) + 10 + 'px';
     }
   };
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(callback);
     dispatch({ type: 'adminImageSL/setImageScale', payload: 1 });
-    dispatch({ type: 'adminImageSL/setPage', payload: 1 });
-    const url = "/admin/images/" + page;
-    call(url, "GET").then((response) => {
-      dispatch({ type: 'adminImageSL/setData', payload: response.list });
-      setPageSize(response.pageSize);
-    });
     return () => {
       if (observerRef.current) observerRef.current.disconnect();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   window.onresize = () => {
     dispatch({ type: 'adminImageSL/setImageScale', payload: 0 });
@@ -63,14 +69,14 @@ const ImageViewer = () => {
   let viewerWidth = 0;
   let imagesMargin = 0;
   let imagesLineCount = 1;
-  let bottomtop = 5555;
+  let bottomtop = 0;
   if (adminImageViewer.current) {
 
     viewerWidth = adminImageViewer.current.clientWidth;
     imagesMargin = 20 + 2 * data.imageScale;
     imagesLineCount = Math.floor((viewerWidth - 100) / ((imageBaseSize + 2) * data.imageScale + imagesMargin));
 
-    bottomtop = viewerTop + Math.ceil(data.data.slice(0, data.page * pageSize).length / imagesLineCount) * (imageBaseSize + 2) * data.imageScale + (Math.floor(data.data.slice(0, data.page * pageSize).length / imagesLineCount) + 1) * imagesMargin + 'px';
+    bottomtop = viewerTop + Math.ceil(data.data.slice(0, data.page * pageSize).length / imagesLineCount) * (imageBaseSize + 2) * data.imageScale + (Math.floor(data.data.slice(0, data.page * pageSize).length / imagesLineCount) + 1) * imagesMargin;
   }
   const imgStyle = {
     width: imageBaseSize * data.imageScale + 'px',
@@ -93,18 +99,89 @@ const ImageViewer = () => {
             left: i % imagesLineCount * (imageBaseSize + 2) * data.imageScale + (i % imagesLineCount + 1) * imagesMargin - 14 + 'px',
             top: viewerTop + Math.floor(i / imagesLineCount) * (imageBaseSize + 2) * data.imageScale + (Math.floor(i / imagesLineCount) + 1) * imagesMargin + 'px',
           }
+          const onClick = () => {
+            imageModal.current.style.display = 'flex';
+            setModalData(p);
+          };
           return (
             <div key={i} style={{ ...divStyle, ...position }}>
-              <img src={API_BASE_URL + p.imgUrl} alt='images' style={imgStyle}></img>
-              {/* {p.url} */}
+              <img src={API_BASE_URL + p.imgUrl} alt='images' style={imgStyle} onClick={onClick}></img>
             </div>
           )
         })}
         {data.moreScroll && <div ref={refHook} style={{
-          backgroundColor: 'red',
           width: '100px', height: '100px', position: 'absolute',
-          top: bottomtop
+          top: bottomtop + 'px'
         }}></div>}
+        {(() => {
+          if (!data.moreScroll) {
+            return (<div style={{
+              left: '30%', fontSize: '2em',
+              height: '100px', position: 'absolute',
+              top: 60 + bottomtop + 'px', className: 'abcd'
+            }}>end data</div>)
+          }
+        })()}
+      </div>
+      <div ref={imageModal} style={{
+        position: 'fixed',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        display: 'none',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'rgba(0, 0, 0, 0.5)',
+      }} onClick={(e) => {
+        if (e.target === imageModal.current) {
+          imageModal.current.style.display = 'none';
+        }
+      }}>
+        <div style={{
+          backgroundColor: `#ffffff`,
+          width: `50%`,
+          height: `80%`,
+          padding: `15px`,
+          position: 'relative',
+          border: '1px solid black',
+        }} onClick={() => { }} >
+          <img src={API_BASE_URL+(modalData && modalData.imgUrl)} alt='img' style={{ width: '60%', height: 'calc(100% - 5px)' }}></img>
+          {
+            (() => {
+              let style = {
+                position: 'absolute',
+                left: '65%',
+                fontSize: '1.3rem',
+                padding: '10px'
+              }
+              return (
+                <>
+                  <div style={{...style, top:'17%'}}>
+                    글쓴이 : {modalData && modalData.nickName}
+                  </div>
+                  <button style={{...style, top:'57%'}} onClick={()=>{
+                    const url = "/admin/black/image/" + (modalData && modalData.id);
+                    call(url, "GET").then((response) => {
+                      console.log(response)
+                      alert(response.msg);
+                      imageModal.current.style.display = 'none';
+                    })
+                  }}>글 삭제</button>
+                  <button style={{...style, top:'67%'}} onClick={()=>{
+                    const url = "/admin/black/user/" + (modalData && modalData.id);
+                    call(url, "GET").then((response) => {
+                      console.log(response)
+                      alert(response.msg);
+                      imageModal.current.style.display = 'none';
+                    })
+                  }}>유저 블랙</button>
+                </>
+              )
+            })()
+          }
+        </div>
+
       </div>
     </>
   )
@@ -113,20 +190,33 @@ const ImageController = () => {
   const style = {
     position: 'fixed',
     top: '200px',
-    right: '50px',
+    right: 'calc(7vw)',
+    fontSize: '5em',
   }
 
 
 
   const dispatch = useDispatch();
 
-  const ms = useSelector(state=>state.adminImageSL.moreScroll);
+  const ms = useSelector(state => state.adminImageSL.moreScroll);
+  const data = useSelector(state => state.adminImageSL.data);
 
   return (
-    <div className='adminImageController' style={style}>
-      <button className="login-button1" onClick={(e)=>{
+    <div className='adminImageController' style={style} >
+      <div title='무한스크롤 멈추기/계속하기' onClick={(e) => {
         dispatch({ type: 'adminImageSL/switchMoreScroll' });
-      }}>추가로딩{ms?"중지":"계속"}하기</button>
+      }} style={{ cursor: 'pointer' }}>
+        <HiMiniPlayPause />{ms ? <FaRegHandPointDown /> : <FaRegHand />}
+      </div>
+      <div style={{ cursor: 'pointer' }} onClick={() => {
+        console.log(data);
+        const url = "/admin/save/images";
+        call(url, "POST", data).then((response) => {
+          console.log(response);
+        });
+      }} >
+        <RiSave3Fill style={{ margin: '0 auto' }} />
+      </div>
     </div>
   )
 }
@@ -165,7 +255,7 @@ export const adminImageSL = createSlice({
       state.page = state.page + 1;
     },
     getMoreData: (state, action) => {
-      
+
       state.data = state.data.concat(action.payload);
       state.page = state.page + 1;
     }
@@ -184,7 +274,7 @@ const AdminImage = ({ setModalData, page }) => {
   return (
     <>
       <ImageViewer />
-      <ImageController />
+      <ImageController setModalData={setModalData} />
     </>
   )
 }

@@ -1,46 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { call } from '../../ApiService';
+import { API_BASE_URL } from '../../ApiConfig';
 
-const AdminUserPage = ({ selectedCg, setModalData }) => {
-  const users = useSelector(state => state.user);
-  const blackUser = useSelector(state => state.blacklist.blackUser)
-  const dispatch = useDispatch();
-  // event.currentTarget
+const AdminUserPage = () => {
+
+  const [users, setUsers] = useState();
+
+  useEffect(() => {
+
+    const url = "/admin/getusers";
+    call(url, "GET").then((response) => {
+      console.log(response)
+      setUsers(response.list);
+    })
+
+  }, [])
+
+
+
   return (
     <div className='adminUserPage'>
-      {users.filter(p =>
-        selectedCg === '' || selectedCg === undefined ?
-          p :
-          selectedCg === '1' ?
-            blackUser.find(q => p.id === q) === undefined :
-            blackUser.find(q => p.id === q) !== undefined).filter(p => p.gender !== 'admin').map(p =>
-              <div key={p.id} className='adminUserBox'
-                onMouseOver={selectedCg === '' || selectedCg === undefined ?
-                  e => { } : selectedCg === '1' ?
-                    e => { e.currentTarget.style.background = 'red' } :
-                    e => { e.currentTarget.style.background = 'blue' }
-                }
-                onMouseOut={selectedCg === '' || selectedCg === undefined ?
-                  e => { } : selectedCg === '1' ?
-                    e => { e.currentTarget.style.background = 'none' } :
-                    e => { e.currentTarget.style.background = 'none' }
-                }
-                onClick={selectedCg === '' || selectedCg === undefined ?
-                  e => { } : selectedCg === '1' ?
-                    e => { dispatch({ type: 'blacklist/addBLU', payload: p.id }) } :
-                    e => { dispatch({ type: 'blacklist/delBLU', payload: p.id }) }
-                }
-              >
-                <div>
-                  {p.img ?? <><img src={p.img} alt="" /></>}
-                </div>
-                <div>
-                  <span>NickName : {p.nickname}</span><span>ID : {p.id}</span><span>gender : {p.gender}</span><br />
-                  <span>phone : {p.phone}</span><span>email : {p.email}</span><br />
-                  <span>address : {p.address}</span>
-                </div>
-              </div>
-            )}
+      {users && users.map(p =>
+        <div key={p.id} className='adminUserBox'
+          onMouseOver={() => { }}
+          onMouseOut={() => { }}
+          onClick={() => { }}
+        >
+          <div>
+            {p.profileImgUrl ? (<img src={API_BASE_URL + p.profileImgUrl} alt="" />) : "?"}
+          </div>
+          <div>
+            <span>NickName : {p.nickName}</span><span>ID : {p.userId}</span><span>gender : {p.gender}</span><br />
+            <span>phone : {p.phone}</span><span>email : {p.email}</span><br />
+            <span>address : {p.address}</span>
+          </div>
+          <div style={{ position: 'relative' }}>
+            {p.role}
+            {(() => {
+              const style = { position: 'absolute', bottom: 10, right: 10, padding: '5px' };
+              const content = p.role === 'USER' ? '차단하기' : p.role === 'BLACKED' ? '차단해제' : p.role === 'DELETED' ? '복구하기' : '';
+              const onClick = () => {
+                const url = "/admin/setuser/" + p.role.toLowerCase() + "/" + p.id;
+                console.log(url);
+                call(url, "GET").then((response) => {
+                  console.log(response)
+                  const url = "/admin/getusers";
+                  call(url, "GET").then((response) => {
+                    console.log(response)
+                    setUsers(response.list);
+                  })
+                })
+              };
+
+              return (<button style={style} onClick={onClick}>{content}</button>)
+
+            })()}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

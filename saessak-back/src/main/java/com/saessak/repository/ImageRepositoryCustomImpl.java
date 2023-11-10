@@ -41,7 +41,8 @@ public class ImageRepositoryCustomImpl implements ImageRepositoryCustom {
             image.member.id,
             image.board.id,
             image.product.id,
-            image.id
+            image.id,
+            image.imgUrl
         ))
         .from(image)
         .where(checkAdmin())

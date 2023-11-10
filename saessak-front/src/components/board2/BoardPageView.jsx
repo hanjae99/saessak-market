@@ -1,52 +1,48 @@
 import React, { useEffect, useState } from "react";
 import {
   Link,
-  Navigate,
   useNavigate,
   useParams,
-  useSearchParams,
 } from "react-router-dom";
-import Header from "../main/Header";
 import NoticeBoardList from "./NoticeBoardList";
 import { call } from "../../ApiService";
 import BoardListViewer from "./BoardListViewer";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const BoardPageView = () => {
-  const { boardName } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { boardName, page } = useParams();
   const [viewData, setVeiwData] = useState([]);
-  const [viewList, setViewList] = useState({
+  const [viewList] = useState({
     boardNumber: "글번호",
     title: "제목",
     writer: "작성자",
     regTime: "작성시간",
-    recommend: "조회수",
+    clickCount: "조회수",
   });
-  const [pageSize, setPageSize] = useState(15);
+  const [pageSize, setPageSize] = useState(10);
   const [totalPageSize, setTotalPageSize] = useState(1);
   const [userRole, setUserRole] = useState("any");
   const bn = boardName !== undefined ? boardName : "main";
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url =
-      "/board/" +
-      bn +
-      (searchParams.get("page") > 0 ? "/" + searchParams.get("page") : "/1");
+    const url = "/board/" + bn + (page > 0 ? "/" + page : "/1");
     // console.log("url :", url);
     call(url, "GET").then((response) => {
-      // console.log("response",response);
+      console.log("response", response);
       if (response && response.list !== undefined) {
-        setVeiwData(response.list.map(p=>({...p, regTime:new Date().getDate() === new Date(p.regTime).getDate()
-          ? new Date(p.regTime).toLocaleTimeString()
-          : new Date(p.regTime).toLocaleDateString()})));
+        setVeiwData(response.list.map(p => ({
+          ...p, regTime: new Date().getDate() === new Date(p.regTime).getDate()
+            ? new Date(p.regTime).toLocaleTimeString()
+            : new Date(p.regTime).toLocaleDateString()
+        })));
         setPageSize(response.pageSize);
-        setTotalPageSize(response.totalPageSize);
+        setTotalPageSize(response.totalPageSize>0?response.totalPageSize:1);
         setUserRole(response.viewerRole);
       }
     });
-  }, [boardName, window.location.search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardName, page]);
 
   const onViewListClick = (e, p) => {
     navigate("/board/detail/" + bn + "/" + p.id);
@@ -61,7 +57,7 @@ const BoardPageView = () => {
 
   return (
     <>
-      
+
       <div className="board-main">
         <div className="board-left">
           <NoticeBoardList />
@@ -75,12 +71,41 @@ const BoardPageView = () => {
           <div className="board-footer">
             <ul className="pagination">
               <li className="page-item">
-                <button className="page-link">
+                <button className="page-link" disabled={Math.floor((page > 0 ? page : 1) / 10) * 10 + 1 === 1} onClick={() => {
+                  navigate("/board/list/" + bn + "/" + (Math.floor((page > 0 ? page : 1) / 10) * 10));
+                }}>
                   <FaArrowLeft />
                 </button>
               </li>
+              {
+                (() => {
+                  let thisPage = (page > 0 ? page : 1);
+                  let startPage = Math.floor((thisPage-1) / 10) * 10 + 1;
+                  let endPage = Math.ceil(thisPage / 10) * 10 > totalPageSize ? totalPageSize : Math.ceil(thisPage / 10) * 10;
+                  let result = [];
+                  let style = {
+                    height: '41px',
+                    lineHeight: '40px',
+                    cursor: 'pointer',
+                    // color: 'blue',
+                  };
+                  // console.log(startPage,endPage,endPage - startPage + 1);
+                  for (let i = 0; i < 10; i++) {
+                    if (i+startPage>endPage) {
+                      break;
+                    }
+                    result.push(<li className="page-item" key={i} style={i+startPage+""===thisPage+""?{...style, fontWeight:'bold'}:style} onClick={() => {
+                      navigate("/board/list/" + bn + "/" + (i+startPage));
+                    }}>{i+startPage}</li>)
+                  }
+                  // console.log(result);
+                  return result;
+                })()
+              }
               <li className="page-item">
-                <button className="page-link">
+                <button className="page-link" disabled={Math.ceil((page > 0 ? page : 1) / 10) * 10 > totalPageSize} onClick={() => {
+                  navigate("/board/list/" + bn + "/" + (Math.ceil((page > 0 ? page : 1) / 10) * 10 + 1));
+                }}>
                   <FaArrowRight />
                 </button>
               </li>
