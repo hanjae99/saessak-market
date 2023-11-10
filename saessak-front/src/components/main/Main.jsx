@@ -1,14 +1,13 @@
-import React from "react";
-import Header from "./Header";
-import "./Main.scss";
-import CarouselBox from "./CarouselBox";
-import HotProduct from "./HotProduct";
-import NewProduct from "./NewProduct";
-import Footer from "./Footer";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import React from "react";
+import CarouselBox from "./CarouselBox";
+import Footer from "./Footer";
+import Header from "./Header";
+import HotProduct from "./HotProduct";
+import "./Main.scss";
+import NewProduct from "./NewProduct";
 
 const Main = () => {
   return (

@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Manu.css";
 import { Button } from "react-bootstrap";
@@ -8,17 +7,19 @@ import { call } from "../../ApiService";
 import { useState } from "react";
 import { API_BASE_URL } from "../../ApiConfig";
 import { useCallback } from "react";
+import priceComma from "../../pricecomma";
 
 const Check = () => {
   const movePages = useNavigate();
 
   const [buyProduct, setBuyProduct] = useState([]);
 
+  const [totalPage, setTotalPage] = useState(0);
+
   useEffect(() => {
     call("/user/check", "GET").then((response) => {
       if (response && response.data) {
         setBuyProduct(response.data);
-        console.log("gd", response.data);
       }
     });
   }, []);
@@ -35,10 +36,9 @@ const Check = () => {
 
   useEffect(() => {
     // 총 페이지 수 계산
+    setTotalPage(Math.ceil(buyProduct && buyProduct.length / 10));
 
     const makePageBtn = () => {
-      const totalPage = Math.ceil(buyProduct && buyProduct.length / 2);
-
       const newPageBtns = [];
       // 페이지 버튼 6개씩 보여주기
       for (
@@ -59,10 +59,7 @@ const Check = () => {
       setPageBtns(newPageBtns); // 페이지 버튼 상태 업데이트
     };
     makePageBtn(); // 페이지 버튼 생성 함수 호출
-  }, [buyProduct, movePage]);
-
-  console.log(pageNumLength);
-  console.log("안녕", pageBtns);
+  }, [buyProduct, pageNumLength]);
 
   // page 버튼 6개씩 보여주기
   const prevPageNumLength = useCallback(() => {
@@ -73,7 +70,7 @@ const Check = () => {
     setpageNumLength(pageNumLength + 1); // 다음 페이지 세트로 이동
   }, [pageNumLength]);
 
-  const itemsPerPage = 2; // 페이지당 상품 수
+  const itemsPerPage = 10; // 페이지당 상품 수
   const [displayedProducts, setDisplayedProduct] = useState([]);
 
   useEffect(() => {
@@ -85,7 +82,6 @@ const Check = () => {
       );
     setDisplayedProduct(displayedProduct);
   }, [buyProduct, pageNumLength, movePage]);
-  console.log(displayedProducts);
 
   return (
     <div className="section">
@@ -150,7 +146,10 @@ const Check = () => {
                                           {displayedProducts[i].title}
                                         </div>
                                         <div className="text-2-name-1-2">
-                                          {displayedProducts[i].price} 원
+                                          {priceComma(
+                                            displayedProducts[i].price
+                                          )}{" "}
+                                          원
                                         </div>
                                       </div>
                                     </div>
@@ -166,13 +165,13 @@ const Check = () => {
                               onClick={() => {
                                 console.log(buyProduct[i].buyListId);
                                 call(
-                                  `/user/check/${buyProduct[i].buyListId}`,
+                                  `/user/check/${buyProduct[i].productId}`,
                                   "DELETE"
                                 ).then((response) => {
                                   if (response.error === "success") {
                                     const filteredWish = buyProduct.filter(
                                       (w) =>
-                                        w.buyListId !== buyProduct[i].buyListId
+                                        w.productId !== buyProduct[i].productId
                                     );
                                     setBuyProduct(filteredWish);
                                   }
@@ -193,19 +192,12 @@ const Check = () => {
         </div>
         {buyProduct && buyProduct.length !== 0 ? (
           <div className="pagination1">
-            <button
-              onClick={prevPageNumLength}
-              disabled={pageNumLength && pageNumLength === 0}
-            >
+            <button onClick={prevPageNumLength} disabled={pageNumLength === 0}>
               이전
             </button>
-            {pageBtns}
             <button
               onClick={nextPageNumLength}
-              disabled={
-                pageNumLength &&
-                pageNumLength === Math.ceil(buyProduct.length / 2) - 1
-              }
+              disabled={pageNumLength + 1 >= totalPage}
             >
               다음
             </button>

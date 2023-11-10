@@ -26,9 +26,11 @@ public class DetailController {
     private final MemberRepository memberRepository;
 
 
+
     @GetMapping("/{productId}")
     public ResponseEntity<?> getDetail(@PathVariable("productId") Long productId ,@AuthenticationPrincipal String memberId){
         DetailDTO dto =detailService.get(productId);
+
         log.info(memberId);
 
 
@@ -38,6 +40,8 @@ public class DetailController {
 
                 if (Objects.equals(loginId, dto.getMemberDTO().getMemberId())) {
                     dto.setIsWriter("true");
+                }else{
+                    dto.setIsWriter("false");
                 }
             }
             return ResponseEntity.ok().body(dto);

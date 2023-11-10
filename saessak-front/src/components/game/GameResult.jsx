@@ -15,7 +15,7 @@ const GameResult = () => {
   // const 받을변수 = useParams().key;
   const game = useSelector((state) => state.game.data);
 
-  console.log("게임결과페이지", game);
+  // console.log("게임결과페이지", game);
   const finalresultint = parseInt(finalresult);
 
   useEffect(() => {

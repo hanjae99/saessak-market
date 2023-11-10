@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Detail.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../main/Header";
@@ -34,12 +34,17 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      // console.log(response);
+      console.log(response);
       if (response === 1) {
         navigate("/");
       }
 
       setDetaildatas(response);
+    });
+
+    // 조회수 증가
+    call(`/product/clickPlus/${id}`, "PUT").then((response) => {
+      // console.log(response);
     });
   }, [id]);
 
@@ -61,21 +66,16 @@ const Detail = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    // dispatch({
-    //   type: "user/addProduct",
-    //   payload: {
-    //     id: item.id,
-    //     name: item.name,
-    //     price: item.price,
-    //     text: item.text,
-    //     imgsrc1: item.imgsrc1,
-    //     imgsrc2: item.imgsrc2,
-    //     categories: item.categories,
-    //   },
-    // });
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+
+    if (accessToken === "") {
+      alert("로그인 후 이용해주세요");
+      navigate("/login");
+      return;
+    }
 
     call(`/detail/addwish/${id}`, "POST", null).then((response) => {
-      console.log(response);
+      // console.log(response);
       navigate("/user/wishlist");
       if (response.error === "success") {
         alert("찜 목록에 추가되었습니다.");
@@ -112,11 +112,8 @@ const Detail = () => {
     };
 
     chatCall("/chatBox/getChatBox", "POST", request).then((response) => {
-      console.log(response);
       if (response) {
-        navigate("/chat/" + response);
-      } else {
-        navigate("/login");
+        window.open(`/chat/${response}`, "새싹마켓", "width=600,height=840");
       }
     });
   };
@@ -138,8 +135,18 @@ const Detail = () => {
               )}
             </div>
             <div className="detail-productsitem2">
-              <div>
+              <div className="detail-productsTitleAndSellStatus">
                 <h1>제품명</h1>
+                {detaildatas.sellStatus === "SELL" ? (
+                  <p className="selling-status selling">판매중</p>
+                ) : (
+                  ""
+                )}
+                {detaildatas.sellStatus === "SOLD_OUT" ? (
+                  <p className="selling-status sold-out">판매완료</p>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="detail-productsitem-divname">
                 <p className="detail-productsitem-div-name">
@@ -156,15 +163,15 @@ const Detail = () => {
                 </p>
               </div>
               <div>
-                {detaildatas.isWriter && detaildatas.isWriter === "true" ? (
-                  ""
-                ) : (
+                {detaildatas.isWriter && detaildatas.isWriter === "false" ? (
                   <button
                     onClick={handleChat}
                     className="detail-productsitem-btn1"
                   >
                     채팅 하기
                   </button>
+                ) : (
+                  ""
                 )}
               </div>
               <div>

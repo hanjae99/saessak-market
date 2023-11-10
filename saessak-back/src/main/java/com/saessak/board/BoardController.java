@@ -28,6 +28,33 @@ public class BoardController {
   @Autowired
   private BoardService boardService;
 
+  @GetMapping("/dummyset")
+  public ResponseEntity<?> setDummy() {
+
+    for (int i=0; i<220; i++) {
+
+      Board board = Board.builder()
+          .title("더미"+i)
+          .member(boardService.getMember(1L))
+          .content("더미더미")
+          .showStatus(ShowStatus.SHOW)
+          .boardName("main")
+          .build();
+      Board savedBoard = boardService.saveBoard(board);
+
+      BoardMain boardMain = new BoardMain();
+      boardMain.setBoard(savedBoard);
+      boardService.saveBoardMain(boardMain);
+    }
+
+
+    BoardResponseDTO<?> responseDTO = BoardResponseDTO.builder()
+        .msg("good")
+        .build();
+
+    return ResponseEntity.ok().body(responseDTO);
+  }
+
 
 
   @GetMapping("/{boardName}/detail/{boardId}")
@@ -36,6 +63,8 @@ public class BoardController {
                                            @AuthenticationPrincipal String userId) {
     List<BoardDTO> list = new ArrayList<>();
     Board board = boardService.getBoard(boardId);
+    board.setClickCount(board.getClickCount()+1);
+    boardService.saveBoard(board);
     BoardDTO boardDTO = BoardDTO.builder()
         .title(board.getTitle())
         .content(board.getContent())
@@ -43,6 +72,7 @@ public class BoardController {
         .regTime(board.getRegTime())
         .updateTime(board.getUpdateTime())
         .writer(board.getMember().getNickName())
+        .clickCount(board.getClickCount())
         .build();
     list.add(boardDTO);
 
@@ -55,13 +85,6 @@ public class BoardController {
         isMaster = "master";
       }
     }
-
-
-
-
-
-
-
 
     BoardResponseDTO<BoardDTO> responseDTO = BoardResponseDTO.<BoardDTO>builder()
         .list(list)
@@ -87,7 +110,7 @@ public class BoardController {
 
 
 
-    int pageSize = 15;
+    int pageSize = 10;
     String role = "any";
 
     if (!userId.equals("anonymousUser")) {
@@ -117,7 +140,7 @@ public class BoardController {
         }
       }).collect(Collectors.toList());
       if (Objects.equals(boardName, "voc")) {
-        list = list.stream().filter(p->p.getWriter().equals(boardService.getMember(userId).getNickName())).collect(Collectors.toList());
+        list = list.stream().filter(p-> boardService.getMember(userId).getRole().equals(Role.ADMIN) || p.getWriter().equals(boardService.getMember(userId).getNickName())).collect(Collectors.toList());
       }
     }
     int totalPageSize = pb.getTotalPages();
@@ -205,8 +228,10 @@ public class BoardController {
         break;
     }
 
+    BoardResponseDTO<?> responseDTO = BoardResponseDTO.builder()
+        .msg("ok").build();
 
-    return ResponseEntity.ok().body("kk");
+    return ResponseEntity.ok().body(responseDTO);
 
   }
 

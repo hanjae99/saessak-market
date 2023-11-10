@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import AdminNav from './AdminNav'
-import AdminCategory from './AdminCategory'
 import AdminModal from './AdminModal'
 import './AdminPage.css';
 import AdminContentBox2 from './AdminContentBox2'
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import AdminContentBox from './AdminContentBox';
 
 const AdminPage = () => {
   let {page} = useParams();
@@ -24,6 +22,7 @@ const AdminPage = () => {
   useEffect(()=>{
     setSelectedCg()
     dispatch({type:'login/login',payload:'admin'})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[page])
   return (
     <div className='adminPage'>

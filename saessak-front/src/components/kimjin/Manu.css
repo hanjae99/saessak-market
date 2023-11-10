@@ -226,7 +226,7 @@
   border-bottom: 2px solid #d3d3d3;
   border-left: 2px solid #d3d3d3;
   border-right: 2px solid #d3d3d3;
-  padding: 5px;
+  padding: 45px;
 }
 
 .manu-2-1-1 > div {
@@ -467,7 +467,8 @@
   color: white;
   width: 200px;
   height: 100px;
-  font-size: 30px;
+  line-height: 45px;
+  /* font-size: 30px; */
   text-align: center;
   padding: 30px 0;
   margin-top: 3px;

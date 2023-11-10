@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./SignUp.css";
 import Header from "../main/Header";
@@ -10,6 +10,8 @@ const SignUp = () => {
   //const user = useSelector((state) => state.user);
   const [signFailed, setSignFailed] = useState(false);
   const [idCheck, setIdCheck] = useState(0);
+  const [pwdPass, setPwdPass] = useState("");
+  const [pwdCheck, setPwdCheck] = useState(0);
   const [nicknameCheck, setNicknameCheck] = useState(0);
   const [emailCheck, setEmailCheck] = useState(0);
   const [emailCheckData, setEmailCheckData] = useState("");
@@ -47,21 +49,22 @@ const SignUp = () => {
       !newUser.nickName ||
       !newUser.password ||
       idCheck !== -1 ||
+      pwdCheck !== -1 ||
       nicknameCheck !== -1 ||
       emailPassCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
-      // !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
-      // isSmsChecked !== 1 ||
+      !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
+      isSmsChecked !== 1 ||
       !newUser.gender
     ) {
       setSignFailed(true);
       return;
     } else {
-      console.log(newUser);
+      // console.log(newUser);
       setSignFailed(false);
       signup(newUser).then((response) => {
-        console.log(response);
+        // console.log(response);
         alert("계정이 성공적으로 생성되었습니다.");
         window.location.href = "/login";
       });
@@ -89,14 +92,20 @@ const SignUp = () => {
   };
 
   const onPwdCheck = (e) => {
-    const { value } = e.target;
-    if (newUser.password === value) {
-      setNewUser((prevUser) => ({
-        ...prevUser,
-        password: e.target.value,
-      }));
-    }
+    const value = e.target.value;
+    setPwdPass(value);
   };
+
+  useEffect(() => {
+    if (newUser.password && pwdPass && newUser.password === pwdPass) {
+      setPwdCheck(-1);
+    } else if (newUser.password || pwdPass) {
+      setPwdCheck(1);
+    } else {
+      setPwdCheck(0);
+    }
+  }, [newUser.password, pwdPass]);
+
   const onName = (e) => {
     setNewUser((prevUser) => ({
       ...prevUser,
@@ -119,7 +128,7 @@ const SignUp = () => {
   };
 
   const onCustomDomain = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     const value = e.target.value;
     setCustomDomain(value);
   };
@@ -229,7 +238,7 @@ const SignUp = () => {
         localStorage.setItem("SMSTOKENEXPIRE", response.expireDate);
         setIsSmsSend(1);
       } else {
-        console.log(response);
+        // console.log(response);
         setIsSmsSend(-1);
       }
     });
@@ -255,6 +264,7 @@ const SignUp = () => {
     };
 
     call("/signup/smsCheck", "POST", request).then((response) => {
+      console.log(response);
       if (response && response.message === "success") {
         localStorage.setItem("SMSTOKEN", "");
         localStorage.setItem("SMSTOKENEXPIRE", "");
@@ -365,6 +375,20 @@ const SignUp = () => {
                 onChange={onPwdCheck}
               />
             </div>
+            {pwdCheck === 1 ? (
+              <p className="signup-duplicated-msg">
+                비밀번호를 다시확인해주세요
+              </p>
+            ) : (
+              ""
+            )}
+            {pwdCheck === -1 ? (
+              <p className="signup-duplicated1-msg">
+                비밀번호를 사용할수있습니다
+              </p>
+            ) : (
+              ""
+            )}
             <div className="signup-input-container">
               <label className="signup-text-id">이름 *</label>
               <input
@@ -477,8 +501,13 @@ const SignUp = () => {
                   type="text"
                   placeholder="ex):복사한 인증키를 입력해주세요"
                   onChange={onSmsCheckInput}
+                  readOnly={isSmsChecked === 1 ? true : false}
                 />
-                <button className="signup-bt2" onClick={sendSmsCheck}>
+                <button
+                  className="signup-bt2"
+                  onClick={sendSmsCheck}
+                  disabled={isSmsChecked === 1 ? true : false}
+                >
                   인증
                 </button>
               </div>

@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @Getter
@@ -27,16 +26,19 @@ public class MainProductFormDTO {
 
     private Integer wishedCount;
 
+    private LocalDateTime regTime;
+
     private LocalDateTime updateTime;
 
     @QueryProjection
-    public MainProductFormDTO(Long id, String title, Integer price, String imgUrl, Integer clickedCount, Integer wishedCount, LocalDateTime updateTime) {
+    public MainProductFormDTO(Long id, String title, Integer price, String imgUrl, Integer clickedCount, Integer wishedCount, LocalDateTime regTime, LocalDateTime updateTime) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.imgUrl = imgUrl;
         this.clickedCount = clickedCount;
         this.wishedCount = wishedCount;
+        this.regTime = regTime;
         this.updateTime = updateTime;
     }
 }

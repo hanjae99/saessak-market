@@ -1,19 +1,18 @@
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Button } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdReorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { call } from "../../ApiService";
-import "./Header.scss";
-import { Button } from "@mui/material";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import PersonIcon from "@mui/icons-material/Person";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { loginCheck } from "../../loginCheck";
+import "./Header.scss";
 
 const Header = () => {
   const [value, setValue] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
   const [categoryDTO, setCategoryDTO] = useState([]);
   const [loginMinute, setLoginMinute] = useState("");
@@ -49,11 +48,16 @@ const Header = () => {
 
     // 카테고리 정보 가져오기
     call("/product/searchcate", "GET").then((response) => {
-      // console.log(response.data);
       if (response && response.data && response.data != null) {
         setCategoryDTO(response.data);
       }
     });
+
+    // 관리자일 경우 관리자 페이지로 이동하는 버튼 노출
+    if (localStorage.getItem("ISADMIN") === "true") {
+      setIsAdmin(true);
+      return;
+    }
 
     intervalId.current = setInterval(() => {
       const now = new Date();
@@ -71,16 +75,15 @@ const Header = () => {
     clearInterval(intervalId.current);
   }
 
-  // const login = useSelector((state) => state.login);
-  // const dispatch = useDispatch();
-
   const handleLogInAndOut = (e) => {
     if (isLogin) {
       localStorage.setItem("ACCESS_TOKEN", "");
       localStorage.setItem("EXPIREDATE", "");
       localStorage.setItem("NICKNAME", "");
+      localStorage.setItem("ISADMIN", "");
       alert("로그아웃 되었습니다.");
       setIsLogin(false);
+      setIsAdmin(false);
       navigate("/");
     } else {
       navigate("/login");
@@ -103,9 +106,11 @@ const Header = () => {
       <div id="headContainer">
         <div className="headContent">
           <div className="logo">
-            <Link to="/">
-              <img src="/img/saessak.png" alt="logo" />
-            </Link>
+            <div className="logo-image">
+              <Link to="/">
+                <img src="/img/mainLogo_sang.png" alt="logo" />
+              </Link>
+            </div>
             <div className="logo-text">
               <Link to="/">
                 <img src="/img/logo.png" alt="새싹마켓 logo" />
@@ -146,26 +151,12 @@ const Header = () => {
             >
               마이페이지
             </Button>
-            {/* <button onClick={handleLogInAndOut}>
-              {isLogin ? "로그아웃" : "로그인"}
-            </button>
-            <button
-              onClick={() => {
-                navigate("/user/mypage");
-              }}
-            >
-              마이페이지
-            </button> */}
           </div>
         </div>
       </div>
       <div id="navContainer">
         <div className="navContent">
           <div className="category">
-            {/* <span>
-              <MdReorder />
-            </span>
-            <span>카테고리</span> */}
             <div className="category_selectBtn">
               <MdReorder />
               <span>카테고리</span>
@@ -175,26 +166,6 @@ const Header = () => {
                 style={{ width: "80%", height: "20px", zIndex: "-999" }}
               ></div>
               <ul>
-                {/* {category
-                  .filter((c) => c.categoryno <= 20)
-                  .sort((a, b) =>
-                    a.categoryno.length === b.categoryno.length
-                      ? a.categoryno > b.categoryno
-                        ? 1
-                        : -1
-                      : a.categoryno.length > b.categoryno.length
-                      ? 1
-                      : -1
-                  )
-                  .map((c) => {
-                    return (
-                      <li className="categoryItem" key={c.categoryno}>
-                        <Link to={"/search?category=" + c.categoryno}>
-                          {c.categoryname}
-                        </Link>
-                      </li>
-                    );
-                  })} */}
                 {categoryDTO.map((c) => (
                   <li className="categoryItem" key={c.id}>
                     <Link to={"/search?category=" + c.id}>{c.name}</Link>
@@ -215,7 +186,16 @@ const Header = () => {
             </div>
           </nav>
         </div>
-        {isLogin ? (
+        {isAdmin ? (
+          <div className="login-info">
+            <div className="loginedUserNick">
+              환영해요, {localStorage.getItem("NICKNAME")} 님
+            </div>
+            <Button variant="contained" onClick={() => navigate("/admin")}>
+              관리자
+            </Button>
+          </div>
+        ) : isLogin ? (
           <div className="login-info">
             <div className="loginedUserNick">
               환영해요, {localStorage.getItem("NICKNAME")} 님

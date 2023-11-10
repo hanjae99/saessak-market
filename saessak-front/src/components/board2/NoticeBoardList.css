@@ -2,7 +2,7 @@
   cursor: pointer;
   text-decoration: none;
   color: white;
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   transition: all 0.5s linear;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .notice-box {
-  padding-left: 10px;
+  padding-left: 30px;
   color: white;
 }
 

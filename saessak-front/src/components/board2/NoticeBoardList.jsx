@@ -7,11 +7,11 @@ const NoticeBoardList = () => {
 
   return (
     <div className="notice-box">
-      <div className="menuBtn1">
-        <img src="/img/leaf2.png" alt="" className="menuBtn1-img" />
+      <div className="menuBtn1" style={{width:'100%', alignItems:'center'}}>
+        {/* <img src="/img/leaf2.png" alt="" className="menuBtn1-img" style={{width:'50%', height:'80%'}} /> */}
       </div>
       <ul className="notice-list">
-        <h3 style={{ fontSize: "30px" }} className="board-list-h3">
+        <h3 style={{ fontSize: "1.1rem" }} className="board-list-h3">
           소통
         </h3>
         <hr className="notice-hr" />
@@ -22,7 +22,7 @@ const NoticeBoardList = () => {
         </li>
       </ul>
       <ul className="notice-list">
-        <h3 className="board-list-h3" style={{ fontSize: "30px" }}>
+        <h3 className="board-list-h3" style={{ fontSize: "1.1rem" }}>
           고객센터
         </h3>
         <hr className="notice-hr" />

@@ -21,7 +21,7 @@ export function call(api, method, request) {
   // 요청 데이터가 존재하는 경우, 요청 데이터를 JSON 문자열로 변환하여 옵션에 추가합니다.
   if (request) {
     options.body = JSON.stringify(request);
-    console.log(options);
+    // console.log(options);
   }
 
   // fetch 함수를 사용하여 API에 요청을 보내고, 응답을 처리합니다.
@@ -80,6 +80,11 @@ export function login(loginDTO) {
 export function signout() {
   localStorage.setItem("ACCESS_TOKEN", "");
   window.location.href = "/login";
+}
+
+export function memberdelete() {
+  localStorage.setItem("ACCESS_TOKEN", "");
+  window.location.href = "/";
 }
 
 export function signup(signUpDTO) {

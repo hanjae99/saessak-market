@@ -1,5 +1,6 @@
 package com.saessak.detail.service;
 
+import com.saessak.constant.SellStatus;
 import com.saessak.detail.dto.*;
 import com.saessak.entity.*;
 import com.saessak.main.dto.ProductDTO;
@@ -13,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,7 @@ public class DetailService {
     private final ImageRepository imageRepository;
     private final ChatBoxRepository chatBoxRepository;
     private final WishListRepository wishListRepository;
+
 
     public DetailDTO get(Long productId){
 
@@ -172,17 +175,15 @@ public class DetailService {
 
         Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
 
-        LocalDateTime updateTime = product.getUpdateTime();
-
-        LocalDateTime regTime = product.getRegTime();
-
         if (wishListRepository.existsByMemberIdAndProductId(memberId, productId)) {
             // 이미 찜한 상품이라면 추가 작업을 수행하지 않음
             return;
         }
 
-
-        wishListRepository.insertById(member.getId(), productId, updateTime, regTime);
+        WishList wishList = new WishList();
+        wishList.setMember(member);
+        wishList.setProduct(product);
+        wishListRepository.save(wishList);
     }
 
 

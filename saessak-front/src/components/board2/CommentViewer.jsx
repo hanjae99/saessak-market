@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs'
 import { FaXmark } from 'react-icons/fa6'
 import { FaRegComment } from 'react-icons/fa'
 import { RxEraser } from 'react-icons/rx'
 import { call } from '../../ApiService'
+import { API_BASE_URL } from '../../ApiConfig'
 
 const ProfileImg = ({ imgsrc }) => {
   return (
     <span className='cmt_ProfileImg'>
-      {imgsrc === undefined || imgsrc === '' ? '?' : <img src={imgsrc} alt=''></img>}
+      {imgsrc === undefined || imgsrc === '' ? '?' : <img src={API_BASE_URL + imgsrc} alt=''></img>}
     </span>
   )
 }
@@ -155,6 +156,7 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
         
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(()=>{
@@ -162,6 +164,7 @@ const CommentViewer = ({ parent, parentId, isAnonymous = false }) => {
       document.getElementById("updateNowComment")&&document.getElementById("updateNowComment").scrollIntoView({ behavior: "smooth",block: "center"});
       dispatch({ type: 'comments/setData', payload: {...commentData, updateNow:0 } })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[commentData.updateNow])
 
 

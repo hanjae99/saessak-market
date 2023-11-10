@@ -100,9 +100,10 @@ public class WishListService {
 
     }
 
-    public WishList buyDelete(Long buyListId){
-        wishListRepository.deleteByMemberIdAndProductId(buyListId);
-        return null;
+    public Product buyDelete (Long productId){
+        Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+        product.setOrderMember(null);
+        return product;
     }
 
     public Product sellUpdate(Long productId){

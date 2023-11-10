@@ -14,7 +14,6 @@ import BoardPage from "./components/board2/BoardPage";
 import Detail from "./components/detail/Detail";
 import Game from "./components/game/Game";
 import GameResult from "./components/game/GameResult";
-import Chatting from "./components/kimjin/Chatting";
 import { Layout } from "./components/mypage/layout";
 import Main from "./components/main/Main";
 import ProductList2 from "./components/productList/ProductList2";
@@ -23,12 +22,11 @@ import BoardEditorPage from "./components/board2/BoardEditorPage";
 import BoardViewerPage from "./components/board2/BoardViewerPage";
 import KakaoLogin from "./components/Login/KakaoLogin";
 import Chat from "./components/chat/Chat";
-import ChatApp from "./ChatApp";
 import FindById from "./components/Login/FindById";
 import FindByPwd from "./components/Login/FindByPwd";
 
 function App() {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   return (
     <div>
       <Routes>
@@ -43,15 +41,15 @@ function App() {
         <Route path="/detail" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/singup" element={<SignUp />} />
-        <Route path="/boardmain" element={<BoardMain page={page} />} />
+        {/* <Route path="/boardmain" element={<BoardMain page={page} />} /> */}
         <Route path="/boardwrite" element={<CreateNotice />} />
-        <Route path="/boardmain/1" element={<CreateVoice page={page} />} />
+        {/* <Route path="/boardmain/1" element={<CreateVoice page={page} />} /> */}
         <Route path="/user/*" element={<Layout />}></Route>
         <Route path="/boardmain/ntc" element={<BoardNtc />}></Route>
         <Route path="/boardmain/ntc/:id?" element={<BoardNtcInfo />}></Route>
         <Route path="/boardmain/info/:id?" element={<BoardInfo />}></Route>
-        <Route path="/chatting" element={<Chatting />}></Route>
         <Route path="/board/list/:boardName?" element={<BoardPage />}></Route>
+        <Route path="/board/list/:boardName/:page" element={<BoardPage />}></Route>
         <Route
           path="/board/write/:boardName"
           element={<BoardEditorPage />}

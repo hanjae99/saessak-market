@@ -1,13 +1,9 @@
 package com.saessak.repository;
 
-import com.querydsl.core.types.ConstantImpl;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.querydsl.sql.SQLExpressions;
 import com.saessak.constant.SellStatus;
 import com.saessak.detail.dto.DetailDTO;
 import com.saessak.entity.*;
@@ -59,40 +55,15 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         QWishList wishList = QWishList.wishList;
 
         // 동적으로 정렬 조건 변경
-        OrderSpecifier<?> orderSpecifier = product.updateTime.desc();
+        OrderSpecifier<?> orderSpecifier = product.regTime.desc();
 
         if (productDTO.getSortBy().equals("Wish")){
             orderSpecifier = wishList.id.count().desc();
         }else if (productDTO.getSortBy().equals("Click")){
             orderSpecifier = product.clickCount.desc();
         }else if (productDTO.getSortBy().equals("Date")){
-            orderSpecifier = product.updateTime.desc();
+            orderSpecifier = product.regTime.desc();
         }
-
-//        List<ProductDTO> content = queryFactory
-//                .select(new QProductDTO(
-//                        product.id,
-//                        product.title,
-//                        product.price,
-//                        product.sellStatus,
-//                        image.imgUrl,
-//                        product.clickCount,
-//                        Expressions.asNumber(0),
-//                        product.regTime,
-//                        product.updateTime,
-//                        Expressions.asString(productDTO.getSearchBy()),
-//                        Expressions.asString(productDTO.getSearchQuery()),
-//                        Expressions.asString(productDTO.getSortBy())
-//                ))
-//                .from(product, image, productCategory)
-//                .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
-//                .where(searchSellStatusEq(productDTO.getSellStatus()),
-//                        productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
-//                .groupBy(product.id)
-//                .orderBy(product.updateTime.desc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
 
         List<ProductDTO> content = queryFactory
                 .select(new QProductDTO(
@@ -102,7 +73,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         product.sellStatus,
                         image.imgUrl,
                         product.clickCount,
-                        wishList.id.count().intValue(),
+                        wishList.id.countDistinct().intValue(),
                         product.regTime,
                         product.updateTime,
                         Expressions.asString(productDTO.getSearchBy()),
@@ -110,38 +81,25 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         Expressions.asString(productDTO.getSortBy())
                 ))
                 .from(product)
-                .leftJoin(image)
+                .innerJoin(image)
                 .on(product.id.eq(image.product.id))
-                .leftJoin(productCategory)
+                .innerJoin(productCategory)
                 .on(product.id.eq(productCategory.product.id))
                 .leftJoin(wishList)
                 .on(product.id.eq(wishList.product.id))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
                         productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .groupBy(product.id)
-//                .orderBy(product.updateTime.desc())
                 .orderBy(orderSpecifier)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
-//        // 찜 수 조회
-//        for (ProductDTO dto : content){
-//            Long wishedCount = queryFactory
-//                    .select(wishList.id.count())
-//                    .from(wishList)
-//                    .where(wishList.product.id.eq(dto.getId()))
-//                    .fetchOne();
-//            dto.setWishedCount(wishedCount.intValue());
-//        }
 
         long total = queryFactory.select(product.id.countDistinct()).from(product, image, productCategory)
                 .where(product.id.eq(image.product.id).and(product.id.eq(productCategory.product.id)))
                 .where(searchSellStatusEq(productDTO.getSellStatus()),
                         productTitleCateLike(productDTO.getSearchBy(), productDTO.getSearchQuery()))
                 .fetchOne();
-
-//        System.out.println("============" + total);
 
         return new PageImpl<>(content, pageable, total);
 
@@ -209,6 +167,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         image.imgUrl,
                         product.clickCount,
                         Expressions.asNumber(0),
+                        product.regTime,
                         product.updateTime
                 ))
                 .from(image)
@@ -246,13 +205,14 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         image.imgUrl,
                         product.clickCount,
                         Expressions.asNumber(0),
+                        product.regTime,
                         product.updateTime
                 ))
                 .from(image)
                 .join(image.product, product)
                 .where(searchSellStatusEq(SellStatus.SELL))
                 .groupBy(product.id)
-                .orderBy(product.updateTime.desc())
+                .orderBy(product.regTime.desc())
                 .limit(4)
                 .fetch();
 

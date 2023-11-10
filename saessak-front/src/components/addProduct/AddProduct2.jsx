@@ -6,10 +6,10 @@ import Select from "@mui/material/Select";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { call, uploadProduct } from "../../ApiService";
+import { loginCheck } from "../../loginCheck";
 import Footer from "../main/Footer";
 import Header from "../main/Header";
 import "./AddProduct.scss";
-import { loginCheck } from "../../loginCheck";
 
 const AddProduct2 = () => {
   const [imgFile, setImgFile] = useState([]);
@@ -23,51 +23,6 @@ const AddProduct2 = () => {
   const [marker, setMarker] = useState();
 
   useEffect(() => {
-    // const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    // if (accessToken !== "") {
-    //   // 토큰 유효시간 검사
-    //   const expiration = localStorage.getItem("EXPIREDATE");
-    //   if (expiration && expiration != "") {
-    //     const now = new Date().getTime();
-    //     // 토큰 만료
-    //     if (now >= Date.parse(expiration)) {
-    //       localStorage.setItem("ACCESS_TOKEN", "");
-    //       localStorage.setItem("EXPIREDATE", "");
-    //       setIsLogin(false);
-    //       alert("로그인 시간이 만료되었습니다");
-    //       navigate("/login");
-    //     } else {
-    //       // 토큰 유지, 로그인 유지
-    //       setIsLogin(true);
-
-    //       // 카테고리 정보 가져오기
-    //       call("/product/searchcate", "GET").then((response) => {
-    //         // console.log(response.data);
-    //         if (response.data && response.data != null) {
-    //           setCategoryDTO(response.data);
-    //         }
-    //         console.log(categoryDTO);
-    //       });
-
-    //       // 지도 가져오기
-    //       kakao.maps.load(() => {
-    //         const container = document.getElementById("map_add");
-    //         const options = {
-    //           // center: new kakao.maps.LatLng(33.450701, 126.570667),
-    //           center: new kakao.maps.LatLng(37.489972, 126.927158),
-    //           level: 3,
-    //         };
-
-    //         setMap(new kakao.maps.Map(container, options));
-    //         setMarker(new kakao.maps.Marker());
-    //       });
-    //     }
-    //   }
-    // } else {
-    //   alert("로그인 후 이용해주세요!");
-    //   navigate("/login");
-    // }
-
     const result = loginCheck();
     if (result === "token expired") {
       setIsLogin(false);
@@ -78,11 +33,9 @@ const AddProduct2 = () => {
 
       // 카테고리 정보 가져오기
       call("/product/searchcate", "GET").then((response) => {
-        // console.log(response.data);
         if (response.data && response.data != null) {
           setCategoryDTO(response.data);
         }
-        console.log(categoryDTO);
       });
 
       // 지도 가져오기
@@ -142,15 +95,11 @@ const AddProduct2 = () => {
       formData.append("productImgFileList", imgFile[i]);
     }
 
-    // console.log(e.target.elements.chooseFile.value);
-
-    // dispatch({ type: "product/add", payload: newProduct });
-    // navigate("/search");
-
     uploadProduct("/product/new", "POST", formData).then((response) => {
       const result = response.data[0];
       if (result === "success") {
-        alert(result);
+        // alert(result);
+        alert("상품이 등록되었습니다!");
         navigate("/search");
       } else {
         alert(result);
@@ -160,7 +109,6 @@ const AddProduct2 = () => {
 
   const handleSelect = (e) => {
     setSelectedCate(e.target.value);
-    console.log(e.target.value);
   };
 
   const onClickAddr = () => {
