@@ -1,5 +1,6 @@
 package com.saessak.detail.service;
 
+import com.saessak.constant.SellStatus;
 import com.saessak.detail.dto.*;
 import com.saessak.entity.*;
 import com.saessak.main.dto.ProductDTO;
@@ -13,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,7 @@ public class DetailService {
     private final ImageRepository imageRepository;
     private final ChatBoxRepository chatBoxRepository;
     private final WishListRepository wishListRepository;
+
 
     public DetailDTO get(Long productId){
 

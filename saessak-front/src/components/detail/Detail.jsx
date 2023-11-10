@@ -34,7 +34,7 @@ const Detail = () => {
 
   useEffect(() => {
     call(`/detail/${id}`, "GET").then((response) => {
-      // console.log(response);
+      console.log(response);
       if (response === 1) {
         navigate("/");
       }

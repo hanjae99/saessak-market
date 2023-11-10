@@ -1,6 +1,7 @@
 package com.saessak.admin;
 
 
+import com.saessak.constant.Role;
 import com.saessak.entity.Board;
 import com.saessak.entity.Image;
 import com.saessak.entity.Member;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -64,5 +66,46 @@ public class AdminService {
 
   public String getNickNameFromBoard(Long boardId) {
     return getBoard(boardId).getMember().getNickName();
+  }
+
+  public List<Product> getProductList(Member member) {
+    return productRepository.findBySellMemberId(member.getId());
+  }
+
+  public List<Board> getBoardList(Member member) {
+    return boardRepository.findByMemberId(member.getId());
+  }
+
+  public void saveMember(Member member) {
+    memberRepository.save(member);
+  }
+
+  public void saveProducts(List<Product> productList) {
+    productRepository.saveAll(productList);
+  }
+
+  public void saveBoards(List<Board> boardList) {
+    boardRepository.saveAll(boardList);
+  }
+
+  public void saveBoard(Board board) {
+    boardRepository.save(board);
+  }
+
+  public void saveProduct(Product product) {
+    productRepository.save(product);
+  }
+
+  public List<Member> getMemberList() {
+    return memberRepository.findByNotAdmin();
+  }
+
+  public String getMemberImage(Long id) {
+    Image image = imageRepository.findByMemberId(id);
+    if (image!=null) {
+      return image.getImgUrl();
+    } else {
+      return null;
+    }
   }
 }

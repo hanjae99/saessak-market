@@ -146,7 +146,7 @@ const ImageViewer = () => {
           position: 'relative',
           border: '1px solid black',
         }} onClick={() => { }} >
-          <img src={modalData && modalData.imgUrl} alt='img' style={{ width: '60%', height: 'calc(100% - 5px)' }}></img>
+          <img src={API_BASE_URL+(modalData && modalData.imgUrl)} alt='img' style={{ width: '60%', height: 'calc(100% - 5px)' }}></img>
           {
             (() => {
               let style = {

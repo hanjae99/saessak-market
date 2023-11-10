@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
 
@@ -28,4 +30,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Member findByUserIdAndEmail(String userId, String email);
 
 
+    @Query(value = "select mb from Member mb where mb.role != 'ADMIN'")
+    List<Member> findByNotAdmin();
 }
