@@ -18,6 +18,10 @@ const SignUp = () => {
   const [emailCheckInput, setEmailCheckInput] = useState("");
   const [emailPassCheck, setEmailPassCheck] = useState(0);
   const [emailId, setEmailId] = useState(""); // 이메일 아이디 상태
+  const [passwordRegex, setPasswordRegex] = useState(
+    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/
+  );
+  const [pwdRegCheck, setPwdRegCheck] = useState(0);
 
   const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
   const [customDomain, setCustomDomain] = useState(""); // 직접 도메인 입력
@@ -39,7 +43,6 @@ const SignUp = () => {
     phone: "",
     address: "",
     gender: "",
-    //userproduct: [],
   });
 
   const onSubmit = (e) => {
@@ -54,8 +57,8 @@ const SignUp = () => {
       emailPassCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
-      !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
-      isSmsChecked !== 1 ||
+      // !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
+      // isSmsChecked !== 1 ||
       !newUser.gender
     ) {
       setSignFailed(true);
@@ -68,7 +71,6 @@ const SignUp = () => {
         alert("계정이 성공적으로 생성되었습니다.");
         window.location.href = "/login";
       });
-      //navigator("/login");
     }
   };
 
@@ -97,12 +99,25 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    if (newUser.password && pwdPass && newUser.password === pwdPass) {
-      setPwdCheck(-1);
-    } else if (newUser.password || pwdPass) {
-      setPwdCheck(1);
+    if (!newUser.password) {
+      setPwdRegCheck(0);
+    } else if (
+      newUser.password.length < 4 ||
+      !passwordRegex.test(newUser.password)
+    ) {
+      setPwdRegCheck(1);
     } else {
+      setPwdRegCheck(-1);
+    }
+  }, [newUser.password, passwordRegex]);
+
+  useEffect(() => {
+    if (!pwdPass) {
       setPwdCheck(0);
+    } else if (newUser.password === pwdPass && pwdRegCheck === -1) {
+      setPwdCheck(-1);
+    } else {
+      setPwdCheck(1);
     }
   }, [newUser.password, pwdPass]);
 
@@ -149,37 +164,20 @@ const SignUp = () => {
 
   const onidCheck = (e) => {
     e.preventDefault();
-    // const checkid = user.find((u) => u.id === newUser.id);
     call(`/signup/userId/${newUser.userId}`, "GET", null).then((response) => {
       //console.log(response);
       setIdCheck(response);
     });
-    // if (checkid) {
-    //   setIdCheck(1);
-    // } else if (checkid === undefined && newUser.id === "") {
-    //   setIdCheck(0);
-    // } else {
-    //   setIdCheck(-1);
-    // }
   };
 
   const onNicknameCheck = (e) => {
     e.preventDefault();
-    //const checkNickname = user.find((u) => u.nickname === newUser.nickname);
     call(`/signup/nickName/${newUser.nickName}`, "GET", null).then(
       (response) => {
         //  console.log(response.data);
         setNicknameCheck(response);
       }
     );
-
-    // if (checkNickame) {
-    //   setNicknameCheck(1);
-    // } else if (checkNickname === undefined && newUser.nickname === "") {
-    //   setNicknameCheck(0);
-    // } else {
-    //   setNicknameCheck(-1);
-    // }
   };
 
   const onEmailCheck = (e) => {
@@ -366,6 +364,13 @@ const SignUp = () => {
                 onChange={onPwd}
               />
             </div>
+            {pwdRegCheck === 1 ? (
+              <p className="signup-duplicated-msg">
+                비밀번호를 4자이상 문자,숫자를 한개이상 입력해주세요
+              </p>
+            ) : (
+              ""
+            )}
             <div className="signup-input-container">
               <label className="signup-text-id">비밀번호확인 *</label>
               <input
