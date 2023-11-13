@@ -72,7 +72,7 @@ const BoardPageView = () => {
             <ul className="pagination">
               <li className="page-item">
                 <button className="page-link" disabled={Math.floor((page > 0 ? page : 1) / 10) * 10 + 1 === 1} onClick={() => {
-                  navigate("/board/list/" + bn + "/" + (Math.floor((page > 0 ? page : 1) / 10) * 10));
+                  navigate("/board/list/" + bn + "/" + ((Math.floor((page > 0 ? page : 1) / 10)+1) * 10));
                 }}>
                   <FaArrowLeft />
                 </button>

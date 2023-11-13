@@ -31,15 +31,17 @@ public class BoardController {
   @GetMapping("/dummyset")
   public ResponseEntity<?> setDummy() {
 
-    for (int i=0; i<220; i++) {
+    for (int i=0; i<520; i++) {
 
       Board board = Board.builder()
-          .title("더미"+i)
-          .member(boardService.getMember(1L))
+          .title("테스트용 "+i+" 번째 더미")
           .content("더미더미")
           .showStatus(ShowStatus.SHOW)
           .boardName("main")
           .build();
+
+      board.setMember(boardService.getMember((i%5+1)+""));
+
       Board savedBoard = boardService.saveBoard(board);
 
       BoardMain boardMain = new BoardMain();
