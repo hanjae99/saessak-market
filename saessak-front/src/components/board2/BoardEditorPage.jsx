@@ -97,7 +97,7 @@ const BoardEditorPage = () => {
   return (
     <>
       <Header />
-      <div className="board-main">
+      <div className="board-main" style={{minHeight:'700px'}}>
         <div className="board-left">
           <NoticeBoardList />
         </div>
