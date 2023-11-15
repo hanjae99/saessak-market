@@ -18,6 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
+//                .allowedOrigins("http://saessakmarket.store") // 들어올 수 있는 허용 경로
                 .allowedOrigins("http://localhost:3000") // 들어올 수 있는 허용 경로
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS") // 해당 경로가 사용할수 있는 메소드
                 .allowedHeaders("*")
