@@ -8,6 +8,7 @@ import { call } from "../../ApiService";
 import KakaoMap from "./KakaoMap";
 import { chatCall } from "../../ChatService";
 import priceComma from "./../../pricecomma";
+import { API_BASE_URL } from "../../ApiConfig";
 
 const Detail = () => {
   const { id } = useParams();
@@ -237,7 +238,7 @@ const Detail = () => {
                           >
                             <img
                               className="detail-imgbox1"
-                              src={`http://localhost:8888${up.imgUrl}`}
+                              src={API_BASE_URL + up.imgUrl}
                               alt=""
                             />
                           </div>
@@ -283,7 +284,7 @@ const Detail = () => {
                       <div className="detail-recommend-img">
                         <img
                           className="detail-recommend-img"
-                          src={`http://localhost:8888${cp.imgUrl}`}
+                          src={API_BASE_URL + cp.imgUrl}
                           alt=""
                         />
                       </div>
