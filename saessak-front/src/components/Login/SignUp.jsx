@@ -19,7 +19,7 @@ const SignUp = () => {
   const [emailPassCheck, setEmailPassCheck] = useState(0);
   const [emailId, setEmailId] = useState(""); // 이메일 아이디 상태
   const [passwordRegex, setPasswordRegex] = useState(
-    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/
+    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
   );
   const [pwdRegCheck, setPwdRegCheck] = useState(0);
 
@@ -102,7 +102,7 @@ const SignUp = () => {
     if (!newUser.password) {
       setPwdRegCheck(0);
     } else if (
-      newUser.password.length < 4 ||
+      newUser.password.length < 8 ||
       !passwordRegex.test(newUser.password)
     ) {
       setPwdRegCheck(1);
@@ -366,7 +366,7 @@ const SignUp = () => {
             </div>
             {pwdRegCheck === 1 ? (
               <p className="signup-duplicated-msg">
-                비밀번호를 4자이상 문자,숫자를 한개이상 입력해주세요
+                비밀번호를 8자이상 문자,숫자를 한개이상 입력해주세요
               </p>
             ) : (
               ""

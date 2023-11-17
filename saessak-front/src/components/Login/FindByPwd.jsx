@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -22,6 +22,10 @@ const FindByPwd = () => {
   const [pwdCheck, setPwdCheck] = useState("");
   const [pwdPass, setPwdPass] = useState(0);
   const [changPass, setChangPass] = useState(true);
+  const [passwordRegex, setPasswordRegex] = useState(
+    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+  );
+  const [pwdRegCheck, setPwdRegCheck] = useState(0);
 
   const onChangeUserId = (e) => {
     setFindByIdDTO((prevUser) => ({
@@ -95,6 +99,29 @@ const FindByPwd = () => {
       setPwdPass(-1);
     }
   };
+
+  useEffect(() => {
+    if (!findByIdDTO.password) {
+      setPwdRegCheck(0);
+    } else if (
+      findByIdDTO.password.length < 8 ||
+      !passwordRegex.test(findByIdDTO.password)
+    ) {
+      setPwdRegCheck(1);
+    } else {
+      setPwdRegCheck(-1);
+    }
+  }, [findByIdDTO.password, passwordRegex]);
+
+  useEffect(() => {
+    if (!pwdPass) {
+      setPwdCheck(0);
+    } else if (findByIdDTO.password === pwdPass && pwdRegCheck === -1) {
+      setPwdCheck(-1);
+    } else {
+      setPwdCheck(1);
+    }
+  }, [findByIdDTO.password, pwdPass]);
 
   return (
     <>
@@ -196,6 +223,13 @@ const FindByPwd = () => {
                   onChange={onPassword}
                 />
               </div>
+              {pwdRegCheck === 1 ? (
+                <p className="signup-duplicated-msg">
+                  비밀번호를 8자이상 문자,숫자를 한개이상 입력해주세요
+                </p>
+              ) : (
+                ""
+              )}
               <div className="login-input2">
                 <input
                   className="login-inputBox2"
