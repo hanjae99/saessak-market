@@ -2,9 +2,6 @@ package com.saessak.wishlist.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.saessak.constant.SellStatus;
-import com.saessak.entity.Member;
-import com.saessak.entity.Product;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,19 +9,17 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class WishListDTO {
+public class BuyListDto {
 
-    private Long productId;
-
-    private Long wishListId;
+    private Long id;
 
     private String title;
 
     private int price;
 
-    private LocalDateTime updateTime;
-
     private SellStatus sellStatus;
+
+    private LocalDateTime updateTime;
 
     private String imgUrl;
 
@@ -32,17 +27,14 @@ public class WishListDTO {
 
     private Long orderMemberId;
 
-
-
     @QueryProjection
 
-    public WishListDTO(Long productId, Long wishListId, String title, int price, LocalDateTime updateTime, SellStatus sellStatus, String imgUrl, Long sellMemberId, Long orderMemberId) {
-        this.productId = productId;
-        this.wishListId = wishListId;
+    public BuyListDto(Long id, String title, int price, SellStatus sellStatus, LocalDateTime updateTime, String imgUrl, Long sellMemberId, Long orderMemberId) {
+        this.id = id;
         this.title = title;
         this.price = price;
-        this.updateTime = updateTime;
         this.sellStatus = sellStatus;
+        this.updateTime = updateTime;
         this.imgUrl = imgUrl;
         this.sellMemberId = sellMemberId;
         this.orderMemberId = orderMemberId;

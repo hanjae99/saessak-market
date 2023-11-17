@@ -1,6 +1,8 @@
 package com.saessak.wishlist.controller;
 
 import com.saessak.mypage.dto.ResponseDTO;
+import com.saessak.wishlist.dto.BuyListDto;
+import com.saessak.wishlist.dto.SellListDto;
 import com.saessak.wishlist.dto.WishListDTO;
 import com.saessak.wishlist.service.WishListService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class WishListController {
     public ResponseEntity<?> readWishList(@AuthenticationPrincipal String userId){
 
         List<WishListDTO> readWish = wishListService.read(Long.parseLong(userId));
+        log.info("====================="+readWish.toString());
 
         ResponseDTO<WishListDTO> response = ResponseDTO.<WishListDTO>builder()
                 .data(readWish)
@@ -35,9 +38,9 @@ public class WishListController {
     @GetMapping("/sellcheck")
     public ResponseEntity<?> readSellCheck(@AuthenticationPrincipal String userId){
 
-        List<WishListDTO> readWish = wishListService.sellread(Long.parseLong(userId));
+        List<SellListDto> readWish = wishListService.sellread(Long.parseLong(userId));
 
-        ResponseDTO<WishListDTO> response = ResponseDTO.<WishListDTO>builder()
+        ResponseDTO<SellListDto> response = ResponseDTO.<SellListDto>builder()
                 .data(readWish)
                 .build();
 
@@ -48,7 +51,7 @@ public class WishListController {
     @GetMapping("/check")
     public ResponseEntity<?> readBuyCheck(@AuthenticationPrincipal String userId){
 
-        List<WishListDTO> readWish = wishListService.buyread(Long.parseLong(userId));
+        List<BuyListDto> readWish = wishListService.buyread(Long.parseLong(userId));
 
         if (readWish.isEmpty()){
             ResponseDTO<String> response = ResponseDTO.<String>builder()
@@ -56,7 +59,7 @@ public class WishListController {
                     .build();
             return ResponseEntity.ok().body(response);
         }
-        ResponseDTO<WishListDTO> response = ResponseDTO.<WishListDTO>builder()
+        ResponseDTO<BuyListDto> response = ResponseDTO.<BuyListDto>builder()
                 .data(readWish)
                 .build();
 
