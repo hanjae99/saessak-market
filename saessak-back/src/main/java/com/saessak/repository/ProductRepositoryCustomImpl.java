@@ -7,6 +7,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.saessak.constant.SellStatus;
 import com.saessak.detail.dto.DetailDTO;
 import com.saessak.entity.*;
+import com.saessak.game.dto.GameDTO;
+import com.saessak.game.dto.QGameDTO;
 import com.saessak.imgfile.FileService;
 import com.saessak.main.dto.*;
 import org.springframework.data.domain.Page;
@@ -228,4 +230,25 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
         return content;
     }
-}
+
+    public List<GameDTO> gameRandomDataWithQueryDSL() {
+        QProduct product = QProduct.product;
+        QImage image = QImage.image;
+
+
+        List<GameDTO> result = queryFactory
+                .select(new QGameDTO(product.id, product.title, product.price, product.content, image.imgUrl))
+                .from(image)
+                .join(image.product, product)
+                .where(product.id.eq(image.product.id))
+                .where(product.sellStatus.eq(SellStatus.valueOf("SELL")))
+                .groupBy(product.id)
+                .orderBy(Expressions.numberTemplate(Double.class, "rand()").asc())
+                .limit(10)
+                .fetch();
+
+        return result;
+
+
+    }
+    }

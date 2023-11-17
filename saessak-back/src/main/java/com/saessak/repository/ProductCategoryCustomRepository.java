@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProductCategoryCustomRepository {
 
     List<CategoryProductDTO> cateRandomData( Long categoryId);
+    public List<CategoryProductDTO> categoryRandomDataWithQueryDSL(Long categoryId, Long productId);
 }

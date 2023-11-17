@@ -71,7 +71,8 @@ const Chat = () => {
   useEffect(() => {
     const connectWebSocket = () => {
       stompClient.current = new StompJs.Client({
-        brokerURL: "ws://localhost:8888/chatting",
+        // brokerURL: "ws://localhost:8888/chatting",
+        brokerURL: "ws://saessakmarket.store:8888/chatting",
         reconnectDelay: 3000,
       });
 
