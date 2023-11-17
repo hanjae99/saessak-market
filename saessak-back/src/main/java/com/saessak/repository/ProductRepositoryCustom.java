@@ -1,6 +1,7 @@
 package com.saessak.repository;
 
 import com.saessak.detail.dto.DetailDTO;
+import com.saessak.game.dto.GameDTO;
 import com.saessak.main.dto.MainProductFormDTO;
 import com.saessak.main.dto.ProductDTO;
 import com.saessak.main.dto.ProductFormDTO;
@@ -20,4 +21,6 @@ public interface ProductRepositoryCustom {
     List<MainProductFormDTO> getRandomProduct();
 
     List<MainProductFormDTO> getNewestProduct();
+
+    List<GameDTO> gameRandomDataWithQueryDSL();
 }

@@ -86,21 +86,26 @@ public class DetailService {
 
 
 
-        //카테고리로 랜덤 데이터 가져옴  productDTOList에 넣어놨음
-        List<CateProductInter> list=productCategoryRepository.categoryRandomData(productCateId.get(0).getCategory().getId(), productId);
-        List<CategoryProductDTO> productDTOList =new ArrayList<>();
+        List<CategoryProductDTO> productDTOList =productCategoryRepository.categoryRandomDataWithQueryDSL(productCateId.get(0).getCategory().getId(), productId);
+//        //카테고리로 랜덤 데이터 가져옴  productDTOList에 넣어놨음
+//        List<CateProductInter> list=productCategoryRepository.categoryRandomData(productCateId.get(0).getCategory().getId(), productId);
+//        List<CategoryProductDTO> productDTOList =new ArrayList<>();
+//
+//        for(CateProductInter productDTO : list){
+//            CategoryProductDTO categoryProductDTO =CategoryProductDTO.builder()
+//                    .productId(productDTO.getProductId())
+//                    .categoryId(productDTO.getCategoryId())
+//                    .title(productDTO.getTitle())
+//                    .price(productDTO.getPrice())
+//                    .imgUrl(productDTO.getImgUrl())
+//                    .build();
+//
+//            productDTOList.add(categoryProductDTO);
+//        }
 
-        for(CateProductInter productDTO : list){
-            CategoryProductDTO categoryProductDTO =CategoryProductDTO.builder()
-                    .productId(productDTO.getProductId())
-                    .categoryId(productDTO.getCategoryId())
-                    .title(productDTO.getTitle())
-                    .price(productDTO.getPrice())
-                    .imgUrl(productDTO.getImgUrl())
-                    .build();
 
-            productDTOList.add(categoryProductDTO);
-        }
+
+
 
         //member 데이터 완성
         DetailMemberDTO memberDTO=DetailMemberDTO.builder()
