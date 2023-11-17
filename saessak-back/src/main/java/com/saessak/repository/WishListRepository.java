@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface WishListRepository extends JpaRepository<WishList,Long> {
+public interface WishListRepository extends JpaRepository<WishList,Long>, WishListRepositoryCustom {
     @Query( value = "SELECT M.member_id AS memberId, P.product_id AS productId, I.img_url AS imgUrl, " +
             "P.title, P.price, P.update_time AS updateTime, P.sell_status AS sellStatus , WL.wish_list_id AS wishListId " +
             "FROM MEMBER M, PRODUCT P, WISH_LIST WL, IMAGE I " +
@@ -46,6 +46,7 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
             "WHERE wish_list_id = :wishListId", nativeQuery = true)
     void deleteById(@Param("wishListId") Long wishListId);
 
+    List<WishList> findByMemberId(Long memberId);
 
 
 
