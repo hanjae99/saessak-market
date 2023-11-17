@@ -46,6 +46,7 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
             "WHERE wish_list_id = :wishListId", nativeQuery = true)
     void deleteById(@Param("wishListId") Long wishListId);
 
+    List<WishList> findByMemberId(Long memberId);
 
 
 

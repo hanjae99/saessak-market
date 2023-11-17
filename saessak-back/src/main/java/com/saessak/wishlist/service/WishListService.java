@@ -26,6 +26,7 @@ public class WishListService {
 
     private final WishListRepository wishListRepository;
 
+
     private final ProductRepository productRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
