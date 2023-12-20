@@ -74,7 +74,8 @@ public class LoginService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", 	"a72ff07499a78a559bb7e6bccb465597");
-        body.add("redirect_uri", "http://localhost:3000/login/auth/kakao");
+//        body.add("redirect_uri", "http://localhost:3000/login/auth/kakao");
+        body.add("redirect_uri", "http://saessakmarket.store/login/auth/kakao");
         body.add("code", code);
 
         // HTTP 요청 보내기

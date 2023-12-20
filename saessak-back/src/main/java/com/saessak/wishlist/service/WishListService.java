@@ -5,6 +5,9 @@ import com.saessak.entity.Product;
 import com.saessak.entity.WishList;
 import com.saessak.repository.ProductRepository;
 import com.saessak.repository.WishListRepository;
+import com.saessak.repository.WishListRepositoryCustom;
+import com.saessak.wishlist.dto.BuyListDto;
+import com.saessak.wishlist.dto.SellListDto;
 import com.saessak.wishlist.dto.WishListDTO;
 import com.saessak.wishlist.dto.WishListInter;
 import lombok.RequiredArgsConstructor;
@@ -26,72 +29,29 @@ public class WishListService {
 
     private final WishListRepository wishListRepository;
 
+
     private final ProductRepository productRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+
     public List<WishListDTO> read(Long userId){
 
-        List<WishListInter> list = wishListRepository.memberProductSelect(userId);
-        List<WishListDTO> wishListDTOList = new ArrayList<>();
-
-        for (WishListInter item : list) {
-            WishListDTO dto = new WishListDTO();
-            dto.setWishListId(item.getWishListId());
-            dto.setProductId(item.getProductId());
-            dto.setTitle(item.getTitle());
-            dto.setPrice(item.getPrice());
-            dto.setUpdateTime(item.getUpdateTime());
-            dto.setSellStatus(item.getSellStatus());
-            dto.setImgUrl(item.getImgUrl());
-            wishListDTOList.add(dto);
-        }
-
-
-        return wishListDTOList;
+        return wishListRepository.memberProductSelectdsl(userId);
     }
 
-    public List<WishListDTO> sellread(Long userId){
-
-        List<WishListInter> list = wishListRepository.sellMemberProductSelect(userId);
-        List<WishListDTO> wishListDTOList = new ArrayList<>();
-
-        for (WishListInter item : list) {
-            WishListDTO dto = new WishListDTO();
-            dto.setSellMemberId(item.getSellMemberId());
-            dto.setProductId(item.getProductId());
-            dto.setTitle(item.getTitle());
-            dto.setPrice(item.getPrice());
-            dto.setUpdateTime(item.getUpdateTime());
-            dto.setSellStatus(item.getSellStatus());
-            dto.setImgUrl(item.getImgUrl());
-            wishListDTOList.add(dto);
-        }
+    public List<SellListDto> sellread(Long userId){
 
 
-        return wishListDTOList;
+        return wishListRepository.sellMemberProductSelectdsl(userId);
     }
 
-    public List<WishListDTO> buyread(Long userId){
-
-        List<WishListInter> list = wishListRepository.buyMemberProductSelect(userId);
-        List<WishListDTO> wishListDTOList = new ArrayList<>();
-
-        for (WishListInter item : list) {
-            WishListDTO dto = new WishListDTO();
-            dto.setOrderMemberId(item.getOrderMemberId());
-            dto.setBuyListId(item.getBuyListId());
-            dto.setProductId(item.getProductId());
-            dto.setTitle(item.getTitle());
-            dto.setPrice(item.getPrice());
-            dto.setUpdateTime(item.getUpdateTime());
-            dto.setSellStatus(item.getSellStatus());
-            dto.setImgUrl(item.getImgUrl());
-            wishListDTOList.add(dto);
-        }
+    public List<BuyListDto> buyread(Long userId){
 
 
-        return wishListDTOList;
+
+
+        return wishListRepository.buyMemberProductSelectdsl(userId);
     }
 
     public WishList delete(Long wishListId){

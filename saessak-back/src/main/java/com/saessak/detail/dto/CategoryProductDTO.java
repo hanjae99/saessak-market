@@ -18,6 +18,7 @@ public class CategoryProductDTO {
     private String imgUrl;
 
 
+    @QueryProjection
     public CategoryProductDTO(Long productId, Long categoryId, String title, int price, String imgUrl) {
         this.productId = productId;
         this.categoryId = categoryId;

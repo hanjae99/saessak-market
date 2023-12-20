@@ -20,17 +20,30 @@ public class gameController {
 
     private final GameService gameService;
 
+//    @GetMapping
+//    public ResponseEntity<?> getGameList(){
+//      try {
+//          List<GameDTO> glist = gameService.gameList();
+//          ResponseDTO<GameDTO> response = ResponseDTO.<GameDTO>builder().data(glist).build();
+//          return ResponseEntity.ok().body(response);
+//      }catch (Exception e){
+//          String error = e.getMessage();
+//          ResponseDTO<GameDTO> response = ResponseDTO.<GameDTO>builder().error(error).build();
+//          return ResponseEntity.badRequest().body(response);
+//      }
+//    }
+
     @GetMapping
     public ResponseEntity<?> getGameList(){
-      try {
-          List<GameDTO> glist = gameService.gameList();
-          ResponseDTO<GameDTO> response = ResponseDTO.<GameDTO>builder().data(glist).build();
-          return ResponseEntity.ok().body(response);
-      }catch (Exception e){
-          String error = e.getMessage();
-          ResponseDTO<GameDTO> response = ResponseDTO.<GameDTO>builder().error(error).build();
-          return ResponseEntity.badRequest().body(response);
-      }
+        try {
+            List<GameDTO> glist = gameService.gameListdls();
+            ResponseDTO<GameDTO> response = ResponseDTO.<GameDTO>builder().data(glist).build();
+            return ResponseEntity.ok().body(response);
+        }catch (Exception e){
+            String error = e.getMessage();
+            ResponseDTO<GameDTO> response = ResponseDTO.<GameDTO>builder().error(error).build();
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
 

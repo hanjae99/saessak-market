@@ -87,7 +87,7 @@ const Login = () => {
   };
 
   const KakaoLoginAPI = `https://kauth.kakao.com/oauth/authorize?
-client_id=${"a72ff07499a78a559bb7e6bccb465597"}&redirect_uri=${"http://localhost:3000/login/auth/kakao"}&response_type=code`;
+client_id=${"a72ff07499a78a559bb7e6bccb465597"}&redirect_uri=${"http://saessakmarket.store/login/auth/kakao"}&response_type=code`;
 
   /**온클릭 이벤트
    * 카카오 로그인용 새창을 띄운다.

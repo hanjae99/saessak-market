@@ -57,8 +57,8 @@ const SignUp = () => {
       emailPassCheck !== -1 ||
       !newUser.name ||
       !newUser.email ||
-      !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
-      isSmsChecked !== 1 ||
+      // !newUser.phone || // 개발중엔 휴대폰 인증 절차 비활성화
+      // isSmsChecked !== 1 ||
       !newUser.gender
     ) {
       setSignFailed(true);
@@ -482,14 +482,14 @@ const SignUp = () => {
                 className="signup-text-input"
                 type="tel"
                 name="phone"
-                placeholder="전화번호 숫자만 입력해주세요"
+                placeholder="전화번호 숫자만 입력해주세요(현재 인증없이 가입가능)"
                 pattern="[0-9]{11}"
                 onChange={onPhone}
                 required
               />
-              <button className="signup-bt3" onClick={sendSms}>
+              {/* <button className="signup-bt3" onClick={sendSms}>
                 인증
-              </button>
+              </button> */}
             </div>
             {isSmsSend === -1 ? (
               <p className="signup-duplicated-msg">

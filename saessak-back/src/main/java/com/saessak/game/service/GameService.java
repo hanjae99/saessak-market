@@ -35,4 +35,8 @@ public class GameService {
         return gameDTOList;
     }
 
+    public List<GameDTO> gameListdls(){
+        return productRepository.gameRandomDataWithQueryDSL();
+    }
+
 }

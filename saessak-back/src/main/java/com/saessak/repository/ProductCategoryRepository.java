@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductCategoryRepository extends JpaRepository<ProductCategory,Long> {
+public interface ProductCategoryRepository extends JpaRepository<ProductCategory,Long>, ProductCategoryCustomRepository {
 
 
     List<ProductCategory> findByProductId(Long productId);
